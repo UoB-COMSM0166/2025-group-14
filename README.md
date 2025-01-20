@@ -13,7 +13,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-![group photo](IMG_0747.heic)
+![group photo](IMG_0747.jpeg)
 
 - Group member 1, name, email, role
 - Group member 2, name, email, role
