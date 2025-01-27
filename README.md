@@ -1,5 +1,10 @@
 # 2025-group-14
 2025 COMSM0166 group 14
+## Game ideas
+
+### Idea 1: Canal chase game
+### Idea 2: Robot Platformer
+Platformer style game where you are an Android in the year 2442. An evil conglomerate has stolen parts from you and your mission is to get these back before it's too late and you become obsolete. Along the way you have to go through levels and solve small puzzles and problems to progress. Problems to deal with include lasers, trap doors, and traps. The tools at your disposal include jet packs, teleportation and hacking. These are upgrades that you get as you find the parts and progress through the levels.
 
 ## Your Game
 
