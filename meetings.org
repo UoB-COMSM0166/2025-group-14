@@ -1,6 +1,5 @@
 * 03/02/2025
 ** topics
-- introduce topics
 *** 1. game mechanics
 **** stage one (high importance)
 1. up down left right (low effort)
@@ -8,16 +7,16 @@
 3. pursuer (high effort)
 4. movement mechanics (high effort)
 **** stage two (high effort)
-1. aesthetics of game
-2. damage taken
-3. gates opening/ closing
-4. refueling 
+4. aesthetics of game
+5. damage taken
+6. gates opening/ closing
+7. refueling 
 
 *** 2. should we start on game development?
-    1. yes
+    yes
 
 ** actions
-- set actions
-**** another meeting
-**** implement first point
+**** implement first point of game mechanics this week
+** next meeting
+Here we'll decide actions for this week
 
