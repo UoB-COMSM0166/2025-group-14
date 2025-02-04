@@ -14,9 +14,30 @@
 
 *** 2. should we start on game development?
     yes
-
+    
 ** actions
 **** implement first point of game mechanics this week
+**** drinks
 ** next meeting
 Here we'll decide actions for this week
+* 04/02/2025
+** topics
+1. is done
+moving onto 2.
+
+We want the camera to follow
+** actions
+*** tasks
+- research and prototyping
+  
+- movement team
+  dan and leon
+- lake team
+  leah and casey
+- pursuer team
+  polly and adam
+*** adam doing kanban
+*** create git branches
+- each feature has it's own branch
+- each person has their own branch
 
