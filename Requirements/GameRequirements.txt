@@ -1,0 +1,70 @@
+Stakeholders:
+
+1 - Markers
+2 - Developers (us)
+3 - Prospective gamers - friends and family
+4 - Prospective gamers - testers (at testathons)
+5 - Prospective gamers - boaters/enthusiasts
+6 - Prospective gamers - other;
+
+
+Inititive:
+Make a game to get a high grade on this module
+
+Epics
+Stakeholder #1 - As markers, we want a game that is based around unique mechanics to demonstrate the developers' capabilities.
+Stakeholder #2 - As developers, we want a game that is easily implementable so that we can complete it within the timeframe.
+Stakeholder #3 - As friends and family, we want a game that is intutive so that it is easy for casual gamers or new gamers to play.
+Stakeholder #4 - As testers, we want a game that is stable so that it will not crash even as we try to break it. 
+Stakeholder #5 - As boaters/enthusiasts, we want a game that captures the tone and feel of the canals.
+Stakeholder #6 - As prospective gamers, we want a game that is fun to play.
+
+User Stories
+Stakeholder #1 - As markers, we want the challenge of overcoming map hazards to synergize with damage and pursuit so it can be assessed as a cohesive test of player strategy and thus a "twist".
+Acceptance Criteria: Given control over the boat avatar and awareness of hazards and the pursuer, when I employ a clear strategy based on game mechanics, I should be able to complete the game.
+
+Stakeholder #2 - As developers, we want modular game design based around  the interactions between objects so that they can be worked on seperately and we can thus divide tasks among our team members.
+Acceptance Criteria: Given that we are assigned individual objects and mechanics to work on, when we merge branches, these mechanics should interact with minimal refactoring. 
+
+Stakeholder #3 - As a friend or family of the developers, I want a WASD or arrow-key control system so that I can navigate the boat.
+Acceptance Criteria: Given that I have access to a keyboard while playing the game, when I press a button to move the boat avatar, the on-screen boat should move in an expected way.
+
+Stakeholder #3 - As a friend or family of the developers, I want instructions so that I can play the game. 
+Acceptance criteria: Given that I have started up the game myself and seen the loading/introductory screen, when I start gameplay, I should not be confused as to controls or aims.
+
+Stakeholder #4 - As testers, we want the game to have gone through internal testing process so that breaking it will pose a challenge to us.
+Acceptance criteria: Given that the game has been submitted to a testathon, when a tester attempts to break it, it should not break.  
+
+Stakeholder #5 - As a boating enthusiast I want a map that is interestingly shaped to provide a sense of exploration.
+Acceptance criteria: Given some familiarity with the English countryside, while playing the game, I should be able to recognise locks, winding holes and fields.
+
+Stakeholder #5 - As a boating enthusiast, I want the mechanics to feel verasimilitudinous to boat life.
+Acceptance criteria: Given that this avatar is a boat, when the player moves it, it should make the motions of a vessel that turns and advances rather than strafing. 
+
+Stakeholder #6 - As a player of the game I want a map I can navigate in order to encounter structured challenges.
+Acceptance criteria: Given that I have been playing the game for a certain amount of time, when I overcome a level hazard it should have required a greater mastery of the game's mechanics than overcoming a challenge when having played the game for less time.
+
+Stakeholder #6 - As a player of the game I want to encounter locks as a map hazard so that there is challenge
+Acceptance Crteiera: Given that locks slow down both the player avatar and the pursuer, when I encounter one on the map, successful employment of other game mechanics should determine whether I am able to pass it or whether it causes me to lose the game.
+
+Stakeholder #6 - As a player of the game I want to track and address damage to the boat so that there is a challenge
+Acceptance criteria: Given that my boat has taken damage, when I need to strategize in order to beat the game, I should be able to see the damage level and have some option to repair it.
+
+Stakeholder #6 - As a player of the game I want to be pursued by an opponent with an increasing skill/power/speed level to keep the challenge consistently fresh.
+Acceptance Criteria - Given that the game has been played for some time, when the enemy AI moves, it should be operating with a distinct AI algorithm from the starting AI that accounts for more player behaviours. 
+
+Stakeholder #6 - as a player of the game I want a map that contains routes and hazards to reward strategic thinking
+Acceptance criteria: Given that the player has progressed beyond the very opening stages of the game, when the player makes a choice to move the boat in a particular direction, this should be an enactment of a player strategy rather than progression down a linear route. 
+
+Stakeholder #6 - as a plyaer of the game I want it to have a small narrative component to provide context.
+Acceptance Criteria: Given that I have watched the game's introduction, when I see the enemy avatar approach, I should be able to say why they are chasing me and what the stakes are for my hypothetical player character.
+
+
+Breaking down into tasks - "As a boating enthusiast, I want the mechanics to feel verasimilitudinous to boat life."
+
+Develop a control schema for moving the boat.
+Develop a blank level without hazards or enemies.
+Test the motion schema on this map and decide as a group whether the control system has become unintutive in the pursuit of realism; if so, refactor and aim for soemthing less realistic. 
+After developing damage/health mechanics, adjust the motion controls to ensure that avoiding hazards is neither trivially easy nor annoyingly hard.
+Apply the control schema without keyboard input to the pursuer AI.
+
