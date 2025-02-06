@@ -38,7 +38,7 @@ function draw() {
       x1 += 2;
     }
   }
-
+mod
   fill(0);
 
   ellipse(x1, y1, w, h);
