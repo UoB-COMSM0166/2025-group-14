@@ -8,6 +8,9 @@ Feedback after demo'ing paper prototype and first working prototype of canal/mov
 ## I was confused about:
 
 - Understanding the lock system
+- How does the game end? How do you win? Do you gain points, or is there an end point that you must reach to win?
+  - Is it a loop you go around infinitely?
+  - Do you reach a certain point and level up to a new map? 
 
 ## One thing I suggest to improve is:
 
