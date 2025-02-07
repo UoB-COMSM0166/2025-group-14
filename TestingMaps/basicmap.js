@@ -148,7 +148,6 @@ class boat{
         let s = this.speed;
         fill("purple");
         circle(this.x, this.y, this.size);
-        text(setting.redBankGrad, 50, 50);
         if(keyIsPressed){
             if(key === 'w' && this.y > upperLimit){
                 this.y -= s;
@@ -164,12 +163,12 @@ class boat{
             }
         }
 
-        text("x " + this.x, 400, 50);
+        text("x " + this.x, 400, 50);//testprint
         text("y " + this.y, 400, 100);
-        text("borderver " + afterBorderVer, 400, 150)
-        text("borderhor " + afterBorderHor, 400, 200);
-        text("leftLimit " + leftLimit, 400, 250);
-        text("rightLimit" + rightLimit, 400, 300);
+        text("redVerlimit " + upperLimit, 400, 150)
+        text("blackVerlimit " + lowerLimit, 400, 200);
+        text("redHorlimit " + rightLimit, 400, 250);
+        text("blackHorlimit " + leftLimit, 400, 300);
 
 
         
