@@ -47,32 +47,28 @@ class boat{
     visualize(){
         //sets limits based on the locations of the edges of the canal object where the boat is
         let setting = this.canal;
-        let redYLimit = limitY(this.x, this.redBank.gradient, this.redBank.offset);//upperlimit
-        let redXLimit = limitX(this.y, this.redBank.gradient, this.redBank.offset);
-        let blackYLimit = limitY(this.x, this.blackBank.gradient, this.blackBank.offset);//lowerlimit
-        let blackXLimit = limitX(this.y, this.blackBank.gradient, this.blackBank.offset);
-
+   
 
 
         let s = this.speed;
         if(keyIsPressed){
       
-            if(key === 'w' && this.y > redYLimit){
+            if(key === 'w' && this.y > setting.getUpperLimit(this.x)){
                 this.chngDirShape();
                 this.y -= s;
            
             }
-            if(key === 's' && this.y < blackYLimit){
+            if(key === 's' && this.y < setting.getLowerLimit(this.x)){
                 this.chngDirShape();
                 this.y += s;
             
             }
-            if(key === 'd' && this.x < redXLimit){
+            if(key === 'd' && this.x < setting.getRightLimit(this.y)){
                 this.chngDirShape();
                 this.x += s;
         
             }
-            if(key === 'a' && this.x > blackXLimit){
+            if(key === 'a' && this.x > setting.getLeftLimit(this.y)){
                 this.chngDirShape();
                 this.x -= s;
    

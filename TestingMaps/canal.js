@@ -75,10 +75,27 @@ class canal{
         this.redBank.setAfterIntersect(x1, y1);
         this.blackBank.setAfterIntersect(x2, y2);
 
+    }
+
+        //functions that get the limits of boat motion
+        getUpperLimit(x){
+            return limitY(x, this.redBank.gradient, this.redBank.offset);//upperlimit
+        }
+        
+        getLowerLimit(x){
+            return limitY(x, this.blackBank.gradient, this.blackBank.offset);
+        }
+
+        getRightLimit(y){
+            return limitX(y, this.redBank.gradient, this.redBank.offset);
+
+        }
+
+        getLeftLimit(y){
+           return limitX(y, this.blackBank.gradient, this.blackBank.offset);
+        }
         
 
-
-    }
 
 
 }
