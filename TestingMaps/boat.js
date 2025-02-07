@@ -1,18 +1,15 @@
 class boat{
     constructor(speed, startX, startY, width, height, farCorner){
-        this.canal = null;
-        this.redBank = null;
-        this.blackBank = null;
-        this.afterThreshold = null;
-        this.beforeThreshold = null;
+        //relevant metrics to boat motion
         this.speed = speed;
         this.x = startX;
         this.y = startY;
-
-        this.farCorner = farCorner;
         this.width = width;
         this.height = height;
 
+        //stuff for Daniel's motion as outlined on skeleton file
+        //NOTE: Unlike Daniel's boat, this one stops when its MIDDLE, not its FRONT, gets to the border
+        //Didn't want to refactor that for this code because I imagine Daniel and Leon will be playing around with that stuff
         if(this.width >= this.height){
 
             this.prevKey = "horisontal";
@@ -23,9 +20,17 @@ class boat{
         }
 
 
+        //stuff that makes sure the boat interacts with the canal okay
+        this.farCorner = farCorner;
+        this.canal = null;
+        this.redBank = null;
+        this.blackBank = null;
+        this.afterThreshold = null;
+        this.beforeThreshold = null;
+
 
     }
-    
+
     setCanal(canal){
         this.canal = canal;
         this.redBank = canal.redBank;
@@ -38,6 +43,7 @@ class boat{
         }
     }
 
+    //puts the boat on the canvas; this is where motion stuff all goes
     visualize(){
         //sets limits based on the locations of the edges of the canal object where the boat is
         let setting = this.canal;
