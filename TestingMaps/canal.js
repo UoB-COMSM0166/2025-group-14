@@ -14,9 +14,22 @@ class canal{
 
         this.before = null;
         this.after = null; 
-        this.beforeThreshold;
-        this.afterThreshold;
+        this.beforeThreshold = null;
+        this.afterThreshold = null;
         this.farCorner = farCorner;
+
+        if(startY <= endY){
+            this.rightBank = this.redBank;
+            this.leftBank = this.blackBank
+            console.log("for canal " + this.name + "the red bank is on the right");
+        }
+
+        
+        if(startY > endY){
+            this.rightBank = this.blackBank;
+            this.leftBank = this.redBank;
+            console.log("for canal " + this.name + "the red bank is on the left");
+        }
     }
 
     visualize(){
@@ -88,12 +101,12 @@ class canal{
         }
 
         getRightLimit(y){
-            return limitX(y, this.redBank.gradient, this.redBank.offset);
+            return limitX(y, this.rightBank.gradient, this.rightBank.offset);
 
         }
 
         getLeftLimit(y){
-           return limitX(y, this.blackBank.gradient, this.blackBank.offset);
+           return limitX(y, this.leftBank.gradient, this.leftBank.offset);
         }
         
 
@@ -115,13 +128,20 @@ class canal{
                 beforeBorderVer = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
             }
 
+            //console.log("x: " + x + " y: " + y + " bX: " + afterBorderHor + " by " + afterBorderVer);
+
+
+
             if(y > afterBorderVer && x > afterBorderHor){
+                console.log("Swap forward!");
                 return this.after;
+        
 
             }
 
             
             if(y < beforeBorderVer && x < beforeBorderHor){
+                console.log("Swap backwards!");
                 return this.before;
             }
 
