@@ -4,12 +4,11 @@ const canalWidth = 400;
 
 
 
-let c1 = new canal(canalWidth, "Starter", 0, 200, canvasSize, 200, null, null);
+let c1 = new canal(canalWidth, "Starter", 0, 200, canvasSize, 200, null, null, canvasSize);
 
-//boat variables from left to right: Speed, starting X coordinate, starting Y coordinate, width, height, and "Canvas Size"
-//CanvasSize is just there because for barrier calculations to work, the boat object has to have a local copy of the size of the canvas
+//boat variables from left to right: Speed, starting X coordinate, starting Y coordinate, width, height
 
-let b = new boat(2, 5, 300, 60, 30, canvasSize);
+let b = new boat(2, 5, 300, 60, 30);
 b.setCanal(c1);
 
 function setup(){

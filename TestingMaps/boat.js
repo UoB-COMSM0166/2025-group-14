@@ -1,5 +1,5 @@
 class boat{
-    constructor(speed, startX, startY, width, height, farCorner){
+    constructor(speed, startX, startY, width, height){
         //relevant metrics to boat motion
         this.speed = speed;
         this.x = startX;
@@ -21,34 +21,19 @@ class boat{
 
 
         //stuff that makes sure the boat interacts with the canal okay
-        this.farCorner = farCorner;
         this.canal = null;
-        this.redBank = null;
-        this.blackBank = null;
-        this.afterThreshold = null;
-        this.beforeThreshold = null;
 
 
     }
 
     setCanal(canal){
         this.canal = canal;
-        this.redBank = canal.redBank;
-        this.blackBank = canal.blackBank;
-        if(canal.afterThreshold != null){
-            this.afterThreshold = canal.afterThreshold;
-        }
-        if(canal.beforeThreshold != null){
-            this.beforeThreshold = canal.beforeThreshold;
-        }
     }
 
     //puts the boat on the canvas; this is where motion stuff all goes
     visualize(){
         //sets limits based on the locations of the edges of the canal object where the boat is
         let setting = this.canal;
-   
-
 
         let s = this.speed;
         if(keyIsPressed){
@@ -81,46 +66,19 @@ class boat{
 
 
         //tests if the boat has moved to another canal segment, and shifts it there if so
-        this.borderTest(setting);
+        this.reachedTheNextOne(setting);
 
 
     }
 
-    borderTest(setting){
-        let afterBorderHor = this.farCorner;
-        let afterBorderVer = this.farCorner;
-        let beforeBorderHor = 0;
-        let beforeBorderVer = 0;
-
-        if(setting.after != null){
-       
-            afterBorderHor = limitX(this.y, this.afterThreshold.gradient, this.afterThreshold.offset);
-            afterBorderVer = limitY(this.x, this.afterThreshold.gradient, this.afterThreshold.offset);
-
-        }
-        if(setting.before != null){
-
-            beforeBorderHor = limitX(this.y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
-            beforeBorderVer = limitY(this.x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
-        }
-
-        if(this.y > afterBorderVer && this.x > afterBorderHor){
-            let pasturesNew = this.canal.after;
+    reachedTheNextOne(setting){
+        let pasturesNew = setting.thresholdCheck(this.x, this.y);
+        if(pasturesNew != null){
             this.setCanal(pasturesNew);
-            console.log("switched to canal with name " + this.canal.name);//testprint 
-
+            console.log("switched to canal with name " + this.canal.name)
         }
-
-        
-        if(this.y < beforeBorderVer && this.x < beforeBorderHor){
-            let pasturesNew = this.canal.before;
-            this.setCanal(pasturesNew);
-            console.log("switched to canal with name " + this.canal.name);//testprint
-        }
-
-        
-
     }
+
 
     chngDirShape() {
         if (this.prevKey === "horisontal" && (key === 'w' || key === 's')){

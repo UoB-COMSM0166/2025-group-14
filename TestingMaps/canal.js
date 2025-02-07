@@ -1,5 +1,5 @@
 class canal{
-    constructor(width, name, startX, startY, endX, endY){
+    constructor(width, name, startX, startY, endX, endY, farCorner){
         this.width = width;
         this.name = name;
         this.redBank = new bank(startX, startY, endX, endY);
@@ -16,6 +16,7 @@ class canal{
         this.after = null; 
         this.beforeThreshold;
         this.afterThreshold;
+        this.farCorner = farCorner;
     }
 
     visualize(){
@@ -95,6 +96,38 @@ class canal{
            return limitX(y, this.blackBank.gradient, this.blackBank.offset);
         }
         
+
+        thresholdCheck(x, y){
+            let afterBorderHor = this.farCorner;
+            let afterBorderVer = this.farCorner;
+            let beforeBorderHor = 0;
+            let beforeBorderVer = 0;
+
+            if(this.after != null){
+        
+                afterBorderHor = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
+                afterBorderVer = limitY(x, this.afterThreshold.gradient, this.afterThreshold.offset);
+
+            }
+            if(this.before != null){
+
+                beforeBorderHor = limitX(y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
+                beforeBorderVer = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
+            }
+
+            if(y > afterBorderVer && x > afterBorderHor){
+                return this.after;
+
+            }
+
+            
+            if(y < beforeBorderVer && x < beforeBorderHor){
+                return this.before;
+            }
+
+            return null;
+
+        }
 
 
 
