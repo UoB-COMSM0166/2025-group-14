@@ -7,8 +7,8 @@ const canalWidth = 60;
 
 let c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
 let c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
-let c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-let c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
+let c3 = new canal(canalWidth*2, "ThirdElement", 200, 430, 550, 560);
+let c4 = new canal(canalWidth/2, "Uphill", 550, 400, 600, 100);
 let c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
 let c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
 c1.setConnections(c6, c2);

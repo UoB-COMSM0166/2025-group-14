@@ -67,6 +67,7 @@ class canal{
  
     }
 
+
     setConnections(before, after){
         this.before = before;
         this.after = after;
@@ -82,7 +83,6 @@ class canal{
         let target = this.before;
         let targRed = target.redBank;
         let targBlack = target.blackBank;
-
         let redGrad = this.redBank.gradient;
         let redOff = this.redBank.offset;
         let blackGrad = this.blackBank.gradient;
@@ -104,8 +104,6 @@ class canal{
         let target = this.after;
         let targRed = target.redBank;
         let targBlack = target.blackBank;
-
-
         let redGrad = this.redBank.gradient;
         let redOff = this.redBank.offset;
         let blackGrad = this.blackBank.gradient;
@@ -142,11 +140,7 @@ class canal{
 
         thresholdCheck(x, y){
 
-
-
-
             if(this.after != null){
-        
                 if(this.afterThreshold.checkCross(x, y)){
                     console.log("Swap forward!");
                     return this.after;
@@ -156,16 +150,12 @@ class canal{
 
             }
             if(this.before != null){
-
-
                 if(this.beforeThreshold.checkCross(x, y)){
                     console.log("Swap backward!");
                     return this.before;
                 }
         
             }
-
-
 
             return null;
 
