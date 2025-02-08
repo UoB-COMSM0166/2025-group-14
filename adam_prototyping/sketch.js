@@ -28,7 +28,7 @@ class Player{
 
   move() {
     this.velocity.set(0, 0);
-
+    
     if (keyIsDown(UP_ARROW)) this.velocity.y = -this.speed;
     if (keyIsDown(DOWN_ARROW)) this.velocity.y = this.speed;
     if (keyIsDown(LEFT_ARROW)) this.velocity.x = -this.speed;
