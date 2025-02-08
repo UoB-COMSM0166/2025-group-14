@@ -4,6 +4,7 @@ let numberOfWaves = 1.75; // Define the number of waves in the canal
 let amplitude = 400; // Define the amplitude of the waves
 let playerScale = 1/30;
 let lineThickness = 1;
+let canalSideSeparation = 10; //Higher = closer together
 
 function setup() {
   let width = windowWidth;
@@ -24,6 +25,38 @@ function draw() {
   pursuer.applyForce(steering);
   pursuer.update();
   pursuer.show();
+}
+
+class Canal {
+  constructor(waveHeight, numWaves) {
+    this.waveHeight = waveHeight; // Controls the vertical amplitude of the waves
+    this.numWaves = numWaves; // Controls how many waves appear
+    this.drawCanal();
+  }
+
+  drawCanal() {
+    noFill();
+    stroke(0, 0, 100);
+    strokeWeight(lineThickness);
+    beginShape();
+    //below is adapted from coding train wave example: https://editor.p5js.org/codingtrain/sketches/EIbEYLTaZ
+    for (let i = 0; i <= totalCurvePoints; i++) {
+      let angle = map(i, 0, totalCurvePoints, 0, this.numWaves * TWO_PI); // Control number of waves
+      let y = map(sin(angle), -1, 1, height / 2 - this.waveHeight / 2, height / 2 + this.waveHeight / 2) + width/canalSideSeparation; 
+      let x = map(i, 0, totalCurvePoints, 0, width); 
+      vertex(x, y);
+    }
+    endShape();
+
+    beginShape();
+    for (let i = 0; i <= totalCurvePoints; i++) {
+      let angle = map(i, 0, totalCurvePoints, 0, this.numWaves * TWO_PI); 
+      let y = map(sin(angle), -1, 1, height / 2 - this.waveHeight / 2, height / 2 + this.waveHeight / 2) - width/canalSideSeparation; 
+      let x = map(i, 0, totalCurvePoints, 0, width); 
+      vertex(x, y);
+    }
+    endShape();
+  }
 }
 
 //adapted from polly branch 
@@ -57,38 +90,6 @@ class Player{
     rotate(this.velocity.heading());
     ellipse(0, 0, width*playerScale, height*playerScale);
     pop();
-  }
-}
-
-class Canal {
-  constructor(waveHeight, numWaves) {
-    this.waveHeight = waveHeight; // Controls the vertical amplitude of the waves
-    this.numWaves = numWaves; // Controls how many waves appear
-    this.drawCanal();
-  }
-
-  drawCanal() {
-    noFill();
-    stroke(0, 0, 100);
-    strokeWeight(lineThickness);
-    beginShape();
-    //below is adapted from coding train wave example: https://editor.p5js.org/codingtrain/sketches/EIbEYLTaZ
-    for (let i = 0; i <= totalCurvePoints; i++) {
-      let angle = map(i, 0, totalCurvePoints, 0, this.numWaves * TWO_PI); // Control number of waves
-      let y = map(sin(angle), -1, 1, height / 2 - this.waveHeight / 2, height / 2 + this.waveHeight / 2); 
-      let x = map(i, 0, totalCurvePoints, 0, width); 
-      vertex(x, y);
-    }
-    endShape();
-
-    beginShape();
-    for (let i = 0; i <= totalCurvePoints; i++) {
-      let angle = map(i, 0, totalCurvePoints, 0, this.numWaves * TWO_PI); 
-      let y = map(sin(angle), -1, 1, height / 2 - this.waveHeight / 2, height / 2 + this.waveHeight / 2); 
-      let x = map(i, 0, totalCurvePoints, 0, width); 
-      vertex(x, y);
-    }
-    endShape();
   }
 }
 
