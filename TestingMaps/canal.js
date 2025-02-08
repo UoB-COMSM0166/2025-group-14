@@ -21,13 +21,13 @@ class canal{
         if(direction === "up"){
             this.redBank = this.topBank;
             this.blackBank = this.bottomBank;
-            this.centreX = endX - startX;
+      
 
         }else{
         
             this.redBank = this.bottomBank;
             this.blackBank = this.topBank;
-            this.centreX = startX - endX;
+     
 
         }
 
@@ -35,14 +35,14 @@ class canal{
         if(startY <= endY){
             this.rightBank = this.redBank;
             this.leftBank = this.blackBank;
-            this.centreY = endY - startY;
+        
         }
 
         
         if(startY > endY){
             this.rightBank = this.blackBank;
             this.leftBank = this.redBank;
-            this.centreY = startY + endY;
+  
         }
 
 
