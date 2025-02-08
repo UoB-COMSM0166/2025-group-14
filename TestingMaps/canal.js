@@ -1,33 +1,61 @@
 class canal{
     constructor(width, name, startX, startY, endX, endY){
+        
+        
+        //preliminary maths
+        let a = angleCalc(startX, startY, endX, endY);
+        let opp = Math.sin(a) * width;
+        let adj = Math.cos(a) * width;
+
+
+
+        //two banks of "Width" apart
         this.width = width;
         this.name = name;
-        this.redBank = new bank(startX, startY, endX, endY);
-        console.log("canal " + this.name + " face " + this.redBank.verticalFacing);
- 
+        this.topBank = new bank(startX, startY, endX, endY);
+        this.bottomBank = new bank(startX + opp, startY + adj, endX + opp, endY + adj);
 
-        //calculate angle and derrive other bank
-        let a = angleCalc(startX, startY, endX, endY);
-        this.opp = Math.sin(a) * width;
-        this.adj = Math.cos(a) * width;
 
-        this.blackBank = new bank(startX + this.opp, startY + this.adj, endX + this.opp, endY + this.adj);
+        //designates the banks as "red" or "black", allowing connection of segments redBank to redBank & blackBank to blackBank
+        let direction = this.topBank.verticalFacing;
+        if(direction === "up"){
+            this.redBank = this.topBank;
+            this.blackBank = this.bottomBank;
+            this.centreX = endX - startX;
 
-        this.before = null;
-        this.after = null; 
-        this.beforeThreshold = null;
-        this.afterThreshold = null;
+        }else{
+        
+            this.redBank = this.bottomBank;
+            this.blackBank = this.topBank;
+            this.centreX = startX - endX;
 
+        }
+
+        //determines left and right limits within which the boats can move
         if(startY <= endY){
             this.rightBank = this.redBank;
-            this.leftBank = this.blackBank
+            this.leftBank = this.blackBank;
+            this.centreY = endY - startY;
         }
 
         
         if(startY > endY){
             this.rightBank = this.blackBank;
             this.leftBank = this.redBank;
+            this.centreY = startY + endY;
         }
+
+
+
+
+        //set during the connection function; "before" and  "after" are the two canals that connect to this one, with "threshold" being the point between them for the boat to cross
+        this.before = null;
+        this.after = null; 
+        this.beforeThreshold = null;
+        this.afterThreshold = null;
+
+
+
     }
 
     visualize(){
@@ -54,6 +82,7 @@ class canal{
         let target = this.before;
         let targRed = target.redBank;
         let targBlack = target.blackBank;
+
         let redGrad = this.redBank.gradient;
         let redOff = this.redBank.offset;
         let blackGrad = this.blackBank.gradient;
@@ -75,6 +104,8 @@ class canal{
         let target = this.after;
         let targRed = target.redBank;
         let targBlack = target.blackBank;
+
+
         let redGrad = this.redBank.gradient;
         let redOff = this.redBank.offset;
         let blackGrad = this.blackBank.gradient;
@@ -92,11 +123,11 @@ class canal{
 
         //functions that get the limits of boat motion
         getUpperLimit(x){
-            return limitY(x, this.redBank.gradient, this.redBank.offset);//upperlimit
+            return limitY(x, this.topBank.gradient, this.topBank.offset);//upperlimit
         }
         
         getLowerLimit(x){
-            return limitY(x, this.blackBank.gradient, this.blackBank.offset);
+            return limitY(x, this.bottomBank.gradient, this.bottomBank.offset);
         }
 
         getRightLimit(y){

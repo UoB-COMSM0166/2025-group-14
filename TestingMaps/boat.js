@@ -1,11 +1,13 @@
 class boat{
-    constructor(speed, startX, startY, width, height){
+    constructor(speed, canal, startX, startY, width, height){
         //relevant metrics to boat motion
         this.speed = speed;
+        this.canal = canal;
         this.x = startX;
         this.y = startY;
         this.width = width;
         this.height = height;
+     
 
         //stuff for Daniel's motion as outlined on skeleton file
         //NOTE: Unlike Daniel's boat, this one stops when its MIDDLE, not its FRONT, gets to the border
@@ -20,15 +22,10 @@ class boat{
         }
 
 
-        //stuff that makes sure the boat interacts with the canal okay
-        this.canal = null;
 
 
     }
 
-    setCanal(canal){
-        this.canal = canal;
-    }
 
     //puts the boat on the canvas; this is where motion stuff all goes
     visualize(){
@@ -74,7 +71,7 @@ class boat{
     reachedTheNextOne(setting){
         let pasturesNew = setting.thresholdCheck(this.x, this.y);
         if(pasturesNew != null){
-            this.setCanal(pasturesNew);
+            this.canal = pasturesNew;
             console.log("switched to canal with name " + this.canal.name)
         }
     }

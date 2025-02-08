@@ -5,18 +5,20 @@ const canalWidth = 60;
 
 //front of House
 
-let c1 = new canal(canalWidth, "Starter", 200, 300, 300, 400, null, null);
-let c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600, null, null);
-let c3 = new canal(canalWidth, "ThirdElement", 200, 500, 450, 500, null, null);
-let c4 = new canal(canalWidth, "Uphill", 450, 400, 600, 100, null, null);
-let c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150, null, null);
-c1.setConnections(null, c2);
+let c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
+let c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
+let c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
+let c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
+let c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
+let c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
+c1.setConnections(c6, c2);
 c2.setConnections(c1, c3);
 c3.setConnections(c2, c4);
 c4.setConnections(c3, c5);
-c5.setConnections(c4, null);
-let b = new boat(2, 178.78679656440357, 221.21320343559643, 10, 20);
-b.setCanal(c1);
+c5.setConnections(c4, c6);
+c6.setConnections(c5, c1)
+let b = new boat(2, c1, 220, 330, 10, 20);
+
 
 function setup(){
     createCanvas(canvasSize, canvasSize);
@@ -31,7 +33,7 @@ function draw(){
     c3.visualize();
     c4.visualize();
     c5.visualize();
-
+    c6.visualize();
     //c1.afterThreshold.visualize();
 
     b.visualize();
