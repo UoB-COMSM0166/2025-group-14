@@ -1,8 +1,9 @@
 class canal{
-    constructor(width, name, startX, startY, endX, endY, farCorner){
+    constructor(width, name, startX, startY, endX, endY){
         this.width = width;
         this.name = name;
         this.redBank = new bank(startX, startY, endX, endY);
+        console.log("canal " + this.name + " face " + this.redBank.verticalFacing);
  
 
         //calculate angle and derrive other bank
@@ -16,19 +17,16 @@ class canal{
         this.after = null; 
         this.beforeThreshold = null;
         this.afterThreshold = null;
-        this.farCorner = farCorner;
 
         if(startY <= endY){
             this.rightBank = this.redBank;
             this.leftBank = this.blackBank
-            console.log("for canal " + this.name + "the red bank is on the right");
         }
 
         
         if(startY > endY){
             this.rightBank = this.blackBank;
             this.leftBank = this.redBank;
-            console.log("for canal " + this.name + "the red bank is on the left");
         }
     }
 
@@ -64,7 +62,8 @@ class canal{
         const y1 = linearIntersectY(redGrad, redOff, targRed.gradient, targRed.offset);
         const x2 = linearIntersectX(blackGrad, blackOff, targBlack.gradient, targBlack.offset);
         const y2 = linearIntersectY(blackGrad, blackOff, targBlack.gradient, targBlack.offset);
-        this.beforeThreshold = new bank(x1, y1, x2, y2);
+        this.beforeThreshold = new bank(x2, y2, x1, y1);
+    
 
         this.redBank.setBeforeIntersect(x1, y1);
         this.blackBank.setBeforeIntersect(x2, y2);
@@ -85,7 +84,7 @@ class canal{
         const x2 = linearIntersectX(blackGrad, blackOff, targBlack.gradient, targBlack.offset);
         const y2 = linearIntersectY(blackGrad, blackOff, targBlack.gradient, targBlack.offset);
         this.afterThreshold = new bank(x1, y1, x2, y2);
-        
+              
         this.redBank.setAfterIntersect(x1, y1);
         this.blackBank.setAfterIntersect(x2, y2);
 
@@ -111,39 +110,31 @@ class canal{
         
 
         thresholdCheck(x, y){
-            let afterBorderHor = this.farCorner;
-            let afterBorderVer = this.farCorner;
-            let beforeBorderHor = 0;
-            let beforeBorderVer = 0;
+
+
+
 
             if(this.after != null){
         
-                afterBorderHor = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
-                afterBorderVer = limitY(x, this.afterThreshold.gradient, this.afterThreshold.offset);
+                if(this.afterThreshold.checkCross(x, y)){
+                    console.log("Swap forward!");
+                    return this.after;
+                }
+        
+
 
             }
             if(this.before != null){
 
-                beforeBorderHor = limitX(y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
-                beforeBorderVer = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
-            }
 
-            //console.log("x: " + x + " y: " + y + " bX: " + afterBorderHor + " by " + afterBorderVer);
-
-
-
-            if(y > afterBorderVer && x > afterBorderHor){
-                console.log("Swap forward!");
-                return this.after;
+                if(this.beforeThreshold.checkCross(x, y)){
+                    console.log("Swap backward!");
+                    return this.before;
+                }
         
-
             }
 
-            
-            if(y < beforeBorderVer && x < beforeBorderHor){
-                console.log("Swap backwards!");
-                return this.before;
-            }
+
 
             return null;
 

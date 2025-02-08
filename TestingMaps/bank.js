@@ -6,10 +6,28 @@ class bank{
         this.endY = endY;
         this.gradient = gradient(startX, startY, endX, endY);
         this.offset = offset(this.gradient, startX, startY);
+
+
         this.beforeIntersectX = null;
         this.beforeIntersectY = null;
         this.afterIntersectX = null;
         this.afterIntersectY = null;
+        this.horizontalFacing = null;
+        this.verticalFacing = null;
+        this.setDirection();
+    }
+
+    setDirection(){
+        if(this.startX >= this.endX){
+            this.verticalFacing = "down";
+        }else{
+            this.verticalFacing = "up";
+        }
+        if(this.startY >= this.endY){
+            this.horizontalFacing = "left";
+        }else{
+            this.horizontalFacing = "right";
+        }
     }
 
     setBeforeIntersect(x, y){
@@ -45,6 +63,36 @@ class bank{
 
 
     }
+
+    checkCross(x, y){
+        let limX = limitX(y, this.gradient, this.offset);
+        let limY = limitY(x, this.gradient, this.offset);
+        let xBool = false;
+        let yBool = false;
+
+        if(this.horizontalFacing === "right" && x > limX){
+            xBool = true;
+        }
+        if(this.horizontalFacing === "left" && x < limX){
+            xBool = true;
+        }
+        if(this.verticalFacing === "up" && y < limY){
+            yBool = true;
+        }
+        if(this.verticalFacing === "down" && y > limY){
+            yBool = true;
+        }
+
+        if(xBool && yBool){
+            return true;
+        }else{
+            return false;
+        }
+
+      
+    }
+    
+    
 
 
 }
