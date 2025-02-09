@@ -48,7 +48,7 @@ function draw() {
     } else if (key === 'a') {
       angle -= 0.05;
     } else if (key === 'd') {
-      angle += 0.05;s
+      angle += 0.05;
     }
   }
 

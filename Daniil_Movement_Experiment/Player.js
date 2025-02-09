@@ -15,7 +15,8 @@ class Player {
     if (keyIsDown(87) === true) { //W
       if (this.yDeltaSpeed > -2){
         this.yDeltaSpeed -= 0.05;
-      } 
+      }
+      // if (this.angle < 270 ){}
     }
     else if (keyIsDown(83) === false && this.yDeltaSpeed < 0){
       this.yDeltaSpeed += 0.05;
@@ -84,12 +85,23 @@ class Player {
   }
 
   show() {
+    // angleMode(DEGREES);
     fill(0);
     push();
-    translate(this.x, this.y,);
-    rotate(this.angle);
+    translate(this.x, this.y);
+    // rotate(this.angle);
+    rotate(atan2(this.yDeltaSpeed, this.xDeltaSpeed));
     ellipse(0, 0, this.w, this.h);
     pop();
+
+    fill(256);
+    circle(this.x + 40 * cos(this.angle), this.y + 40 * sin(this.angle), 5);
+
+    fill(0);
+    text(`atan: ${atan(this.yDeltaSpeed, this.xDeltaSpeed)}`, this.x - 40, this.y - 80);
+    text(`atan2: ${atan2(this.yDeltaSpeed, this.xDeltaSpeed)}`, this.x - 40, this.y - 65);
+    text(`x: ${Math.floor(this.x)} y: ${Math.floor(this.y)}`, this.x - 40, this.y - 50);
+    // this.angle -= 0.5;
   }
 }
 
