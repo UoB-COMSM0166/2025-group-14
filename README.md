@@ -50,7 +50,7 @@ Add a group photo here!
 - 15% ~750 words
 - Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop?
 
-##### Requirements Reflection
+#### Requirements Reflection
 Initially, for certain cases, we had difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity -- a level which may vary between different teams and companies due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
 
 (1) **Initiative** = largest overview/goal; it is made up of several Epics.
@@ -66,6 +66,7 @@ Another helpful lesson which Ruzanna mentioned to us is that if a particular Acc
 When establishing the requirements in the specific context of our game, we quickly realised the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important aspects of the game. For example, developing fluid and intuitive movement for the boat which the user controls, and not worrying yet about less pressing nice-to-have features like sound effects. As a team, we find the prioritisation matrix below to be a useful tool and reminder of what to work on next.
 
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
+Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
 
 ### Design
