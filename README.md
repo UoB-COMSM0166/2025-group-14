@@ -51,7 +51,7 @@ Add a group photo here!
 - Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop?
 
 #### Requirements Reflection
-Initially, for certain cases, we had difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity -- a level which may vary between different teams and companies due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
+Initially, for certain cases, we had difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity -- a level which may vary between different teams due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
 
 (1) **Initiative** = largest overview/goal; it is made up of several Epics.
 
