@@ -48,7 +48,25 @@ Add a group photo here!
 ### Requirements 
 
 - 15% ~750 words
-- Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop? 
+- Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop?
+
+##### Requirements Reflection
+Initially, for certain cases, we had difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity -- a level which may vary between different teams and companies due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
+
+(1) **Initiative** = largest overview/goal; it is made up of several Epics.
+
+(2) **Epic** = more narrow scope than an Initiative but large enough that it takes several sprints to complete; it is made up of several user stories.
+
+(3) **User Story** = even more specific than an Epic and must be achievable within a single sprint.
+
+(4) **Acceptance Criteria** = a pre-determined set of expectations/outcomes which is retrospectively measured against a specific user story, to ensure that what was promised has been fulfilled.
+
+Another helpful lesson which Ruzanna mentioned to us is that if a particular Acceptance Criteria depends on something else that is not in the corresponding story, it could mean that it should be broken down into multiple stories. This way, each story can be developed independently, and the epic can be delivered incrementally. This modularity is important because development could otherwise become inefficient.
+
+When establishing the requirements in the specific context of our game, we quickly realised the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important aspects of the game. For example, developing fluid and intuitive movement for the boat which the user controls, and not worrying yet about less pressing nice-to-have features like sound effects. As a team, we find the prioritisation matrix below to be a useful tool and reminder of what to work on next.
+
+![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
+
 
 ### Design
 
