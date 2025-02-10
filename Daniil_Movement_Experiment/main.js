@@ -7,21 +7,24 @@ function setup() {
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
 
-  player = new Player(width / 2, height / 2);
+  player = new Player(width / 2, height / 2, 10);
 }
 
 function draw() {
   ResizeCanvas();
-
   background(200);
 
-  // Draw and update movement of the player
+  let current = createVector(0.2, 0);
+  player.setCurrent(current);
+
   player.move();
+  player.friction();
   player.show();
 }
 
+
+// create a dinamically resizable canvas
 function ResizeCanvas() {
-  // create a dinamically resizable canvas
   if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight){
     createCanvas(windowWidth, windowHeight);
     oldWindowWidth = windowWidth;

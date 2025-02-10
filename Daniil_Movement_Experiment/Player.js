@@ -1,107 +1,93 @@
+//sources of inspiration/plagiarism precaution
+// https://editor.p5js.org/codingtrain/sketches/zcTpMCpA
+
+
 class Player {
-  constructor(mainX, mainY) {
-    this.x = mainX;
-    this.y = mainY;
-    this.w = 80;
-    this.h = 50;
-    this.prevKey = "horisontal";
+  //changed the function a little bit
+  constructor(mainX, mainY, mainM, mainCurrent) {
+    this.pos = createVector(mainX, mainY);
+    this.acc = createVector(0, 0);
+    this.dim = createVector(80, 50);
+    this.vel = createVector(0, 0);
+    this.mass = mainM;
     this.angle = 0;
-    this.xDeltaSpeed = 0;
-    this.yDeltaSpeed = 0;
+    this.mu = 0.02;
+    this.curr = mainCurrent;
   }
 
-  move() {
-    //acceleration when W is presses, and deceleration, when released
-    if (keyIsDown(87) === true) { //W
-      if (this.yDeltaSpeed > -2){
-        this.yDeltaSpeed -= 0.05;
-      }
-      // if (this.angle < 270 ){}
-    }
-    else if (keyIsDown(83) === false && this.yDeltaSpeed < 0){
-      this.yDeltaSpeed += 0.05;
-      if (this.yDeltaSpeed > 0){
-        this.yDeltaSpeed = 0;
-      }
-    }
+  //changed the function a little bit
+  friction() {
+    //the formula for friction is F = -v (velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
 
-    /////////////////////////////////////////////////////////////
-    if (keyIsDown(83) === true) { //S
-      if (this.yDeltaSpeed < 2){
-        this.yDeltaSpeed += 0.05;
-      }
-    }
-    else if (keyIsDown(87) === false && this.yDeltaSpeed > 0){
-      this.yDeltaSpeed -= 0.05;
-      if (this.yDeltaSpeed < 0){
-        this.yDeltaSpeed = 0;
-      }
-    }
+    // Direction of Friction - copy the velocity vector, normalise it, and reverse the x&y coordinates
+    let friction = this.vel.copy().normalize().mult(-1);
 
-    /////////////////////////////////////////////////////////////
-    if (keyIsDown(68) === true) { //D
-      if (this.xDeltaSpeed < 2){
-        this.xDeltaSpeed += 0.05;
-      }
-    }
-    else if (keyIsDown(65) === false && this.xDeltaSpeed > 0){
-      this.xDeltaSpeed -= 0.05;
-      if (this.xDeltaSpeed < 0){
-        this.xDeltaSpeed = 0;
-      }
-    }
-    ///////////////////////////////////////////////////////////////////
-    if (keyIsDown(65) === true) { //A
-      if (this.xDeltaSpeed > -2){
-        this.xDeltaSpeed -= 0.05;
-      }
-    }
-    else if (keyIsDown(68) === false && this.xDeltaSpeed < 0){
-      this.xDeltaSpeed += 0.05;
-      if (this.xDeltaSpeed > 0){
-        this.xDeltaSpeed = 0;
-      }
-    }
-
-    this.x += this.xDeltaSpeed;
-    this.y += this.yDeltaSpeed;
+    // Magnitude of Friction
+    friction.setMag(this.mu * this.mass);
+    this.applyForce(friction);
   }
 
-  chngDirShape() {
-    if (this.prevKey === "horisontal" && (key === 'w' || key === 's')){
-      this.chngShape()
-      this.prevKey = "vertical";
-    }
-    else if (this.prevKey === "vertical" && (key === 'a' || key === 'd')){
-      this.chngShape()
-      this.prevKey = "horisontal";
-    }
+  //plagiarism warning
+  applyForce(force) {
+    //F = M * A -> A = F/M; static function is used here so that you don't update the value of the divided vector 
+    let f = p5.Vector.div(force, this.mass);
+    this.acc.add(f);
   }
 
-  chngShape() {
-    let temp = this.w;
-    this.w = this.h;
-    this.h = temp;
+  setCurrent(curr) {
+    this.pos.add(curr);
   }
 
+  //there is a better way to represent this, check later
   show() {
+    //plagiarism warning
+    //what these 3 lines do is essentially update the velocity vector if there is any kind of accelereaiton
+    //if there is any kind of velocity, then you move the poisition of the object, 
+    //when you apply force to an object, you add to acceleration with each frame. To avoid acceleration accumulation, you have to reset it 
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    this.acc.set(0, 0);
+
     // angleMode(DEGREES);
     fill(0);
     push();
-    translate(this.x, this.y);
-    // rotate(this.angle);
-    rotate(atan2(this.yDeltaSpeed, this.xDeltaSpeed));
-    ellipse(0, 0, this.w, this.h);
+    translate(this.pos.x, this.pos.y);
+    rotate(this.vel.heading());
+    ellipse(0, 0, this.dim.x, this.dim.y);
+    stroke('white'); 
+    line(0, 0, this.dim.x / 2, 0);
+
     pop();
 
     fill(256);
-    circle(this.x + 40 * cos(this.angle), this.y + 40 * sin(this.angle), 5);
-
     fill(0);
-    text(`atan: ${atan(this.yDeltaSpeed, this.xDeltaSpeed)}`, this.x - 40, this.y - 80);
-    text(`atan2: ${atan2(this.yDeltaSpeed, this.xDeltaSpeed)}`, this.x - 40, this.y - 65);
-    text(`x: ${Math.floor(this.x)} y: ${Math.floor(this.y)}`, this.x - 40, this.y - 50);
+
+    text(`vel: ${this.vel}`, this.pos.x - 40, this.pos.y - 65);
+    text(`x: ${Math.floor(this.pos.x)} y: ${Math.floor(this.pos.y)}`, this.pos.x - 40, this.pos.y - 50);
     // this.angle -= 0.5;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////
+
+  //this function is written completely by me
+  move() {
+    // this if & else if statement increases vertical acceleration 
+    // in response to W (87) and S (83) key presses
+    if (keyIsDown(83) === true) {
+      this.acc.add(createVector(0, 0.05));
+    }
+    else if (keyIsDown(87) === true) {
+      this.acc.add(createVector(0, -0.05));
+    }
+
+    // this if & else if statement increases horisontal acceleration 
+    // in response to A (65) and D (68) key presses
+    if (keyIsDown(65) === true) {
+      this.acc.add(createVector(-0.05, 0));
+    }
+    else if (keyIsDown(68) === true) {
+      this.acc.add(createVector(0.05, 0));
+    }
   }
 }
 
