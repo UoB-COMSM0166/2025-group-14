@@ -1,67 +1,25 @@
-let oldWindowWidth;
-let oldWindowHeight;
-
-let x1;
-let y1;
-let w = 80;
-let h = 50;
-let temp;
-let prevKey = "horisontal";
-
+let pressedKeys = {};
 
 function setup() {
   //set the canvas size the first time when the program starts
   createCanvas(windowWidth, windowHeight);
-  oldWindowWidth = windowWidth;
-  oldWindowHeight = windowHeight;
-
-  x1 = width / 2;
-  y1 = height / 2;
+  canal = new Canal(600, 200);
+  player = new Player(width / 2, height / 2, canal);
 }
 
 function draw() {
-
-  background(200);
-  // Update x and y if a key is pressed.
-  if (keyIsPressed === true) {
-    if (key === 'w' && y1 > height/3 + 40) {
-      chngDirShape();
-      y1 -= 2;
-    } else if (key === 's' && y1 < height*2/3 - 40) {
-      chngDirShape();
-      y1 += 2;
-    } else if (key === 'a') {
-      chngDirShape();
-      x1 -= 2;
-    } else if (key === 'd') {
-      chngDirShape();
-      x1 += 2;
-    }
-  }
-
-  fill(0);
-
-  ellipse(x1, y1, w, h);
-
-  strokeWeight(3);
-  line(0, height/3, width, height/3);
-  line(0, height*2/3, width, height*2/3);
+  background(0);
+  // Draw the canal
+  canal.draw();
+  // Draw and update movement of the player
+  player.move();
+  player.draw();
 }
 
-function chngDirShape() {
-  if (prevKey === "horisontal" && (key === 'w' || key === 's')){
-    chngShape()
-    prevKey = "vertical";
-  }
-  else if (prevKey === "vertical" && (key === 'a' || key === 'd')){
-    chngShape()
-    prevKey = "horisontal";
-  }
+function keyPressed() {
+  pressedKeys[key] = true;
 }
 
-function chngShape() {
-  temp = w;
-  w = h;
-  h = temp;
+function keyReleased() {
+  delete pressedKeys[key];
 }
-
