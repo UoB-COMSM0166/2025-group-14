@@ -7,18 +7,15 @@ function setup() {
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
 
-  player = new Player(width / 2, height / 2, 10);
+  //to create a player object you need x coordinate, y coordinate, mass of the boat, and the boat speed limit 
+  player = new Player(width / 2, height / 2, 10, 3);
 }
 
 function draw() {
   ResizeCanvas();
   background(200);
 
-  let current = createVector(0.2, 0);
-  player.setCurrent(current);
-
-  player.move();
-  player.friction();
+  //to make the player model appear on the screen
   player.show();
 }
 
