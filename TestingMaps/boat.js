@@ -1,10 +1,10 @@
 class boat{
-    constructor(speed, canal, startX, startY, width, height){
+    constructor(speed, canal, width, height){
         //relevant metrics to boat motion
         this.speed = speed;
         this.canal = canal;
-        this.x = startX;
-        this.y = startY;
+        this.x = canal.startPos[0];
+        this.y = canal.startPos[1];
         this.width = width;
         this.height = height;
      

@@ -17,7 +17,7 @@ c3.setConnections(c2, c4);
 c4.setConnections(c3, c5);
 c5.setConnections(c4, c6);
 c6.setConnections(c5, c1)
-let b = new boat(2, c1, 220, 330, 10, 20);
+let b = new boat(2, c4, 10, 20);
 
 
 function setup(){

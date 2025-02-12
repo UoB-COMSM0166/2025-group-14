@@ -14,6 +14,7 @@ class canal{
         this.name = name;
         this.topBank = new bank(startX, startY, endX, endY);
         this.bottomBank = new bank(startX + opp, startY + adj, endX + opp, endY + adj);
+        this.startPos = [startX + opp/2, startY + adj/2];
 
 
         //designates the banks as "red" or "black", allowing connection of segments redBank to redBank & blackBank to blackBank
@@ -159,6 +160,10 @@ class canal{
 
             return null;
 
+        }
+
+        boatStart(){
+            
         }
 
 
