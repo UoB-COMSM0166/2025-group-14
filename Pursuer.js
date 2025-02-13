@@ -1,10 +1,10 @@
 class Pursuer {
-    constructor(x, y, canal) {
+    constructor(x, y, canal, maxSpeed = 3, maxForce = 0.3) {
       this.position = createVector(x, y);
       this.velocity = createVector(0, 0);
       this.acceleration = createVector(0, 0);
-      this.maxSpeed = 2;
-      this.maxForce = 0.3;
+      this.maxSpeed = maxSpeed;
+      this.maxForce = maxForce;
       this.r = 16;
       this.lowerYBound = canal.top + this.r;
       this.upperYBound = canal.bottom - this.r;
