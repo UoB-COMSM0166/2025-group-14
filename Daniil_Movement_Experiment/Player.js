@@ -8,15 +8,15 @@
 
 class Player {
   constructor(mainX, mainY, mainMass, velLimit) {
-    this.pos = createVector(mainX, mainY);
-    this.acc = createVector(0, 0);
+    this.position = createVector(mainX, mainY);
+    this.acceleration = createVector(0, 0);
     this.w = 80;
     this.h = 50;
-    this.vel = createVector(0, 0);
+    this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
     this.mu = 0.02;
-    this.velLimit = velLimit;
+    this.velocityLimit = velLimit;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -49,13 +49,15 @@ class Player {
     else if (keyIsDown(68) === true) {
       this.applyForce(createVector(0.5, 0));
     }
+
+    
   }
 
   //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
   // change the mu parameter if you want to increase/decrease friction
   friction() {
-    if (this.vel.mag() > 0.02){ //this is a bugfix (without it, the stationary object would flip 60 times a second)
-      let friction = this.vel.copy().normalize().mult(-1);
+    if (this.velocity.mag() > 0.02){ //this is a bugfix (without it, the stationary object would flip 60 times a second)
+      let friction = this.velocity.copy().normalize().mult(-1);
       // Magnitude of Friction
       friction.setMag(this.mu * this.mass);
       this.applyForce(friction);
@@ -63,19 +65,19 @@ class Player {
   }
 
   updatePosition() {
-    this.vel.add(this.acc);
-    this.pos.add(this.vel);
-    this.vel.limit(this.velLimit);
-    this.acc.set(0, 0);
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.velocity.limit(this.velocityLimit);
+    this.acceleration.set(0, 0);
   }
 
-  // rotate(this.vel.heading()) to direct the player's model in the direction of the velocity vector
+  // rotate(this.velocity.heading()) to direct the player's model in the direction of the velocity vector
   // stroke was added just to show where the model is pointing to
   paintPlayerModel() {
     fill(0);
     push();
-    translate(this.pos.x, this.pos.y);
-    rotate(this.vel.heading());
+    translate(this.position.x, this.position.y);
+    rotate(this.velocity.heading());
     stroke('black'); 
     ellipse(0, 0, this.w, this.h);
     stroke('white'); 
@@ -87,16 +89,15 @@ class Player {
   // and the addition of force vectors recults in a single acceleration vector
   applyForce(force) {
     let f = p5.Vector.div(force, this.mass);
-    this.acc.add(f);
+    this.acceleration.add(f);
   }
 
   debugHelperText() {
     fill('black');
     stroke('white');
-    text(`vel magnitude: ${this.vel.mag()}`, this.pos.x - 40, this.pos.y - 80);
-    text(`vel: ${this.vel}`, this.pos.x - 40, this.pos.y - 65);
-    text(`x: ${Math.floor(this.pos.x)} y: ${Math.floor(this.pos.y)}`, this.pos.x - 40, this.pos.y - 50);
+    text(`vel magnitude: ${this.velocity.mag()}`, this.position.x - 40, this.position.y - 80);
+    text(`vel: ${this.velocity}`, this.position.x - 40, this.position.y - 65);
+    text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
   }
-
 }
 
