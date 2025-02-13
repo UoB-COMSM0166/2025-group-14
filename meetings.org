@@ -28,16 +28,58 @@ moving onto 2.
 We want the camera to follow
 ** actions
 *** tasks
-- research and prototyping
-  
-- movement team
-  dan and leon
-- lake team
-  leah and casey
-- pursuer team
-  polly and adam
+**** research and prototyping
+- movement team: dan and leon
+- lake team: leah and casey
+- pursuer team: polly and adam
 *** adam doing kanban
 *** create git branches
 - each feature has it's own branch
 - each person has their own branch
+
+
+* 11/02/2025
+** topics
+*** catch up on progress
+**** research and prototyping
+- movement team: dan and leon
+  95%
+- lake team: leah and casey
+  80% done
+- pursuer team: polly and adam
+  95%
+  
+*** discussion on what to merge and how
+- merge movement with pursuer then after this merge lake
+- meetup to merge in 2 parts
+*** modularising the code (seperate files for seperate features)
+- look at polly's branch for cleaning up the repo
+** next steps
+this week:
+    1. one class for each feature
+    2. meetup with leah
+    3. pursuer and movement team merging to main
+    4. lake to main
+next week:
+    - other stuff
+      
+* 13/02/2025
+** topics
+*** merging process
+- going with daniels version for movement team
+- daniel changing variable names
+*** sprint for next week
+- Leah:
+  lakes development, locks
+- Casey:
+  camera following and levels
+- Polly:
+  damage
+- Adam:
+  path finding ability of pursuer
+- Dan:
+  fuel system
+- Leon:
+  game aesthetics
+*** readme and uml diagram
 
