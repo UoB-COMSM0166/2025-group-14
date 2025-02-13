@@ -48,13 +48,13 @@ We want the camera to follow
   80% done
 - pursuer team: polly and adam
   95%
-
+  
 *** discussion on what to merge and how
 - merge movement with pursuer then after this merge lake
 - meetup to merge in 2 parts
 *** modularising the code (seperate files for seperate features)
 - look at polly's branch for cleaning up the repo
-*** next steps
+** next steps
 this week:
     1. one class for each feature
     2. meetup with leah
@@ -62,5 +62,24 @@ this week:
     4. lake to main
 next week:
     - other stuff
+      
+* 13/02/2025
+** topics
+*** merging process
+- going with daniels version for movement team
+- daniel changing variable names
+*** sprint for next week
+- Leah:
+  lakes development, locks
+- Casey:
+  camera following and levels
+- Polly:
+  damage
+- Adam:
+  path finding ability of pursuer
+- Dan:
+  fuel system
+- Leon:
+  game aesthetics
+*** readme and uml diagram
 
-** actions
