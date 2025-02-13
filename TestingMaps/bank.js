@@ -30,6 +30,7 @@ class bank{
         }
     }
 
+    // stores intersection point in bank
     setBeforeIntersect(x, y){
         this.beforeIntersectX = x;
         this.beforeIntersectY = y;
@@ -40,13 +41,14 @@ class bank{
         this.afterIntersectY = y
     }
     
-    
+
     visualize(){
         let x1 = this.startX;
         let y1 = this.startY;
         let x2 = this.endX;
         let y2 = this.endY;
 
+        // deals with intersection
         if(this.beforeIntersectX != null){
             x1 = this.beforeIntersectX;
             y1 = this.beforeIntersectY;
@@ -64,6 +66,7 @@ class bank{
 
     }
 
+    // checks if boat is within bounds
     checkCross(x, y){
         let limX = limitX(y, this.gradient, this.offset);
         let limY = limitY(x, this.gradient, this.offset);

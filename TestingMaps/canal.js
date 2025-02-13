@@ -31,14 +31,15 @@ class canal{
 
         }
 
+        // sets side to either left or right
         //determines left and right limits within which the boats can move
         if(startY <= endY){
             this.rightBank = this.redBank;
             this.leftBank = this.blackBank;
-        
+
         }
 
-        
+
         if(startY > endY){
             this.rightBank = this.blackBank;
             this.leftBank = this.redBank;
@@ -78,6 +79,7 @@ class canal{
         }
     }
 
+    // draws new bank that glues them together
     setBeforeThreshold(){
         let target = this.before;
         let targRed = target.redBank;
@@ -140,19 +142,14 @@ class canal{
         }
         
 
+        // passes responsibility from one canal to another
         thresholdCheck(x, y){
-
-
-
-
             if(this.after != null){
         
                 if(this.afterThreshold.checkCross(x, y)){
                     console.log("Swap forward!");
                     return this.after;
                 }
-        
-
 
             }
             if(this.before != null){
@@ -164,8 +161,6 @@ class canal{
                 }
         
             }
-
-
 
             return null;
 

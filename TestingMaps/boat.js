@@ -68,6 +68,7 @@ class boat{
 
     }
 
+    // moves the boat into new canal
     reachedTheNextOne(setting){
         let pasturesNew = setting.thresholdCheck(this.x, this.y);
         if(pasturesNew != null){
