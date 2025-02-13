@@ -17,7 +17,7 @@ c3.setConnections(c2, c4);
 c4.setConnections(c3, c5);
 c5.setConnections(c4, c6);
 c6.setConnections(c5, c1)
-let b = new boat(2, c4, 10, 20);
+let b = new Player(c1, 10,3)
 
 
 function setup(){
@@ -36,7 +36,7 @@ function draw(){
     c6.visualize();
     //c1.afterThreshold.visualize();
 
-    b.visualize();
+    b.show();
    
 
 }
