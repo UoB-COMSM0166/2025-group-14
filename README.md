@@ -27,7 +27,7 @@ Add a group photo here!
 | Name | Email | Role |
 |----|-----|------|
 | Polly Lang | js24119@bristol.ac.uk | developer |
-| | | |
+| Leon Wellstead | np24094@bristol.ac.uk | developer |
 | | | |
 | | | |
 | | | |
