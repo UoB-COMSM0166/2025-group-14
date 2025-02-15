@@ -8,10 +8,10 @@
 
 class Player {
   constructor(mainX, mainY, mainMass, velLimit) {
-    this.position = createVector(mainX, mainY);
+    this.position = createVector(300, 250);
     this.acceleration = createVector(0, 0);
-    this.w = 20;
-    this.h = 10;
+    this.w = 10;
+    this.h = 5;
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
@@ -27,7 +27,7 @@ class Player {
     this.paintPlayerModel();
 
     //Uncomment this if you want to see the values of the parameters to use in debugging
-    this.debugHelperText();
+    // this.debugHelperText();
   }
 
   move() {
