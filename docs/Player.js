@@ -10,8 +10,8 @@ class Player {
   constructor(mainX, mainY, mainMass, velLimit) {
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
-    this.w = 80;
-    this.h = 50;
+    this.w = 20;
+    this.h = 10;
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
@@ -33,20 +33,20 @@ class Player {
   move() {
     // this if & else if statement increases vertical acceleration 
     // in response to W (87) and S (83) key presses
-    if (keyIsDown(83) === true) {
+    if (keyIsDown(40) === true) {
       //it should be done via appyforce function, not add acceleration, to include mass into the equation
       //because if we will have objects of different masses that has to be accounted for 
       this.applyForce(createVector(0, 0.5));
     }
-    else if (keyIsDown(87) === true) {
+    else if (keyIsDown(38) === true) {
       this.applyForce(createVector(0,- 0.5));
     }
     // this if & else if statement increases horisontal acceleration 
     // in response to A (65) and D (68) key presses
-    if (keyIsDown(65) === true) {
+    if (keyIsDown(37) === true) {
       this.applyForce(createVector(-0.5, 0));
     }
-    else if (keyIsDown(68) === true) {
+    else if (keyIsDown(39) === true) {
       this.applyForce(createVector(0.5, 0));
     }
 
