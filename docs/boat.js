@@ -9,6 +9,7 @@ class boat{
         this.height = height;
      
 
+        // TODO this needed?
         //stuff for Daniel's motion as outlined on skeleton file
         //NOTE: Unlike Daniel's boat, this one stops when its MIDDLE, not its FRONT, gets to the border
         //Didn't want to refactor that for this code because I imagine Daniel and Leon will be playing around with that stuff
@@ -34,23 +35,23 @@ class boat{
 
         let s = this.speed;
         if(keyIsPressed){
-      
-            if(key === 'w' && this.y > setting.getUpperLimit(this.x)){
+            // up
+            if(key === 'w' && this.y > this.canal.getUpperLimit(this.x)){
                 this.chngDirShape();
                 this.y -= s;
-           
+            // down
             }
-            if(key === 's' && this.y < setting.getLowerLimit(this.x)){
+            if(key === 's' && this.y < this.canal.getLowerLimit(this.x)){
                 this.chngDirShape();
                 this.y += s;
-            
+            // right
             }
-            if(key === 'd' && this.x < setting.getRightLimit(this.y)){
+            if(key === 'd' && this.x < this.canal.getRightLimit(this.y)){
                 this.chngDirShape();
                 this.x += s;
-        
+            // left
             }
-            if(key === 'a' && this.x > setting.getLeftLimit(this.y)){
+            if(key === 'a' && this.x > this.canal.getLeftLimit(this.y)){
                 this.chngDirShape();
                 this.x -= s;
    

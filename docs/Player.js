@@ -7,8 +7,8 @@
 
 
 class Player {
-  constructor(mainX, mainY, mainMass, velLimit) {
-    this.position = createVector(300, 250);
+  constructor(canal, x, y, mainMass, velLimit) {
+    this.position = createVector(x, y);
     this.acceleration = createVector(0, 0);
     this.w = 10;
     this.h = 5;
@@ -17,6 +17,8 @@ class Player {
     this.angle = 0;
     this.mu = 0.02;
     this.velocityLimit = velLimit;
+
+    this.canal = canal;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -33,24 +35,36 @@ class Player {
   move() {
     // this if & else if statement increases vertical acceleration 
     // in response to W (87) and S (83) key presses
-    if (keyIsDown(40) === true) {
+    // down
+    if (keyIsDown(40) === true && this.position.y < this.canal.getLowerLimit(this.position.x)) {
       //it should be done via appyforce function, not add acceleration, to include mass into the equation
       //because if we will have objects of different masses that has to be accounted for 
       this.applyForce(createVector(0, 0.5));
     }
-    else if (keyIsDown(38) === true) {
+    // up
+    else if (keyIsDown(38) === true && this.position.y > this.canal.getUpperLimit(this.position.x)) {
       this.applyForce(createVector(0,- 0.5));
     }
     // this if & else if statement increases horisontal acceleration 
     // in response to A (65) and D (68) key presses
-    if (keyIsDown(37) === true) {
+    // left
+    if (keyIsDown(37) === true && this.position.x > this.canal.getLeftLimit(this.position.y)) {
       this.applyForce(createVector(-0.5, 0));
     }
-    else if (keyIsDown(39) === true) {
+    // right
+    else if (keyIsDown(39) === true && this.position.x < this.canal.getRightLimit(this.position.y)) {
       this.applyForce(createVector(0.5, 0));
     }
 
-    
+    this.reachedTheNextOne(this.canal);
+  }
+
+  reachedTheNextOne(setting){
+      let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
+      if(pasturesNew != null){
+          this.canal = pasturesNew;
+          console.log("switched to canal with name " + this.canal.name)
+      }
   }
 
   //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
@@ -90,6 +104,10 @@ class Player {
   applyForce(force) {
     let f = p5.Vector.div(force, this.mass);
     this.acceleration.add(f);
+  }
+
+  checkForCollision() {
+
   }
 
   debugHelperText() {
