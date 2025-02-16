@@ -16,7 +16,7 @@ function setup() {
   //to create a player object you need x coordinate, y coordinate, mass of the boat, and the boat speed limit 
   player = new Player(width / 2, height / 2, 5, 10);
   // canal = new oldCanal(300, 100);
-  // pursuer = new Pursuer(100, 100, canal);
+  pursuer = new Pursuer(100, 100, canal);
 
   c1 = new canal(canalWidth, "Starter", 300, 200, 500, 350);
   c2 = new canal(canalWidth, "Steep", 350, 250, 430, 500);
@@ -40,11 +40,11 @@ function draw() {
   //to make the player model appear on the screen
   player.show();
 
-  // // pursuer object appear and behaviour
-  // let steering = pursuer.arrive(player);
-  // pursuer.applyForce(steering);
-  // pursuer.update();
-  // pursuer.show();
+  // pursuer object appear and behaviour
+  let steering = pursuer.arrive(player);
+  pursuer.applyForce(steering);
+  pursuer.update();
+  pursuer.show();
 
   c1.visualize();
   c2.visualize();
