@@ -4,7 +4,8 @@
 
 let oldWindowWidth;
 let oldWindowHeight;
-let c1, c2, c3, c4, c5, c6, b;  
+let c1, c2, c3, c4, c5, c6;  
+// let b;
 const canalWidth = 80;
 
 function setup() {
@@ -25,7 +26,7 @@ function setup() {
   c4.setConnections(c3, c5);
   c5.setConnections(c4, c6);
   c6.setConnections(c5, c1)
-  b = new boat(2, c1, 250, 200, 10, 20);
+  // b = new boat(2, c1, 250, 200, 10, 20);
 
   //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
   player = new Player(160, 320, 5, 3, c6);
@@ -50,7 +51,7 @@ function draw() {
   c5.visualize();
   c6.visualize();
 
-  b.visualize(); // visualising the Leah's boat
+  // b.visualize(); // visualising the Leah's boat
 
   //to make the player model appear on the screen
   player.show(); // visualising Daniil's boat
