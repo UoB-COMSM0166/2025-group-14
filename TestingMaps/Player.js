@@ -11,8 +11,8 @@ class Player {
     this.canal = canal;
     this.position = createVector(canal.startPos[0], canal.startPos[1]);
     this.acceleration = createVector(0, 0);
-    this.w = 80;
-    this.h = 50;
+    this.w = 40
+    this.h = 25
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
@@ -28,7 +28,7 @@ class Player {
     this.paintPlayerModel();
 
     //Uncomment this if you want to see the values of the parameters to use in debugging
-    this.debugHelperText();
+    //this.debugHelperText();
   }
 
   move() {
@@ -41,9 +41,10 @@ class Player {
       //it should be done via appyforce function, not add acceleration, to include mass into the equation
       //because if we will have objects of different masses that has to be accounted for 
       this.applyForce(createVector(0, 0.5));
+      console.log("W!!");//testprint
     }
-    else if (keyIsDown(87) === true && this.y > setting.getUpperLimit(x)) {
-      this.applyForce(createVector(0,- 0.5));
+    else if (keyIsDown(87) === true && y > setting.getUpperLimit(x)) {
+      this.applyForce(createVector(0, -0.5));
     }
     // this if & else if statement increases horisontal acceleration 
     // in response to A (65) and D (68) key presses

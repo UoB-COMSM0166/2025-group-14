@@ -70,7 +70,7 @@ class boat{
         let pasturesNew = setting.thresholdCheck(this.x, this.y);
         if(pasturesNew != null){
             this.canal = pasturesNew;
-            console.log("switched to canal with name " + this.canal.name)
+            console.log("moved into a canal with name " + this.canal.name);
         }
     }
 

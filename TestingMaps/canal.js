@@ -143,7 +143,6 @@ class canal{
 
             if(this.after != null){
                 if(this.afterThreshold.checkCross(x, y)){
-                    console.log("Swap forward!");
                     return this.after;
                 }
         
@@ -152,7 +151,6 @@ class canal{
             }
             if(this.before != null){
                 if(this.beforeThreshold.checkCross(x, y)){
-                    console.log("Swap backward!");
                     return this.before;
                 }
         
@@ -162,9 +160,6 @@ class canal{
 
         }
 
-        boatStart(){
-            
-        }
 
 
 
