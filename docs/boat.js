@@ -60,7 +60,14 @@ class boat{
         fill(0);
         ellipse(this.x, this.y, this.width, this.height);
 
+        fill('black');
+        stroke('white');
 
+        text(`upper: ${Math.round(setting.getUpperLimit(this.x))}`, this.x - 40, this.y - 110);
+        text(`right: ${Math.round(setting.getRightLimit(this.y))}`, this.x - 40, this.y - 95);
+        text(`left: ${Math.round(setting.getLeftLimit(this.y))}`, this.x - 40, this.y - 80);
+        text(`lower: ${Math.round(setting.getLowerLimit(this.x))}`, this.x - 40, this.y - 65);
+        text(`x: ${Math.floor(this.x)} y: ${Math.floor(this.y)}`, this.x - 40, this.y - 50);
 
         //tests if the boat has moved to another canal segment, and shifts it there if so
         this.reachedTheNextOne(setting);

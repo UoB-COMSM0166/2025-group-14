@@ -13,11 +13,6 @@ function setup() {
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
 
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, and the boat speed limit 
-  player = new Player(450, 200, 5, 10);
-  // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal);
-
   c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
   c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
   c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
@@ -31,14 +26,16 @@ function setup() {
   c5.setConnections(c4, c6);
   c6.setConnections(c5, c1)
   b = new boat(2, c1, 250, 200, 10, 20);
+
+  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
+  player = new Player(160, 320, 5, 3, c6);
+  // canal = new oldCanal(300, 100);
+  pursuer = new Pursuer(100, 200, canal);
 }
 
 function draw() {
   ResizeCanvas();
   background(200);
-
-  //to make the player model appear on the screen
-  player.show();
 
   // pursuer object appear and behaviour
   let steering = pursuer.arrive(player);
@@ -53,7 +50,10 @@ function draw() {
   c5.visualize();
   c6.visualize();
 
-  b.visualize();
+  b.visualize(); // visualising the Leah's boat
+
+  //to make the player model appear on the screen
+  player.show(); // visualising Daniil's boat
 }
 
 

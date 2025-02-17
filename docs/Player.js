@@ -7,7 +7,7 @@
 
 
 class Player {
-  constructor(mainX, mainY, mainMass, velLimit) {
+  constructor(mainX, mainY, mainMass, velLimit, canal) {
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
     this.w = 10;
@@ -17,6 +17,7 @@ class Player {
     this.angle = 0;
     this.mu = 0.02;
     this.velocityLimit = velLimit;
+    this.canal = canal;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -27,30 +28,70 @@ class Player {
     this.paintPlayerModel();
 
     //Uncomment this if you want to see the values of the parameters to use in debugging
-    // this.debugHelperText();
+    this.debugHelperText();
   }
 
-  move() {
+  move() { //trying to adapt Leah's code to mine
+    //sets limits based on the locations of the edges of the canal object where the boat is
+    let setting = this.canal;
+
     // this if & else if statement increases vertical acceleration 
-    // in response to W (87) and S (83) key presses
-    if (keyIsDown(40) === true) {
+    // in response to UP (87) and DOWN (83) key presses
+    if (keyIsDown(DOWN_ARROW) === true && this.position.y < setting.getLowerLimit(this.position.x)) {
       //it should be done via appyforce function, not add acceleration, to include mass into the equation
       //because if we will have objects of different masses that has to be accounted for 
       this.applyForce(createVector(0, 0.5));
     }
-    else if (keyIsDown(38) === true) {
+    else if (keyIsDown(UP_ARROW) === true && this.position.y > setting.getUpperLimit(this.position.x)) {
       this.applyForce(createVector(0,- 0.5));
     }
     // this if & else if statement increases horisontal acceleration 
     // in response to A (65) and D (68) key presses
-    if (keyIsDown(37) === true) {
+    if (keyIsDown(LEFT_ARROW) === true && this.position.x > setting.getLeftLimit(this.position.y)) {
       this.applyForce(createVector(-0.5, 0));
     }
-    else if (keyIsDown(39) === true) {
+    else if (keyIsDown(RIGHT_ARROW) === true && this.position.x < setting.getRightLimit(this.position.y)) {
       this.applyForce(createVector(0.5, 0));
     }
 
-    
+    //tests if the boat has moved to another canal segment, and shifts it there if so
+    this.reachedTheNextOne(setting);
+
+    //collision mechanism for the upper border
+    if (this.position.y < setting.getUpperLimit(this.position.x)) {
+      this.position.y = setting.getUpperLimit(this.position.x);
+      this.velocity.y = 0;
+      this.acceleration.y = 0;
+    }
+
+    //collision mechanism for the bottom border
+    if (this.position.y > setting.getLowerLimit(this.position.x)) {
+      this.position.y = setting.getLowerLimit(this.position.x);
+      this.velocity.y = 0;
+      this.acceleration.y = 0;
+    }
+
+    //collision mechanism for the right border
+    if (this.position.x > setting.getRightLimit(this.position.y)) {
+      this.position.x = setting.getRightLimit(this.position.y);
+      this.velocity.x = 0;
+      this.acceleration.x = 0;
+    }
+
+    //collision mechanism for the left border
+    if (this.position.x < setting.getLeftLimit(this.position.y)) {
+      this.position.x = setting.getLeftLimit(this.position.y);
+      this.velocity.x = 0;
+      this.acceleration.x = 0;
+    }
+  }
+
+  reachedTheNextOne(setting){ //Leah's function that checks the transition between canals (2 parallel lines)
+    let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
+    if(pasturesNew != null){
+        this.canal = pasturesNew;
+        console.log("switched to canal with name " + this.canal.name)
+    }
   }
 
   //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
@@ -95,9 +136,41 @@ class Player {
   debugHelperText() {
     fill('black');
     stroke('white');
-    text(`vel magnitude: ${this.velocity.mag()}`, this.position.x - 40, this.position.y - 80);
-    text(`vel: ${this.velocity}`, this.position.x - 40, this.position.y - 65);
+
+    text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, this.position.x - 40, this.position.y - 110);
+    text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, this.position.x - 40, this.position.y - 95);
+    text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
+    text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
     text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
   }
 }
+
+
+    // //collision mechanism for the upper border
+    // if (this.position.y < setting.getUpperLimit(this.position.x)) {
+    //   this.position.y = setting.getUpperLimit(this.position.x) + 2;
+    //   this.velocity.y *= -0.5;
+    //   this.acceleration.y *= -0.2;
+    // }
+
+    // //collision mechanism for the bottom border
+    // if (this.position.y > setting.getLowerLimit(this.position.x)) {
+    //   this.position.y = setting.getLowerLimit(this.position.x) - 2;
+    //   this.velocity.y *= -0.5;
+    //   this.acceleration.y *= -0.2;
+    // }
+
+    // //collision mechanism for the right border
+    // if (this.position.x > setting.getRightLimit(this.position.y)) {
+    //   this.position.x = setting.getRightLimit(this.position.y) - 2;
+    //   this.velocity.x *= -0.5;
+    //   this.acceleration.x *= -0.2;
+    // }
+
+    // //collision mechanism for the left border
+    // if (this.position.x < setting.getLeftLimit(this.position.y)) {
+    //   this.position.x = setting.getLeftLimit(this.position.y) + 2;
+    //   this.velocity.x *= -0.5;
+    //   this.acceleration.x *= -0.2;
+    // }
 
