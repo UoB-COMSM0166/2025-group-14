@@ -1,13 +1,12 @@
 class Pursuer {
-    constructor(x, y, maxSpeed = 3, maxForce = 0.3) {
+    constructor(x, y, canal, maxSpeed = 3, maxForce = 0.3) {
       this.position = createVector(x, y);
       this.velocity = createVector(0, 0);
       this.acceleration = createVector(0, 0);
       this.maxSpeed = maxSpeed;
       this.maxForce = maxForce;
       this.r = 16;
-      //this.lowerYBound = canal.top + this.r;
-      //this.upperYBound = canal.bottom - this.r;
+      this.canal = canal;
     }
   
     pursue(target) {
@@ -60,13 +59,33 @@ class Pursuer {
       this.velocity.add(this.acceleration); // Update velocity and position vectors resulting from changes in acceleration
       this.velocity.limit(this.maxSpeed);
       this.position.add(this.velocity);
-      // Limit the pursuer to the boundaries of the canal 
-      //if (this.position.y > this.upperYBound) {
-      //  this.position.y = this.upperYBound;
-      //}
-      //if (this.position.y < this.lowerYBound) {
-      //  this.position.y = this.lowerYBound;
-      //}
+
+      let setting = this.canal;
+      let upper = setting.getUpperLimit(this.position.x) + 1;
+      let right = setting.getRightLimit(this.position.y) - 1;
+      let left = setting.getLeftLimit(this.position.y) + 1;
+      let lower = setting.getLowerLimit(this.position.x) - 1;
+
+      // Limit the pursuer to the boundaries of the canal
+      // upper limit
+     
+      if (this.position.y < upper) {
+        this.position.y = upper;
+      }
+      // lower limit
+      if (this.position.y > lower) {
+        this.position.y = lower;
+      }
+      // right limit
+      if (this.position.x > right) {
+        this.position.x = right;
+      }
+      //left limit
+      if (this.position.x < left) {
+        this.position.x = left;
+      }
+      // call leah's function so that canal boundaries are updated
+      this.reachedTheNextOne(setting);
       this.acceleration.set(0, 0);
     }
   
@@ -80,5 +99,28 @@ class Pursuer {
       rotate(this.velocity.heading());             // orientation of pursuer
       triangle(-this.r, -this.r / 2, -this.r, this.r / 2, this.r, 0); // shape
       pop();
+
+      stroke('red');
+      line(this.position.x, this.position.y, player.position.x, player.position.y);
+      this.debugHelperText();
+    }
+    //from Leah code
+    reachedTheNextOne(setting){ 
+      let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
+      if(pasturesNew != null){
+          this.canal = pasturesNew;
+          console.log("switched to canal with name " + this.canal.name)
+      }
+    }
+
+    debugHelperText() {
+      fill('blue');
+      stroke('white');
+      text(`PERSUER STATS`, 50, 35);
+      text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, 50, 50);
+      text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, 50, 65);
+      text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, 50, 80);
+      text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, 50, 95);
+      text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, 50, 110);
     }
   }
