@@ -31,7 +31,7 @@ function setup() {
   //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
   player = new Player(160, 320, 5, 3, c6);
   // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal);
+  pursuer = new Pursuer(100, 200);
 }
 
 function draw() {

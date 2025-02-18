@@ -1,13 +1,13 @@
 class Pursuer {
-    constructor(x, y, canal, maxSpeed = 3, maxForce = 0.3) {
+    constructor(x, y, maxSpeed = 3, maxForce = 0.3) {
       this.position = createVector(x, y);
       this.velocity = createVector(0, 0);
       this.acceleration = createVector(0, 0);
       this.maxSpeed = maxSpeed;
       this.maxForce = maxForce;
       this.r = 16;
-      this.lowerYBound = canal.top + this.r;
-      this.upperYBound = canal.bottom - this.r;
+      //this.lowerYBound = canal.top + this.r;
+      //this.upperYBound = canal.bottom - this.r;
     }
   
     pursue(target) {
@@ -61,12 +61,12 @@ class Pursuer {
       this.velocity.limit(this.maxSpeed);
       this.position.add(this.velocity);
       // Limit the pursuer to the boundaries of the canal 
-      if (this.position.y > this.upperYBound) {
-        this.position.y = this.upperYBound;
-      }
-      if (this.position.y < this.lowerYBound) {
-        this.position.y = this.lowerYBound;
-      }
+      //if (this.position.y > this.upperYBound) {
+      //  this.position.y = this.upperYBound;
+      //}
+      //if (this.position.y < this.lowerYBound) {
+      //  this.position.y = this.lowerYBound;
+      //}
       this.acceleration.set(0, 0);
     }
   
@@ -81,5 +81,4 @@ class Pursuer {
       triangle(-this.r, -this.r / 2, -this.r, this.r / 2, this.r, 0); // shape
       pop();
     }
-
   }
