@@ -7,7 +7,8 @@
 
 
 class Player {
-  constructor(mainX, mainY, mainMass, velLimit, canal) {
+  constructor(mainX, mainY, mainMass, velLimit, accForce, canal) {
+    this.accForce = accForce; 
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
     this.w = 10;
@@ -18,6 +19,8 @@ class Player {
     this.mu = 0.02;
     this.velocityLimit = velLimit;
     this.canal = canal;
+    this.fuelBar = new fuel(500);
+    
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -29,33 +32,44 @@ class Player {
 
     //Uncomment this if you want to see the values of the parameters to use in debugging
     this.debugHelperText();
+
+    // let fuelBar;
+    // fuelBar = new fuel(0.5);
+    this.fuelBar.fuelMain();
   }
 
   move() { //trying to adapt Leah's code to mine
     //sets limits based on the locations of the edges of the canal object where the boat is
     let setting = this.canal;
-
-    // this if & else if statement increases vertical acceleration 
-    // in response to UP (87) and DOWN (83) key presses
-    if (keyIsDown(DOWN_ARROW) === true && this.position.y < setting.getLowerLimit(this.position.x)) {
-      //it should be done via appyforce function, not add acceleration, to include mass into the equation
-      //because if we will have objects of different masses that has to be accounted for 
-      this.applyForce(createVector(0, 0.5));
-    }
-    else if (keyIsDown(UP_ARROW) === true && this.position.y > setting.getUpperLimit(this.position.x)) {
-      this.applyForce(createVector(0,- 0.5));
-    }
-    // this if & else if statement increases horisontal acceleration 
-    // in response to A (65) and D (68) key presses
-    if (keyIsDown(LEFT_ARROW) === true && this.position.x > setting.getLeftLimit(this.position.y)) {
-      this.applyForce(createVector(-0.5, 0));
-    }
-    else if (keyIsDown(RIGHT_ARROW) === true && this.position.x < setting.getRightLimit(this.position.y)) {
-      this.applyForce(createVector(0.5, 0));
-    }
-
     //tests if the boat has moved to another canal segment, and shifts it there if so
     this.reachedTheNextOne(setting);
+
+
+    if (this.fuelBar.remainingFuel > 0) {
+      // this if & else if statement increases vertical acceleration 
+      // in response to W (87) and S (83) key presses, or the corresponding arrow keys
+      if ((keyIsDown(DOWN_ARROW) === true || keyIsDown(83) === true) && this.position.y < setting.getLowerLimit(this.position.x)) {
+        //it should be done via appyforce function, not add acceleration, to include mass into the equation
+        //because if we will have objects of different masses that has to be accounted for 
+        this.applyForce(createVector(0, this.accForce));
+        this.fuelBar.throttleConsumtion(this.accForce);
+
+      }
+      else if ((keyIsDown(UP_ARROW) === true || keyIsDown(87) === true) && this.position.y > setting.getUpperLimit(this.position.x)) {
+        this.applyForce(createVector(0, -this.accForce));
+        this.fuelBar.throttleConsumtion(this.accForce);
+      }
+      // this if & else if statement increases horisontal acceleration 
+      // in response to A (65) and D (68) key presses, or the corresponding arrow keys
+      if ((keyIsDown(LEFT_ARROW) === true || keyIsDown(65) === true) && this.position.x > setting.getLeftLimit(this.position.y)) {
+        this.applyForce(createVector(-this.accForce, 0));
+        this.fuelBar.throttleConsumtion(this.accForce);
+      }
+      else if ((keyIsDown(RIGHT_ARROW) === true || keyIsDown(68) === true) && this.position.x < setting.getRightLimit(this.position.y)) {
+        this.applyForce(createVector(this.accForce, 0));
+        this.fuelBar.throttleConsumtion(this.accForce);
+      }
+    }
 
     //collision mechanism for the upper border
     if (this.position.y < setting.getUpperLimit(this.position.x)) {
@@ -102,7 +116,15 @@ class Player {
       // Magnitude of Friction
       friction.setMag(this.mu * this.mass);
       this.applyForce(friction);
+    } else {
+      this.velocityRoundDown();
     }
+  }
+
+  velocityRoundDown() { //this function was created because when friction decreases the 
+  // speed vector scalar to near-zero values, the 2 vectors wouldn't cancel out properly 
+  // which makes the player object rotate with each frame. This is a workaround to counter that
+    this.velocity = createVector(0, 0);
   }
 
   updatePosition() {
@@ -144,6 +166,8 @@ class Player {
     text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
   }
 }
+
+
 
 
     // //collision mechanism for the upper border
