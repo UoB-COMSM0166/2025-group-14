@@ -1,5 +1,5 @@
 class Pursuer {
-    constructor(x, y, canal, maxSpeed = 3, maxForce = 0.3) {
+    constructor(x, y, canal, maxSpeed = 1, maxForce = 0.3) {
       this.position = createVector(x, y);
       this.velocity = createVector(0, 0);
       this.acceleration = createVector(0, 0);
@@ -20,7 +20,7 @@ class Pursuer {
     }
   
     // Arrival behaviour (slowing down as the pursuer approaches the target, and
-    // stopping once it reaches the target) is implemented by setting the 'arrival'
+    // stopping once it reaches the target) is implemented by canalSegment the 'arrival'
     // argument of the seek method. 
     arrive(target) {
       // 2nd argument true enables the arrival behavior
@@ -60,11 +60,13 @@ class Pursuer {
       this.velocity.limit(this.maxSpeed);
       this.position.add(this.velocity);
 
-      let setting = this.canal;
-      let upper = setting.getUpperLimit(this.position.x) + 1;
-      let right = setting.getRightLimit(this.position.y) - 1;
-      let left = setting.getLeftLimit(this.position.y) + 1;
-      let lower = setting.getLowerLimit(this.position.x) - 1;
+      let canalSegment = this.canal;
+      let upper = canalSegment.getUpperLimit(this.position.x) + 1;
+      let right = canalSegment.getRightLimit(this.position.y) - 1;
+      let left = canalSegment.getLeftLimit(this.position.y) + 1;
+      let lower = canalSegment.getLowerLimit(this.position.x) - 1;
+
+      this.lineOfSight(canalSegment, player);
 
       // Limit the pursuer to the boundaries of the canal
       // upper limit
@@ -85,12 +87,30 @@ class Pursuer {
         this.position.x = left;
       }
       // call leah's function so that canal boundaries are updated
-      this.reachedTheNextOne(setting);
+      this.reachedTheNextOne(canalSegment);
+
+      canalSegment = PursuerPathing.incrementCanal(canalSegment);  
+      let corner1 = PursuerPathing.getStartCorner(canalSegment);
+      let corner2 = PursuerPathing.getEndCorner(canalSegment);
+      push();
+      stroke('black');
+      strokeWeight(1);
+      circle(corner1.xCoord, corner1.yCoord, 16);
+      circle(corner2.xCoord, corner2.yCoord, 16);
+      noStroke();
+      text('Start', corner1.xCoord + 5, corner1.yCoord - 5);
+      text('End', corner2.xCoord + 5, corner2.yCoord - 5);
+      pop();
+      
       this.acceleration.set(0, 0);
     }
   
     // Draw the pursuer to the screen
     show() {
+      //red line to show direct path to player
+      stroke('red');
+      line(this.position.x, this.position.y, player.position.x, player.position.y);
+      
       stroke(255);
       strokeWeight(2);
       fill(255);
@@ -99,28 +119,58 @@ class Pursuer {
       rotate(this.velocity.heading());             // orientation of pursuer
       triangle(-this.r, -this.r / 2, -this.r, this.r / 2, this.r, 0); // shape
       pop();
-
-      stroke('red');
-      line(this.position.x, this.position.y, player.position.x, player.position.y);
-      this.debugHelperText();
+      
+      //this.debugHelperText();
     }
-    //from Leah code
-    reachedTheNextOne(setting){ 
-      let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
+
+    //leah code that updates which canal segment the pursuer is currently in
+    reachedTheNextOne(canalSegment){ 
+      let pasturesNew = canalSegment.thresholdCheck(this.position.x, this.position.y);
       if(pasturesNew != null){
           this.canal = pasturesNew;
           console.log("switched to canal with name " + this.canal.name)
       }
     }
 
+    lineOfSight(canal, player) {
+      let startCanal = canal;
+      let i = 0;
+      //let target = createVector(player.position.x, player.position.y);
+      //let position = createVector(this.position.x, this.position.y);
+      do {
+        text(canal.name, 100, 100 + i);
+        canal = canal.after;
+        i += 10;
+      }
+      while (canal != startCanal && canal != null); 
+    }
+
     debugHelperText() {
       fill('blue');
       stroke('white');
-      text(`PERSUER STATS`, 50, 35);
-      text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, 50, 50);
-      text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, 50, 65);
-      text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, 50, 80);
-      text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, 50, 95);
-      text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, 50, 110);
+      text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, this.position.x - 40, this.position.y - 110);
+      text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, this.position.x - 40, this.position.y - 95);
+      text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
+      text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
+      text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
     }
   }
+
+
+
+
+
+/*
+  canalSegment = PursuerPathing.incrementCanal(canalSegment);  
+  let corner1 = PursuerPathing.getStartCorner(canalSegment);
+  let corner2 = PursuerPathing.getEndCorner(canalSegment);
+  push();
+  stroke('black');
+  strokeWeight(1);
+  circle(corner1.xCoord, corner1.yCoord, 16);
+  circle(corner2.xCoord, corner2.yCoord, 16);
+  noStroke();
+  text('Start', corner1.xCoord + 5, corner1.yCoord - 5);
+  text('End', corner2.xCoord + 5, corner2.yCoord - 5);
+  pop();
+  */

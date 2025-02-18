@@ -41,7 +41,7 @@ function draw() {
   // pursuer object appear and behaviour
   let steering = pursuer.arrive(player);
   pursuer.applyForce(steering);
-  pursuer.update();
+  pursuer.update(player);
   pursuer.show(player);
 
   c1.visualize();

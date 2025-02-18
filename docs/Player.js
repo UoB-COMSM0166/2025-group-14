@@ -28,7 +28,7 @@ class Player {
     this.paintPlayerModel();
 
     //Uncomment this if you want to see the values of the parameters to use in debugging
-    this.debugHelperText();
+    //this.debugHelperText();
   }
 
   move() { //trying to adapt Leah's code to mine
