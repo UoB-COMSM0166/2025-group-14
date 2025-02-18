@@ -2,10 +2,13 @@
 
 | To Do | Doing | Done |
 |---|---|---|
-|Implement damage over time methods in Player|Implement Timer class and instances|Health attributes in Player class|
-|Test that displayed health bar updates as damage taken||Health bar instantiation and display|
-|Implement collision damage mechanisms (requires Canal merge)|||
-|Implement repair method|||
+|||Health attributes in Player class|
+|||Health bar instantiation and display|
+|||Implement Timer class and instances|
+|||Implement damage over time methods in Player|
+|||Test that displayed health bar updates as damage taken|
+|||Implement collision damage mechanisms (requires Canal merge)|
+|||Implement repair method|
 
 # Conceptually:
 - health bar/points inducates state of boat
