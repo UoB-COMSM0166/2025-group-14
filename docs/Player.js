@@ -62,6 +62,8 @@ class Player {
       this.position.y = setting.getUpperLimit(this.position.x);
       this.velocity.y = 0;
       this.acceleration.y = 0;
+      this.velocity.x = 0;
+      this.acceleration.x = 0;
     }
 
     //collision mechanism for the bottom border
@@ -69,6 +71,8 @@ class Player {
       this.position.y = setting.getLowerLimit(this.position.x);
       this.velocity.y = 0;
       this.acceleration.y = 0;
+      this.velocity.x = 0;
+      this.acceleration.x = 0;
     }
 
     //collision mechanism for the right border
@@ -76,6 +80,9 @@ class Player {
       this.position.x = setting.getRightLimit(this.position.y);
       this.velocity.x = 0;
       this.acceleration.x = 0;
+      this.velocity.y = 0;
+      this.acceleration.y = 0;
+
     }
 
     //collision mechanism for the left border
@@ -83,6 +90,8 @@ class Player {
       this.position.x = setting.getLeftLimit(this.position.y);
       this.velocity.x = 0;
       this.acceleration.x = 0;
+      this.velocity.y = 0;
+      this.acceleration.y = 0;
     }
   }
 
