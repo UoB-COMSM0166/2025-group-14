@@ -11,8 +11,6 @@ class Player extends Sprite {
     super(mainX, mainY, boatFrames, 0.05);
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
-    // this.w = 10;
-    // this.h = 5;
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
