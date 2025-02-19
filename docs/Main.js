@@ -12,11 +12,13 @@ const canalWidth = 80;
 let boatSpritesheet;
 let boatJson;
 let boatFrames = [];
+let pursuerBoatFrames = [];
 //TODO: let waterTileFrames = [];
 // Preload sprite images before the program starts
 function preload() {
   boatJson = loadJSON("boat.json");
   boatSpritesheet = loadImage("Boat-redbrown.png");
+  pursuerBoatSpritesheet = loadImage("Boat-grey.png");
 }
 
 function setup() {
@@ -45,14 +47,17 @@ function setup() {
     let pos = frame.position;
     let img = boatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
     boatFrames.push(img);
+    let pursuerImg = pursuerBoatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
+    pursuerBoatFrames.push(pursuerImg);
   }
   //CHECKING IF ARRAY IS POPULATED CORRECTLY
   console.log("Boat frames: ", boatFrames);
+  console.log("Pursuer boat frames: ", pursuerBoatFrames);
 
   //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal
   player = new Player(160, 320, 5, 3, c6, boatFrames);
   // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal);
+  pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
 }
 
 function draw() {
