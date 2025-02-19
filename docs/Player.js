@@ -5,13 +5,14 @@
 //sources of inspiration/plagiarism precaution
 // https://editor.p5js.org/codingtrain/sketches/zcTpMCpA
 
-
-class Player {
-  constructor(mainX, mainY, mainMass, velLimit, canal) {
+class Player extends Sprite {
+  constructor(mainX, mainY, mainMass, velLimit, canal, boatFrames) {
+    // 'super' calls the parent constructor, passing it the appropriate sprite sheet
+    super(mainX, mainY, boatFrames, 0.05);
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
-    this.w = 10;
-    this.h = 5;
+    // this.w = 10;
+    // this.h = 5;
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
@@ -31,26 +32,37 @@ class Player {
     this.debugHelperText();
   }
 
-  move() { //trying to adapt Leah's code to mine
+  move() {
+    //trying to adapt Leah's code to mine
     //sets limits based on the locations of the edges of the canal object where the boat is
     let setting = this.canal;
 
-    // this if & else if statement increases vertical acceleration 
+    // this if & else if statement increases vertical acceleration
     // in response to UP (87) and DOWN (83) key presses
-    if (keyIsDown(DOWN_ARROW) === true && this.position.y < setting.getLowerLimit(this.position.x)) {
+    if (
+      keyIsDown(DOWN_ARROW) === true &&
+      this.position.y < setting.getLowerLimit(this.position.x)
+    ) {
       //it should be done via appyforce function, not add acceleration, to include mass into the equation
-      //because if we will have objects of different masses that has to be accounted for 
+      //because if we will have objects of different masses that has to be accounted for
       this.applyForce(createVector(0, 0.5));
+    } else if (
+      keyIsDown(UP_ARROW) === true &&
+      this.position.y > setting.getUpperLimit(this.position.x)
+    ) {
+      this.applyForce(createVector(0, -0.5));
     }
-    else if (keyIsDown(UP_ARROW) === true && this.position.y > setting.getUpperLimit(this.position.x)) {
-      this.applyForce(createVector(0,- 0.5));
-    }
-    // this if & else if statement increases horisontal acceleration 
+    // this if & else if statement increases horisontal acceleration
     // in response to A (65) and D (68) key presses
-    if (keyIsDown(LEFT_ARROW) === true && this.position.x > setting.getLeftLimit(this.position.y)) {
+    if (
+      keyIsDown(LEFT_ARROW) === true &&
+      this.position.x > setting.getLeftLimit(this.position.y)
+    ) {
       this.applyForce(createVector(-0.5, 0));
-    }
-    else if (keyIsDown(RIGHT_ARROW) === true && this.position.x < setting.getRightLimit(this.position.y)) {
+    } else if (
+      keyIsDown(RIGHT_ARROW) === true &&
+      this.position.x < setting.getRightLimit(this.position.y)
+    ) {
       this.applyForce(createVector(0.5, 0));
     }
 
@@ -84,20 +96,26 @@ class Player {
       this.velocity.x = 0;
       this.acceleration.x = 0;
     }
+
+    // Keep the x and y, inherited from Sprite class, in sync with the position
+    this.x = this.position.x;
+    this.y = this.position.y;
   }
 
-  reachedTheNextOne(setting){ //Leah's function that checks the transition between canals (2 parallel lines)
+  reachedTheNextOne(setting) {
+    //Leah's function that checks the transition between canals (2 parallel lines)
     let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
-    if(pasturesNew != null){
-        this.canal = pasturesNew;
-        console.log("switched to canal with name " + this.canal.name)
+    if (pasturesNew != null) {
+      this.canal = pasturesNew;
+      console.log("switched to canal with name " + this.canal.name);
     }
   }
 
-  //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
+  //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass)
   // change the mu parameter if you want to increase/decrease friction
   friction() {
-    if (this.velocity.mag() > 0.02){ //this is a bugfix (without it, the stationary object would flip 60 times a second)
+    if (this.velocity.mag() > 0.02) {
+      //this is a bugfix (without it, the stationary object would flip 60 times a second)
       let friction = this.velocity.copy().normalize().mult(-1);
       // Magnitude of Friction
       friction.setMag(this.mu * this.mass);
@@ -115,18 +133,26 @@ class Player {
   // rotate(this.velocity.heading()) to direct the player's model in the direction of the velocity vector
   // stroke was added just to show where the model is pointing to
   paintPlayerModel() {
-    fill(0);
+    // fill(0);
     push();
     translate(this.position.x, this.position.y);
     rotate(this.velocity.heading());
-    stroke('black'); 
-    ellipse(0, 0, this.w, this.h);
-    stroke('white'); 
-    line(0, 0, this.w / 2, 0);
+    this.updateAnimation();
+    image(
+      this.frames[this.currentFrame],
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height
+    );
+    // stroke("black");
+    // ellipse(0, 0, this.w, this.h);
+    // stroke("white");
+    // line(0, 0, this.w / 2, 0);
     pop();
   }
 
-  // this function converts the force into acceleration (Force = Mass * Acceleration -> A = F/M), 
+  // this function converts the force into acceleration (Force = Mass * Acceleration -> A = F/M),
   // and the addition of force vectors recults in a single acceleration vector
   applyForce(force) {
     let f = p5.Vector.div(force, this.mass);
@@ -134,43 +160,61 @@ class Player {
   }
 
   debugHelperText() {
-    fill('black');
-    stroke('white');
+    fill("black");
+    stroke("white");
 
-    text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, this.position.x - 40, this.position.y - 110);
-    text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, this.position.x - 40, this.position.y - 95);
-    text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
-    text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
-    text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
+    text(
+      `upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`,
+      this.position.x - 40,
+      this.position.y - 110
+    );
+    text(
+      `right: ${Math.round(this.canal.getRightLimit(this.position.y))}`,
+      this.position.x - 40,
+      this.position.y - 95
+    );
+    text(
+      `left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`,
+      this.position.x - 40,
+      this.position.y - 80
+    );
+    text(
+      `lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`,
+      this.position.x - 40,
+      this.position.y - 65
+    );
+    text(
+      `x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`,
+      this.position.x - 40,
+      this.position.y - 50
+    );
   }
 }
 
+// //collision mechanism for the upper border
+// if (this.position.y < setting.getUpperLimit(this.position.x)) {
+//   this.position.y = setting.getUpperLimit(this.position.x) + 2;
+//   this.velocity.y *= -0.5;
+//   this.acceleration.y *= -0.2;
+// }
 
-    // //collision mechanism for the upper border
-    // if (this.position.y < setting.getUpperLimit(this.position.x)) {
-    //   this.position.y = setting.getUpperLimit(this.position.x) + 2;
-    //   this.velocity.y *= -0.5;
-    //   this.acceleration.y *= -0.2;
-    // }
+// //collision mechanism for the bottom border
+// if (this.position.y > setting.getLowerLimit(this.position.x)) {
+//   this.position.y = setting.getLowerLimit(this.position.x) - 2;
+//   this.velocity.y *= -0.5;
+//   this.acceleration.y *= -0.2;
+// }
 
-    // //collision mechanism for the bottom border
-    // if (this.position.y > setting.getLowerLimit(this.position.x)) {
-    //   this.position.y = setting.getLowerLimit(this.position.x) - 2;
-    //   this.velocity.y *= -0.5;
-    //   this.acceleration.y *= -0.2;
-    // }
+// //collision mechanism for the right border
+// if (this.position.x > setting.getRightLimit(this.position.y)) {
+//   this.position.x = setting.getRightLimit(this.position.y) - 2;
+//   this.velocity.x *= -0.5;
+//   this.acceleration.x *= -0.2;
+// }
 
-    // //collision mechanism for the right border
-    // if (this.position.x > setting.getRightLimit(this.position.y)) {
-    //   this.position.x = setting.getRightLimit(this.position.y) - 2;
-    //   this.velocity.x *= -0.5;
-    //   this.acceleration.x *= -0.2;
-    // }
-
-    // //collision mechanism for the left border
-    // if (this.position.x < setting.getLeftLimit(this.position.y)) {
-    //   this.position.x = setting.getLeftLimit(this.position.y) + 2;
-    //   this.velocity.x *= -0.5;
-    //   this.acceleration.x *= -0.2;
-    // }
-
+// //collision mechanism for the left border
+// if (this.position.x < setting.getLeftLimit(this.position.y)) {
+//   this.position.x = setting.getLeftLimit(this.position.y) + 2;
+//   this.velocity.x *= -0.5;
+//   this.acceleration.x *= -0.2;
+// }
