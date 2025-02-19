@@ -20,8 +20,6 @@ class Player {
     this.mu = 0.02;
     this.velocityLimit = velLimit;
     this.canal = canal;
-    //it's not actually a hitbox, but a circle, but it does the function of a hitbox
-    this.frontHitbox
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -35,30 +33,19 @@ class Player {
     this.debugHelperText();
   }
 
-  // rotateUpderlyingEllipse() {
-
-  // }
-
-  move() { //trying to adapt Leah's code to mine
+  move() { 
     //sets limits based on the locations of the edges of the canal object where the boat is
     // let setting = this.canal;
 
     //tests if the boat has moved to another canal segment, and shifts it there if so
     this.reachedTheNextOne(this.canal);
 
-    // this if & else if statement increases vertical acceleration 
-    // in response to UP (87) and DOWN (83) key presses
     if (keyIsDown(DOWN_ARROW) === true) {
-      //it should be done via appyforce function, not add acceleration, to include mass into the equation
-      //because if we will have objects of different masses that has to be accounted for 
       this.applyForce(createVector(0, 0.5));
     }
-    // else if (keyIsDown(UP_ARROW) === true && this.position.y > this.canal.getUpperLimit(this.position.x) && (!hitUp)) {
     else if (keyIsDown(UP_ARROW) === true) {
       this.applyForce(createVector(0,- 0.5));
     }
-    // this if & else if statement increases horisontal acceleration 
-    // in response to A (65) and D (68) key presses
     if (keyIsDown(LEFT_ARROW) === true) {
       this.applyForce(createVector(-0.5, 0));
     }
@@ -66,10 +53,10 @@ class Player {
       this.applyForce(createVector(0.5, 0));
     }
 
-    let hitUp = this.didHitBorder(0);
-    let hitDown = this.didHitBorder(1);
-    let hitLeft = this.didHitBorder(2);
-    let hitRight = this.didHitBorder(3);
+    let hitUp = this.didHitBorder(0); // 0 - upper border
+    let hitDown = this.didHitBorder(1); // 1 - lower border 
+    let hitLeft = this.didHitBorder(2); // 2 - left border
+    let hitRight = this.didHitBorder(3); // 3 - right border
 
     if (hitUp || hitDown || hitRight || hitLeft) {
 
@@ -100,6 +87,12 @@ class Player {
     let y = this.position.y;
     let angle = this.velocity.heading();
 
+    //these are the 3 hitboxes. If you want to visualise them
+    //you can create 3 circles with the following x&y coordinates.
+    //One would be in the front of the ellipse, and 2 on each side.
+    //The sin and cos are needed, because the origianl ellipse does not
+    //actually rotate, event though it is displayed as rotated along 
+    // the velocity vector
     let frontHitbox = {
       x: x + ((this.w/2) * cos(angle)),
       y: y + ((this.w/2) * sin(angle)),
@@ -118,24 +111,23 @@ class Player {
     let leftLim = this.canal.getLeftLimit(y);
     let rightLim = this.canal.getRightLimit(y);
 
-    // collideLineCircle(x1, y1, x2, y2, cx, cy, diameter)
     switch(direction) {
-      case 0: //hitting the upper border
+      case 0: //Does front, right or left hitbox cross the upper border?
         let hitUpperFront = (frontHitbox.y <= upLim);
         let hitUpperRight = (rightHitbox.y <= upLim);
         let hitUpperLeft = (leftHitbox.y <= upLim);
         return (hitUpperFront || hitUpperRight || hitUpperLeft);
-      case 1: //hitting the lower border
+      case 1: //Does front, right or left hitbox cross the lower border?
         let hitLowerFront = (frontHitbox.y >= lowLim);
         let hitLowerRight = (rightHitbox.y >= lowLim);
         let hitLowerLeft = (leftHitbox.y >= lowLim);
         return (hitLowerFront || hitLowerRight || hitLowerLeft);
-      case 2: //hitting the left border
+      case 2: //Does front, right or left hitbox cross the left border?
         let hitLeftFront = (frontHitbox.x <= leftLim);
         let hitLeftRight = (rightHitbox.x <= leftLim);
         let hitLeftLeft = (leftHitbox.x <= leftLim);
         return (hitLeftFront || hitLeftRight || hitLeftLeft);
-      case 3: //hitting the right border
+      case 3: //Does front, right or left hitbox cross the right border?
         let hitRightFront = (frontHitbox.x >= rightLim);
         let hitRightRight = (rightHitbox.x >= rightLim);
         let hitRightLeft = (leftHitbox.x >= rightLim);
