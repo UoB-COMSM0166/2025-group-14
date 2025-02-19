@@ -176,13 +176,13 @@ class Player {
 
     noStroke();
      
-    // //uncomment these 3 circles, if you need to adjust the position of the hitboxes
-    // fill('green');
-    // circle(this.position.x + ((this.w/2) * cos(this.velocity.heading())), this.position.y + ((this.w/2) * sin(this.velocity.heading())), 5);
-    // fill('blue');
-    // circle(this.position.x + ((this.h/2) * -1 * sin(this.velocity.heading())), this.position.y + ((this.h/2) * cos(this.velocity.heading())), 5);
-    // fill('red');
-    // circle(this.position.x + ((this.h/2) * sin(this.velocity.heading())), this.position.y + ((this.h/2) * -1 * cos(this.velocity.heading())), 5);
+    //uncomment these 3 circles, if you need to adjust the position of the hitboxes
+    fill('green');
+    circle(this.position.x + ((this.w/2) * cos(this.velocity.heading())), this.position.y + ((this.w/2) * sin(this.velocity.heading())), 5);
+    fill('blue');
+    circle(this.position.x + ((this.h/2) * -1 * sin(this.velocity.heading())), this.position.y + ((this.h/2) * cos(this.velocity.heading())), 5);
+    fill('red');
+    circle(this.position.x + ((this.h/2) * sin(this.velocity.heading())), this.position.y + ((this.h/2) * -1 * cos(this.velocity.heading())), 5);
 
     // fill(0);
     // stroke('white');
