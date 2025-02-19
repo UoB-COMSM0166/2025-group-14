@@ -33,70 +33,101 @@ class Player {
 
   move() { //trying to adapt Leah's code to mine
     //sets limits based on the locations of the edges of the canal object where the boat is
-    let setting = this.canal;
+    // let setting = this.canal;
+
+    //tests if the boat has moved to another canal segment, and shifts it there if so
+    this.reachedTheNextOne(this.canal);
+
+    let hitUp = this.didHitUpperBorder();
+    // console.log(hitUp);
+    let hitDown = this.didHitLowerBorder();
+    let hitLeft = this.didHitLeftBorder();
+    let hitRight = this.didHitRightBorder();
 
     // this if & else if statement increases vertical acceleration 
     // in response to UP (87) and DOWN (83) key presses
-    if (keyIsDown(DOWN_ARROW) === true && this.position.y < setting.getLowerLimit(this.position.x)) {
+    if (keyIsDown(DOWN_ARROW) === true && this.position.y < this.canal.getLowerLimit(this.position.x)) {
       //it should be done via appyforce function, not add acceleration, to include mass into the equation
       //because if we will have objects of different masses that has to be accounted for 
       this.applyForce(createVector(0, 0.5));
     }
-    else if (keyIsDown(UP_ARROW) === true && this.position.y > setting.getUpperLimit(this.position.x)) {
+    // else if (keyIsDown(UP_ARROW) === true && this.position.y > this.canal.getUpperLimit(this.position.x) && (!hitUp)) {
+    else if (keyIsDown(UP_ARROW) === true && this.position.y > this.canal.getUpperLimit(this.position.x) + 1) {
       this.applyForce(createVector(0,- 0.5));
     }
     // this if & else if statement increases horisontal acceleration 
     // in response to A (65) and D (68) key presses
-    if (keyIsDown(LEFT_ARROW) === true && this.position.x > setting.getLeftLimit(this.position.y)) {
+    if (keyIsDown(LEFT_ARROW) === true && this.position.x > this.canal.getLeftLimit(this.position.y)) {
       this.applyForce(createVector(-0.5, 0));
     }
-    else if (keyIsDown(RIGHT_ARROW) === true && this.position.x < setting.getRightLimit(this.position.y)) {
+    else if (keyIsDown(RIGHT_ARROW) === true && this.position.x < this.canal.getRightLimit(this.position.y)) {
       this.applyForce(createVector(0.5, 0));
     }
 
-    //tests if the boat has moved to another canal segment, and shifts it there if so
-    this.reachedTheNextOne(setting);
-
     //collision mechanism for the upper border
-    if (this.position.y < setting.getUpperLimit(this.position.x)) {
-      this.position.y = setting.getUpperLimit(this.position.x);
-      this.velocity.y = 0;
-      this.acceleration.y = 0;
-      this.velocity.x = 0;
-      this.acceleration.x = 0;
+    if (hitUp) {
+      this.position.y += 20;
+
+      this.velocity = createVector(0, 0);
+      this.acceleration = createVector(0, 0);
     }
 
     //collision mechanism for the bottom border
-    if (this.position.y > setting.getLowerLimit(this.position.x)) {
-      this.position.y = setting.getLowerLimit(this.position.x);
-      this.velocity.y = 0;
-      this.acceleration.y = 0;
-      this.velocity.x = 0;
-      this.acceleration.x = 0;
+    if (hitDown) {
+      this.position.y -= 20;
+
+      this.velocity = createVector(0, 0);
+      this.acceleration = createVector(0, 0);
+
     }
 
     //collision mechanism for the right border
-    if (this.position.x > setting.getRightLimit(this.position.y)) {
-      this.position.x = setting.getRightLimit(this.position.y);
-      this.velocity.x = 0;
-      this.acceleration.x = 0;
-      this.velocity.y = 0;
-      this.acceleration.y = 0;
+    if (hitRight) {
+      this.position.x -= 20;
 
+      this.velocity = createVector(0, 0);
+      this.acceleration = createVector(0, 0);
     }
 
     //collision mechanism for the left border
-    if (this.position.x < setting.getLeftLimit(this.position.y)) {
-      this.position.x = setting.getLeftLimit(this.position.y);
-      this.velocity.x = 0;
-      this.acceleration.x = 0;
-      this.velocity.y = 0;
-      this.acceleration.y = 0;
+    if (hitLeft) {
+      this.position.x += 20;
+      
+      this.velocity = createVector(0, 0);
+      this.acceleration = createVector(0, 0);
     }
   }
 
-  reachedTheNextOne(setting){ //Leah's function that checks the transition between canals (2 parallel lines)
-    let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
+  // collidePointEllipse(pointX, pointY, ellipseX, ellipseY, ellipseWidth, ellipseHeight)
+  didHitUpperBorder() {
+    let x = this.position.x;
+    let y = this.position.y;
+    return collidePointEllipse(x, this.canal.getUpperLimit(x), x, y, this.w, this.h);
+  }
+
+  // collidePointEllipse(pointX, pointY, ellipseX, ellipseY, ellipseWidth, ellipseHeight)
+  didHitLowerBorder() {
+    let x = this.position.x;
+    let y = this.position.y;
+    return collidePointEllipse(x, this.canal.getLowerLimit(x), x, y, this.w, this.h);
+  }
+
+  // collidePointEllipse(pointX, pointY, ellipseX, ellipseY, ellipseWidth, ellipseHeight)
+  didHitLeftBorder() {
+    let x = this.position.x;
+    let y = this.position.y;
+    return collidePointEllipse(this.canal.getLeftLimit(y), y, x, y, this.w, this.h);
+  }
+
+  didHitRightBorder() {
+    let x = this.position.x;
+    let y = this.position.y;
+    return collidePointEllipse(this.canal.getRightLimit(y), y, x, y, this.w, this.h);
+  }
+
+
+  reachedTheNextOne(currCanal){ //Leah's function that checks the transition between canals (2 parallel lines)
+    let pasturesNew = currCanal.thresholdCheck(this.position.x, this.position.y);
     if(pasturesNew != null){
         this.canal = pasturesNew;
         console.log("switched to canal with name " + this.canal.name)
@@ -153,33 +184,3 @@ class Player {
     text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
   }
 }
-
-
-    // //collision mechanism for the upper border
-    // if (this.position.y < setting.getUpperLimit(this.position.x)) {
-    //   this.position.y = setting.getUpperLimit(this.position.x) + 2;
-    //   this.velocity.y *= -0.5;
-    //   this.acceleration.y *= -0.2;
-    // }
-
-    // //collision mechanism for the bottom border
-    // if (this.position.y > setting.getLowerLimit(this.position.x)) {
-    //   this.position.y = setting.getLowerLimit(this.position.x) - 2;
-    //   this.velocity.y *= -0.5;
-    //   this.acceleration.y *= -0.2;
-    // }
-
-    // //collision mechanism for the right border
-    // if (this.position.x > setting.getRightLimit(this.position.y)) {
-    //   this.position.x = setting.getRightLimit(this.position.y) - 2;
-    //   this.velocity.x *= -0.5;
-    //   this.acceleration.x *= -0.2;
-    // }
-
-    // //collision mechanism for the left border
-    // if (this.position.x < setting.getLeftLimit(this.position.y)) {
-    //   this.position.x = setting.getLeftLimit(this.position.y) + 2;
-    //   this.velocity.x *= -0.5;
-    //   this.acceleration.x *= -0.2;
-    // }
-
