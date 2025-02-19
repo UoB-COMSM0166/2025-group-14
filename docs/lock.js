@@ -17,7 +17,7 @@ class lock extends canal{
     }
 
     getFullStatus(){
-        let mod = frameCount % this.cycle;
+        let mod = (frameCount/60) % this.cycle;
         text(mod + "/" + this.cycle, this.topBank.endX, this.topBank.endY+(this.width/4));
         if(mod < this.openTime){
             return "empty";
@@ -129,8 +129,38 @@ class lock extends canal{
 
     }
 
+//visualization experiment that got out of hand - putting it on pause and just using a numerical reader for now
+   /* indicatorLines(){
+        let rPos;
+        let bPos;
+        let rMax = this.afterThreshold.startX;
+        let bMax = this.afterThreshold.endX;
+        let rMin = this.beforeThreshold.endX;
+        let bMin = this.beforeThreshold.startX;
+        let rGulf = rMax - rMin;
+        let bGulf = bMax - bMin;
+        let seconds = (frameCount/60) % this.startFull
+        if(this.level === "full"){
+            rPos = rMax;
+            bPos = bMax;
+        }else if(this.level === "empty"){
+            rPos = rMin;
+            bPos = bMin;
+        }else if(this.level === "filling"){
+        
+            
+            rPos = rMin + (rGulf/(this.startFull/seconds));
+            bPos = bMin + (bGulf/(this.startFull/seconds));
+        }else{
+          
 
-    
+            rPos = rMin + rMax-(rGulf/(this.startFull/seconds));
+            bPos = bMin + bMax-(bGulf/(this.startFull/seconds));
+        }
+        line(this.beforeThreshold.endX, this.beforeThreshold.endY, rPos, limitY(30, this.redBank.gradient, this.redBank.offset));
+        line(this.beforeThreshold.startX, this.beforeThreshold.startY, bPos, limitY(30, this.blackBank.gradient, this.blackBank.offset));
+ 
+    }*/
 
 
     visualize(){
@@ -145,7 +175,9 @@ class lock extends canal{
         let status = this.getFullStatus();
         this.level = status
         text(status, this.topBank.endX, this.topBank.endY+(this.width/2));
- 
+        //stroke("green");
+        //this.indicatorLines();
+
     }
 
 
