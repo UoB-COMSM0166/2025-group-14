@@ -131,12 +131,13 @@ class Player extends Sprite {
   }
 
   // rotate(this.velocity.heading()) to direct the player's model in the direction of the velocity vector
-  // stroke was added just to show where the model is pointing to
   paintPlayerModel() {
-    // fill(0);
     push();
     translate(this.position.x, this.position.y);
-    rotate(this.velocity.heading());
+    // Boat sprite points up by default, but it must point right by default because
+    // the velocity vector points right by default - i.e., 0 radians points to the right
+    // therefore we rotate the boat image by PI/2 radians (90 degrees) to make it point right
+    rotate(this.velocity.heading() + HALF_PI);
     this.updateAnimation();
     image(
       this.frames[this.currentFrame],
@@ -145,10 +146,6 @@ class Player extends Sprite {
       this.width,
       this.height
     );
-    // stroke("black");
-    // ellipse(0, 0, this.w, this.h);
-    // stroke("white");
-    // line(0, 0, this.w / 2, 0);
     pop();
   }
 
