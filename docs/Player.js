@@ -92,7 +92,7 @@ class Player {
     //collision mechanism for the left border
     if (hitLeft) {
       this.position.x += 20;
-      
+
       this.velocity = createVector(0, 0);
       this.acceleration = createVector(0, 0);
     }
@@ -147,7 +147,7 @@ class Player {
 
   updatePosition() {
     this.velocity.add(this.acceleration);
-    this.position.add(this.velocity);
+    this.position.add(this.velocity); 
     this.velocity.limit(this.velocityLimit);
     this.acceleration.set(0, 0);
   }
