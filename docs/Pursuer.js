@@ -1,5 +1,5 @@
 class Pursuer {
-    constructor(x, y, canal, maxSpeed = 1, maxForce = 0.3) {
+    constructor(x, y, canal, maxSpeed = 2, maxForce = 0.3) {
       this.position = createVector(x, y);
       this.velocity = createVector(0, 0);
       this.acceleration = createVector(0, 0);
@@ -7,24 +7,32 @@ class Pursuer {
       this.maxForce = maxForce;
       this.r = 16;
       this.canal = canal;
+      this.debugMode = false;
     }
-  
-    pursue(target) {
-      let t = target.position.copy();
-      let prediction = target.velocity.copy();
-      prediction.mult(10);
-      t.add(prediction);
-      fill(0, 255, 0);
-      circle(t.x, t.y, 16);
-      return this.seek(t);
+
+    setTarget(player) {
+      if (this.lineOfSight(this.canal, player)) {
+        return player;
+      } 
+      let whichWay = this.findOptimalPath();
+      let direction = "forward";
+      if(whichWay) {
+        direction = "reverse";
+      }
+      let { x, y } = PursuerPath.getPath(this.canal, direction);
+      return new Player(x, y, 0, 0, this.canal);
     }
+    
   
     // Arrival behaviour (slowing down as the pursuer approaches the target, and
-    // stopping once it reaches the target) is implemented by canalSegment the 'arrival'
+    // stopping once it reaches the target) is implemented by canal the 'arrival'
     // argument of the seek method. 
-    arrive(target) {
-      // 2nd argument true enables the arrival behavior
-      return this.seek(target, true);
+    arrive(player, target) {
+      let arrivalEnabled = false;
+      if(player === target) {
+        arrivalEnabled = true;
+      }
+      return this.seek(target, arrivalEnabled);
     }
   
     // Implements pursuer seek behaviour
@@ -66,8 +74,6 @@ class Pursuer {
       let left = canalSegment.getLeftLimit(this.position.y) + 1;
       let lower = canalSegment.getLowerLimit(this.position.x) - 1;
 
-      this.lineOfSight(canalSegment, player);
-
       // Limit the pursuer to the boundaries of the canal
       // upper limit
      
@@ -93,9 +99,8 @@ class Pursuer {
   
     // Draw the pursuer to the screen
     show() {
-      //red line to show direct path to player
-      stroke('red');
-      line(this.position.x, this.position.y, player.position.x, player.position.y);
+      if (this.debugMode) { this.debugHelperText(); }
+      if (this.debugMode && this.lineOfSight()) { this.debugHelperLines(this.position, player.position, `red`, 20); }
       
       stroke(255);
       strokeWeight(2);
@@ -105,8 +110,6 @@ class Pursuer {
       rotate(this.velocity.heading());             // orientation of pursuer
       triangle(-this.r, -this.r / 2, -this.r, this.r / 2, this.r, 0); // shape
       pop();
-      
-      //this.debugHelperText();
     }
 
     //leah code that updates which canal segment the pursuer is currently in
@@ -114,24 +117,75 @@ class Pursuer {
       let pasturesNew = canalSegment.thresholdCheck(this.position.x, this.position.y);
       if(pasturesNew != null){
           this.canal = pasturesNew;
-          //console.log("switched to canal with name " + this.canal.name)
       }
     }
-
-    lineOfSight(canal, player) {
-      let currentCanal = canal;
+    //if multiple branches are introduced in future then this will have to be refactored
+    //function returns true if pursuer has unobstructed line of sight to player
+    //TODO: if player is on the red boundary then intersection will return true (i.e. pursuer is blind)
+    lineOfSight() {
+      let canal = this.canal;
       let target = {x: player.position.x, y: player.position.y};
       let position = {x: this.position.x, y: this.position.y};
       do {
-        let startCorner = PursuerPathing.getStartCorner(canal);
-        let endCorner = PursuerPathing.getEndCorner(canal);
-        if(Intersection.doIntersect(startCorner, endCorner, position, target)) {
-          console.log("Persuer has lost line of sight to player");
-          return true;
+        let startCorner = PursuerPath.getStartCorner(canal);
+        let endCorner = PursuerPath.getEndCorner(canal);
+        if(Intersect.doIntersect(startCorner, endCorner, position, target)) {
+          return false;
         }
+        canal = canal.after;
+      } while (canal != this.canal && canal != null);
+      return true;
+    }
+    
+    //if multiple branches are introduced in future then this will have to be refactored (recursion?)
+    //if fastest route found going canal.start -> canal.end then false, else returns true
+    findOptimalPath() {
+      let canal = this.canal;
+      let startCorner = PursuerPath.getStartCorner(canal);
+      let endCorner = PursuerPath.getEndCorner(canal);
+
+      let dist1 = PursuerPath.calcDist(this.position, startCorner);
+      let dist2 = PursuerPath.calcDist(this.position, endCorner);
+
+      if (this.debugMode) { 
+        this.debugHelperLines(this.position, startCorner, `green`); 
+        this.debugHelperLines(this.position, endCorner, `blue`);
       }
-      while (canal != currentCanal && canal != null);
-      return false;
+
+      do {
+        canal = canal.before;
+        startCorner = PursuerPath.getStartCorner(canal);
+        endCorner = PursuerPath.getEndCorner(canal);
+        if (canal === player.canal) {
+          dist1 += PursuerPath.calcDist(endCorner, player.position);
+          if (this.debugMode) {this.debugHelperLines(endCorner, player.position, `green`)};
+        } else {
+          dist1 += PursuerPath.calcDist(endCorner, startCorner);
+          if (this.debugMode) {this.debugHelperLines(endCorner, startCorner, `green`)};
+        }
+      } while (canal != this.canal && canal != null && canal != player.canal);
+      
+      canal = this.canal;
+
+      do {
+        canal = canal.after;
+        startCorner = PursuerPath.getStartCorner(canal);
+        endCorner = PursuerPath.getEndCorner(canal);
+        if (canal === player.canal) {
+          dist2 += PursuerPath.calcDist(startCorner, player.position);
+          if (this.debugMode) {this.debugHelperLines(startCorner, player.position, `blue`)};
+        } else {
+          dist2 += PursuerPath.calcDist(startCorner, endCorner);
+          if (this.debugMode) {this.debugHelperLines(startCorner, endCorner, `blue`)};
+        }
+      } while (canal != this.canal && canal != null && canal != player.canal);
+      
+      if (this.debugMode) { 
+        this.debugHelperLines(0, 0, `green`, 40, dist1); 
+        this.debugHelperLines(0, 0, `blue`, 60, dist2);
+      }
+
+      return dist1 <= dist2;
     }
 
     debugHelperText() {
@@ -142,20 +196,25 @@ class Pursuer {
       text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
       text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
       text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
+      }
+
+    debugHelperLines(from, to, color, offset, distance) {
+      push();
+      if (from) {
+        stroke(color);
+        strokeWeight(5);
+        line(from.x, from.y, to.x, to.y);
+        distance = PursuerPath.calcDist(from, to);
+      }
+      noStroke();
+      textSize(20);
+      fill(color);
+      if (offset) {
+        text(`Distance to target: ` + round(distance), 20, offset);
+      }
+      pop();
     }
   }
 
-/*
-  canalSegment = PursuerPathing.incrementCanal(canalSegment);  
-  let corner1 = PursuerPathing.getStartCorner(canalSegment);
-  let corner2 = PursuerPathing.getEndCorner(canalSegment);
-  push();
-  stroke('black');
-  strokeWeight(1);
-  circle(corner1.xCoord, corner1.yCoord, 16);
-  circle(corner2.xCoord, corner2.yCoord, 16);
-  noStroke();
-  text('Start', corner1.xCoord + 5, corner1.yCoord - 5);
-  text('End', corner2.xCoord + 5, corner2.yCoord - 5);
-  pop();
-  */
+
+  
