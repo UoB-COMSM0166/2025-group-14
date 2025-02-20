@@ -28,10 +28,10 @@ Add a group photo here!
 |----|-----|------|
 | Polly Lang | js24119@bristol.ac.uk | developer |
 | Leon Wellstead | np24094@bristol.ac.uk | developer |
-| | | |
-| | | |
-| | | |
-| | | |
+| Casey Cronyn | mt24200@bristol.ac.uk | developer |
+| Daniil Lutskiy | ya24711@bristol.ac.uk | developer |
+| Leah Liddle | zs24945@bristol.ac.uk | developer |
+| Adam Sidnell | fv24034@bristol.ac.uk | developer |
 
 ## Project Report
 
