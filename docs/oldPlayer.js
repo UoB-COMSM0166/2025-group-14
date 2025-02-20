@@ -12,14 +12,16 @@ class Player {
   constructor(mainX, mainY, mainMass, velLimit, canal) {
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
-    this.w = 20;
-    this.h = 10;
+    this.w = 50;
+    this.h = 20;
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
     this.mu = 0.02;
     this.velocityLimit = velLimit;
     this.canal = canal;
+    this.hitAny = false;
+    this.collisionOffset = createVector(0, 0);
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -40,6 +42,12 @@ class Player {
     //tests if the boat has moved to another canal segment, and shifts it there if so
     this.reachedTheNextOne(this.canal);
 
+    let hitUp = this.didHitBorder(0); // 0 - upper border
+    let hitDown = this.didHitBorder(1); // 1 - lower border 
+    let hitLeft = this.didHitBorder(2); // 2 - left border
+    let hitRight = this.didHitBorder(3); // 3 - right border
+    this.hitAny = (hitUp || hitDown || hitRight || hitLeft);
+
     if (keyIsDown(DOWN_ARROW) === true) {
       this.applyForce(createVector(0, 0.5));
     }
@@ -53,33 +61,45 @@ class Player {
       this.applyForce(createVector(0.5, 0));
     }
 
-    let hitUp = this.didHitBorder(0); // 0 - upper border
-    let hitDown = this.didHitBorder(1); // 1 - lower border 
-    let hitLeft = this.didHitBorder(2); // 2 - left border
-    let hitRight = this.didHitBorder(3); // 3 - right border
+    if (this.hitAny) { 
+      this.acceleration = createVector(0, 0);
+      this.velocity.div(1000);
 
-    if (hitUp || hitDown || hitRight || hitLeft) {
+      if (hitUp) {//collision mechanism for the upper border
+        this.collisionOffset = createVector(0, 2.5);
+      }
+      if (hitDown) { //collision mechanism for the bottom border
+         this.collisionOffset = createVector(0, -2.5);
+      }
+      if (hitRight) { //collision mechanism for the right border
+        this.collisionOffset = createVector(-2.5, 0);
+      }
+      if (hitLeft) { //collision mechanism for the left border
+        this.collisionOffset = createVector(2.5, 0);
+      }
+    }
 
-      /*//collision mechanism for the upper border
-      if (hitUp) {
-        this.position.y += 20;
-      }
-      //collision mechanism for the bottom border
-      if (hitDown) {
-        this.position.y -= 20;
-      }
-      //collision mechanism for the right border
-      if (hitRight) {
-        this.position.x -= 20;
-      }
-      //collision mechanism for the left border
-      if (hitLeft) {
-        this.position.x += 20;
-      }
+    this.applyCollisionOffset();
+  }
 
-      this.velocity = createVector(0, 0);
-      this.acceleration = createVector(0, 0);*/
-      this.velocity.mult(-0.3);
+  applyCollisionOffset() {
+
+    this.position.add(this.collisionOffset);
+
+    if (this.collisionOffset.x >  0.2) {
+      this.collisionOffset.x -= 0.2;
+    } else if (this.collisionOffset.x < -0.2) {
+      this.collisionOffset.x += 0.2;
+    } else if (Math.abs(this.collisionOffset.x) < 0.2) {
+      this.collisionOffset.x = 0;
+    }
+
+    if (this.collisionOffset.y >  0.2) {
+      this.collisionOffset.y -= 0.2;
+    } else if (this.collisionOffset.y < -0.2) {
+      this.collisionOffset.y += 0.2;
+    } else if (Math.abs(this.collisionOffset.y) < 0.2) {
+      this.collisionOffset.y = 0;
     }
   }
 
@@ -147,12 +167,13 @@ class Player {
   //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
   // change the mu parameter if you want to increase/decrease friction
   friction() {
-    if (this.velocity.mag() > 0.02){ //this is a bugfix (without it, the stationary object would flip 60 times a second)
+    if (this.velocity.mag() > 0.02 && (!this.hitAny)){ //this is a bugfix (without it, the stationary object would flip 60 times a second)
       let friction = this.velocity.copy().normalize().mult(-1);
       // Magnitude of Friction
       friction.setMag(this.mu * this.mass);
       this.applyForce(friction);
-    }
+      // text(`friction: ${friction.mag()}`, this.position.x - 40, this.position.y - 35); 
+    } 
   }
 
   updatePosition() {
@@ -188,8 +209,7 @@ class Player {
     // fill(0);
     // stroke('white');
     // strokeWeight(5);
-    // // line(-Infinity, this.position.y, Infinity, this.position.y);
-    // // line(0, this.position.y, windowWidth, this.position.y);
+
 
     // // upper
     // line(0, this.canal.getUpperLimit(this.position.x), windowWidth, this.canal.getUpperLimit(this.position.x));
@@ -209,17 +229,15 @@ class Player {
   }
 
   debugHelperText() {
-    fill('black');
-    stroke('white');
-    strokeWeight(2);
-
+    // fill('black');
+    // stroke('white');
+    // strokeWeight(2);
     // text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, this.position.x - 40, this.position.y - 110);
     // text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, this.position.x - 40, this.position.y - 95);
     // text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
     // text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
     // text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
-
-    text(`heading: ${this.velocity.heading()}`, this.position.x - 40, this.position.y - 50);
+    // text(`heading: ${this.velocity.heading()}`, this.position.x - 40, this.position.y - 50);
 
   }
 }
