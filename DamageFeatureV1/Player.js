@@ -20,6 +20,7 @@ class Player {
     this.canal = canal;
     // NEW damage stuff!
     this.originalVelocityLimit = this.velLimit; // stores a copy of velLimit so not lost when player is immobilised
+    this.velocityMagnitudeCopy = this.velocity.mag();
     this.health = maxHealth; // starts with maxHealth
     this.maxHealth = maxHealth;
     this.zeroHealth = false;
@@ -45,9 +46,17 @@ class Player {
     this.takeDamageOverTime();
     //this.takeCollisionDamage();
 
+    // If health is zero, stops player boat until repaired.
+    if (this.zeroHealth) {
+      text("Health is zero! Repairs needed...", this.position.x, this.position.y + 20);
+      this.haltPlayer();
+    }
+
     // If 'r' key is pressed, repair boat
     if (keyIsDown(82) === true) {
-        this.repair()
+      // If health is zero, repairs take three times as long as default
+      if (this.zeroHealth) this.repair(9.0)
+      this.repair();
     }
   }
 
@@ -63,7 +72,7 @@ class Player {
       this.applyForce(createVector(0, 0.5));
     }
     else if (keyIsDown(UP_ARROW) === true && this.position.y > setting.getUpperLimit(this.position.x)) {
-      this.applyForce(createVector(0,- 0.5));
+      this.applyForce(createVector(0, - 0.5));
     }
     // this if & else if statement increases horisontal acceleration 
     // in response to A (65) and D (68) key presses
@@ -77,7 +86,7 @@ class Player {
     //tests if the boat has moved to another canal segment, and shifts it there if so
     this.reachedTheNextOne(setting);
 
-    
+
     //collision mechanism for the upper border
     if (this.position.y < setting.getUpperLimit(this.position.x)) {
       this.position.y = setting.getUpperLimit(this.position.x);
@@ -109,12 +118,12 @@ class Player {
       this.acceleration.x = 0;
       this.takeDamage(this.collisionDamage);
     }
-      
-/*
-    // NEW! Collision mechanics - Daniil's code, but refactored so that it works with the new 
-    // damage mechanics
-    this.collisionUpdates();
-    */
+
+    /*
+        // NEW! Collision mechanics - Daniil's code, but refactored so that it works with the new 
+        // damage mechanics
+        this.collisionUpdates();
+        */
   }
 
   /*
@@ -167,18 +176,18 @@ class Player {
   }
 */
 
-  reachedTheNextOne(setting){ //Leah's function that checks the transition between canals (2 parallel lines)
+  reachedTheNextOne(setting) { //Leah's function that checks the transition between canals (2 parallel lines)
     let pasturesNew = setting.thresholdCheck(this.position.x, this.position.y);
-    if(pasturesNew != null){
-        this.canal = pasturesNew;
-        console.log("switched to canal with name " + this.canal.name)
+    if (pasturesNew != null) {
+      this.canal = pasturesNew;
+      console.log("switched to canal with name " + this.canal.name)
     }
   }
 
   //the formula for friction is F = -v (reverced copy of the velocity vector) * Mu (arbitrary constant) * N (for our purpose can be equated to object's mass) 
   // change the mu parameter if you want to increase/decrease friction
   friction() {
-    if (this.velocity.mag() > 0.02){ //this is a bugfix (without it, the stationary object would flip 60 times a second)
+    if (this.velocity.mag() > 0.02) { //this is a bugfix (without it, the stationary object would flip 60 times a second)
       let friction = this.velocity.copy().normalize().mult(-1);
       // Magnitude of Friction
       friction.setMag(this.mu * this.mass);
@@ -200,9 +209,9 @@ class Player {
     push();
     translate(this.position.x, this.position.y);
     rotate(this.velocity.heading());
-    stroke('black'); 
+    stroke('black');
     ellipse(0, 0, this.w, this.h);
-    stroke('white'); 
+    stroke('white');
     line(0, 0, this.w / 2, 0);
     pop();
   }
@@ -230,7 +239,7 @@ class Player {
   takeDamage(damagePoints) {
     this.health -= damagePoints;
     if (this.health <= 0) {
-        this.healthIsZero();
+      this.healthIsZero();
     }
   }
 
@@ -239,29 +248,29 @@ class Player {
   healthIsZero() {
     this.health = 0; // health cannot go below zero
     this.zeroHealth = true;
-  } 
-
-
-    /*
-  // Returns true if player is colliding with canal
-  collideWithCanal() {
-    if (this.isCollidingWithCanal() != "not colliding") return true;
-    else return false;
   }
 
-  // Take damage equal to collisionDamage if player has collided with the side of the canal
-  takeCollisionDamage() {
-    // Timer ensures that collision damage can only be taken once per second.
-    //let timeElapsed = this.timer.getTime();
-    //let secondsBeforeNextDamage = 1.0;
-    //let timeLimit = secondsBeforeNextDamage / (frameRate() * secondsBeforeNextDamage);
 
-    //if (timeElapsed % timeInterval < timeLimit && this.collideWithCanal() === true) {
-    //if (this.collideWithCanal() === true) {
-    if (this.isCollidingWithCanal != "not colliding") {
-        this.takeDamage(this.collisionDamage);
-    }
+  /*
+// Returns true if player is colliding with canal
+collideWithCanal() {
+  if (this.isCollidingWithCanal() != "not colliding") return true;
+  else return false;
+}
+
+// Take damage equal to collisionDamage if player has collided with the side of the canal
+takeCollisionDamage() {
+  // Timer ensures that collision damage can only be taken once per second.
+  //let timeElapsed = this.timer.getTime();
+  //let secondsBeforeNextDamage = 1.0;
+  //let timeLimit = secondsBeforeNextDamage / (frameRate() * secondsBeforeNextDamage);
+
+  //if (timeElapsed % timeInterval < timeLimit && this.collideWithCanal() === true) {
+  //if (this.collideWithCanal() === true) {
+  if (this.isCollidingWithCanal != "not colliding") {
+      this.takeDamage(this.collisionDamage);
   }
+}
 */
 
   // Decrements health by [damagePoints] points every [timeInterval] seconds.
@@ -273,9 +282,9 @@ class Player {
     // integer seconds).
     let timeLimit = timeInterval / (frameRate() * timeInterval);
     // need float comparison as calls this functions multiple times in a single second - prevents it decrementing the health multiple times in a given second
-    if (timeElapsed % timeInterval < timeLimit) { 
+    if (timeElapsed % timeInterval < timeLimit) {
       this.takeDamage(this.damageOverTime); // If condition true, player takes damage
-    } 
+    }
     if (this.health <= 0) {
       this.healthIsZero();
     }
@@ -283,53 +292,68 @@ class Player {
 
   // Returns health attribute to maxHealth
   repair(timeTaken = 3.0) {
-    // Stop movement for 3 seconds
-    let timer = new Timer();
-    timer.startTimer();
-    this.velocityLimit = 0;
-    //text("Repairing...", this.position.x, this.position.y + 5);
-    // While timer < timeTaken for repairs, boat is immobile. 
-    while (timer.hasElapsed(timeTaken) === false) {
-      // Print a text message to boat position saying that repairs are ongoing...
-      //text("Repairing...", 500, 500);
-        continue;
-    }
 
-    // Timer reaches timeTaken for repairs. Boat movement reset.
-    // Revert limitVelocity to original value (allow boat to move again)
-    this.velocityLimit = this.originalVelocityLimit;
+    // Stop movement for 3 seconds
+    this.haltPlayer(timeTaken);
 
     // Update health to maxHealth
     this.health = this.maxHealth;
-  } 
+    this.zeroHealth = false;
+  }
+
+
+  // Stops boat for a given amount of time
+  haltPlayer(timeHalted = null) {
+    this.velocityLimit = 0; // halt player
+    this.velocityMagnitudeCopy = this.velocity.mag();
+    this.velocity.setMag(0);
+    // If argument not given, halt player indefinitely (until repairs occur)
+    // If argument IS given, halt player until the given number of seconds have elapsed
+    if (timeHalted != null) {
+      let timer = new Timer();
+      timer.startTimer();
+    
+      //text("Repairing...", this.position.x, this.position.y + 5);
+      // While timer < timeHalted, boat is immobile. 
+      while (timer.hasElapsed(timeHalted) === false) {
+        // Print a text message to boat position saying that repairs are ongoing...
+        //text("Repairing...", 500, 500);
+        continue;
+      }
+      // Timer reaches timeTaken for repairs. Boat movement reset.
+      // Revert limitVelocity to original value (allow boat to move again)
+      this.velocityLimit = this.originalVelocityLimit;
+      this.velocity.setMag(this.velocityMagnitudeCopy);
+    }
+  }
 }
 
 
-    // //collision mechanism for the upper border
-    // if (this.position.y < setting.getUpperLimit(this.position.x)) {
-    //   this.position.y = setting.getUpperLimit(this.position.x) + 2;
-    //   this.velocity.y *= -0.5;
-    //   this.acceleration.y *= -0.2;
-    // }
+// //collision mechanism for the upper border
+// if (this.position.y < setting.getUpperLimit(this.position.x)) {
+//   this.position.y = setting.getUpperLimit(this.position.x) + 2;
+//   this.velocity.y *= -0.5;
+//   this.acceleration.y *= -0.2;
+// }
 
-    // //collision mechanism for the bottom border
-    // if (this.position.y > setting.getLowerLimit(this.position.x)) {
-    //   this.position.y = setting.getLowerLimit(this.position.x) - 2;
-    //   this.velocity.y *= -0.5;
-    //   this.acceleration.y *= -0.2;
-    // }
+// //collision mechanism for the bottom border
+// if (this.position.y > setting.getLowerLimit(this.position.x)) {
+//   this.position.y = setting.getLowerLimit(this.position.x) - 2;
+//   this.velocity.y *= -0.5;
+//   this.acceleration.y *= -0.2;
+// }
 
-    // //collision mechanism for the right border
-    // if (this.position.x > setting.getRightLimit(this.position.y)) {
-    //   this.position.x = setting.getRightLimit(this.position.y) - 2;
-    //   this.velocity.x *= -0.5;
-    //   this.acceleration.x *= -0.2;
-    // }
+// //collision mechanism for the right border
+// if (this.position.x > setting.getRightLimit(this.position.y)) {
+//   this.position.x = setting.getRightLimit(this.position.y) - 2;
+//   this.velocity.x *= -0.5;
+//   this.acceleration.x *= -0.2;
+// }
 
-    // //collision mechanism for the left border
-    // if (this.position.x < setting.getLeftLimit(this.position.y)) {
-    //   this.position.x = setting.getLeftLimit(this.position.y) + 2;
-    //   this.velocity.x *= -0.5;
-    //   this.acceleration.x *= -0.2;
-    // }
+// //collision mechanism for the left border
+// if (this.position.x < setting.getLeftLimit(this.position.y)) {
+//   this.position.x = setting.getLeftLimit(this.position.y) + 2;
+//   this.velocity.x *= -0.5;
+//   this.acceleration.x *= -0.2;
+// }
 
