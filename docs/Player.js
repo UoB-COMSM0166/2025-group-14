@@ -48,7 +48,6 @@ class Player {
     let hitRight = this.didHitBorder(3); // 3 - right border
     this.hitAny = (hitUp || hitDown || hitRight || hitLeft);
 
-    // if (!this.hitAny){
     if (keyIsDown(DOWN_ARROW) === true) {
       this.applyForce(createVector(0, 0.5));
     }
@@ -61,114 +60,30 @@ class Player {
     else if (keyIsDown(RIGHT_ARROW) === true) {
       this.applyForce(createVector(0.5, 0));
     }
-    // }
 
     if (this.hitAny) { 
       this.acceleration = createVector(0, 0);
+      this.velocity.div(1000);
 
-      // //collision mechanism for the upper border
-      // if (hitUp) {
-      //   this.position.y += 20;
-      // }
-      // //collision mechanism for the bottom border
-      // if (hitDown) {
-      //   this.position.y -= 20;
-      // }
-      // //collision mechanism for the right border
-      // if (hitRight) {
-      //   this.position.x -= 20;
-      // }
-      // //collision mechanism for the left border
-      // if (hitLeft) {
-      //   this.position.x += 20;
-      // }
-
-      // //collision mechanism for the upper border
-      // let speed = this.velocity.mag();
-      // if (hitUp) {
-      //   if (this.velocity.y < 1) {
-      //     this.velocity = createVector(0, 0.7);
-      //   } else {
-      //     this.velocity.mult(0.7, -0.7);
-      //   }
-      // }
-      // //collision mechanism for the bottom border
-      // if (hitDown) {
-      //   if (speed < 1) {
-      //     this.velocity = createVector(0, -0.7);
-      //   } else {
-      //     this.velocity.mult(0.7, -0.7);
-      //   }
-      // }
-      // //collision mechanism for the right border
-      // if (hitRight) {
-      //   if (speed < 1) {
-      //     this.velocity = createVector(-0.7, 0);
-      //   } else {
-      //     this.velocity.mult(-0.7, 0.7);
-      //   }
-      // }
-      // //collision mechanism for the left border
-      // if (hitLeft) {
-      //   if (speed < 1) {
-      //     this.velocity = createVector(1, 0);
-      //   } else {
-      //     this.velocity.mult(-0.7, 0.7);
-      //   }
-      // }
-
-            //collision mechanism for the upper border
-      let speed = this.velocity.mag();
-      if (hitUp) {
-        // if (speed > 1) {
-        //   this.velocity.mult(0, 0);
-        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(1, -1));
-        // }
+      if (hitUp) {//collision mechanism for the upper border
         this.collisionOffset = createVector(0, 2.5);
       }
-      //collision mechanism for the bottom border
-      if (hitDown) {
-        // if (speed > 1) {
-        //   this.velocity.mult(0, 0);
-        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(1, -1));
-        // }
-        this.collisionOffset = createVector(0, -2.5);
+      if (hitDown) { //collision mechanism for the bottom border
+         this.collisionOffset = createVector(0, -2.5);
       }
-      //collision mechanism for the right border
-      if (hitRight) {
-        // if (speed > 1) {
-        //   this.velocity.mult(0, 0);
-        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(-1, 1));
-        // }
+      if (hitRight) { //collision mechanism for the right border
         this.collisionOffset = createVector(-2.5, 0);
       }
-      //collision mechanism for the left border
-      if (hitLeft) {
-        // if (speed > 1) {
-        //   this.velocity.mult(0, 0);
-        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(-1, 1));
-        // }
+      if (hitLeft) { //collision mechanism for the left border
         this.collisionOffset = createVector(2.5, 0);
       }
-      this.velocity.div(1000);
     }
 
     this.applyCollisionOffset();
-
-    fill('black');
-    stroke('white');
-    strokeWeight(2);
-    text(`hitUp: ${hitUp}`, this.position.x - 40, this.position.y - 110);
-    text(`hitDown: ${hitDown}`, this.position.x - 40, this.position.y - 95);
-    text(`this.velocity.y: ${this.velocity.y}`, this.position.x - 40, this.position.y - 80);
-    text(`this.velocity.x: ${this.velocity.x}`, this.position.x - 40, this.position.y - 65);
-    text(`acc: ${this.acceleration}`, this.position.x - 40, this.position.y - 50);
-    // text(`vel: ${this.velocity}`, this.position.x - 40, this.position.y - 35); 
-    text(`this.velocity.mag(): ${this.velocity.mag()}`, this.position.x - 40, this.position.y - 20);
   }
 
   applyCollisionOffset() {
-    //this.collision offset
+
     this.position.add(this.collisionOffset);
 
     if (this.collisionOffset.x >  0.2) {
@@ -291,11 +206,10 @@ class Player {
     fill('red');
     circle(this.position.x + ((this.h/2) * sin(this.velocity.heading())), this.position.y + ((this.h/2) * -1 * cos(this.velocity.heading())), 5);
 
-    fill(0);
-    stroke('white');
-    strokeWeight(5);
-    // line(-Infinity, this.position.y, Infinity, this.position.y);
-    // line(0, this.position.y, windowWidth, this.position.y);
+    // fill(0);
+    // stroke('white');
+    // strokeWeight(5);
+
 
     // // upper
     // line(0, this.canal.getUpperLimit(this.position.x), windowWidth, this.canal.getUpperLimit(this.position.x));
@@ -315,16 +229,14 @@ class Player {
   }
 
   debugHelperText() {
-    fill('black');
-    stroke('white');
-    strokeWeight(2);
-
+    // fill('black');
+    // stroke('white');
+    // strokeWeight(2);
     // text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, this.position.x - 40, this.position.y - 110);
     // text(`right: ${Math.round(this.canal.getRightLimit(this.position.y))}`, this.position.x - 40, this.position.y - 95);
     // text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
     // text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
     // text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
-
     // text(`heading: ${this.velocity.heading()}`, this.position.x - 40, this.position.y - 50);
 
   }
