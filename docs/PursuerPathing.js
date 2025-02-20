@@ -1,27 +1,14 @@
 class PursuerPathing {
   
   static getStartCorner(canal) {
-   let xCoord = canal.redBank.beforeIntersectX; 
-   let yCoord = canal.redBank.beforeIntersectY;
-   return {xCoord, yCoord};
+   let x = canal.redBank.beforeIntersectX; 
+   let y = canal.redBank.beforeIntersectY;
+   return {x, y};
   }
 
   static getEndCorner(canal) {
-    let xCoord = canal.redBank.afterIntersectX; 
-    let yCoord = canal.redBank.afterIntersectY;
-    return {xCoord, yCoord};
-  }
-
-  //methods below are pretty redundant
-  static incrementCanal(canal) {
-    return canal.after;
-  }
-
-  static decrementCanal(canal) {
-    return canal.before;
-  }
-
-  static lineOfSight() {
-
+    let x = canal.redBank.afterIntersectX; 
+    let y = canal.redBank.afterIntersectY;
+    return {x, y};
   }
 }

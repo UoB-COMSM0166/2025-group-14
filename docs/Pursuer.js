@@ -88,20 +88,6 @@ class Pursuer {
       }
       // call leah's function so that canal boundaries are updated
       this.reachedTheNextOne(canalSegment);
-
-      canalSegment = PursuerPathing.incrementCanal(canalSegment);  
-      let corner1 = PursuerPathing.getStartCorner(canalSegment);
-      let corner2 = PursuerPathing.getEndCorner(canalSegment);
-      push();
-      stroke('black');
-      strokeWeight(1);
-      circle(corner1.xCoord, corner1.yCoord, 16);
-      circle(corner2.xCoord, corner2.yCoord, 16);
-      noStroke();
-      text('Start', corner1.xCoord + 5, corner1.yCoord - 5);
-      text('End', corner2.xCoord + 5, corner2.yCoord - 5);
-      pop();
-      
       this.acceleration.set(0, 0);
     }
   
@@ -128,21 +114,24 @@ class Pursuer {
       let pasturesNew = canalSegment.thresholdCheck(this.position.x, this.position.y);
       if(pasturesNew != null){
           this.canal = pasturesNew;
-          console.log("switched to canal with name " + this.canal.name)
+          //console.log("switched to canal with name " + this.canal.name)
       }
     }
 
     lineOfSight(canal, player) {
-      let startCanal = canal;
-      let i = 0;
-      //let target = createVector(player.position.x, player.position.y);
-      //let position = createVector(this.position.x, this.position.y);
+      let currentCanal = canal;
+      let target = {x: player.position.x, y: player.position.y};
+      let position = {x: this.position.x, y: this.position.y};
       do {
-        text(canal.name, 100, 100 + i);
-        canal = canal.after;
-        i += 10;
+        let startCorner = PursuerPathing.getStartCorner(canal);
+        let endCorner = PursuerPathing.getEndCorner(canal);
+        if(Intersection.doIntersect(startCorner, endCorner, position, target)) {
+          console.log("Persuer has lost line of sight to player");
+          return true;
+        }
       }
-      while (canal != startCanal && canal != null); 
+      while (canal != currentCanal && canal != null);
+      return false;
     }
 
     debugHelperText() {
@@ -155,10 +144,6 @@ class Pursuer {
       text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
     }
   }
-
-
-
-
 
 /*
   canalSegment = PursuerPathing.incrementCanal(canalSegment);  
