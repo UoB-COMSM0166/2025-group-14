@@ -1,11 +1,7 @@
 class Pursuer extends Sprite {
   constructor(x, y, canal, maxSpeed = 3, maxForce = 0.3, pursuerBoatFrames) {
     // 'super' calls the parent constructor, passing it the appropriate sprite sheet
-    console.log(
-      "Checking pursuer boat frames from within pursuer: ",
-      pursuerBoatFrames
-    );
-    super(x, y, pursuerBoatFrames, 0.05);
+    super(x, y, pursuerBoatFrames);
     this.position = createVector(x, y);
     this.velocity = createVector(0, 0);
     this.acceleration = createVector(0, 0);
@@ -81,14 +77,25 @@ class Pursuer extends Sprite {
     push();
     translate(this.position.x, this.position.y); // position of pursuer
     rotate(this.velocity.heading() + HALF_PI); // orientation of pursuer
-    this.updateAnimation();
-    image(
-      this.frames[this.currentFrame],
-      -this.width / 2,
-      -this.height / 2,
-      this.width,
-      this.height
-    );
+    if (this.velocity.mag() > 0.05) {
+      this.updateAnimation(0.07);
+      image(
+        this.frames[this.currentFrame],
+        -this.width / 2,
+        -this.height / 2,
+        this.width,
+        this.height
+      );
+    } else {
+      this.updateAnimation(0.02);
+      image(
+        this.frames[this.currentFrame],
+        -this.width / 2,
+        -this.height / 2,
+        this.width,
+        this.height
+      );
+    }
     pop();
   }
 }

@@ -8,7 +8,7 @@
 class Player extends Sprite {
   constructor(mainX, mainY, mainMass, velLimit, canal, boatFrames) {
     // 'super' calls the parent constructor, passing it the appropriate sprite sheet
-    super(mainX, mainY, boatFrames, 0.05);
+    super(mainX, mainY, boatFrames);
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
     this.velocity = createVector(0, 0);
@@ -136,14 +136,25 @@ class Player extends Sprite {
     // the velocity vector points right by default - i.e., 0 radians points to the right
     // therefore we rotate the boat image by PI/2 radians (90 degrees) to make it point right
     rotate(this.velocity.heading() + HALF_PI);
-    this.updateAnimation();
-    image(
-      this.frames[this.currentFrame],
-      -this.width / 2,
-      -this.height / 2,
-      this.width,
-      this.height
-    );
+    if (this.velocity.mag() > 0.05) {
+      this.updateAnimation(0.07);
+      image(
+        this.frames[this.currentFrame],
+        -this.width / 2,
+        -this.height / 2,
+        this.width,
+        this.height
+      );
+    } else {
+      this.updateAnimation(0.03);
+      image(
+        this.frames[this.currentFrame],
+        -this.width / 2,
+        -this.height / 2,
+        this.width,
+        this.height
+      );
+    }
     pop();
   }
 

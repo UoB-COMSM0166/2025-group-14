@@ -1,5 +1,5 @@
 class Sprite {
-  constructor(x, y, frames, speed = 1) {
+  constructor(x, y, frames, speed = 0.05) {
     this.x = x;
     this.y = y;
     this.frames = frames;
@@ -11,7 +11,10 @@ class Sprite {
     this.height = this.frames[0].height;
   }
 
-  updateAnimation() {
+  updateAnimation(altSpeed) {
+    if (altSpeed) {
+      this.speed = altSpeed;
+    }
     // Increment the index by the speed.
     // Speed is used to dictate the number of frames (still images)
     // that we want to jump by each time; this is what creates the animation effect    this.index += this.speed;
