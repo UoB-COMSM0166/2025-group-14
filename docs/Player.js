@@ -120,42 +120,37 @@ class Player {
             //collision mechanism for the upper border
       let speed = this.velocity.mag();
       if (hitUp) {
-        if (speed < 1) {
-          this.collisionOffset = createVector(0, 2);
-          // this.velocity = createVector(0, 0.7);
-        } else {
-          this.velocity.mult(0.7, 0.7);
-          this.collisionOffset = p5.Vector.mult(this.velocity, createVector(1, -1));
-        }
+        // if (speed > 1) {
+        //   this.velocity.mult(0, 0);
+        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(1, -1));
+        // }
+        this.collisionOffset = createVector(0, 2.5);
       }
       //collision mechanism for the bottom border
       if (hitDown) {
-        if (speed < 1) {
-          this.collisionOffset = createVector(0, -2);
-        } else {
-          this.velocity.mult(0.7, 0.7);
-          this.collisionOffset = p5.Vector.mult(this.velocity, createVector(1, -1));
-        }
+        // if (speed > 1) {
+        //   this.velocity.mult(0, 0);
+        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(1, -1));
+        // }
+        this.collisionOffset = createVector(0, -2.5);
       }
       //collision mechanism for the right border
       if (hitRight) {
-        if (speed < 1) {
-          this.collisionOffset = createVector(-2, 0);
-        } else {
-          this.velocity.mult(0.7, 0.7);
-          this.collisionOffset = p5.Vector.mult(this.velocity, createVector(-1, 1));
-        }
+        // if (speed > 1) {
+        //   this.velocity.mult(0, 0);
+        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(-1, 1));
+        // }
+        this.collisionOffset = createVector(-2.5, 0);
       }
       //collision mechanism for the left border
       if (hitLeft) {
-        if (speed < 1) {
-          this.collisionOffset = createVector(2, 0);
-        } else {
-          this.velocity.mult(0.7, 0.7);
-          this.collisionOffset = p5.Vector.mult(this.velocity, createVector(-1, 1));
-        }
-       
+        // if (speed > 1) {
+        //   this.velocity.mult(0, 0);
+        //   // this.collisionOffset = p5.Vector.mult(this.velocity, createVector(-1, 1));
+        // }
+        this.collisionOffset = createVector(2.5, 0);
       }
+      this.velocity.div(1000);
     }
 
     this.applyCollisionOffset();
@@ -176,19 +171,19 @@ class Player {
     //this.collision offset
     this.position.add(this.collisionOffset);
 
-    if (this.collisionOffset.x >  0.1) {
-      this.collisionOffset.x -= 0.1;
-    } else if (this.collisionOffset.x < -0.1) {
-      this.collisionOffset.x += 0.1;
-    } else if (Math.abs(this.collisionOffset.x) < 0.1) {
+    if (this.collisionOffset.x >  0.2) {
+      this.collisionOffset.x -= 0.2;
+    } else if (this.collisionOffset.x < -0.2) {
+      this.collisionOffset.x += 0.2;
+    } else if (Math.abs(this.collisionOffset.x) < 0.2) {
       this.collisionOffset.x = 0;
     }
 
-    if (this.collisionOffset.y >  0.1) {
-      this.collisionOffset.y -= 0.1;
-    } else if (this.collisionOffset.y < -0.1) {
-      this.collisionOffset.y += 0.1;
-    } else if (Math.abs(this.collisionOffset.y) < 0.1) {
+    if (this.collisionOffset.y >  0.2) {
+      this.collisionOffset.y -= 0.2;
+    } else if (this.collisionOffset.y < -0.2) {
+      this.collisionOffset.y += 0.2;
+    } else if (Math.abs(this.collisionOffset.y) < 0.2) {
       this.collisionOffset.y = 0;
     }
   }
@@ -263,7 +258,7 @@ class Player {
       friction.setMag(this.mu * this.mass);
       this.applyForce(friction);
       // text(`friction: ${friction.mag()}`, this.position.x - 40, this.position.y - 35); 
-    }
+    } 
   }
 
   updatePosition() {
