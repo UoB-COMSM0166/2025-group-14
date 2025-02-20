@@ -60,7 +60,7 @@ class Player {
 
     if (hitUp || hitDown || hitRight || hitLeft) {
 
-      //collision mechanism for the upper border
+      /*//collision mechanism for the upper border
       if (hitUp) {
         this.position.y += 20;
       }
@@ -78,7 +78,8 @@ class Player {
       }
 
       this.velocity = createVector(0, 0);
-      this.acceleration = createVector(0, 0);
+      this.acceleration = createVector(0, 0);*/
+      this.velocity.mult(-0.3);
     }
   }
 

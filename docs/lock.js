@@ -86,7 +86,7 @@ class lock extends lockcomponent{
        if(this.afterThreshold.horizontalFacing === "left" && this.level != "full"){
            athreshLimit = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
        }
-       console.log("bank " + lbLimit + " before " + bthreshLimit + " after " + athreshLimit);
+
        return Math.max(lbLimit, bthreshLimit, athreshLimit);
 
    
@@ -128,7 +128,7 @@ class lock extends lockcomponent{
     }*/
 
 //visualization experiment that got out of hand - putting it on pause and just using a numerical reader for now
-   /* indicatorLines(){
+   /*indicatorLines(){
         let rPos;
         let bPos;
         let rMax = this.afterThreshold.startX;
@@ -152,8 +152,8 @@ class lock extends lockcomponent{
         }else{
           
 
-            rPos = rMin + rMax-(rGulf/(this.startFull/seconds));
-            bPos = bMin + bMax-(bGulf/(this.startFull/seconds));
+            rPos = rMax - rMin + (rGulf/(this.startFull/seconds));
+            bPos = rMax - bMin + (bGulf/(this.startFull/seconds));
         }
         line(this.beforeThreshold.endX, this.beforeThreshold.endY, rPos, limitY(30, this.redBank.gradient, this.redBank.offset));
         line(this.beforeThreshold.startX, this.beforeThreshold.startY, bPos, limitY(30, this.blackBank.gradient, this.blackBank.offset));
