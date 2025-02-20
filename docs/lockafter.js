@@ -1,8 +1,8 @@
-class lockafter extends canal{
+class lockafter extends lockcomponent{
     getUpperLimit(x){
         let tbLimit = limitY(x, this.topBank.gradient, this.topBank.offset);
         let bthreshLimit;
-        if(this.beforeThreshold.verticalFacing === "up"){
+        if(this.beforeThreshold.verticalFacing === "up" && this.before.level != "full"){
             bthreshLimit = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
             let outp = Math.max(tbLimit, bthreshLimit);
             return outp;
@@ -14,7 +14,7 @@ class lockafter extends canal{
     getLowerLimit(x){
         let bbLimit = limitY(x, this.bottomBank.gradient, this.bottomBank.offset);
         let bthreshLimit;
-        if(this.beforeThreshold.verticalFacing === "down"){
+        if(this.beforeThreshold.verticalFacing === "down" && this.before.level != "full"){
             bthreshLimit = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
         
             let outp = Math.min(bbLimit, bthreshLimit);
@@ -27,7 +27,7 @@ class lockafter extends canal{
     getRightLimit(y){
         let rbLimit = limitX(y, this.rightBank.gradient, this.rightBank.offset);
         let bthreshLimit;
-        if(this.beforeThreshold.horizontalFacing === "right"){
+        if(this.beforeThreshold.horizontalFacing === "right" && this.before.level != "full"){
             bthreshLimit = limitX(y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
             let outp = Math.min(rbLimit, bthreshLimit);
             return outp;
@@ -41,7 +41,7 @@ class lockafter extends canal{
     getLeftLimit(y){
        let lbLimit = limitX(y, this.leftBank.gradient, this.leftBank.offset);
        let bthreshLimit;
-       if(this.beforeThreshold.horizontalFacing === "left"){
+       if(this.beforeThreshold.horizontalFacing === "left" && this.before.level != "full"){
            bthreshLimit = limitX(y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
            let outp = Math.max(lbLimit, bthreshLimit);
            return outp;
@@ -52,7 +52,7 @@ class lockafter extends canal{
     }
     
 
-    thresholdCheck(x, y){
+    /*thresholdCheck(x, y){
 
 
         if(this.after != null){
@@ -76,5 +76,5 @@ class lockafter extends canal{
 
         return null;
 
-    }
+    }*/
 }

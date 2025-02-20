@@ -1,11 +1,9 @@
-class lock extends canal{
+class lock extends lockcomponent{
 
 
     constructor(width, name, startX, startY, endX, endY, fillTime, openTime){
         super(width, name, startX, startY, endX, endY);
       
-
-        //LOCK SPECIFIC - details whether the lock is open or closed
         this.fillTime = fillTime
         this.openTime = openTime
         this.cycle = this.fillTime + this.fillTime + this.openTime + this.openTime;
@@ -39,10 +37,10 @@ class lock extends canal{
         let tbLimit = limitY(x, this.topBank.gradient, this.topBank.offset);
         let bthreshLimit = 0;
         let athreshLimit = 0;
-        if(this.beforeThreshold.verticalFacing === "up"){
+        if(this.beforeThreshold.verticalFacing === "up" && this.level != "empty"){
             bthreshLimit = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
         }
-        if(this.afterThreshold.verticalFacing === "up"){
+        if(this.afterThreshold.verticalFacing === "up" && this.level != "full"){
             athreshLimit = limitY(x, this.afterThreshold.gradient, this.afterThreshold.offset);
         }
         return Math.max(tbLimit, bthreshLimit, athreshLimit);
@@ -52,10 +50,10 @@ class lock extends canal{
         let bbLimit = limitY(x, this.bottomBank.gradient, this.bottomBank.offset);
         let bthreshLimit = 3000;
         let athreshLimit = 3000;
-        if(this.beforeThreshold.verticalFacing === "down"){
+        if(this.beforeThreshold.verticalFacing === "down" && this.level != "empty"){
             bthreshLimit = limitY(x, this.beforeThreshold.gradient, this.beforeThreshold.offset);
         }
-        if(this.afterThreshold.verticalFacing === "down"){
+        if(this.afterThreshold.verticalFacing === "down" && this.level != "full"){
             athreshLimit = limitY(x, this.afterThreshold.gradient, this.afterThreshold.offset);
         }
         return Math.min(bbLimit, bthreshLimit, athreshLimit);
@@ -66,10 +64,10 @@ class lock extends canal{
         let rbLimit = limitX(y, this.rightBank.gradient, this.rightBank.offset);
         let bthreshLimit = 3000;
         let athreshLimit = 3000;
-        if(this.beforeThreshold.horizontalFacing === "right"){
+        if(this.beforeThreshold.horizontalFacing === "right" && this.level != "empty"){
             bthreshLimit = limitX(y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
         }
-        if(this.afterThreshold.horizontalFacing === "right"){
+        if(this.afterThreshold.horizontalFacing === "right" && this.level != "full"){
             athreshLimit = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
         }
         return Math.min(rbLimit, bthreshLimit, athreshLimit);
@@ -82,10 +80,10 @@ class lock extends canal{
        let lbLimit = limitX(y, this.leftBank.gradient, this.leftBank.offset);
        let bthreshLimit = 0;
        let athreshLimit = 0;
-       if(this.beforeThreshold.horizontalFacing === "left"){
+       if(this.beforeThreshold.horizontalFacing === "left" && this.level != "empty"){
            bthreshLimit = limitX(y, this.beforeThreshold.gradient, this.beforeThreshold.offset);
        }
-       if(this.afterThreshold.horizontalFacing === "left"){
+       if(this.afterThreshold.horizontalFacing === "left" && this.level != "full"){
            athreshLimit = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
        }
        console.log("bank " + lbLimit + " before " + bthreshLimit + " after " + athreshLimit);
@@ -94,7 +92,7 @@ class lock extends canal{
    
     }
 
-    thresholdCheck(x, y){
+    /*thresholdCheck(x, y){
 
         if(this.level === "filling" || this.level === "emptying"){
             return null;
@@ -127,7 +125,7 @@ class lock extends canal{
 
         return null;
 
-    }
+    }*/
 
 //visualization experiment that got out of hand - putting it on pause and just using a numerical reader for now
    /* indicatorLines(){

@@ -1,8 +1,8 @@
-class lockbefore extends canal{
+class lockbefore extends lockcomponent{
                 getUpperLimit(x){
                     let tbLimit = limitY(x, this.topBank.gradient, this.topBank.offset);
                     let athreshLimit;
-                    if(this.afterThreshold.verticalFacing === "up"){
+                    if(this.afterThreshold.verticalFacing === "up" && this.after.level != "empty"){
                         athreshLimit = limitY(x, this.afterThreshold.gradient, this.afterThreshold.offset);
                         let outp = Math.max(tbLimit, athreshLimit);
                         return outp;
@@ -14,7 +14,7 @@ class lockbefore extends canal{
                 getLowerLimit(x){
                     let bbLimit = limitY(x, this.bottomBank.gradient, this.bottomBank.offset);
                     let athreshLimit;
-                    if(this.afterThreshold.verticalFacing === "down"){
+                    if(this.afterThreshold.verticalFacing === "down"  && this.after.level != "empty"){
                         athreshLimit = limitY(x, this.afterThreshold.gradient, this.afterThreshold.offset);
                     
                         let outp = Math.min(bbLimit, athreshLimit);
@@ -27,7 +27,7 @@ class lockbefore extends canal{
                 getRightLimit(y){
                     let rbLimit = limitX(y, this.rightBank.gradient, this.rightBank.offset);
                     let athreshLimit;
-                    if(this.afterThreshold.horizontalFacing === "right"){
+                    if(this.afterThreshold.horizontalFacing === "right" && this.after.level != "empty"){
                         athreshLimit = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
                         let outp = Math.min(rbLimit, athreshLimit);
                         return outp;
@@ -41,7 +41,7 @@ class lockbefore extends canal{
                 getLeftLimit(y){
                    let lbLimit = limitX(y, this.leftBank.gradient, this.leftBank.offset);
                    let athreshLimit;
-                   if(this.afterThreshold.horizontalFacing === "left"){
+                   if(this.afterThreshold.horizontalFacing === "left" && this.after.level != "empty"){
                        athreshLimit = limitX(y, this.afterThreshold.gradient, this.afterThreshold.offset);
                        let outp = Math.max(lbLimit, athreshLimit);
                        return outp;
@@ -52,7 +52,7 @@ class lockbefore extends canal{
                 }
                 
     
-                thresholdCheck(x, y){
+                /*thresholdCheck(x, y){
     
 
                     if(this.after != null){
@@ -76,5 +76,5 @@ class lockbefore extends canal{
         
                     return null;
         
-                }
+                }*/
 }
