@@ -53,6 +53,10 @@ class canal{
         this.after = null; 
         this.beforeThreshold = null;
         this.afterThreshold = null;
+        this.afterBuffer = null;
+        this.beforeBuffer = null;
+        this.afterBufferCrossed = null;
+        this.beforeBufferCrossed = null;
 
 
 
@@ -63,6 +67,10 @@ class canal{
         this.redBank.visualize();
         stroke("black");
         this.blackBank.visualize();
+        stroke("green");
+        this.afterBuffer.visualize();
+        stroke("orange");
+        this.beforeBuffer.visualize();
  
  
     }
@@ -97,6 +105,10 @@ class canal{
         this.redBank.setBeforeIntersect(x1, y1);
         this.blackBank.setBeforeIntersect(x2, y2);
 
+        const x3 = linearIntersectX(blackGrad, blackOff, targRed.gradient, targRed.offset);
+        const y3 = linearIntersectY(blackGrad, blackOff, targRed.gradient, targRed.offset); 
+        this.beforeBuffer = new bank(x3, y3, x1, y1);
+
 
     }
 
@@ -118,6 +130,10 @@ class canal{
               
         this.redBank.setAfterIntersect(x1, y1);
         this.blackBank.setAfterIntersect(x2, y2);
+
+        const x3 = linearIntersectX(blackGrad, blackOff, targRed.gradient, targRed.offset);
+        const y3 = linearIntersectY(blackGrad, blackOff, targRed.gradient, targRed.offset); 
+        this.afterBuffer = new bank(x3, y3, x1, y1);
 
     }
 
