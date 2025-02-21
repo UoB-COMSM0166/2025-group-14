@@ -82,4 +82,9 @@ next week:
 - Leon:
   game aesthetics
 *** readme and uml diagram
+* 19/02/2025
+Teams meeting, all going well
+- Daniel and Leah to refocus on collision mechanics
+  
+  
 
