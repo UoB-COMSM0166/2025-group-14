@@ -166,18 +166,18 @@ class Player {
       y: y + ((this.w/2) * sin(angle)),
     };
     if(currCanal.afterBuffer.checkCross(x, y)){
-      console.log("after false");
       this.canal.afterBufferCrossed = false;
+      console.log(this.canal.afterBufferCrossed);
     }else{
-      console.log("after true");
       this.canal.afterBufferCrossed = true;
+      console.log(this.canal.afterBufferCrossed);
     }
     if(currCanal.beforeBuffer.checkCross(x, y)){
-      console.log("before true");
       this.canal.beforeBufferCrossed = true;
+      console.log(this.canal.beforeBufferCrossed);
     }else{
-      console.log("before false");
       this.canal.beforeBufferCrossed = false;
+      console.log(this.canal.beforeBufferCrossed);
     }
     let pasturesNew = currCanal.thresholdCheck(frontHitbox.x, frontHitbox.y);
     if(pasturesNew != null){

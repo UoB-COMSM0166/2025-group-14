@@ -139,32 +139,149 @@ class canal{
 
         //functions that get the limits of boat motion
         getUpperLimit(x){
-            return limitY(x, this.topBank.gradient, this.topBank.offset);//upperlimit
+            if(this.beforeBufferCrossed){
+                return this.getBufferLimits(x, 0, "before");
+            }else if(this.afterBufferCrossed){
+                return this.getBufferLimits(x, 0, "after");
+            }else{
+                return this.getStandardLimits(x, 0);
+            }
         }
-        
+
         getLowerLimit(x){
-            return limitY(x, this.bottomBank.gradient, this.bottomBank.offset);
+            if(this.beforeBufferCrossed){
+                return this.getBufferLimits(x, 1, "before");
+            }else if(this.afterBufferCrossed){
+                return this.getBufferLimits(x, 1, "after");
+            }else{
+                return this.getStandardLimits(x, 1);
+            }
         }
 
         getRightLimit(y){
-            return limitX(y, this.rightBank.gradient, this.rightBank.offset);
-
+            if(this.beforeBufferCrossed){
+                return this.getBufferLimits(y, 3, "before");
+            }else if(this.afterBufferCrossed){
+                return this.getBufferLimits(y, 3, "after");
+            }else{
+                return this.getStandardLimits(y, 3);
+            }
         }
 
         getLeftLimit(y){
-           return limitX(y, this.leftBank.gradient, this.leftBank.offset);
+            if(this.beforeBufferCrossed){
+                return this.getBufferLimits(y, 2, "before");
+            }else if(this.afterBufferCrossed){
+                return this.getBufferLimits(y, 2, "after");
+            }else{
+                return this.getStandardLimits(y, 2);
+            }
+        }
+
+        
+        getBufferLimits(inp, direction, buffer){
+            //0-3 = up down left right;
+            let targetCurrent;
+            let targetComparison;
+            let comparison;
+            let vertical;
+            let bigNum;
+            switch(buffer){
+                case "before":
+                    comparison = this.before;
+                    break;
+                case "after":
+                    comparison = this.after;
+                    break;
+            }
+
+            switch(direction){
+                case 0:
+                    targetCurrent = this.topBank;
+                    targetComparison = comparison.topBank;
+                    vertical = true;
+                    bigNum = false;
+                    break;
+                case 1:
+                    targetCurrent = this.bottomBank;
+                    targetComparison = comparison.bottomBank;
+                    vertical = true;
+                    bigNum = true;
+                    break;
+                case 2:
+                    targetCurrent = this.leftBank;
+                    targetComparison = comparison.leftBank;
+                    vertical = false;
+                    bigNum = false;
+                    break;
+                case 3:
+                    targetCurrent = this.rightBank;
+                    targetComparison = comparison.rightBank;
+                    vertical = false;
+                    bigNum = true;
+                    break;
+
+            }
+            let targOut;
+            let compOut;
+            if(vertical){
+                targOut = limitY(inp, targetCurrent.gradient, targetCurrent.offset);
+                compOut = limitY(inp, targetComparison.gradient, targetComparison.offset);
+            }else{
+                targOut = limitX(inp, targetCurrent.gradient, targetCurrent.offset);
+                compOut = limitX(inp, targetComparison.gradient, targetComparison.offset);
+
+            }
+            if(bigNum){
+                return Math.max(targOut, compOut);
+            }else{
+                return Math.min(targOut, compOut);
+            }
+            
+        }
+
+   
+        
+        getStandardLimits(inp, direction){
+            //0-3 = up down left right;
+            let target;
+            let vertical;
+            switch(direction){
+                case 0:
+                    target = this.topBank;
+                    vertical = true;
+                    break;
+                case 1:
+                    target = this.bottomBank;
+                    vertical = true;
+                    break;
+                case 2:
+                    target = this.leftBank;
+                    vertical = false;
+                    break;
+                case 3:
+                    target = this.rightBank;
+                    vertical = false;
+                    break;
+
+            }
+            if(vertical){
+                return limitY(inp, target.gradient, target.offset);
+            }else{
+                return limitX(inp, target.gradient, target.offset);
+            }
+            
         }
         
 
         thresholdCheck(x, y){
 
-
-
-
             if(this.after != null){
-        
+    
                 if(this.afterThreshold.checkCross(x, y)){
                     console.log("Swap forward!");
+                    this.afterBufferCrossed = false;
+                    this.after.beforeBufferCrossed = true;
                     return this.after;
                 }
         
@@ -172,10 +289,10 @@ class canal{
 
             }
             if(this.before != null){
-
-
                 if(this.beforeThreshold.checkCross(x, y)){
                     console.log("Swap backward!");
+                    this.beforeBufferCrossed = false;
+                    this.before.afterBufferCrossed = true;
                     return this.before;
                 }
         
