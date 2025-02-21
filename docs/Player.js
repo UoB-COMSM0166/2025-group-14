@@ -12,8 +12,8 @@ class Player {
   constructor(mainX, mainY, mainMass, velLimit, canal) {
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
-    this.w = 50;
-    this.h = 20;
+    this.w = 10;
+    this.h = 5;
     this.velocity = createVector(0, 0);
     this.mass = mainMass;
     this.angle = 0;
@@ -38,7 +38,6 @@ class Player {
   move() { 
     //sets limits based on the locations of the edges of the canal object where the boat is
     // let setting = this.canal;
-
     //tests if the boat has moved to another canal segment, and shifts it there if so
     this.reachedTheNextOne(this.canal);
 
@@ -48,16 +47,17 @@ class Player {
     let hitRight = this.didHitBorder(3); // 3 - right border
     this.hitAny = (hitUp || hitDown || hitRight || hitLeft);
 
-    if (keyIsDown(DOWN_ARROW) === true) {
+    
+    if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) { // W = 83
       this.applyForce(createVector(0, 0.5));
     }
-    else if (keyIsDown(UP_ARROW) === true) {
+    else if (keyIsDown(UP_ARROW) || keyIsDown(87)) { // S = 87
       this.applyForce(createVector(0,- 0.5));
     }
-    if (keyIsDown(LEFT_ARROW) === true) {
+    if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) { // A = 65
       this.applyForce(createVector(-0.5, 0));
     }
-    else if (keyIsDown(RIGHT_ARROW) === true) {
+    else if (keyIsDown(RIGHT_ARROW) | keyIsDown(68)) { // D = 68
       this.applyForce(createVector(0.5, 0));
     }
 
@@ -66,22 +66,25 @@ class Player {
       this.velocity.div(1000);
 
       if (hitUp) {//collision mechanism for the upper border
-        this.collisionOffset = createVector(0, 2.5);
+        this.collisionOffset.set(0, 2.5);
       }
       if (hitDown) { //collision mechanism for the bottom border
-         this.collisionOffset = createVector(0, -2.5);
+         this.collisionOffset.set(0, -2.5);
       }
       if (hitRight) { //collision mechanism for the right border
-        this.collisionOffset = createVector(-2.5, 0);
+        this.collisionOffset.set(-2.5, 0);
       }
       if (hitLeft) { //collision mechanism for the left border
-        this.collisionOffset = createVector(2.5, 0);
+        this.collisionOffset.set(2.5, 0);
       }
     }
 
     this.applyCollisionOffset();
   }
 
+
+  // this function basically draggs the player model off the border
+  // when the boat "hits" the edge of the canal 
   applyCollisionOffset() {
 
     this.position.add(this.collisionOffset);
@@ -114,6 +117,8 @@ class Player {
     //The sin and cos are needed, because the origianl ellipse does not
     //actually rotate, event though it is displayed as rotated along 
     // the velocity vector
+    // Note, these are the real hitboxes. The coloured circles on the boat
+    // (created in the paintPlayerModel()) are there for aesthetic reasons
     let frontHitbox = {
       x: x + ((this.w/2) * cos(angle)),
       y: y + ((this.w/2) * sin(angle)),
@@ -196,20 +201,21 @@ class Player {
     line(0, 0, this.w / 2, 0);
     pop();
 
-    noStroke();
-     
-    //uncomment these 3 circles, if you need to adjust the position of the hitboxes
-    fill('green');
-    circle(this.position.x + ((this.w/2) * cos(this.velocity.heading())), this.position.y + ((this.w/2) * sin(this.velocity.heading())), 5);
-    fill('blue');
-    circle(this.position.x + ((this.h/2) * -1 * sin(this.velocity.heading())), this.position.y + ((this.h/2) * cos(this.velocity.heading())), 5);
-    fill('red');
-    circle(this.position.x + ((this.h/2) * sin(this.velocity.heading())), this.position.y + ((this.h/2) * -1 * cos(this.velocity.heading())), 5);
+    // //uncomment these 3 circles, if you need to adjust the position of the hitboxes
+
+    // noStroke();
+    // fill('green');
+    // circle(this.position.x + ((this.w/2) * cos(this.velocity.heading())), this.position.y + ((this.w/2) * sin(this.velocity.heading())), 5);
+    // fill('blue');
+    // circle(this.position.x + ((this.h/2) * -1 * sin(this.velocity.heading())), this.position.y + ((this.h/2) * cos(this.velocity.heading())), 5);
+    // fill('red');
+    // circle(this.position.x + ((this.h/2) * sin(this.velocity.heading())), this.position.y + ((this.h/2) * -1 * cos(this.velocity.heading())), 5);
+
+    // // uncomment these lines if you want to see the borders of the canal at any given time
 
     // fill(0);
     // stroke('white');
     // strokeWeight(5);
-
 
     // // upper
     // line(0, this.canal.getUpperLimit(this.position.x), windowWidth, this.canal.getUpperLimit(this.position.x));
