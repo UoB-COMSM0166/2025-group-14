@@ -1,10 +1,10 @@
 class boat{
-    constructor(speed, canal, startX, startY, width, height){
+    constructor(speed, canal, width, height){
         //relevant metrics to boat motion
         this.speed = speed;
         this.canal = canal;
-        this.x = startX;
-        this.y = startY;
+        this.x = canal.startPos[0];
+        this.y = canal.startPos[1];
         this.width = width;
         this.height = height;
      
@@ -20,8 +20,6 @@ class boat{
             this.prevKey = "vertical";
             this.front = this.height;
         }
-
-
 
 
     }
@@ -72,7 +70,7 @@ class boat{
         let pasturesNew = setting.thresholdCheck(this.x, this.y);
         if(pasturesNew != null){
             this.canal = pasturesNew;
-            console.log("switched to canal with name " + this.canal.name)
+            console.log("moved into a canal with name " + this.canal.name);
         }
     }
 
