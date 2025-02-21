@@ -157,7 +157,15 @@ class Player {
   }
 
   reachedTheNextOne(currCanal){ //Leah's function that checks the transition between canals (2 parallel lines)
-    let pasturesNew = currCanal.thresholdCheck(this.position.x, this.position.y);
+    let x = this.position.x; 
+    let y = this.position.y;
+    let angle = this.velocity.heading();
+
+    let frontHitbox = {
+      x: x + ((this.w/2) * cos(angle)),
+      y: y + ((this.w/2) * sin(angle)),
+    };
+    let pasturesNew = currCanal.thresholdCheck(frontHitbox.x, frontHitbox.y);
     if(pasturesNew != null){
         this.canal = pasturesNew;
         console.log("switched to canal with name " + this.canal.name)
