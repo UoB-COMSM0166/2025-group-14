@@ -165,20 +165,6 @@ class Player {
       x: x + ((this.w/2) * cos(angle)),
       y: y + ((this.w/2) * sin(angle)),
     };
-    if(currCanal.afterBuffer.checkCross(x, y)){
-      this.canal.afterBufferCrossed = false;
-      console.log(this.canal.afterBufferCrossed);
-    }else{
-      this.canal.afterBufferCrossed = true;
-      console.log(this.canal.afterBufferCrossed);
-    }
-    if(currCanal.beforeBuffer.checkCross(x, y)){
-      this.canal.beforeBufferCrossed = true;
-      console.log(this.canal.beforeBufferCrossed);
-    }else{
-      this.canal.beforeBufferCrossed = false;
-      console.log(this.canal.beforeBufferCrossed);
-    }
     let pasturesNew = currCanal.thresholdCheck(frontHitbox.x, frontHitbox.y);
     if(pasturesNew != null){
         this.canal = pasturesNew;

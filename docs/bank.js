@@ -6,6 +6,8 @@ class bank{
         this.endY = endY;
         this.gradient = gradient(startX, startY, endX, endY);
         this.offset = offset(this.gradient, startX, startY);
+        this.angle = Math.atan(this.gradient);
+        this.length = length(startX, startY, endX, endY);
 
 
         this.beforeIntersectX = null;
@@ -37,7 +39,7 @@ class bank{
 
     setAfterIntersect(x, y){
         this.afterIntersectX = x;
-        this.afterIntersectY = y
+        this.afterIntersectY = y;
     }
     
     
@@ -91,8 +93,6 @@ class bank{
 
       
     }
-    
-    
 
 
 }

@@ -34,3 +34,12 @@ function limitY(x, grad, offset){
 function limitX(y, grad, offset){
     return (y - offset) / grad;
 }
+
+function length(startX, startY, endX, endY){
+    let vertChange = endX - startX;
+    let horChange = endY - startY;
+    vertChange *= vertChange;
+    horChange *= horChange;
+    return Math.sqrt(vertChange + horChange);
+
+}

@@ -50,6 +50,7 @@ function draw() {
   c4.visualize();
   c5.visualize();
   c6.visualize();
+  console.log("Resetting");
 
   // b.visualize(); // visualising the Leah's boat
 

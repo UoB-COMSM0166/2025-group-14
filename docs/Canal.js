@@ -1,13 +1,10 @@
 class canal{
     constructor(width, name, startX, startY, endX, endY){
         
-        
         //preliminary maths
         let a = angleCalc(startX, startY, endX, endY);
         let opp = Math.sin(a) * width;
         let adj = Math.cos(a) * width;
-
-
 
         //two banks of "Width" apart
         this.width = width;
@@ -15,19 +12,16 @@ class canal{
         this.topBank = new bank(startX, startY, endX, endY);
         this.bottomBank = new bank(startX + opp, startY + adj, endX + opp, endY + adj);
 
-
         //designates the banks as "red" or "black", allowing connection of segments redBank to redBank & blackBank to blackBank
         let direction = this.topBank.verticalFacing;
         if(direction === "up"){
             this.redBank = this.topBank;
             this.blackBank = this.bottomBank;
       
-
         }else{
         
             this.redBank = this.bottomBank;
             this.blackBank = this.topBank;
-     
 
         }
 
@@ -38,27 +32,17 @@ class canal{
         
         }
 
-        
         if(startY > endY){
             this.rightBank = this.blackBank;
             this.leftBank = this.redBank;
   
         }
 
-
-
-
         //set during the connection function; "before" and  "after" are the two canals that connect to this one, with "threshold" being the point between them for the boat to cross
         this.before = null;
         this.after = null; 
         this.beforeThreshold = null;
         this.afterThreshold = null;
-        this.afterBuffer = null;
-        this.beforeBuffer = null;
-        this.afterBufferCrossed = null;
-        this.beforeBufferCrossed = null;
-
-
 
     }
 
@@ -67,12 +51,19 @@ class canal{
         this.redBank.visualize();
         stroke("black");
         this.blackBank.visualize();
-        stroke("green");
-        this.afterBuffer.visualize();
-        stroke("orange");
-        this.beforeBuffer.visualize();
- 
- 
+        this.visualizeInterior();
+
+    }
+
+    visualizeInterior(){
+        stroke("blue");
+        fill("blue");
+        beginShape(QUAD_STRIP);
+        vertex(this.redBank.beforeIntersectX, this.redBank.beforeIntersectY);
+        vertex(this.blackBank.beforeIntersectX, this.blackBank.beforeIntersectY);
+        vertex(this.redBank.afterIntersectX, this.redBank.afterIntersectY);
+        vertex(this.blackBank.afterIntersectX, this.blackBank.afterIntersectY);
+        endShape(CLOSE);
     }
 
     setConnections(before, after){
@@ -105,10 +96,6 @@ class canal{
         this.redBank.setBeforeIntersect(x1, y1);
         this.blackBank.setBeforeIntersect(x2, y2);
 
-        const x3 = linearIntersectX(blackGrad, blackOff, targRed.gradient, targRed.offset);
-        const y3 = linearIntersectY(blackGrad, blackOff, targRed.gradient, targRed.offset); 
-        this.beforeBuffer = new bank(x3, y3, x1, y1);
-
 
     }
 
@@ -131,17 +118,14 @@ class canal{
         this.redBank.setAfterIntersect(x1, y1);
         this.blackBank.setAfterIntersect(x2, y2);
 
-        const x3 = linearIntersectX(blackGrad, blackOff, targRed.gradient, targRed.offset);
-        const y3 = linearIntersectY(blackGrad, blackOff, targRed.gradient, targRed.offset); 
-        this.afterBuffer = new bank(x3, y3, x1, y1);
 
     }
 
         //functions that get the limits of boat motion
         getUpperLimit(x){
-            if(this.beforeBufferCrossed){
+            if(false){
                 return this.getBufferLimits(x, 0, "before");
-            }else if(this.afterBufferCrossed){
+            }else if(false){
                 return this.getBufferLimits(x, 0, "after");
             }else{
                 return this.getStandardLimits(x, 0);
@@ -149,9 +133,9 @@ class canal{
         }
 
         getLowerLimit(x){
-            if(this.beforeBufferCrossed){
+            if(false){
                 return this.getBufferLimits(x, 1, "before");
-            }else if(this.afterBufferCrossed){
+            }else if(false){
                 return this.getBufferLimits(x, 1, "after");
             }else{
                 return this.getStandardLimits(x, 1);
@@ -159,9 +143,9 @@ class canal{
         }
 
         getRightLimit(y){
-            if(this.beforeBufferCrossed){
+            if(false){
                 return this.getBufferLimits(y, 3, "before");
-            }else if(this.afterBufferCrossed){
+            }else if(false){
                 return this.getBufferLimits(y, 3, "after");
             }else{
                 return this.getStandardLimits(y, 3);
@@ -169,9 +153,9 @@ class canal{
         }
 
         getLeftLimit(y){
-            if(this.beforeBufferCrossed){
+            if(false){
                 return this.getBufferLimits(y, 2, "before");
-            }else if(this.afterBufferCrossed){
+            }else if(false){
                 return this.getBufferLimits(y, 2, "after");
             }else{
                 return this.getStandardLimits(y, 2);
@@ -280,8 +264,6 @@ class canal{
     
                 if(this.afterThreshold.checkCross(x, y)){
                     console.log("Swap forward!");
-                    this.afterBufferCrossed = false;
-                    this.after.beforeBufferCrossed = true;
                     return this.after;
                 }
         
@@ -291,8 +273,6 @@ class canal{
             if(this.before != null){
                 if(this.beforeThreshold.checkCross(x, y)){
                     console.log("Swap backward!");
-                    this.beforeBufferCrossed = false;
-                    this.before.afterBufferCrossed = true;
                     return this.before;
                 }
         
