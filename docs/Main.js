@@ -13,26 +13,36 @@ let boatSpritesheet;
 let boatJson;
 let boatFrames = [];
 let pursuerBoatFrames = [];
-//TODO: let waterTileFrames = [];
+let waterSpritesheet;
+let waterTileFrame;
 // Preload sprite images before the program starts
 function preload() {
   boatJson = loadJSON("boat.json");
   boatSpritesheet = loadImage("Boat-redbrown.png");
   pursuerBoatSpritesheet = loadImage("Boat-grey.png");
+  waterSpritesheet = loadImage("water.png");
 }
 
 function setup() {
   //set the canvas size the first time when the program starts
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight, WEBGL);
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
-
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
-  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
-  c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300);
+  waterTileFrame = waterSpritesheet.get(0, 0, 16, 16);
+  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450, waterTileFrame);
+  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600, waterTileFrame);
+  c3 = new canal(
+    canalWidth,
+    "ThirdElement",
+    200,
+    500,
+    550,
+    620,
+    waterTileFrame
+  );
+  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100, waterTileFrame);
+  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150, waterTileFrame);
+  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300, waterTileFrame);
   c1.setConnections(c6, c2);
   c2.setConnections(c1, c3);
   c3.setConnections(c2, c4);
@@ -54,21 +64,16 @@ function setup() {
   console.log("Boat frames: ", boatFrames);
   console.log("Pursuer boat frames: ", pursuerBoatFrames);
 
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal
+  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, the start canal, and spritesheet
   player = new Player(160, 320, 5, 3, c6, boatFrames);
   // canal = new oldCanal(300, 100);
   pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
 }
 
 function draw() {
+  translate(-width / 2, -height / 2);
   ResizeCanvas();
   background(200);
-
-  // pursuer object appear and behaviour
-  let steering = pursuer.arrive(player);
-  pursuer.applyForce(steering);
-  pursuer.update();
-  pursuer.show();
 
   c1.visualize();
   c2.visualize();
@@ -78,6 +83,12 @@ function draw() {
   c6.visualize();
 
   // b.visualize(); // visualising the Leah's boat
+
+  // pursuer object appear and behaviour
+  let steering = pursuer.arrive(player);
+  pursuer.applyForce(steering);
+  pursuer.update();
+  pursuer.show();
 
   //to make the player model appear on the screen
   player.show(); // visualising Daniil's boat
