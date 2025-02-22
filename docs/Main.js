@@ -60,9 +60,6 @@ function setup() {
     let pursuerImg = pursuerBoatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
     pursuerBoatFrames.push(pursuerImg);
   }
-  //CHECKING IF ARRAY IS POPULATED CORRECTLY
-  console.log("Boat frames: ", boatFrames);
-  console.log("Pursuer boat frames: ", pursuerBoatFrames);
 
   //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, the start canal, and spritesheet
   player = new Player(160, 320, 5, 3, c6, boatFrames);
