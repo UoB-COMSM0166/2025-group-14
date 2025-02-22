@@ -1,3 +1,6 @@
+// Linked below is where we got the boat sprites from.
+// https://samifd3f122.itch.io/free-pixel-art-boats?download
+
 // Adapted from Daniel's main.js file. Added the pursuer object and a test canal (feel free to replace with your own
 // canal object once the canal feature is merged). This Main file is just for testing compatability between the Player
 // and Pursuer features.
