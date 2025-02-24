@@ -84,7 +84,6 @@ class Player {
     this.applyCollisionOffset();
 
     // // end of map member to change level
-    // // TODO change this to be less hard coded
     // if (this.position.x > windowWidth + 20) {
     //   let yCord = this.position.y
     //   this.position = createVector(0, yCord);
@@ -97,8 +96,18 @@ class Player {
     //   this.position = createVector(0, yCord);
     //   this.endOfMap = true;
     // }
+  // }
+
   }
 
+
+
+  nextLevel(canal) {
+    let yCord = this.position.y
+    this.position = createVector(0, yCord);
+    this.endOfMap = true;
+    this.canal = canal;
+  }
 
   // this function basically draggs the player model off the border
   // when the boat "hits" the edge of the canal 

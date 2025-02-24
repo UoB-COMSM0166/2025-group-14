@@ -14,7 +14,7 @@ function setup() {
   oldWindowHeight = windowHeight;
 
   // // circular map
-  // let start = LC.circularLevel()[0];
+  // let start = LC.circularLevel();
   // player = new Player(160, 320, 5, 3, start);
 
   // let start = LC.levelOne();
@@ -33,8 +33,12 @@ function draw() {
   background(200);
 
   player.show(); // visualising Daniil's boat
-  LC.show(player.endOfMap);
+  LC.show();
 
+  if (player.position.x > 200) {
+    let level = LC.nextLevel()
+    player.nextLevel(level);
+  }
   // // pursuer object appear and behaviour
   // let steering = pursuer.arrive(player);
   // pursuer.applyForce(steering);

@@ -59,14 +59,16 @@ class canalBuilder {
 
     flatLevel(length) {
         let canals = [];
+        let lastCanalIdx = length - 1;
         let windowScale = windowWidth / length;
         let xStartPos = 0;
         let yStartPos = innerHeight / 2;
         let xEndPos = xStartPos + windowScale;
         let yEndPos = yStartPos;
+
         for (let i = 0; i < length; i++) {
             // avoids strange behavior if canal exceeds screen width
-            if (i == length - 1) {
+            if (i == lastCanalIdx) {
                 xEndPos--;
             }
             canals.push(new canal(this.canalWidth, this.canalNum++, xStartPos, yStartPos, xEndPos, yEndPos));
@@ -81,12 +83,28 @@ class canalBuilder {
                 yEndPos -= 50;
             }
         }
-        canals[0].setConnections(null, canals[1]);
-        canals[1].setConnections(canals[0], canals[2]);
-        canals[2].setConnections(canals[1], canals[3]);
-        canals[3].setConnections(canals[2], canals[4]);
-        canals[4].setConnections(canals[3], null);
+        this.setConnectionsFlatLevel(canals, length, lastCanalIdx);
         return canals;
+    }
+
+    setConnectionsFlatLevel(canals, length, lastCanalIdx) {
+        let prev, next;
+        for (let i = 0; i < length; i++) {
+            // set last or first element correctly
+            if (i == 0) {
+                prev = null;
+                next = canals[i + 1];
+            }
+            else if (i == lastCanalIdx) {
+                prev = canals[i - 1];
+                next = null;
+            }
+            else {
+                prev = canals[i - 1];
+                next = canals[i + 1];
+            }
+            canals[i].setConnections(prev, next);
+        }
     }
 }
 
@@ -112,29 +130,39 @@ class LevelController {
     }
 
     generatedLevel() {
-        let num = 5;
-        this.canals[0] = this.builder.flatLevel(num);
-        return this.canals[0][0];
+        let num = randomInt(3, 10);
+        this.canals[this.level] = this.builder.flatLevel(num);
+        return this.canals[this.level][0];
     }
 
     circularLevel() {
         this.canals[0] = this.builder.circLevel();
-        return this.canals[0];
+        return this.canals[0][0];
     }
 
+    // returns first canal of new level
     nextLevel() {
-        this.levelMethods[++this.level]();
+        this.level += 1;
+        return this.generatedLevel()[0];
+        // this.levelMethods[++this.level]();
     }
 
     show(endOfLevel) {
         textSize(100);
         text("LEVEL " + (this.level + 1), windowWidth/2-100, 100);
 
+        // if (endOfLevel) {
+        //     this.nextLevel();
+        // }
         for (let segment of this.canals[this.level]) {
             segment.visualize();
         }
-        if (endOfLevel) {
-            this.nextLevel();
-        }
     }
 }
+
+// maximum is exclusive
+function randomInt(min, max) {
+    const minCeil = Math.ceil(min);
+    const maxFloor = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloor - minCeil) + minCeil);
+  }
