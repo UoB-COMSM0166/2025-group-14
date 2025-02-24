@@ -22,6 +22,7 @@ class Player {
     this.canal = canal;
     this.hitAny = false;
     this.collisionOffset = createVector(0, 0);
+    this.endOfMap = false;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -36,6 +37,7 @@ class Player {
   }
 
   move() { 
+    this.endOfMap = false;
     //sets limits based on the locations of the edges of the canal object where the boat is
     // let setting = this.canal;
     //tests if the boat has moved to another canal segment, and shifts it there if so
@@ -80,6 +82,19 @@ class Player {
     }
 
     this.applyCollisionOffset();
+
+    // // end of map member to change level
+    // // TODO change this to be less hard coded
+    // if (this.position.x > windowWidth + 20) {
+    //   let yCord = this.position.y
+    //   this.position = createVector(0, yCord);
+    //   this.endOfMap = true;
+    // }
+    if (this.position.x > 200) {
+      let yCord = this.position.y
+      this.position = createVector(0, yCord);
+      this.endOfMap = true;
+    }
   }
 
 
@@ -165,7 +180,7 @@ class Player {
     let pasturesNew = currCanal.thresholdCheck(this.position.x, this.position.y);
     if(pasturesNew != null){
         this.canal = pasturesNew;
-        console.log("switched to canal with name " + this.canal.name)
+        console.log("switched to canal " + this.canal.name)
     }
   }
 

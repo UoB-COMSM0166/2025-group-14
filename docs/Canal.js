@@ -138,39 +138,20 @@ class canal{
         getLeftLimit(y){
            return limitX(y, this.leftBank.gradient, this.leftBank.offset);
         }
-        
 
         thresholdCheck(x, y){
-
-
-
-
             if(this.after != null){
-        
                 if(this.afterThreshold.checkCross(x, y)){
                     console.log("Swap forward!");
                     return this.after;
                 }
-        
-
-
             }
             if(this.before != null){
-
-
                 if(this.beforeThreshold.checkCross(x, y)){
                     console.log("Swap backward!");
                     return this.before;
                 }
-        
             }
-
-
-
             return null;
-
         }
-
-
-
 }
