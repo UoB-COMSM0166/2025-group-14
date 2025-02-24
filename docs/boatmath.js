@@ -43,3 +43,14 @@ function length(startX, startY, endX, endY){
     return Math.sqrt(vertChange + horChange);
 
 }
+
+function angleIntersect(grad1, grad2){
+    let num = grad1 - grad2;
+    let denom = 1 + (grad1 * grad2);
+    let abs = Math.abs(num/denom);
+    return (Math.atan(abs) * (180/Math.PI));
+}
+
+function toDegrees(rads){
+    return rads * (180/Math.PI);
+}

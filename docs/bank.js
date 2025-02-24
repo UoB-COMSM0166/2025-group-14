@@ -7,6 +7,7 @@ class bank{
         this.gradient = gradient(startX, startY, endX, endY);
         this.offset = offset(this.gradient, startX, startY);
         this.angle = Math.atan(this.gradient);
+        this.angleInDegrees = toDegrees(this.angle);
         this.length = length(startX, startY, endX, endY);
 
 
@@ -16,19 +17,25 @@ class bank{
         this.afterIntersectY = null;
         this.horizontalFacing = null;
         this.verticalFacing = null;
+        this.horizontalPointing = null;
+        this.verticalPointing = null;
         this.setDirection();
     }
 
     setDirection(){
         if(this.startX >= this.endX){
             this.verticalFacing = "down";
+            this.horizontalPointing = "left";
         }else{
             this.verticalFacing = "up";
+            this.horizontalPointing = "right";
         }
         if(this.startY >= this.endY){
             this.horizontalFacing = "left";
+            this.verticalPointing = "up";
         }else{
             this.horizontalFacing = "right";
+            this.verticalPointing = "down";
         }
     }
 
