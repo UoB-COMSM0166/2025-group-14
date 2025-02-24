@@ -90,11 +90,13 @@ class Player {
     //   this.position = createVector(0, yCord);
     //   this.endOfMap = true;
     // }
-    if (this.position.x > 200) {
-      let yCord = this.position.y
-      this.position = createVector(0, yCord);
-      this.endOfMap = true;
-    }
+
+    // // below is for level testing 
+    // if (this.position.x > 200) {
+    //   let yCord = this.position.y
+    //   this.position = createVector(0, yCord);
+    //   this.endOfMap = true;
+    // }
   }
 
 
