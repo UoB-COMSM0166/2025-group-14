@@ -8,6 +8,12 @@ let c1, c2, c3, c4, c5, c6;
 // let b;
 const canalWidth = 80;
 
+// Player health, collion damage and amount of damage taken over time - 
+// can be reset at different levels? 
+let playerMaxHealth = 100;
+let playerCollisionDamage = 5;
+let playerDamageOverTime = 1;
+
 function setup() {
   //set the canvas size the first time when the program starts
   createCanvas(windowWidth, windowHeight);
@@ -28,8 +34,16 @@ function setup() {
   c6.setConnections(c5, c1)
   // b = new boat(2, c1, 250, 200, 10, 20);
 
+  // Instantiate Timer (to time events that occur over time)
+  timer = new Timer();
+  timer.startTimer();
+
   //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
-  player = new Player(160, 320, 5, 3, c6);
+  player = new Player(160, 320, 5, 3, c6, timer, playerMaxHealth, playerCollisionDamage, playerDamageOverTime);
+  
+  // Instantiate healthbar
+  healthbar = new HealthBar(10, 20, playerMaxHealth, player);
+  
   // canal = new oldCanal(300, 100);
   pursuer = new Pursuer(100, 200, canal);
 }
@@ -37,6 +51,9 @@ function setup() {
 function draw() {
   ResizeCanvas();
   background(200);
+
+  // For testing - comment out
+  timer.show();
 
   // pursuer object appear and behaviour
   let steering = pursuer.arrive(player);
@@ -55,6 +72,9 @@ function draw() {
 
   //to make the player model appear on the screen
   player.show(); // visualising Daniil's boat
+
+  // display and update healthbar
+  healthbar.draw();
 }
 
 
