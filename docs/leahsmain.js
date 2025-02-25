@@ -14,12 +14,12 @@ function setup() {
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
 
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
+  c1 = new lockafter(canalWidth, "Starter", 200, 300, 400, 450);
   c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
   c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 1000, 100);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
+  c4 = new canal(canalWidth, "Uphill", 700, 400, 1000, 100);
+  c5 = new lockbefore(canalWidth, "Crossbar", 600, 150, 100, 150);
+  c6 = new lock(canalWidth, "victory", 100, 150, 200, 300, 5, 3);
   c1.setConnections(c6, c2);
   c2.setConnections(c1, c3);
   c3.setConnections(c2, c4);

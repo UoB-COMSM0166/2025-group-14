@@ -62,6 +62,7 @@ class Player {
     }
 
     if (this.hitAny) { 
+      console.log("Collision!");//testprint
       this.acceleration = createVector(0, 0);
       this.velocity.div(1000);
 

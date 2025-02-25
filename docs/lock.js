@@ -16,7 +16,6 @@ class lock extends lockcomponent{
 
     getFullStatus(){
         let mod = (frameCount/60) % this.cycle;
-        text(mod + "/" + this.cycle, this.topBank.endX, this.topBank.endY+(this.width/4));
         if(mod < this.openTime){
             return "empty";
         }else if(mod >= this.openTime && mod < this.startFull){
