@@ -24,10 +24,11 @@ function preload() {
   boatSpritesheet = loadImage("Boat-redbrown.png");
   pursuerBoatSpritesheet = loadImage("Boat-grey.png");
   waterSpritesheet = loadImage("water.png");
+  font = loadFont("inconsolata.otf");
 }
 
-// Player health, collion damage and amount of damage taken over time - 
-// can be reset at different levels? 
+// Player health, collion damage and amount of damage taken over time -
+// can be reset at different levels?
 let playerMaxHealth = 100;
 let playerCollisionDamage = 5;
 let playerDamageOverTime = 1;
@@ -35,6 +36,7 @@ let playerDamageOverTime = 1;
 function setup() {
   //set the canvas size the first time when the program starts
   createCanvas(windowWidth, windowHeight, WEBGL);
+  textFont(font);
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
   waterTileFrame = waterSpritesheet.get(0, 0, 16, 16);
@@ -74,12 +76,23 @@ function setup() {
   timer = new Timer();
   timer.startTimer();
 
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
-  player = new Player(160, 320, 5, 3, c6, boatFrames, timer, playerMaxHealth, playerCollisionDamage, playerDamageOverTime);
-  
+  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal
+  player = new Player(
+    160,
+    320,
+    5,
+    3,
+    c6,
+    boatFrames,
+    timer,
+    playerMaxHealth,
+    playerCollisionDamage,
+    playerDamageOverTime
+  );
+
   // Instantiate healthbar
   healthbar = new HealthBar(10, 20, playerMaxHealth, player);
-  
+
   // canal = new oldCanal(300, 100);
   pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
 }
