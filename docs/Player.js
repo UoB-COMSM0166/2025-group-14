@@ -6,11 +6,10 @@
 // https://editor.p5js.org/codingtrain/sketches/zcTpMCpA
 
 class Player extends Sprite {
-  constructor(mainX, mainY, mainMass, velLimit, canal, boatFrames) {
+  constructor(mainX, mainY, mainMass, velLimit, canal, boatFrames, timer, maxHealth, collisionDamage, damageOverTim) {
     //also includes the Includes the p5.collide2D addon library (https://github.com/bmoren/p5.collide2D?tab=readme-ov-file#collidepointellipse)
     // 'super' calls the parent constructor, passing it the appropriate sprite sheet
     super(mainX, mainY, boatFrames);
-
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
     this.velocity = createVector(0, 0);
@@ -21,6 +20,17 @@ class Player extends Sprite {
     this.canal = canal;
     this.hitAny = false;
     this.collisionOffset = createVector(0, 0);
+    // NEW damage stuff!
+    this.originalVelocityLimit = this.velLimit; // stores a copy of velLimit so not lost when player is immobilised
+    this.velocityMagnitudeCopy = this.velocity.mag();
+    this.health = maxHealth; // starts with maxHealth
+    this.maxHealth = maxHealth;
+    this.zeroHealth = false;
+    this.collisionDamage = collisionDamage;
+    this.damageOverTime = damageOverTime;
+    //this.collisionDamage = 5; // hard-coded values for testing only
+    //this.damageOverTime = 1;
+    this.timer = timer;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -32,6 +42,24 @@ class Player extends Sprite {
 
     //Uncomment this if you want to see the values of the parameters to use in debugging
     this.debugHelperText();
+
+    // NEW damage/health code
+    // Update damage over time and collision damage
+    this.takeDamageOverTime();
+    this.takeCollisionDamage();
+
+    // If health is zero, stops player boat until repaired.
+    if (this.zeroHealth) {
+      text("Health is zero! Repairs needed...", this.position.x, this.position.y + 20);
+      this.haltPlayer();
+    }
+
+    // If 'r' key is pressed, repair boat
+    if (keyIsDown(82) === true) {
+      // If health is zero, repairs take three times as long as default
+      if (this.zeroHealth) this.repair(9.0)
+      this.repair();
+    }
   }
 
   move() {
@@ -288,6 +316,87 @@ class Player extends Sprite {
       this.position.x - 40,
       this.position.y - 50
     );
+  }
+
+  // EVERYTHING BELOW THIS IS NEW -> DAMAGE MECHANICS!
+  // Updates the health attribute based on damage taken
+  takeDamage(damagePoints) {
+    this.health -= damagePoints;
+    if (this.health <= 0) {
+      this.healthIsZero();
+    }
+  }
+
+  // If health is <= zero, makes sure health cannot go below zero and sets
+  // zeroHealth attribute to true.
+  healthIsZero() {
+    this.health = 0; // health cannot go below zero
+    this.zeroHealth = true;
+  }
+
+  // Collision damage
+  takeCollisionDamage() {
+    if (this.hitAny) {
+      this.takeDamage(this.collisionDamage);
+    }
+    if (this.health <= 0) {
+      this.healthIsZero();
+    }
+  }
+
+
+  // Decrements health by [damagePoints] points every [timeInterval] seconds.
+  takeDamageOverTime(timeInterval = 2.0) {
+    // Get current time from Main timer (started during setup)
+    let timeElapsed = this.timer.getTime();
+    // Set the comparison value - depends on frame rate. Ensures that condition for taking damage is
+    // only true ONCE per timeInterval (rather than multiple times, which is what you get if you use
+    // integer seconds).
+    let timeLimit = timeInterval / (frameRate() * timeInterval);
+    // need float comparison as calls this functions multiple times in a single second - prevents it decrementing the health multiple times in a given second
+    if (timeElapsed % timeInterval < timeLimit) {
+      this.takeDamage(this.damageOverTime); // If condition true, player takes damage
+    }
+    if (this.health <= 0) {
+      this.healthIsZero();
+    }
+  }
+
+  // Returns health attribute to maxHealth
+  repair(timeTaken = 3.0) {
+
+    // Stop movement for 3 seconds
+    this.haltPlayer(timeTaken);
+
+    // Update health to maxHealth
+    this.health = this.maxHealth;
+    this.zeroHealth = false;
+  }
+
+
+  // Stops boat for a given amount of time
+  haltPlayer(timeHalted = null) {
+    this.velocityLimit = 0; // halt player
+    this.velocityMagnitudeCopy = this.velocity.mag();
+    this.velocity.setMag(0);
+    // If argument not given, halt player indefinitely (until repairs occur)
+    // If argument IS given, halt player until the given number of seconds have elapsed
+    if (timeHalted != null) {
+      let timer = new Timer();
+      timer.startTimer();
+    
+      //text("Repairing...", this.position.x, this.position.y + 5);
+      // While timer < timeHalted, boat is immobile. 
+      while (timer.hasElapsed(timeHalted) === false) {
+        // Print a text message to boat position saying that repairs are ongoing...
+        //text("Repairing...", 500, 500);
+        continue;
+      }
+      // Timer reaches timeTaken for repairs. Boat movement reset.
+      // Revert limitVelocity to original value (allow boat to move again)
+      this.velocityLimit = this.originalVelocityLimit;
+      this.velocity.setMag(this.velocityMagnitudeCopy);
+    }
   }
 }
 

@@ -26,6 +26,12 @@ function preload() {
   waterSpritesheet = loadImage("water.png");
 }
 
+// Player health, collion damage and amount of damage taken over time - 
+// can be reset at different levels? 
+let playerMaxHealth = 100;
+let playerCollisionDamage = 5;
+let playerDamageOverTime = 1;
+
 function setup() {
   //set the canvas size the first time when the program starts
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -64,8 +70,16 @@ function setup() {
     pursuerBoatFrames.push(pursuerImg);
   }
 
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, the start canal, and spritesheet
-  player = new Player(160, 320, 5, 3, c6, boatFrames);
+  // Instantiate Timer (to time events that occur over time)
+  timer = new Timer();
+  timer.startTimer();
+
+  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
+  player = new Player(160, 320, 5, 3, c6, boatFrames, timer, playerMaxHealth, playerCollisionDamage, playerDamageOverTime);
+  
+  // Instantiate healthbar
+  healthbar = new HealthBar(10, 20, playerMaxHealth, player);
+  
   // canal = new oldCanal(300, 100);
   pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
 }
@@ -74,6 +88,9 @@ function draw() {
   translate(-width / 2, -height / 2);
   ResizeCanvas();
   background(200);
+
+  // For testing - comment out
+  timer.show();
 
   c1.visualize();
   c2.visualize();
@@ -92,6 +109,9 @@ function draw() {
 
   //to make the player model appear on the screen
   player.show(); // visualising Daniil's boat
+
+  // display and update healthbar
+  healthbar.draw();
 }
 
 // create a dinamically resizable canvas
