@@ -24,7 +24,7 @@ function preload() {
   boatSpritesheet = loadImage("Boat-redbrown.png");
   pursuerBoatSpritesheet = loadImage("Boat-grey.png");
   waterSpritesheet = loadImage("water.png");
-  font = loadFont("Inconsolata.otf");
+  font = loadFont("./Inconsolata.otf");
 }
 
 // Player health, collion damage and amount of damage taken over time -
