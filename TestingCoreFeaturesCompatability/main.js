@@ -1,38 +1,27 @@
-let oldWindowWidth;
-let oldWindowHeight;
+let pursuer;
+let player;
+let canal;
 
 function setup() {
-  //set the canvas size the first time when the program starts
-  createCanvas(windowWidth, windowHeight);
-  oldWindowWidth = windowWidth;
-  oldWindowHeight = windowHeight;
-
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, and the boat speed limit 
-  player = new Player(width / 2, height / 2, 5, 10);
+  createCanvas(400, 400);
   canal = new Canal(300, 100);
   pursuer = new Pursuer(100, 100, canal);
+  player = new Player(width/2, height/2, 10, 3);
 }
 
 function draw() {
-  ResizeCanvas();
-  background(200);
+  background(0);
 
-  //to make the player model appear on the screen
+  // Draw the canal
+  canal.show();
+
+  // Draw and update movement of the player
   player.show();
 
-  // pursuer object appear and behaviour
+  // Calculate steering of pursuer based on player movement and use to update
+  // locomotion. Draw pursuer.
   let steering = pursuer.arrive(player);
   pursuer.applyForce(steering);
   pursuer.update();
   pursuer.show();
-}
-
-
-// create a dinamically resizable canvas
-function ResizeCanvas() {
-  if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight){
-    createCanvas(windowWidth, windowHeight);
-    oldWindowWidth = windowWidth;
-    oldWindowHeight = windowHeight;
-  }
 }
