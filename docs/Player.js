@@ -32,7 +32,7 @@ class Player extends Sprite {
     this.hitAny = false;
     this.collisionOffset = createVector(0, 0);
     // NEW damage stuff!
-    this.originalVelocityLimit = this.velLimit; // stores a copy of velLimit so not lost when player is immobilised
+    this.originalVelocityLimit = velLimit; // stores a copy of velLimit so not lost when player is immobilised
     this.velocityMagnitudeCopy = this.velocity.mag();
     this.health = maxHealth; // starts with maxHealth
     this.maxHealth = maxHealth;
@@ -424,6 +424,7 @@ class Player extends Sprite {
   haltPlayer(timeHalted = null) {
     this.velocityLimit = 0; // halt player
     this.velocityMagnitudeCopy = this.velocity.mag();
+    console.log("this.velMagCopy: ", this.velocityMagnitudeCopy);
     this.velocity.setMag(0);
     // If argument not given, halt player indefinitely (until repairs occur)
     // If argument IS given, halt player until the given number of seconds have elapsed
@@ -442,6 +443,8 @@ class Player extends Sprite {
       // Revert limitVelocity to original value (allow boat to move again)
       this.velocityLimit = this.originalVelocityLimit;
       this.velocity.setMag(this.velocityMagnitudeCopy);
+      console.log("this.velocityLimit: ", this.velocityLimit);
+      console.log("Original velocity limit: ", this.originalVelocityLimit);
     }
   }
 }
