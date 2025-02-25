@@ -17,7 +17,7 @@ function setup() {
   c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
   c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
   c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
+  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100, 5, 3);
   c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
   c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
   c1.setConnections(c6, c2);

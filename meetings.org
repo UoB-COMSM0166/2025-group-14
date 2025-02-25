@@ -82,4 +82,103 @@ next week:
 - Leon:
   game aesthetics
 *** readme and uml diagram
+* 19/02/2025
+Teams meeting, all going well
+- Daniel and Leah to refocus on collision mechanics
+  * 03/02/2025
+** topics
+*** 1. game mechanics
+**** stage one (high importance)
+1. up down left right (low effort)
+2. lake with sides we cannot cross (mid effort)
+3. pursuer (high effort)
+4. movement mechanics (high effort)
+**** stage two (high effort)
+4. aesthetics of game
+5. damage taken
+6. gates opening/ closing
+7. refueling 
+
+*** 2. should we start on game development?
+    yes
+    
+** actions
+**** implement first point of game mechanics this week
+**** drinks
+** next meeting
+Here we'll decide actions for this week
+* 04/02/2025
+** topics
+1. is done
+moving onto 2.
+
+We want the camera to follow
+** actions
+*** tasks
+**** research and prototyping
+- movement team: dan and leon
+- lake team: leah and casey
+- pursuer team: polly and adam
+*** adam doing kanban
+*** create git branches
+- each feature has it's own branch
+- each person has their own branch
+
+
+* 11/02/2025
+** topics
+*** catch up on progress
+**** research and prototyping
+- movement team: dan and leon
+  95%
+- lake team: leah and casey
+  80% done
+- pursuer team: polly and adam
+  95%
+  
+*** discussion on what to merge and how
+- merge movement with pursuer then after this merge lake
+- meetup to merge in 2 parts
+*** modularising the code (seperate files for seperate features)
+- look at polly's branch for cleaning up the repo
+** next steps
+this week:
+    1. one class for each feature
+    2. meetup with leah
+    3. pursuer and movement team merging to main
+    4. lake to main
+next week:
+    - other stuff
+      
+* 13/02/2025
+** topics
+*** merging process
+- going with daniels version for movement team
+- daniel changing variable names
+*** sprint for next week
+- Leah:
+  lakes development, locks
+- Casey:
+  camera following and levels
+- Polly:
+  damage
+- Adam:
+  path finding ability of pursuer
+- Dan:
+  fuel system
+- Leon:
+  game aesthetics
+*** readme and uml diagram
+* 19/02/2025
+Teams meeting, all going well
+- Daniel and Leah to refocus on collision mechanics
+* 21/02/2025
+- Leon's boats are looking great. Working on filling in lake artwork
+- Leah and Daniel have been working on making sure the boat behaves properly when hitting sides
+- Casey's level generation is going ok
+- Adam's path finding pursuer is coming along nicely
+** next steps
+- start merging all features and integrating to main
+ 
+  
 
