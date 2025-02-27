@@ -14,6 +14,7 @@ class Pursuer {
       if (this.lineOfSight(this.canal, player)) {
         return player;
       } 
+      /*
       let whichWay = this.findOptimalPath();
       let direction = "forward";
       if(whichWay) {
@@ -21,6 +22,8 @@ class Pursuer {
       }
       let { x, y } = PursuerPath.getPath(this.canal, direction);
       return new Player(x, y, 0, 0, this.canal);
+      */
+      return player;
     }
     
   
