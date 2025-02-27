@@ -28,9 +28,9 @@ class canalBuilder {
         let y = innerHeight / 2
         let third = innerWidth / 3
 
-        canals.push(new canal(this.canalWidth, "0", x, y, x+third, y));
-        canals.push(new canal(this.canalWidth, "1", x+third, y, x+(2*third), y+50));
-        canals.push(new canal(this.canalWidth, "2", x+(2*third), y+50, innerWidth - 1, y));
+        canals.push(new canal(this.canalWidth, "0", x, y, x+third, y-100));
+        canals.push(new canal(this.canalWidth, "1", x+third, y-100, x+(2*third), y+100));
+        canals.push(new canal(this.canalWidth, "2", x+(2*third), y+100, innerWidth - 1, y-100));
 
         canals[0].setConnections(null, canals[1]);
         canals[1].setConnections(canals[0], canals[2]);
