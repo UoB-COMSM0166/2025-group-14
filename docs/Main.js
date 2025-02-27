@@ -13,18 +13,17 @@ function setup() {
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
 
+  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
   // // circular map
   // let start = LC.circularLevel();
   // player = new Player(160, 320, 5, 3, start);
 
-  // let start = LC.levelOne();
+  let start = LC.levelOne();
+  player = new Player(100, innerHeight / 2, 5, 3, start);
+
+  // let start = LC.generatedLevel();
   // player = new Player(100, innerHeight / 2, 5, 3, start);
 
-  let start = LC.generatedLevel();
-  player = new Player(100, innerHeight / 2, 5, 3, start);
-  
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
-  // canal = new oldCanal(300, 100);
   // pursuer = new Pursuer(100, 200, canal);
 }
 
@@ -35,10 +34,14 @@ function draw() {
   player.show(); // visualising Daniil's boat
   LC.show();
 
-  if (player.position.x > 200) {
-    let level = LC.nextLevel()
-    player.nextLevel(level);
+
+  if (player.getCoordinates().x > windowWidth) {
+    LC.nextLevel()
+    player.nextLevel();
+    let currentLevel = LC.getCurrentLevel();
+    player.setLevel(currentLevel);
   }
+
   // // pursuer object appear and behaviour
   // let steering = pursuer.arrive(player);
   // pursuer.applyForce(steering);

@@ -37,7 +37,7 @@ class Player {
   }
 
   move() { 
-    this.endOfMap = false;
+    // this.endOfMap = false;
     //sets limits based on the locations of the edges of the canal object where the boat is
     // let setting = this.canal;
     //tests if the boat has moved to another canal segment, and shifts it there if so
@@ -96,17 +96,22 @@ class Player {
     //   this.position = createVector(0, yCord);
     //   this.endOfMap = true;
     // }
-  // }
-
   }
 
+  getCoordinates() {
+    return this.position;
+  }
 
-
-  nextLevel(canal) {
+  nextLevel() {
     let yCord = this.position.y
     this.position = createVector(0, yCord);
     this.endOfMap = true;
-    this.canal = canal;
+    // this.canal = canal;
+  }
+
+  setLevel(segment) {
+    this.canal = segment;
+    this.endOfMap = false;
   }
 
   // this function basically draggs the player model off the border

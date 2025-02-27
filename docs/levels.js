@@ -140,14 +140,18 @@ class LevelController {
         return this.canals[0][0];
     }
 
-    // returns first canal of new level
-    nextLevel() {
-        this.level += 1;
-        return this.generatedLevel()[0];
-        // this.levelMethods[++this.level]();
+    getCurrentLevel() {
+        return this.canals[this.level][0];
     }
 
-    show(endOfLevel) {
+    // returns first canal of new level
+    nextLevel() {
+        // this.level += 1;
+        // return this.generatedLevel();
+        this.levelMethods[++this.level]();
+    }
+
+    show() {
         textSize(100);
         text("LEVEL " + (this.level + 1), windowWidth/2-100, 100);
 
