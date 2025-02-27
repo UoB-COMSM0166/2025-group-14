@@ -29,8 +29,8 @@ class Timer {
       else return false;
     }
 
-    show() {
-        fill(0);
-        text("Timer: " + this.getTime(), 600, 50);
-    }
+  show() {
+    fill(0);
+    text("Timer: " + this.getTime(), 600, 50);
   }
+}

@@ -179,6 +179,12 @@ Teams meeting, all going well
 - Adam's path finding pursuer is coming along nicely
 ** next steps
 - start merging all features and integrating to main
- 
-  
-
+* 25/02/2025
+** topics
+- catch up!
+** notes
+- continuing: Casey, Polly, Leah
+- Adam: pursuers with flat levels
+- Leah: continuing canal work
+***
+- Leon and Daniel: TBC
