@@ -44,7 +44,6 @@ class Player extends Sprite {
     this.canal = canal;
     this.hitAny = false;
     this.collisionOffset = createVector(0, 0);
-    // NEW damage stuff!
     this.originalVelocityLimit = velLimit; // stores a copy of velLimit so not lost when player is immobilised
     this.velocityMagnitudeCopy = this.velocity.mag();
     this.health = maxHealth; // starts with maxHealth
@@ -52,14 +51,10 @@ class Player extends Sprite {
     this.zeroHealth = false;
     this.collisionDamage = collisionDamage;
     this.damageOverTime = damageOverTime;
-    //this.collisionDamage = 5; // hard-coded values for testing only
-    //this.damageOverTime = 1;
     this.timer = timer;
     this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
-    //this.halted = false;
-    //this.repairsFinished = true;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -88,7 +83,6 @@ class Player extends Sprite {
     }
 
     // If 'r' key is pressed, repair boat
-    //if (keyIsDown(82) === true || this.halted === true) {
     if (keyIsDown(82) === true || this.status === PlayerStatus.REPAIRING) {
       // If health is zero, repairs take twice as long as if health > 0
       if (this.zeroHealth) this.repair(this.repairTime*2)
@@ -438,7 +432,6 @@ class Player extends Sprite {
     // If health is zero, repairs take twice as long as if health > 0
     let timeTaken = this.repairTime
     if (this.zeroHealth) timeTaken = timeTaken * 2;
-    //this.repairsFinished = false;
     this.status = PlayerStatus.REPAIRING;
 
     // Stop movement for repairTime
@@ -450,7 +443,6 @@ class Player extends Sprite {
       "Repairing...repairs will take " + timeTaken + " seconds...");
     repairMessage.show();
 
-    //if (this.repairsFinished === true) {
     if (this.status === PlayerStatus.REPAIRS_FINISHED) {
       // Update health to maxHealth
       this.health = this.maxHealth;
@@ -464,26 +456,16 @@ class Player extends Sprite {
    // this.halted = true;
     this.velocityLimit = 0; // halt player
     this.velocityMagnitudeCopy = this.velocity.mag();
-    console.log("this.velMagCopy: ", this.velocityMagnitudeCopy);
     this.velocity.setMag(0);
     // If argument not given, halt player indefinitely (until repairs occur)
     // If argument IS given, halt player until the given number of seconds have elapsed
     if (timeHalted != null) {
-      //console.log("Repairing...This will take " + timeHalted + " seconds...");
-
       // If timer hasnt already started, start it
       if (!this.repairTimer.isStarted()) {
         this.repairTimer.startTimer();
       }
-      //text("Repairing...", this.position.x, this.position.y + 5);
       // While timer < timeHalted, boat is immobile. 
-      //while (timer.hasElapsed(timeHalted) === false) {
-        // Print a text message to boat position saying that repairs are ongoing...
-        //text("Repairing...", 500, 500);
-      //  continue;
-      //}
       if (this.repairTimer.hasElapsed(timeHalted) === true) {
-        //console.log("Repairs finished!");
         // Timer reaches timeTaken for repairs. Boat movement reset.
         // Revert limitVelocity to original value (allow boat to move again)
         this.velocityLimit = this.originalVelocityLimit;
@@ -492,8 +474,6 @@ class Player extends Sprite {
         // Reset repairTimer
         this.repairTimer.resetTimer();
         this.zeroHealth = false;
-        //this.halted = false;
-        //this.repairsFinished = true;
         this.status = PlayerStatus.REPAIRS_FINISHED;
       }
       
