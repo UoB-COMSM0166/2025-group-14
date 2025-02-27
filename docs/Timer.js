@@ -1,10 +1,22 @@
 class Timer {
     constructor() {
       this.start = Date.now();
+      this.timing = false;
+    }
+
+    // Returns true if the timer has started. false otherwise
+    isStarted() {
+      return this.timing;
     }
   
     startTimer() {
       this.start = Date.now();
+      this.timing = true;
+    }
+
+    resetTimer() {
+      this.start = Date.now();
+      this.timing = false;
     }
   
     getTime() {
@@ -12,8 +24,8 @@ class Timer {
     }
   
     // Returns true if the argument number of seconds has elapsed, false if not.
-    hasElapsed(time = 3.0) {
-      if (this.getTime() == time) return true;
+    hasElapsed(time) {
+      if (this.getTime() >= time) return true;
       else return false;
     }
 

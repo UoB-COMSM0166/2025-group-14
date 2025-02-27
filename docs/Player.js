@@ -8,6 +8,16 @@
 //also includes the Includes the p5.collide2D addon library (https://github.com/bmoren/p5.collide2D?tab=readme-ov-file#collidepointellipse)
 
 
+class PlayerStatus {
+  static NONE = "none";
+  static REPAIRING = "repairing";
+  static REPAIRS_FINISHED = "repairs_finished";
+
+  static isValid(status) {
+      return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
+  }
+}
+
 class Player {
   constructor(mainX, mainY, mainMass, velLimit, canal, timer, maxHealth, collisionDamage, damageOverTime) {
     this.position = createVector(mainX, mainY);
@@ -33,6 +43,11 @@ class Player {
     //this.collisionDamage = 5; // hard-coded values for testing only
     //this.damageOverTime = 1;
     this.timer = timer;
+    this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
+    this.repairTimer = new Timer();
+    this.status = PlayerStatus.NONE;
+    //this.halted = false;
+    //this.repairsFinished = true;
   }
 
   //this is essentially the main function of the class, which was created to encapsulate the class from draw in main.js
@@ -52,14 +67,19 @@ class Player {
 
     // If health is zero, stops player boat until repaired.
     if (this.zeroHealth) {
-      text("Health is zero! Repairs needed...", this.position.x, this.position.y + 20);
+      // Display speech bubble message
+      let zerohealthMessage = new SpeechBubble(this.position.x-150, this.position.y-100, 150, 75, 
+        this.position.x-5, this.position.y - 10,
+        "OH NO! Your health is zero! Press the 'r' key to make repairs!");
+        zerohealthMessage.show();
       this.haltPlayer();
     }
 
     // If 'r' key is pressed, repair boat
-    if (keyIsDown(82) === true) {
-      // If health is zero, repairs take three times as long as default
-      if (this.zeroHealth) this.repair(9.0)
+    //if (keyIsDown(82) === true || this.halted === true) {
+    if (keyIsDown(82) === true || this.status === PlayerStatus.REPAIRING) {
+      // If health is zero, repairs take twice as long as if health > 0
+      if (this.zeroHealth) this.repair(this.repairTime*2)
       this.repair();
     }
   }
@@ -321,39 +341,68 @@ class Player {
   }
 
   // Returns health attribute to maxHealth
-  repair(timeTaken = 3.0) {
+  repair() {
+    // If health is zero, repairs take twice as long as if health > 0
+    let timeTaken = this.repairTime
+    if (this.zeroHealth) timeTaken = timeTaken * 2;
+    //this.repairsFinished = false;
+    this.status = PlayerStatus.REPAIRING;
 
-    // Stop movement for 3 seconds
+    // Stop movement for repairTime
     this.haltPlayer(timeTaken);
 
-    // Update health to maxHealth
-    this.health = this.maxHealth;
-    this.zeroHealth = false;
+    // Display speech bubble message
+    let repairMessage = new SpeechBubble(this.position.x-150, this.position.y-100, 150, 65, 
+      this.position.x-5, this.position.y - 10,
+      "Repairing...repairs will take " + timeTaken + " seconds...");
+    repairMessage.show();
+
+    //if (this.repairsFinished === true) {
+    if (this.status === PlayerStatus.REPAIRS_FINISHED) {
+      // Update health to maxHealth
+      this.health = this.maxHealth;
+      this.zeroHealth = false;
+    }
   }
 
 
   // Stops boat for a given amount of time
   haltPlayer(timeHalted = null) {
+    //this.repairTimer.show();
+   // this.halted = true;
     this.velocityLimit = 0; // halt player
     this.velocityMagnitudeCopy = this.velocity.mag();
     this.velocity.setMag(0);
     // If argument not given, halt player indefinitely (until repairs occur)
     // If argument IS given, halt player until the given number of seconds have elapsed
     if (timeHalted != null) {
-      let timer = new Timer();
-      timer.startTimer();
-    
+      //console.log("Repairing...This will take " + timeHalted + " seconds...");
+
+      // If timer hasnt already started, start it
+      if (!this.repairTimer.isStarted()) {
+        this.repairTimer.startTimer();
+      }
       //text("Repairing...", this.position.x, this.position.y + 5);
       // While timer < timeHalted, boat is immobile. 
-      while (timer.hasElapsed(timeHalted) === false) {
+      //while (timer.hasElapsed(timeHalted) === false) {
         // Print a text message to boat position saying that repairs are ongoing...
         //text("Repairing...", 500, 500);
-        continue;
+      //  continue;
+      //}
+      if (this.repairTimer.hasElapsed(timeHalted) === true) {
+        //console.log("Repairs finished!");
+        // Timer reaches timeTaken for repairs. Boat movement reset.
+        // Revert limitVelocity to original value (allow boat to move again)
+        this.velocityLimit = this.originalVelocityLimit;
+        this.velocity.setMag(this.velocityMagnitudeCopy);
+
+        // Reset repairTimer
+        this.repairTimer.resetTimer();
+        //this.halted = false;
+        //this.repairsFinished = true;
+        this.status = PlayerStatus.REPAIRS_FINISHED;
       }
-      // Timer reaches timeTaken for repairs. Boat movement reset.
-      // Revert limitVelocity to original value (allow boat to move again)
-      this.velocityLimit = this.originalVelocityLimit;
-      this.velocity.setMag(this.velocityMagnitudeCopy);
+      
     }
   }
 }

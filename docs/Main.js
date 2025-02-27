@@ -53,7 +53,7 @@ function draw() {
   background(200);
 
   // For testing - comment out
-  timer.show();
+  //timer.show();
 
   // pursuer object appear and behaviour
   let steering = pursuer.arrive(player);
