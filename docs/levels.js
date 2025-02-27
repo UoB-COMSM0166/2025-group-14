@@ -23,18 +23,20 @@ class canalBuilder {
     }
 
     level1() {
-        let canals = []
-        let x = 0
-        let y = innerHeight / 2
-        let third = innerWidth / 3
+        let canals = [];
+        let x = 0;
+        let y = innerHeight / 2;
+        let fourth = innerWidth / 4;
 
-        canals.push(new canal(this.canalWidth, "0", x, y, x+third, y-100));
-        canals.push(new canal(this.canalWidth, "1", x+third, y-100, x+(2*third), y+100));
-        canals.push(new canal(this.canalWidth, "2", x+(2*third), y+100, innerWidth - 1, y-100));
-
+        canals.push(new canal(this.canalWidth, "0", x, y, x+fourth, y-100));
+        canals.push(new canal(this.canalWidth, "1", x+fourth, y-100, x+(2*fourth), y+100));
+        canals.push(new canal(this.canalWidth, "2", x+(2*fourth), y+100, x+(3*fourth), y-100));
+        canals.push(new canal(this.canalWidth, "3", x+(3*fourth), y-100, innerWidth - 1, y));
+        
         canals[0].setConnections(null, canals[1]);
         canals[1].setConnections(canals[0], canals[2]);
-        canals[2].setConnections(canals[1], null);
+        canals[2].setConnections(canals[1], canals[3]);
+        canals[3].setConnections(canals[2], null);
 
         return canals;
     }
