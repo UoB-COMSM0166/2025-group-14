@@ -47,7 +47,7 @@ class canalBuilder {
 
         canals.push(new canal(this.canalWidth, "4", x, y, x+third, y));
         canals.push(new canal(this.canalWidth, "5", x+third, y, x+(2*third), y-50));
-        canals.push(new canal(this.canalWidth, "6", x+(2*third), y-50, innerWidth, y));
+        canals.push(new canal(this.canalWidth, "6", x+(2*third), y-50, innerWidth - 1, y));
 
         canals[0].setConnections(null, canals[1]);
         canals[1].setConnections(canals[0], canals[2]);

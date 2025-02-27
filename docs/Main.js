@@ -35,7 +35,7 @@ function draw() {
   LC.show();
 
 
-  if (player.getCoordinates().x > windowWidth) {
+  if (player.getCoordinates().x > windowWidth-1) {
     LC.nextLevel()
     player.nextLevel();
     let currentLevel = LC.getCurrentLevel();
