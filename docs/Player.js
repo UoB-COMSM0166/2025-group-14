@@ -18,8 +18,22 @@ class PlayerStatus {
   }
 }
 
-class Player {
-  constructor(mainX, mainY, mainMass, velLimit, canal, timer, maxHealth, collisionDamage, damageOverTime) {
+class Player extends Sprite {
+  constructor(
+    mainX,
+    mainY,
+    mainMass,
+    velLimit,
+    canal,
+    boatFrames,
+    timer,
+    maxHealth,
+    collisionDamage,
+    damageOverTime
+  ) {
+    //also includes the Includes the p5.collide2D addon library (https://github.com/bmoren/p5.collide2D?tab=readme-ov-file#collidepointellipse)
+    // 'super' calls the parent constructor, passing it the appropriate sprite sheet
+    super(mainX, mainY, boatFrames);
     this.position = createVector(mainX, mainY);
     this.acceleration = createVector(0, 0);
     this.velocity = createVector(0, 0);
@@ -473,6 +487,7 @@ class Player {
 
         // Reset repairTimer
         this.repairTimer.resetTimer();
+        this.zeroHealth = false;
         //this.halted = false;
         //this.repairsFinished = true;
         this.status = PlayerStatus.REPAIRS_FINISHED;

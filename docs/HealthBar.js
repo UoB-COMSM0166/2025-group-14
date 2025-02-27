@@ -1,9 +1,10 @@
 class HealthBar {
-  constructor(x, y, maxHealth, player) {
-    this.x = x;
-    this.y = y;
-    this.width = 200;
-    this.height = 10;
+  //constructor(x, y, maxHealth, player) {
+  constructor( maxHealth, player) {
+    this.x = 15;
+    this.y = 30;
+    this.width = 300;
+    this.height = 20;
     this.health = maxHealth;
     this.maxHealth = maxHealth;
     this.playerBoat = player;
@@ -14,7 +15,9 @@ class HealthBar {
     this.update();
 
     // Text
-    text("Healthbar: " + this.health, this.x, this.y - 4);
+    fill(0, 0, 0);
+    textSize(15);
+    text("Healthbar: " + this.health, this.x, this.y - 10);
 
     // Draw empty health bar box
     stroke(0);

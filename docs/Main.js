@@ -91,7 +91,7 @@ function setup() {
   );
 
   // Instantiate healthbar
-  healthbar = new HealthBar(10, 20, playerMaxHealth, player);
+  healthbar = new HealthBar(playerMaxHealth, player);
 
   // canal = new oldCanal(300, 100);
   pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
