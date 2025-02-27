@@ -7,7 +7,7 @@ class Pursuer {
       this.maxForce = maxForce;
       this.r = 16;
       this.canal = canal;
-      this.debugMode = false;
+      this.debugMode = true;
     }
 
     setTarget(player) {
@@ -189,6 +189,8 @@ class Pursuer {
     }
 
     debugHelperText() {
+      push();
+      textSize(10);
       fill('blue');
       stroke('white');
       text(`upper: ${Math.round(this.canal.getUpperLimit(this.position.x))}`, this.position.x - 40, this.position.y - 110);
@@ -196,6 +198,7 @@ class Pursuer {
       text(`left: ${Math.round(this.canal.getLeftLimit(this.position.y))}`, this.position.x - 40, this.position.y - 80);
       text(`lower: ${Math.round(this.canal.getLowerLimit(this.position.x))}`, this.position.x - 40, this.position.y - 65);
       text(`x: ${Math.floor(this.position.x)} y: ${Math.floor(this.position.y)}`, this.position.x - 40, this.position.y - 50);
+      pop();
       }
 
     debugHelperLines(from, to, color, offset, distance) {

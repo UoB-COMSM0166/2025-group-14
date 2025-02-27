@@ -24,7 +24,7 @@ function setup() {
   // let start = LC.generatedLevel();
   // player = new Player(100, innerHeight / 2, 5, 3, start);
 
-  // pursuer = new Pursuer(100, 200, canal);
+  pursuer = new Pursuer(100, innerHeight / 2, start);
 }
 
 function draw() {
@@ -42,11 +42,11 @@ function draw() {
     player.setLevel(currentLevel);
   }
 
-  // // pursuer object appear and behaviour
-  // let steering = pursuer.arrive(player);
-  // pursuer.applyForce(steering);
-  // pursuer.update();
-  // pursuer.show();
+  let target = pursuer.setTarget(player);
+  let steering = pursuer.arrive(player, target);
+  pursuer.applyForce(steering);
+  pursuer.update(target);
+  pursuer.show(player);
 }
 
 
