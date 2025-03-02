@@ -171,9 +171,10 @@ We have split our evaluation into three sections – the first two being feedbac
 
 
 
-- One quantitative evaluation (of your choice) 
+### One quantitative evaluation (of your choice) 
 
-- Description of how code was tested. 
+
+Description of how code was tested. 
 
 ### Process 
 
