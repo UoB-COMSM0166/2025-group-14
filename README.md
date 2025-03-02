@@ -147,27 +147,27 @@ We have split our evaluation into three sections – the first two being feedbac
 (1) Constructive Criticism; (2) Positives; (3) Analysis, based on the user’s feedback.
 
 **(1) Constructive Criticism**
-•	Corners difficult to navigate with current movement mechanics. Glitches occur on corner collisions; and too much bounce when colliding with the walls of the canals.
-•	Pursuer too fast and/or starts too close to the Player.
-•	The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.  
-•	Repair function not very intuitive and too slow to repair.
-•	Health bar too small; bigger bar would be easier to notice.
-•	More small bends would be good, not just straight lines.
-•	How do you win the game? Unclear objective.
+- Corners difficult to navigate with current movement mechanics. Glitches occur on corner collisions; and too much bounce when colliding with the walls of the canals.
+- Pursuer too fast and/or starts too close to the Player.
+- The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
+- Repair function not very intuitive and too slow to repair.
+- Health bar too small; bigger bar would be easier to notice.
+- More small bends would be good, not just straight lines.
+- How do you win the game? Unclear objective.
 
 **(2) Positives**
-•	Map shape was interesting because of the sharp corners. 
-•	Original game idea; never played a game like it before.
-•	User liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
-•	Aesthetics (boats and water texture) received compliments. 
+- Map shape was interesting because of the sharp corners.
+- Original game idea; never played a game like it before.
+- User liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
+- Aesthetics (boats and water texture) received compliments. 
 
 **(3) Analysis**
-•	We need to improve collision detection between the player and canal walls. Collisions occur when they should not; being close to the corner as you go around it, but not actually touching the wall, may register as a collision and bounce the player back. This has a big impact on the user’s experience and is therefore high priority.
-•	We should consider reducing the amount which the player bounces away from the wall when they collide.
-•	A simple tutorial on the controls and objective(s) of the game would make the experience more enjoyable and reduce the learning curve.
-•	We could also add sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. The tutorial would also help with this.
-•	We should consider adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
-•	To produce a more difficult level, we can change the camera to scroll the map into view instead of showing the entire map on the screen; not seeing upcoming corners will make it more difficult.
+- We need to improve collision detection between the player and canal walls. Collisions occur when they should not; being close to the corner as you go around it, but not actually touching the wall, may register as a collision and bounce the player back. This has a big impact on the user’s experience and is therefore high priority.
+- We should consider reducing the amount which the player bounces away from the wall when they collide.
+- A simple tutorial on the controls and objective(s) of the game would make the experience more enjoyable and reduce the learning curve.
+- We could also add sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. The tutorial would also help with this.
+- We should consider adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
+- To produce a more difficult level, we can change the camera to scroll the map into view instead of showing the entire map on the screen; not seeing upcoming corners will make it more difficult.
 
 - One quantitative evaluation (of your choice) 
 
