@@ -169,6 +169,8 @@ We have split our evaluation into three sections – the first two being feedbac
 - We should consider adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
 - To produce a more difficult level, we can change the camera to scroll the map into view instead of showing the entire map on the screen; not seeing upcoming corners will make it more difficult.
 
+
+
 - One quantitative evaluation (of your choice) 
 
 - Description of how code was tested. 
