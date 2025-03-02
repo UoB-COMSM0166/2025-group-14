@@ -141,7 +141,7 @@ This is my first stab at a class diagram. We can update it once we've consolidat
 
 - 15% ~750 words
 
-##### 'Thinking Aloud' - Qualitative Evaluation
+#### 'Thinking Aloud' - Qualitative Evaluation
 
 We have split our evaluation into three sections – the first two being feedback from the user, and the last being our team’s analysis of the feedback: 
 (1) Constructive Criticism; (2) Positives; (3) Analysis, based on the user’s feedback.
