@@ -43,8 +43,6 @@ class canal{
         this.after = null; 
         this.beforeThreshold = null;
         this.afterThreshold = null;
-        this.beforeAngleType = null;
-        this.afterAngleType = null;
 
     }
 
@@ -56,7 +54,6 @@ class canal{
         //this.visualizeInterior();
         stroke("black");
         fill("black");
-        text(this.afterAngleType + " (" + this.redBank.angleInDegrees + ")", this.topBank.startX+10, this.topBank.startY);
     }
 
     visualizeInterior(){
@@ -99,7 +96,6 @@ class canal{
 
         this.redBank.setBeforeIntersect(x1, y1);
         this.blackBank.setBeforeIntersect(x2, y2);
-        this.beforeAngleType = this.angleType(target);
 
 
     }
@@ -122,7 +118,6 @@ class canal{
               
         this.redBank.setAfterIntersect(x1, y1);
         this.blackBank.setAfterIntersect(x2, y2);
-        this.afterAngleType = this.angleType(target);
 
 
     }
@@ -290,19 +285,6 @@ class canal{
 
         }
 
-        angleType(connection){
-            let vert = this.redBank.verticalPointing;
-            let hor = this.redBank.horizontalPointing;
-            let targVert = connection.redBank.verticalPointing;
-            let targHor = connection.redBank.horizontalPointing;
-            if(vert != targVert && hor != targHor){
-                return "acute";
-            }else if(vert === targVert && hor != targHor){
-                return "obtuse";
-            }else{
-                return "reflex";
-            }
-        }
 
 
 
