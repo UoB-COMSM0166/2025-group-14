@@ -114,6 +114,11 @@ class Player {
     this.endOfMap = false;
   }
 
+  kill() {
+    this.position = createVector(null, null);
+    this.canal = null;
+  }
+
   // this function basically draggs the player model off the border
   // when the boat "hits" the edge of the canal 
   applyCollisionOffset() {

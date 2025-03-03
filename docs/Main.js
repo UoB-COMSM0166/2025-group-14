@@ -35,13 +35,24 @@ function draw() {
   LC.show();
 
 
-  if (player.getCoordinates().x > windowWidth-1) {
-    LC.nextLevel()
-    player.nextLevel();
-    let currentLevel = LC.getCurrentLevel();
-    player.setLevel(currentLevel);
-  }
+  // if (player.getCoordinates().x > windowWidth-1) {
+  //   LC.nextLevel()
+  //   // player.nextLevel();
+  //   player.kill()
+  //   // let currentLevel = LC.getCurrentLevel();
+  //   // player.setLevel(currentLevel);
+  // }
 
+  if (player.getCoordinates().x > 600-1) {
+    // LC.nextLevel()
+    // player.nextLevel();
+    player.kill()
+    // player = null;
+    let start = LC.nextLevel();
+    player = new Player(100, innerHeight / 2, 5, 3, start);
+    // let currentLevel = LC.getCurrentLevel();
+    // player.setLevel(currentLevel);
+  }
   // // pursuer object appear and behaviour
   // let steering = pursuer.arrive(player);
   // pursuer.applyForce(steering);
