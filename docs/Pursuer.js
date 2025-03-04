@@ -11,16 +11,17 @@ class Pursuer {
     }
 
     setTarget(player) {
-      if (this.lineOfSight(this.canal, player)) {
+      if (this.lineOfSight(`red`) && this.lineOfSight(`black`)) {
         return player;
       } 
+      console.log("the bank start is " + this.canal.topBank.x);
       /*
       let whichWay = this.findOptimalPath();
       let direction = "forward";
       if(whichWay) {
         direction = "reverse";
       }
-      let { x, y } = PursuerPath.getPath(this.canal, direction);
+      let { x, y } = PursuerPath.makeNode(this.canal, direction);
       return new Player(x, y, 0, 0, this.canal);
       */
       return player;
@@ -103,7 +104,7 @@ class Pursuer {
     // Draw the pursuer to the screen
     show() {
       if (this.debugMode) { this.debugHelperText(); }
-      if (this.debugMode && this.lineOfSight()) { this.debugHelperLines(this.position, player.position, `red`, 20); }
+      if (this.debugMode && this.lineOfSight(`red`) && this.lineOfSight(`black`)) { this.debugHelperLines(this.position, player.position, `red`, 20); }
       
       stroke(255);
       strokeWeight(2);
@@ -125,19 +126,27 @@ class Pursuer {
     //if multiple branches are introduced in future then this will have to be refactored
     //function returns true if pursuer has unobstructed line of sight to player
     //TODO: if player is on the red boundary then intersection will return true (i.e. pursuer is blind)
-    lineOfSight() {
+    lineOfSight(colour) {
+      //colour = "red";
       let canal = this.canal;
       let target = {x: player.position.x, y: player.position.y};
       let position = {x: this.position.x, y: this.position.y};
+      while (canal.before != null && canal != this.canal) { canal = canal.before; }
+      let firstCanal = canal;
       do {
-        let startCorner = PursuerPath.getStartCorner(canal);
-        let endCorner = PursuerPath.getEndCorner(canal);
+        let startCorner = PursuerPath.getStartCorner(canal, colour);
+        let endCorner = PursuerPath.getEndCorner(canal, colour);
         if(Intersect.doIntersect(startCorner, endCorner, position, target)) {
+          //next line displays the line that is blocking line of sight
+          line(startCorner.x, startCorner.y, endCorner.x, endCorner.y);
+          console.log(colour + ` canal is blocking pursuer!`);
           return false;
         }
         canal = canal.after;
-      } while (canal != this.canal && canal != null);
+      } while (canal != null && canal != firstCanal) 
+
       return true;
+
     }
     
     //if multiple branches are introduced in future then this will have to be refactored (recursion?)

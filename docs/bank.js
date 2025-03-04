@@ -42,20 +42,21 @@ class bank{
     
     
     visualize(){
+
+        if(this.beforeIntersectX != null){
+            this.startX = this.beforeIntersectX;
+            this.startY = this.beforeIntersectY;
+        }
+
+        if(this.afterIntersectX != null){
+            this.endX = this.afterIntersectX;
+            this.endY = this.afterIntersectY;
+        }
+
         let x1 = this.startX;
         let y1 = this.startY;
         let x2 = this.endX;
         let y2 = this.endY;
-
-        if(this.beforeIntersectX != null){
-            x1 = this.beforeIntersectX;
-            y1 = this.beforeIntersectY;
-        }
-
-        if(this.afterIntersectX != null){
-            x2 = this.afterIntersectX;
-            y2 = this.afterIntersectY;
-        }
 
 
         line(x1, y1, x2, y2);

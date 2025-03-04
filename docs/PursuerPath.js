@@ -1,19 +1,19 @@
 class PursuerPath {
   
-  static getStartCorner(canal) {
-   let x = canal.redBank.beforeIntersectX; 
-   let y = canal.redBank.beforeIntersectY;
+  static getStartCorner(canal, colour) {
+   let x = canal[`${colour}Bank`].startX;
+   let y = canal[`${colour}Bank`].startY;
    return {x, y};
   }
 
-  static getEndCorner(canal) {
-    let x = canal.redBank.afterIntersectX; 
-    let y = canal.redBank.afterIntersectY;
+  static getEndCorner(canal, colour) {
+    let x = canal[`${colour}Bank`].endX; 
+    let y = canal[`${colour}Bank`].endY;
     return {x, y};
   }
 
   //This finds a point slightly away from the canal corners to target
-  static getPath(canal, direction) {
+  static findNode(canal, direction) {
     let key = direction === "reverse" ? "beforeIntersect" : "afterIntersect";
 
     let xRed = canal.redBank[key + "X"];
