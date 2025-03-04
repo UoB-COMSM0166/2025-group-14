@@ -43,7 +43,7 @@ function draw() {
   //   // player.setLevel(currentLevel);
   // }
 
-  if (player.getCoordinates().x > 600-1) {
+  if (player.getCoordinates().x > windowWidth-1) {
     // LC.nextLevel()
     // player.nextLevel();
     player.kill()

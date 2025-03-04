@@ -13,6 +13,7 @@ class canalBuilder {
         canals.push(new canal(this.canalWidth, "Uphill", 550, 400, 600, 100, 5, 3));
         canals.push(new canal(this.canalWidth, "Crossbar", 600, 150, 100, 150));
         canals.push(new canal(this.canalWidth, "victory", 100, 150, 200, 300));
+
         canals[0].setConnections(canals[5], canals[1]);
         canals[1].setConnections(canals[0], canals[2]);
         canals[2].setConnections(canals[1], canals[3]);
@@ -452,6 +453,7 @@ class LevelController {
     // returns first canal of new level
     nextLevel() {
         this.level += 1;
+        // this.generatedLevel();
         this.levelMethods[this.level]();
         return this.canals[this.level][0];
     }
