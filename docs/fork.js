@@ -24,7 +24,7 @@ class fork extends canal{
         let target = this.diversion;
         let rupture = this.bankApproach();
 
-        //using top and bottom makes sense now
+        //using top and bottom makes sense for now
         //but this strikes me as a likely place to come back and debug
         //yeah okay you definitely need to standardize how you're going to
         //angle your diversion threshold. other than that this seems weirdly close to working?
@@ -42,7 +42,11 @@ class fork extends canal{
         const y1 = linearIntersectY(ruptureGrad, ruptureOff, targTop.gradient, targTop.offset);
         const x2 = linearIntersectX(ruptureGrad, ruptureOff, targBottom.gradient, targBottom.offset);
         const y2 = linearIntersectY(ruptureGrad, ruptureOff, targBottom.gradient, targBottom.offset);
-        this.diversionThreshold = new bank(x1, y1, x2, y2);
+        if(target.type === "out"){
+            this.diversionThreshold = new bank(x1, y1, x2, y2);
+        }else{
+            this.diversionThreshold = new bank(x2, y2, x1, y1);
+        }
 
         this.diversion.bottomBank.setBeforeIntersect(x2, y2);
         this.diversion.topBank.setBeforeIntersect(x1, y1);

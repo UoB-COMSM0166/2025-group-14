@@ -18,18 +18,18 @@ function setup() {
 
   c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
   c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
-  c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
+  c3 = new fork(canalWidth, "ThirdElement", 200, 500, 550, 620);
   c4 = new fork(canalWidth, "Uphill", 700, 400, 1000, 100);
   c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
   c6 = new canal(canalWidth, "victory", 100, 150, 200, 300);
-  c7 = new diversion(canalWidth, "Offshoot", 800, 330, 1000, 400);
+  c7 = new diversion(canalWidth, "Offshoot", 800, 330, 1000, 400, "out");
   c8 = new canal(canalWidth, "Descend!", 970, 400, 1000, 800);
   c9 = new canal(canalWidth, "Lock", 1000, 700, 700, 900);
   c10 = new canal(canalWidth, "Sneaksup", 700, 900, 300, 800);
-  c11 = new diversion(canalWidth, "Rejoin", 400, 560, 490, 800); //490 800 400 560
+  c11 = new diversion(canalWidth, "Rejoin", 490, 800, 400, 560, "in"); //490 800 400 560
   c1.setConnections(c6, c2);
   c2.setConnections(c1, c3);
-  c3.setConnections(c2, c4/*, c11*/);
+  c3.setConnections(c2, c4, c11);
   c4.setConnections(c3, c5, c7);
   c5.setConnections(c4, c6);
   c6.setConnections(c5, c1);
@@ -37,7 +37,7 @@ function setup() {
   c8.setConnections(c7, c9);
   c9.setConnections(c8, c10);
   c10.setConnections(c9, c11);
-  c11.setConnections(c10, null); 
+  c11.setConnections(c10, c3); 
 
   // b = new boat(2, c1, 250, 200, 10, 20);
 

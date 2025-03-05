@@ -60,10 +60,10 @@ class canal{
         stroke("blue");
         fill("blue");
         beginShape(QUAD_STRIP);
-        vertex(this.redBank.beforeIntersectX, this.redBank.beforeIntersectY);
-        vertex(this.blackBank.beforeIntersectX, this.blackBank.beforeIntersectY);
-        vertex(this.redBank.afterIntersectX, this.redBank.afterIntersectY);
-        vertex(this.blackBank.afterIntersectX, this.blackBank.afterIntersectY);
+        vertex(this.redBank.startX, this.redBank.startY);
+        vertex(this.blackBank.startX, this.blackBank.startY);
+        vertex(this.redBank.endX, this.redBank.endY);
+        vertex(this.blackBank.endX, this.blackBank.endY);
         endShape(CLOSE);
     }
 
