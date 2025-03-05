@@ -30,7 +30,7 @@ class fork extends canal{
         //angle your diversion threshold. other than that this seems weirdly close to working?
         //note also that before and after thresholds seem to be flipped from one another
         //I think 1 is before 2 here because a diversion is a kind of after?
-        //leah thiS IS YOR FUCKING CODE
+        //leah thiS IS YOUR FUCKING CODE
 
         let targTop = target.topBank;
         let targBottom = target.bottomBank;

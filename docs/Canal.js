@@ -260,16 +260,12 @@ class canal{
         
 
         thresholdCheck(x, y){
-
             if(this.after != null){
-    
                 if(this.afterThreshold.checkCross(x, y)){
                     console.log("Swap forward!");
                     return this.after;
                 }
         
-
-
             }
             if(this.before != null){
                 if(this.beforeThreshold.checkCross(x, y)){
@@ -278,9 +274,6 @@ class canal{
                 }
         
             }
-
-
-
             return null;
 
         }
