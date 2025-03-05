@@ -3,7 +3,7 @@ class diversion extends canal{
         super(width, name, startX, startY, endX, endY);
     }
 
-    setBeforeThreshold(){
+    /*setBeforeThreshold(){
         let target = this.before.bankApproach();
         let topGrad = this.topBank.gradient;
         let topOff = this.topBank.offset;
@@ -17,7 +17,7 @@ class diversion extends canal{
 
 
 
-    }
+    }*/
 
 }
 

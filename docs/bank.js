@@ -40,11 +40,16 @@ class bank{
     }
 
     setBeforeIntersect(x, y){
+        this.startX = x;
+        this.startY = y;
         this.beforeIntersectX = x;
         this.beforeIntersectY = y;
+
     }
 
     setAfterIntersect(x, y){
+        this.endX = x;
+        this.endY = y;
         this.afterIntersectX = x;
         this.afterIntersectY = y;
     }
@@ -56,7 +61,7 @@ class bank{
         let x2 = this.endX;
         let y2 = this.endY;
 
-        if(this.beforeIntersectX != null){
+        /*if(this.beforeIntersectX != null){
             x1 = this.beforeIntersectX;
             y1 = this.beforeIntersectY;
         }
@@ -64,7 +69,8 @@ class bank{
         if(this.afterIntersectX != null){
             x2 = this.afterIntersectX;
             y2 = this.afterIntersectY;
-        }
+        }*/
+
 
 
         line(x1, y1, x2, y2);
