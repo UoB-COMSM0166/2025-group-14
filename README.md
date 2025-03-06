@@ -141,7 +141,9 @@ This is my first stab at a class diagram. We can update it once we've consolidat
 
 - 15% ~750 words
 
-### 'Thinking Aloud' - Qualitative Evaluation
+#### Qualitative Evaluation
+
+##### 'Thinking Aloud' Evaluation
 
 We have split our evaluation into three sections – the first two being feedback from the user, and the last being our team’s analysis of the feedback: 
 (1) Constructive Criticism; (2) Positives; (3) Analysis, based on the user’s feedback.
@@ -171,7 +173,7 @@ We have split our evaluation into three sections – the first two being feedbac
 
 
 
-### Heuristic Evaluation - Quantitative
+##### Heuristic Evaluation
 
 | Interface     | Issue         | Heuristics    |Frequency (0-4)| Impact (0-4)  |Persistence (0-4)| Severity (0-4)|
 | ------------- |-------------  | ------------- |:-------------:|:-------------:| :-------------: |:-------------:|
@@ -182,6 +184,38 @@ We have split our evaluation into three sections – the first two being feedbac
 | Instructions | It is not immediately obvious how to turn or use the repair. Need clear instructions before the game starts | Help and documentation | 0 | 3 | 1 | 2 |
 
 The feedback from our heuristic evaluation highlighted several usability issues across different components of our game. Broadly, we found that some players struggled with unclear instructions, particularly for turning and repairs, which we plan to address with clearer on-screen prompts and tutorials. We also noted issues with invisible walls affecting turning, alongside difficulty navigating sharp corners at high speeds. Both issues fall under error prevention and user control, suggesting the need for improved visual cues and better control mechanics. To tackle these we will refine the control system and attempt to debug issues with collisions.
+
+#### Quantitative Evaluation
+
+##### System Useability Survey (SUS)
+
+| SUS Question | Average SUS Score (Easy) | Average SUS Level (Difficult) |
+|---|---|---|
+| 1 | 65 | 47.5 |
+| 2 |	55 | 65 |
+| 3	| 80 | 72.5 |
+| 4	| 85 | 72.5 |
+| 5	| 65 | 62.5 |
+| 6	| 82.5 | 77.5 |
+| 7	| 55 | 35 |
+| 8	| 90 | 82.5 |
+| 9	| 57.5 | 65 |
+| 10 |87.5 | 80 |
+| AVERAGE | 72.25 | 66 |
+
+Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
+
+A more granular analysis of the raw data showed that particularly large contributions to the useability score came from Questions 4, 7, and 10 for both levels. These questions are:
+- I think that I would need the support of a technical person to be able to use this system. (4)
+- I would imagine that most people would learn to use this system very quickly. (7)
+- I needed to learn a lot of things before I could get going with this system. (10)
+
+Question 2 also made a fairly large contribution to the SUS for the easy level:
+- I found the system unnecessarily complex. (2)
+
+These large contributions indicate that currently the useability (or lack thereof) of the system may be dominated by the lack of instruction and information provided to the player when they start the game. We (the developers) needed to tell them quite a lot of information before they could start, and most of the testers took a few moments to get to grips with the controls. However, the large contribution from Question 7 (I would imagine that most people would learn to use this system very quickly) suggests that once they have absorbed and understood how to use the system, they find it easy to use. 
+
+Based on this, we can conclude that there is a satisfactorily significant difference between the different levels of the game. However, considerable gains in useability for both levels could be achieved by implementing methods to provide more information to the user about how to play the game and use the controls at the outset, for example, text explanations and/or tutorials. 
 
 ### Process 
 
