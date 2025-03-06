@@ -188,3 +188,14 @@ Teams meeting, all going well
 - Leah: continuing canal work
 ***
 - Leon and Daniel: TBC
+* 06/03/2025
+** topics
+- catch up
+** notes
+- Polly has updated the repo with the quantitative evaluation. Leon too
+- Polly has been improving her features
+- Leah making progress on the forks. She'll next be working on some issues
+- perhaps we can look into p5.play or other JS physics libraries
+- leon working on main menu
+- perhaps we can think about integrating more features to help players with the usability of the game
+- adam trying to work out pursuer following the player with new maps
