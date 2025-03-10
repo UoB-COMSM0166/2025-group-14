@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/7e29c251-fcc6-4441-aada-08fee2c58adf)# 2025-group-14
+# 2025-group-14
 2025 COMSM0166 group 14
 
 ## Link to game prototype
