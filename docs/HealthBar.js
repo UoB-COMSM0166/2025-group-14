@@ -17,7 +17,9 @@ class HealthBar {
     // Text
     fill(0, 0, 0);
     textSize(15);
-    text("Healthbar: " + this.health, this.x, this.y - 10);
+    textAlign(LEFT)
+    //text("Healthbar: " + this.health, this.x, this.y - 10);
+    text("Healthbar: " + this.health, 15, 20);
 
     // Draw empty health bar box
     stroke(0);

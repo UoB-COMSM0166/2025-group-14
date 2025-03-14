@@ -147,6 +147,10 @@ class Player extends Sprite {
     // this.y = this.position.y;
   }
 
+  isHealthZero() {
+    return this.zeroHealth;
+  }
+
   // this function basically draggs the player model off the border
   // when the boat "hits" the edge of the canal
   applyCollisionOffset() {
