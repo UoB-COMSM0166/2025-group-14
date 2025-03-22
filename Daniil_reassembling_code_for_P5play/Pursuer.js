@@ -1,5 +1,5 @@
 class Pursuer extends Sprite {
-  constructor(x, y, canal, maxSpeed = 3, maxForce = 0.3, pursuerBoatFrames) {
+  constructor(x, y, maxSpeed = 3, maxForce = 0.3, pursuerBoatFrames) {
     // 'super' calls the parent constructor, passing it the appropriate sprite sheet
     super(x, y, pursuerBoatFrames);
     this.position = createVector(x, y);
@@ -8,8 +8,8 @@ class Pursuer extends Sprite {
     this.maxSpeed = maxSpeed;
     this.maxForce = maxForce;
     this.r = 16;
-    this.lowerYBound = canal.top + this.r;
-    this.upperYBound = canal.bottom - this.r;
+    // this.lowerYBound = canal.top + this.r;
+    // this.upperYBound = canal.bottom - this.r;
   }
 
   pursue(target) {
@@ -62,13 +62,13 @@ class Pursuer extends Sprite {
     this.velocity.add(this.acceleration); // Update velocity and position vectors resulting from changes in acceleration
     this.velocity.limit(this.maxSpeed);
     this.position.add(this.velocity);
-    // Limit the pursuer to the boundaries of the canal
-    if (this.position.y > this.upperYBound) {
-      this.position.y = this.upperYBound;
-    }
-    if (this.position.y < this.lowerYBound) {
-      this.position.y = this.lowerYBound;
-    }
+    // // Limit the pursuer to the boundaries of the canal
+    // if (this.position.y > this.upperYBound) {
+    //   this.position.y = this.upperYBound;
+    // }
+    // if (this.position.y < this.lowerYBound) {
+    //   this.position.y = this.lowerYBound;
+    // }
     this.acceleration.set(0, 0);
   }
 

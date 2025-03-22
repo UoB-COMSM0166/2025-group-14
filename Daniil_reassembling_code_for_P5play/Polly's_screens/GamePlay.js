@@ -67,18 +67,12 @@ class GamePlay {
     display() {
         translate(-width / 2, -height / 2);
         ResizeCanvas();
-        background(183, 233, 193);
+        background(128);
         //background("lightblue");
 
         // For testing - comment out
         //timer.show();
 
-        c1.visualize();
-        c2.visualize();
-        c3.visualize();
-        c4.visualize();
-        c5.visualize();
-        c6.visualize();
 
         // b.visualize(); // visualising the Leah's boat
 
