@@ -64,6 +64,11 @@ class GamePlay {
     }
     */
 
+    // setup() {
+        // let box = new Sprite(250, 96, 490, 180, 's');
+        // box.shape = 'chain';
+    // }
+
     display() {
         translate(-width / 2, -height / 2);
         ResizeCanvas();
@@ -73,8 +78,6 @@ class GamePlay {
         // For testing - comment out
         //timer.show();
 
-
-        // b.visualize(); // visualising the Leah's boat
 
         // pursuer object appear and behaviour
         let steering = pursuer.arrive(player);

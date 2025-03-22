@@ -53,7 +53,7 @@ function setup() {
   textFont(font);
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
-  
+
   
   // Instantiate the different screens
   start_screen = new StartScreen();

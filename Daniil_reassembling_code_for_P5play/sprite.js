@@ -1,4 +1,4 @@
-class Sprite {
+class LeonSprite {
   constructor(x, y, frames, speed = 0.05) {
     this.x = x;
     this.y = y;

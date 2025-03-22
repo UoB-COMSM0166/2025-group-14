@@ -18,7 +18,7 @@ class PlayerStatus {
   }
 }
 
-class Player extends Sprite {
+class Player extends LeonSprite {
   constructor(
     mainX,
     mainY,

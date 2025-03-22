@@ -1,4 +1,4 @@
-class Pursuer extends Sprite {
+class Pursuer extends LeonSprite {
   constructor(x, y, maxSpeed = 3, maxForce = 0.3, pursuerBoatFrames) {
     // 'super' calls the parent constructor, passing it the appropriate sprite sheet
     super(x, y, pursuerBoatFrames);
