@@ -199,3 +199,14 @@ Teams meeting, all going well
 - leon working on main menu
 - perhaps we can think about integrating more features to help players with the usability of the game
 - adam trying to work out pursuer following the player with new maps
+
+* 25/03/2025
+Long hiatus due to Java assignment related concerns
+** topics
+Daniel has done a go at using p5.play to rewrite some of the code over the weekend.
+Leah is going through it
+*** p5.play refactor
+everyone is on board with this
+refactoring rather than restructuring
+** actions
+going to all try and grok p5 play and think about how we'll go about refactoring for the next meeting
