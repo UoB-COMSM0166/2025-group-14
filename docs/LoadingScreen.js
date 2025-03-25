@@ -1,0 +1,9 @@
+class LoadingScreen{
+    constructor(){
+      
+    }
+
+    show(){
+      
+    }
+  }

@@ -217,6 +217,37 @@ These large contributions indicate that currently the useability (or lack thereo
 
 Based on this, we can conclude that there is a satisfactorily significant difference between the different levels of the game. However, considerable gains in useability for both levels could be achieved by implementing methods to provide more information to the user about how to play the game and use the controls at the outset, for example, text explanations and/or tutorials. 
 
+##### NASA Task Load Index (TLX)
+
+| TLX Question | W value | Sample size | Result significance (at p<0.5) |
+|---|---|---| ---|
+| Mental Demand | 0 | 9 | significant |
+| Physical Demand | 7.5 | 8 | not significant |
+| Temporal Demand | 24 | 10 | not significant |
+| Effort | 2.5 | 10 | significant |
+| Performance | 5 | 9 | significant |
+| Frustration | 8 | 10 | significant |
+
+**Mental demand & Effort:** 
+
+The result was expectedly statistically significant, because increasing the difficulty level implies putting more effort into game play.  Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant
+
+**Physical demand:**
+
+Expectedly, the difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
+
+**Temporal demand:**
+
+Expectedly, the difference between the groups was not statistically significant, because there was no time limit in completing the task in each case. 
+
+**Performance:**
+
+We expected the difference not to be statistically significant because of the way the nature of the task (make n number of laps around a circle track). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was randomised.
+
+**Frustration:**
+
+At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
+
 ### Process 
 
 - 15% ~750 words
