@@ -12,12 +12,13 @@ function setup() {
     [0, 64, 64, 32],
   ]);
 
+  //TODO: figure out why boat direction resets when player stops moving
+  // atual dimensions of boat itself (in the spritesheet) is 32x16px
   player = new Sprite(100, 100, 64, 32);
   player.maxSpeed = 5;
   // player.friction = 10;
   player.drag = 5;
   player.bounciness = 0.9;
-  // player.colour = "green";
   // player.collider = 'kinematic';
   player.addAnimation("boat", boatAnimation);
   player.animation.frameDelay = 18;
