@@ -210,3 +210,13 @@ everyone is on board with this
 refactoring rather than restructuring
 ** actions
 going to all try and grok p5 play and think about how we'll go about refactoring for the next meeting
+* 03/04/2025
+** topics
+catch up and planning for next period.
+** notes
+general catch up and talk about p5 and how we are going to use it in the game.
+Leah - canals
+Casey - map building
+Adam - pursuer
+Polly - start menu
+Daniel - camera movement
