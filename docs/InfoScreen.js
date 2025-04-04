@@ -3,13 +3,23 @@
 class InfoScreen {
 
     constructor() {
+        //this.duck = loadAni(
+        //    'assets/ducky1.png',
+        //    'assets/ducky2.png'
+        //);
+        
         this.duck = loadAni(
-            'assets/ducky1.png',
-            'assets/ducky2.png'
+            'assets/duck_walk1.png',
+            'assets/duck_walk2.png',
+            'assets/duck_walk3.png',
+            'assets/duck_walk4.png',
+            'assets/duck_walk5.png',
+            'assets/duck_walk6.png'
         );
-        this.duck.frameDelay = 10;
+        
+        this.duck.frameDelay = 30;
         this.duck.scale = 3;
-        //this.preload();
+        
     }
     
 
@@ -53,9 +63,16 @@ class InfoScreen {
         //background("lightblue");
         background(183, 233, 193);
         fill(0);
+        
+        let duckX = -450;
+        let duckY = -270;
+        let duckSpacing = 150;
+        let numberOfDucks = 7;
 
-        //duck.move(10, 'right', 1);
-        animation(this.duck, 0, -250);
+        for (let i = 0; i < numberOfDucks; i++) {
+            animation(this.duck, duckX+(i*duckSpacing), duckY);
+        }
+        //animation(this.duck, 0, -270);
 
         textSize(20)
         textAlign(LEFT);
@@ -64,11 +81,12 @@ class InfoScreen {
         text("But be careful: banging into the canal walls with cause your boat to take damage. Your boat may also take some damage over time.", instructionX, instructionY + (instructionSpacing*2), instructionBoxWidth);
         text("You can choose to stop and make repairs at any time by pressing the 'r' key...but watch out for the pursuer on your tail!", instructionX, instructionY + (instructionSpacing*3), instructionBoxWidth);
         text("Be warned: if your health reaches zero, you will be forced to stop until the repairs are complete. More substantial damage means a longer wait for repairs!", instructionX, instructionY + (instructionSpacing*4), instructionBoxWidth);
+        text("One last thing: you can press [Esc] key at any time to go back to the Start Menu.", instructionX, instructionY + (instructionSpacing*5), instructionBoxWidth);
         
         textAlign(CENTER);
         textSize(30);
         stroke(3);
-        text("Press [SPACE] to continue", 0, instructionY+(instructionSpacing*6));
+        text("Press [SPACE] to continue", 0, instructionY+(instructionSpacing*6.5));
         
         // Transition to gameplay screen when player presses the SPACE key
         if (state === GameState.INFO_SCREEN && keyCode == 32) {
