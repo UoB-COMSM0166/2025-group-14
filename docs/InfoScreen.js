@@ -1,9 +1,14 @@
-let duckAni;
+//let duckAni;
 
 class InfoScreen {
 
     constructor() {
-        //this.duck;
+        this.duck = loadAni(
+            'assets/ducky1.png',
+            'assets/ducky2.png'
+        );
+        this.duck.frameDelay = 10;
+        this.duck.scale = 3;
         //this.preload();
     }
     
@@ -26,13 +31,19 @@ class InfoScreen {
 
         allSprites.pixelPerfect = true;
     }
-        */
+       
 
     setup() {
-        duckAni = loadAni('assets/ducky_3_spritesheet.png', {
-            width: 192, height: 128, frames: [0, 1]
-        });
+        //duckAni = loadAni('assets/ducky_3_spritesheet.png', {
+        //    width: 192, height: 128, frames: [0, 1]
+        //});
+        this.duck = loadAni(
+            'assets/ducky1.png',
+            'assets/ducky2.png'
+        );
+        this.duck.frameDelay = 10;
     }
+         */
 
     display() {
         let instructionY = -180;
@@ -44,7 +55,7 @@ class InfoScreen {
         fill(0);
 
         //duck.move(10, 'right', 1);
-        animation(duckAni, 0, -250);
+        animation(this.duck, 0, -250);
 
         textSize(20)
         textAlign(LEFT);
