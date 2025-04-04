@@ -1,4 +1,5 @@
-//let duckAni;
+// Source of duck assets: https://caz-creates-games.itch.io/ducky-3?download
+// Creator: Caz Creates Games
 
 class InfoScreen {
 
