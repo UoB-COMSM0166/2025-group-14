@@ -2,6 +2,7 @@ let ball, floor;
 let banks;
 let leftBankConstr, rightBankConstr;
 let centre;
+let maxSpeed;
 
 
 function setup() {
@@ -21,6 +22,7 @@ function setup() {
   player.bounciness = 0.9;
   player.colour = 'green'; 
   // player.collider = 'kinematic';
+  maxSpeed = 5;
 
   leftBankConstr = [];
   rightBankConstr = [];
@@ -28,6 +30,8 @@ function setup() {
 
   camera.x = player.x;
   camera.y = player.y;
+
+  
   
 }
 
@@ -58,9 +62,6 @@ function draw() {
     }
   }
 
-
-
-
   // player sprite movement logic
   if (kb.pressing('left')) player.applyForce(-40, 0);
   else if (kb.pressing('right')) player.applyForce(40, 0);
@@ -71,13 +72,13 @@ function draw() {
   // let heading = v.heading();
   // player.rotation = heading;
 
-  let maxSpeed = 5;
+  
   let currentVel = createVector(player.vel.x, player.vel.y);
   if (currentVel.mag() > maxSpeed) {
     currentVel.setMag(maxSpeed);
     player.vel.x = currentVel.x;
     player.vel.y = currentVel.y;
-  }
+  } 
 
   // Set sprite rotation based on velocity heading
   player.rotation = currentVel.heading();
