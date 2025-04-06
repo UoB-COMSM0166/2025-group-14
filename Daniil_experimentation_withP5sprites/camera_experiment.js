@@ -4,6 +4,10 @@ let leftBankConstr, rightBankConstr;
 let centre;
 let maxSpeed;
 
+let stationary;
+let direcitonSave;
+
+
 
 function setup() {
 	new Canvas(windowWidth, windowHeight);
@@ -22,7 +26,7 @@ function setup() {
   player.bounciness = 0.9;
   player.colour = 'green'; 
   // player.collider = 'kinematic';
-  maxSpeed = 5;
+  maxSpeed = 4.5;
 
   leftBankConstr = [];
   rightBankConstr = [];
@@ -32,7 +36,8 @@ function setup() {
   camera.y = player.y;
 
   
-  
+  stationary = false;
+  direcitonSave = 0;
 }
 
 function draw() {
@@ -63,16 +68,14 @@ function draw() {
   }
 
   // player sprite movement logic
+  // applying force to the player's sprite in response to wasd or the arrow keys
   if (kb.pressing('left')) player.applyForce(-40, 0);
   else if (kb.pressing('right')) player.applyForce(40, 0);
   if (kb.pressing('up')) player.applyForce(0, -40);
   else if (kb.pressing('down')) player.applyForce(0, 40);
 
-  // let v = createVector(player.vel.x, player.vel.y);
-  // let heading = v.heading();
-  // player.rotation = heading;
 
-  
+  // the following code 1) prevents exceeding the maxSpeed  
   let currentVel = createVector(player.vel.x, player.vel.y);
   if (currentVel.mag() > maxSpeed) {
     currentVel.setMag(maxSpeed);
@@ -80,9 +83,16 @@ function draw() {
     player.vel.y = currentVel.y;
   } 
 
-  // Set sprite rotation based on velocity heading
-  player.rotation = currentVel.heading();
+  // 2)preserves the direction when the sprite stops
+  if (currentVel.mag() > 0.2) direcitonSave = currentVel.heading();
+  
+  if (currentVel.mag() < 0.2) stationary = true; 
+  else stationary = false;
 
+  if (stationary === false) player.rotation = currentVel.heading();
+  else player.rotation = direcitonSave;
+
+  // map creation logic
   if (kb.pressing('shift') && mouse.presses()){
     // console.log("Shift if pressed when mouse is clicked");
     rightBankConstr.push([mouse.x, mouse.y]);
@@ -106,7 +116,7 @@ function draw() {
 
     //debug info with coordinates ont pot of mivng player
     text(`player.x: ${round(player.x)} player.y: ${round(player.y)}`, player.x, player.y - 30);
-    text(`player vel: ${round(currentVel.mag())}`, player.x, player.y - 50);
+    text(`player vel: ${currentVel.mag()}`, player.x, player.y - 50);
     // text(`p.canv.x: ${round(player.canvasPos.x)} p.canv.y: ${round(player.canvasPos.y)}`, player.x, player.y - 50);
     // text(`windowWidth/4: ${round(windowWidth/4)} windowWidth*3/4: ${round(windowWidth*3/4)}`, player.x, player.y - 70);
     // text(`windowHeight/4: ${round(windowHeight/4)} windowHeight*3/4: ${round(windowHeight*3/4)}`, player.x, player.y - 90); 
