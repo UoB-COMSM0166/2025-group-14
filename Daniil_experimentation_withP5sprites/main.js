@@ -1,4 +1,3 @@
-let ball, floor;
 let banks;
 let leftBankConstr, rightBankConstr;
 
@@ -29,15 +28,17 @@ function draw() {
 
   // not necessarily sure what camera.on() does exactly, but if I touch it everything breaks
   camera.on();
-  playerCfg.camera;
+  playerCfg.camera();
 
-  coordinateGrid();
+  // coordinateGrid();
 
   playerCfg.movement();
   playerCfg.debug();
 
 
   mapConstructor();
+
+  coordinateGrid();
 
   // // like with camera on, if I touch it, everything breaks
   // camera.off();
