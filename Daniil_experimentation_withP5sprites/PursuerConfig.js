@@ -97,7 +97,7 @@ class PursuerConfig {
             let snapshot = this.lastSeenArray[i];
             push();  
             noStroke();
-            fill('red');
+            fill(255, 0, 0, 100);
             rectMode(CENTER);
             translate(snapshot.position.x, snapshot.position.y);
             rotate(snapshot.rotation);
@@ -109,12 +109,20 @@ class PursuerConfig {
             let snapshot = this.lastSeenArray[0];
             push();  
             noStroke();
-            fill('green');
+            fill(0, 255, 0, 100);
             rectMode(CENTER);
             translate(snapshot.position.x, snapshot.position.y);
             rotate(snapshot.rotation);
             rect(0, 0, 50, 25);
             pop(); 
+        }
+
+        if (this.target == this.player) {
+            push();
+            stroke(255, 0, 0);
+            strokeWeight(2);
+            line(this.player.x, this.player.y, this.pursuer.x, this.pursuer.y);
+            pop();
         }
          
     }
