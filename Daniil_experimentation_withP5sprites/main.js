@@ -13,6 +13,9 @@ function setup() {
   player = new Sprite(100, 100, 50, 25);
   playerCfg = new PlayerConfig(player);
 
+  pursuer = new Sprite(40, 100, 50, 25);
+  pursuerCfg = new PursuerConfig(pursuer, player, 3);
+
   leftBankConstr = [];
   rightBankConstr = [];
 
@@ -35,6 +38,7 @@ function draw() {
   playerCfg.movement();
   playerCfg.debug();
 
+  pursuerCfg.update();
 
   mapConstructor();
 
