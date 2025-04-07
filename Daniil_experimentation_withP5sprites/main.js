@@ -1,7 +1,7 @@
 let ball, floor;
 let banks;
 let leftBankConstr, rightBankConstr;
-let centre;
+
 
 let playerCfg;
 
@@ -9,10 +9,7 @@ function setup() {
 	new Canvas(windowWidth, windowHeight);
 	// world.gravity.y = 5;
 
-  centre = new Sprite(0, 0, 50);
-  centre.colour = "red";
-  centre.collider = 'static';
-
+  centreCircle = new CentreCirlce();
 
   player = new Sprite(100, 100, 50, 25);
   playerCfg = new PlayerConfig(player);
@@ -23,8 +20,6 @@ function setup() {
   camera.x = player.x;
   camera.y = player.y;
 
-  stationary = false;
-  direcitonSave = 0;
 }
 
 function draw() {
@@ -36,6 +31,19 @@ function draw() {
   camera.on();
   playerCfg.camera;
 
+  coordinateGrid();
+
+  playerCfg.movement();
+  playerCfg.debug();
+
+
+  mapConstructor();
+
+  // // like with camera on, if I touch it, everything breaks
+  // camera.off();
+}
+
+function coordinateGrid() {
   // this creates the grid with coordinates. Might be useful for Leah when creating maps
   for (let horPix = -5000; horPix < 5000; horPix += 300) {
     for (let vewPix = -5000; vewPix < 5000; vewPix += 300) {
@@ -46,11 +54,9 @@ function draw() {
       text(`${horPix} ${vewPix}`, horPix, vewPix);
     }
   }
+}
 
-
-  playerCfg.movement();
-
-
+function mapConstructor() {
   // map creation logic
   if (kb.pressing('shift') && mouse.presses()){
     // console.log("Shift if pressed when mouse is clicked");
@@ -70,11 +76,5 @@ function draw() {
       leftBank.colour = "red";
     }
     // console.log(mouse.x);
-
   }
-
-  playerCfg.debug();
-
-  // // like with camera on, if I touch it, everything breaks
-  // camera.off();
 }
