@@ -4,11 +4,7 @@
 class InfoScreen {
 
     constructor() {
-        //this.duck = loadAni(
-        //    'assets/ducky1.png',
-        //    'assets/ducky2.png'
-        //);
-        
+
         this.duck = loadAni(
             'assets/duck_walk1.png',
             'assets/duck_walk2.png',
@@ -23,38 +19,6 @@ class InfoScreen {
         
     }
     
-
-    /*
-    preload() {
-        this.duck = new Sprite(0, 0, 30, 30, 'static');
-        this.duck.spriteSheet = 'assets/ducky_3_spritesheet.png';
-        //duck.anis.offset.x = 2;
-        this.duck.anis.frameDelay = 8;
-        this.duck.friction = 0;
-
-        this.duck.addAnis({
-            smallbounce: { row: 0, frames: 2 },
-            waddle1: { row: 1, frames: 6 },
-            bigbounce: { row: 2, frames: 5, frameDelay: 4 },
-            waddle2: { row: 3, frames: 6 }
-        });
-        this.duck.changeAni('bigbounce');
-
-        allSprites.pixelPerfect = true;
-    }
-       
-
-    setup() {
-        //duckAni = loadAni('assets/ducky_3_spritesheet.png', {
-        //    width: 192, height: 128, frames: [0, 1]
-        //});
-        this.duck = loadAni(
-            'assets/ducky1.png',
-            'assets/ducky2.png'
-        );
-        this.duck.frameDelay = 10;
-    }
-         */
 
     display() {
         let instructionY = -180;
@@ -73,7 +37,6 @@ class InfoScreen {
         for (let i = 0; i < numberOfDucks; i++) {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
         }
-        //animation(this.duck, 0, -270);
 
         textSize(20)
         textAlign(LEFT);
