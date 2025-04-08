@@ -11,10 +11,17 @@ let c1, c2, c3, c4, c5
 function setup() {
 	new Canvas(windowWidth, windowHeight);
 	// world.gravity.y = 5;
+  boatAnimation = loadAnimation("Boat-redbrown.png", [
+    [64, 64, 64, 32],
+    [0, 0, 64, 32],
+    [0, 64, 64, 32],
+  ]);
 
   centreCircle = new CentreCirlce();
 
   player = new Sprite(100, 100, 50, 25);
+  player.addAnimation("boat", boatAnimation);
+  player.animation.frameDelay = 18;
   playerCfg = new PlayerConfig(player);
 
   pursuer = new Sprite(40, 100, 50, 25);
