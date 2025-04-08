@@ -11,22 +11,6 @@ let c1, c2, c3, c4, c5, c6;
 // let b;
 const canalWidth = 80;
 
-// Game control flow variable
-class GameState {
-  static LOAD_SCREEN = "loading screen";
-  static START_SCREEN = "start screen";
-  static INFO_SCREEN = "information screen";
-  static PLAY_GAME = "playing game";
-  static WIN = "win screen";
-  static LOSE = "lose screen";
-
-  static isValid(state) {
-      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.INFO_SCREEN, GameState.PLAY_GAME,
-        GameState.WIN, GameState.LOSE].includes(state);
-  }
-}
-let state = GameState.START_SCREEN; // Starts on loading screen
-
 // Create variables to store sprites
 let boatSpritesheet;
 let boatJson;
@@ -48,6 +32,8 @@ function preload() {
 let playerMaxHealth = 100;
 let playerCollisionDamage = 5;
 let playerDamageOverTime = 1;
+let playerVelocityLimit = 3;
+let pursuerVelocityLimit = 1;
 
 function setup() {
   //set the canvas size the first time when the program starts
@@ -55,84 +41,6 @@ function setup() {
   textFont(font);
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
-<<<<<<< HEAD
-
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
-  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
-  c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
-  c1.setConnections(c6, c2);
-  c2.setConnections(c1, c3);
-  c3.setConnections(c2, c4);
-  c4.setConnections(c3, c5);
-  c5.setConnections(c4, c6);
-  c6.setConnections(c5, c1)
-  // b = new boat(2, c1, 250, 200, 10, 20);
-
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
-  player = new Player(160, 320, 5, 3, c6);
-  // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal);
-=======
-  
-  
-  // Instantiate the different screens
-  start_screen = new StartScreen();
-  info_screen = new InfoScreen();
-  game_screen = new GamePlay();
-  win_screen = new WinScreen();
-  lose_screen = new LoseScreen();
->>>>>>> p5Play_pursuer
-}
-
-function draw() {
-
-  if (state == GameState.START_SCREEN) {
-    start_screen.display();
-  }
-
-<<<<<<< HEAD
-  c1.visualize();
-  c2.visualize();
-  c3.visualize();
-  c4.visualize();
-  c5.visualize();
-  c6.visualize();
-  console.log("Resetting");
-=======
-  if (state == GameState.INFO_SCREEN) {
-    info_screen.display();
-  }
->>>>>>> p5Play_pursuer
-
-  if (state == GameState.PLAY_GAME) {
-    game_screen.display();
-  }
-
-  if (state == GameState.WIN) {
-    win_screen.display();
-  }
-
-  if (state == GameState.LOSE) {
-    lose_screen.display();
-  }
-  
-}
-
-// create a dinamically resizable canvas
-function ResizeCanvas() {
-  if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight) {
-    createCanvas(windowWidth, windowHeight);
-    oldWindowWidth = windowWidth;
-    oldWindowHeight = windowHeight;
-  }
-}
-
-// Reset the values of the (gameplay) global variables to their initial values
-// (so that the game can restart again after it ends)
-function resetVariables() {
   waterTileFrame = waterSpritesheet.get(0, 0, 16, 16);
   c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450, waterTileFrame);
   c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600, waterTileFrame);
@@ -175,7 +83,7 @@ function resetVariables() {
     160,
     320,
     5,
-    3,
+    playerVelocityLimit,
     c6,
     boatFrames,
     timer,
@@ -188,6 +96,44 @@ function resetVariables() {
   healthbar = new HealthBar(playerMaxHealth, player);
 
   // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
+  pursuer = new Pursuer(100, 200, canal, pursuerVelocityLimit, 0.2, pursuerBoatFrames);
+}
 
+function draw() {
+  translate(-width / 2, -height / 2);
+  ResizeCanvas();
+  background(200);
+
+  // For testing - comment out
+  //timer.show();
+
+  c1.visualize();
+  c2.visualize();
+  c3.visualize();
+  c4.visualize();
+  c5.visualize();
+  c6.visualize();
+
+  // b.visualize(); // visualising the Leah's boat
+
+  // pursuer object appear and behaviour
+  let steering = pursuer.arrive(player);
+  pursuer.applyForce(steering);
+  pursuer.update();
+  pursuer.show();
+
+  //to make the player model appear on the screen
+  player.show(); // visualising Daniil's boat
+
+  // display and update healthbar
+  healthbar.draw();
+}
+
+// create a dinamically resizable canvas
+function ResizeCanvas() {
+  if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight) {
+    createCanvas(windowWidth, windowHeight);
+    oldWindowWidth = windowWidth;
+    oldWindowHeight = windowHeight;
+  }
 }

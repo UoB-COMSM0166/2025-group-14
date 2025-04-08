@@ -28,10 +28,10 @@ Add a group photo here!
 |----|-----|------|
 | Polly Lang | js24119@bristol.ac.uk | developer |
 | Leon Wellstead | np24094@bristol.ac.uk | developer |
-| | | |
-| | | |
-| | | |
-| | | |
+| Casey Cronyn | mt24200@bristol.ac.uk | developer |
+| Daniil Lutskiy | ya24711@bristol.ac.uk | developer |
+| Leah Liddle | zs24945@bristol.ac.uk | developer |
+| Adam Sidnell | fv24034@bristol.ac.uk | developer |
 
 ## Project Report
 
@@ -101,7 +101,7 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 |Prospective gamers - other|As a plyaer of the game I want it to have a small narrative component to provide context.|Given that I have watched the game's introduction, when I see the enemy avatar approach, I should be able to say why they are chasing me and what the stakes are for my hypothetical player character.|
 
 
-#### Requirements Reflection
+### Requirements Reflection
 Initially, for certain cases, we had difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity -- a level which may vary between different teams due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
 
 (1) **Initiative** = largest overview/goal; it is made up of several Epics.
@@ -141,11 +141,112 @@ This is my first stab at a class diagram. We can update it once we've consolidat
 
 - 15% ~750 words
 
-- One qualitative evaluation (your choice) 
+#### Qualitative Evaluation
 
-- One quantitative evaluation (of your choice) 
+##### 'Thinking Aloud' Evaluation
 
-- Description of how code was tested. 
+We have split our evaluation into three sections – the first two being feedback from the user, and the last being our team’s analysis of the feedback: 
+(1) Constructive Criticism; (2) Positives; (3) Analysis, based on the user’s feedback.
+
+**(1) Constructive Criticism**
+- Corners difficult to navigate with current movement mechanics. Glitches occur on corner collisions; and too much bounce when colliding with the walls of the canals.
+- Pursuer too fast and/or starts too close to the Player.
+- The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
+- Repair function not very intuitive and too slow to repair.
+- Health bar too small; bigger bar would be easier to notice.
+- More small bends would be good, not just straight lines.
+- How do you win the game? Unclear objective.
+
+**(2) Positives**
+- Map shape was interesting because of the sharp corners.
+- Original game idea; never played a game like it before.
+- User liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
+- Aesthetics (boats and water texture) received compliments. 
+
+**(3) Analysis**
+- We need to improve collision detection between the player and canal walls. Collisions occur when they should not; being close to the corner as you go around it, but not actually touching the wall, may register as a collision and bounce the player back. This has a big impact on the user’s experience and is therefore high priority.
+- We should consider reducing the amount which the player bounces away from the wall when they collide.
+- A simple tutorial on the controls and objective(s) of the game would make the experience more enjoyable and reduce the learning curve.
+- We could also add sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. The tutorial would also help with this.
+- We should consider adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
+- To produce a more difficult level, we can change the camera to scroll the map into view instead of showing the entire map on the screen; not seeing upcoming corners will make it more difficult.
+
+
+
+##### Heuristic Evaluation
+
+| Interface     | Issue         | Heuristics    |Frequency (0-4)| Impact (0-4)  |Persistence (0-4)| Severity (0-4)|
+| ------------- |-------------  | ------------- |:-------------:|:-------------:| :-------------: |:-------------:|
+| Repairs & visuals | The mechanic of the boat freezing after a repair requires you to start moving again but this is not visually indicated | Visibility of system status | 3 | 2 | 1 | 2 |
+| Canal | Enemy boat goes through walls instead of colliding | Error prevention | 1 | 1 | 1 | 1 | 
+| Controls | It is hard to turn on sharp corners, especially when boat is at speed | User control and freedom | 2 | 2 | 1 | 2 |
+| Canal | Invisible walls mean turning is not always possible but this is not evident to the player | Error prevention | 2 | 3 | 1 | 2 |
+| Instructions | It is not immediately obvious how to turn or use the repair. Need clear instructions before the game starts | Help and documentation | 0 | 3 | 1 | 2 |
+
+The feedback from our heuristic evaluation highlighted several usability issues across different components of our game. Broadly, we found that some players struggled with unclear instructions, particularly for turning and repairs, which we plan to address with clearer on-screen prompts and tutorials. We also noted issues with invisible walls affecting turning, alongside difficulty navigating sharp corners at high speeds. Both issues fall under error prevention and user control, suggesting the need for improved visual cues and better control mechanics. To tackle these we will refine the control system and attempt to debug issues with collisions.
+
+#### Quantitative Evaluation
+
+##### System Useability Survey (SUS)
+
+| SUS Question | Average SUS Score (Easy) | Average SUS Level (Difficult) |
+|---|---|---|
+| 1 | 65 | 47.5 |
+| 2 |	55 | 65 |
+| 3	| 80 | 72.5 |
+| 4	| 85 | 72.5 |
+| 5	| 65 | 62.5 |
+| 6	| 82.5 | 77.5 |
+| 7	| 55 | 35 |
+| 8	| 90 | 82.5 |
+| 9	| 57.5 | 65 |
+| 10 |87.5 | 80 |
+| **Average** | **72.25** | **66** |
+
+Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
+
+A more granular analysis of the raw data showed that particularly large contributions to the useability score came from Questions 4, 7, and 10 for both levels. These questions are:
+- I think that I would need the support of a technical person to be able to use this system. (4)
+- I would imagine that most people would learn to use this system very quickly. (7)
+- I needed to learn a lot of things before I could get going with this system. (10)
+
+Question 2 also made a fairly large contribution to the SUS for the easy level:
+- I found the system unnecessarily complex. (2)
+
+These large contributions indicate that currently the useability (or lack thereof) of the system may be dominated by the lack of instruction and information provided to the player when they start the game. We (the developers) needed to tell them quite a lot of information before they could start, and most of the testers took a few moments to get to grips with the controls. However, the large contribution from Question 7 ("I would imagine that most people would learn to use this system very quickly") suggests that once they have absorbed and understood how to use the system, they find it easy to use. 
+
+Based on this, we can conclude that there is a satisfactorily significant difference between the different levels of the game. However, considerable gains in useability for both levels could be achieved by implementing methods to provide more information to the user about how to play the game and use the controls at the outset, for example, text explanations and/or tutorials. 
+
+##### NASA Task Load Index (TLX)
+
+| TLX Question | W value | Sample size | Result significance (at p<0.5) |
+|---|---|---| ---|
+| Mental Demand | 0 | 9 | significant |
+| Physical Demand | 7.5 | 8 | not significant |
+| Temporal Demand | 24 | 10 | not significant |
+| Effort | 2.5 | 10 | significant |
+| Performance | 5 | 9 | significant |
+| Frustration | 8 | 10 | significant |
+
+**Mental demand & Effort:** 
+
+The result was expectedly statistically significant, because increasing the difficulty level implies putting more effort into game play.  Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant
+
+**Physical demand:**
+
+Expectedly, the difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
+
+**Temporal demand:**
+
+Expectedly, the difference between the groups was not statistically significant, because there was no time limit in completing the task in each case. 
+
+**Performance:**
+
+We expected the difference not to be statistically significant because of the way the nature of the task (make n number of laps around a circle track). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was randomised.
+
+**Frustration:**
+
+At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
 
 ### Process 
 

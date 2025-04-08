@@ -118,12 +118,7 @@ class Player extends Sprite {
       this.applyForce(createVector(0.5, 0));
     }
 
-<<<<<<< HEAD
-    if (this.hitAny) { 
-      console.log("Collision!");//testprint
-=======
     if (this.hitAny) {
->>>>>>> p5Play_pursuer
       this.acceleration = createVector(0, 0);
       this.velocity.div(1000);
 
@@ -150,10 +145,6 @@ class Player extends Sprite {
     // Keep the x and y, inherited from Sprite class, in sync with the position
     // this.x = this.position.x;
     // this.y = this.position.y;
-  }
-
-  isHealthZero() {
-    return this.zeroHealth;
   }
 
   // this function basically draggs the player model off the border
@@ -233,21 +224,6 @@ class Player extends Sprite {
     }
   }
 
-<<<<<<< HEAD
-  reachedTheNextOne(currCanal){ //Leah's function that checks the transition between canals (2 parallel lines)
-    let x = this.position.x; 
-    let y = this.position.y;
-    let angle = this.velocity.heading();
-
-    let frontHitbox = {
-      x: x + ((this.w/2) * cos(angle)),
-      y: y + ((this.w/2) * sin(angle)),
-    };
-    let pasturesNew = currCanal.thresholdCheck(frontHitbox.x, frontHitbox.y);
-    if(pasturesNew != null){
-        this.canal = pasturesNew;
-        console.log("switched to canal with name " + this.canal.name)
-=======
   reachedTheNextOne(currCanal) {
     //Leah's function that checks the transition between canals (2 parallel lines)
     let pasturesNew = currCanal.thresholdCheck(
@@ -257,7 +233,6 @@ class Player extends Sprite {
     if (pasturesNew != null) {
       this.canal = pasturesNew;
       console.log("switched to canal with name " + this.canal.name);
->>>>>>> p5Play_pursuer
     }
   }
 
