@@ -28,7 +28,7 @@ function setup() {
 
 }
 
-function draw() {
+function draw() { 
   if (state == GameState.PLAY_GAME) {
     game_screen.display();
   }
