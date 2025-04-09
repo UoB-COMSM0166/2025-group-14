@@ -8,9 +8,36 @@ let playerCfg;
 let testEdge;
 let c1, c2, c3, c4, c5
 
+// Game control flow variable
+class GameState {
+  static LOAD_SCREEN = "loading screen";
+  static START_SCREEN = "start screen";
+  static INFO_SCREEN = "information screen";
+  static PLAY_GAME = "playing game";
+  static WIN = "win screen";
+  static LOSE = "lose screen";
+}
+let state = GameState.PLAY_GAME; // Starts on loading screen
+
 function setup() {
 	new Canvas(windowWidth, windowHeight);
 	// world.gravity.y = 5;
+
+  resetVariables();
+
+
+}
+
+function draw() { 
+  if (state == GameState.PLAY_GAME) {
+    game_screen.display();
+  }
+}
+
+function resetVariables() {
+  // Instantiate the different screens
+  game_screen = new GamePlay();
+
   boatAnimation = loadAnimation("Boat-redbrown.png", [
     [64, 64, 64, 32],
     [0, 0, 64, 32],
@@ -39,35 +66,6 @@ function setup() {
   c4 = new canal(600, 10, 220); //left up
   c5 = new canal(400, 9, 60)
   network = new canalNetwork(-50, -350, [c1, c2, c3, c4, c5]);
-
-}
-
-function draw() { 
-
-  // clean the previous frame
-  clear();
-
-  // not necessarily sure what camera.on() does exactly, but if I touch it everything breaks
-  camera.on();
-
-  network.animate();
-
-
-  playerCfg.camera();
-
-  // coordinateGrid();
-
-  playerCfg.movement();
-  playerCfg.debug();
-
-  pursuerCfg.update();
-
-  mapConstructor();
-
-  coordinateGrid();
-
-  // // like with camera on, if I touch it, everything breaks
-  // camera.off();
 }
 
 function coordinateGrid() {
