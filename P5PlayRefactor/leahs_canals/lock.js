@@ -54,7 +54,7 @@ class lock extends canal {
         // remember when comparing it to "next"
         //the absolute angle is reversed
         let targ = connection.getOClockInDegrees();
-        // console.log(gate[1].rotation + "/" + targ);
+        console.log(gate[1].rotation + "/" + targ);
 
         if(gate[1].rotation < targ){
             gate[1].rotation = (frameCount) % 360;
