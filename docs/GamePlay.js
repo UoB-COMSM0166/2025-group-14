@@ -102,5 +102,10 @@ class GamePlay {
         if (keyCode == 87){
             state = GameState.WIN;
         }
+
+        // If player presses Esc key, go back to start screen
+        if (keyCode == 27) {
+            state = GameState.START_SCREEN;
+        }
     }
 }

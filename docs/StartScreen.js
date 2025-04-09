@@ -8,10 +8,16 @@ class StartScreen {
         //background("lightblue");
         background(183, 233, 193);
         fill(0);
-        textSize(20)
+        textSize(20);
+        stroke(2);
         textAlign(CENTER);
-        text("Welcome to the Narrowboat Chase Game!", 0, 0)
-        text("Press ENTER to start the game!", 0, 30);
+        text("Welcome to", 0, -100);
+        textSize(50);
+        stroke(4);
+        text("NARROWBOAT CHASE!", 0, -50);
+        textSize(20);
+        stroke(2);
+        text("Press [ENTER] to start the game!", 0, 50);
 
         // Re-initialise the gameplay variables to their starting values
         // (this ensures that the game can be restarted).
