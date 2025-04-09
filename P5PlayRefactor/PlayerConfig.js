@@ -9,7 +9,6 @@ class PlayerConfig {
   this.playerSprite.friction = 10;
   this.playerSprite.drag = 5;
   this.playerSprite.bounciness = 0.9;
-  this.playerSprite.colour = 'green'; 
   // player.collider = 'kinematic';
 
   this.maxSpeed = 4.5;
