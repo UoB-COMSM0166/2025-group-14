@@ -1,7 +1,10 @@
 // Declaration
 class PlayerConfig {
   constructor(player) {
-    this.playerSprite = player;
+
+  this.playerSprite = player;
+
+
   
 
   // player.debug = true;

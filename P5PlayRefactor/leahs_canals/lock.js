@@ -29,6 +29,15 @@ class lock extends canal {
         this.aftDoors = this.doorSprite(this.redEnd, this.blackEnd, this.next);
     }
 
+    removeSprites() { //Daniil: sorry Leah, I was tired
+        this.blackBank.remove();
+        this.redBank.remove();
+        this.foreDoors[0].remove();
+        this.foreDoors[1].remove();
+        this.aftDoors[0].remove();
+        this.aftDoors[1].remove();
+    }
+
     doorSprite(start, end, connection){
         const halfway = this.halfwayPoint(start, end);
 
@@ -54,7 +63,7 @@ class lock extends canal {
         // remember when comparing it to "next"
         //the absolute angle is reversed
         let targ = connection.getOClockInDegrees();
-        console.log(gate[1].rotation + "/" + targ);
+        // console.log(gate[1].rotation + "/" + targ);
 
         if(gate[1].rotation < targ){
             gate[1].rotation = (frameCount) % 360;

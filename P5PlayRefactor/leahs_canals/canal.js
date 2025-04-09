@@ -21,6 +21,7 @@ class canal{
         this.length = length;
         this.oClock = oClock;
         this.width = width;
+        // this.isLock = isLock;
 
         //trigonometric attributes used by the network
         this.horizontal = null;
@@ -42,6 +43,11 @@ class canal{
         this.blackEnd = null;
 
         this.absoluteAngle;
+
+        this.redBank;
+        this.blackBank;
+
+        
         
     }
 
@@ -149,8 +155,8 @@ class canal{
     }
 
     createRedBank(){
-        const redBank = this.createBank(this.redStart, this.redEnd)
-        redBank.colour = "red";
+        this.redBank = this.createBank(this.redStart, this.redEnd)
+        this.redBank.colour = "red";
         
     }
 
@@ -176,8 +182,8 @@ class canal{
         this.blackStart = prevSect;
         this.blackEnd = nextSect;
 
-        const blackBank = this.createBank(prevSect, nextSect);
-        blackBank.colour = "black";
+        this.blackBank = this.createBank(prevSect, nextSect);
+        this.blackBank.colour = "black";
 
     }
 
@@ -211,6 +217,11 @@ class canal{
     createSprites(){
         this.createRedBank();
         this.createBlackBank();
+    }
+
+    removeSprites() {
+        this.blackBank.remove();
+        this.redBank.remove();
     }
 
     createBank(start, end){
