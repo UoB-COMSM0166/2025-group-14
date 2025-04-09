@@ -41,7 +41,7 @@ class canal{
         this.blackStart = null;
         this.blackEnd = null;
 
-        this.absoluteAngle;
+        this.absoluteAngle = null;
         
     }
 
@@ -106,12 +106,13 @@ class canal{
     positionBanks(start, end){
         this.redStart = start;
         this.redEnd = end;
-        this.absoluteAngle = this.angleCalc(start[0], start[1], end[0], end[1], false);
+        this.absoluteAngle = this.angleCalc(start[0], start[1], end[0], end[1], false, true);
         this.positionBlackBank();
     }
 
+
     positionBlackBank(){
-        let a = this.angleCalc(this.redStart[0], this.redStart[1], this.redEnd[0], this.redEnd[1], true)
+        let a = this.angleCalc(this.redStart[0], this.redStart[1], this.redEnd[0], this.redEnd[1], true, false)
         let opp = Math.sin(a) * this.width;
         let adj = Math.cos(a) * this.width;
 
@@ -155,7 +156,6 @@ class canal{
     }
 
     createBlackBank(){
-        let startX, startY, endX, endY;
         const ours = [this.blackGrad, this.blackOff];
 
         let nextSect, prevSect, nexts, prevs;
@@ -220,19 +220,6 @@ class canal{
     }
 
     //other useful functions (called internally)
-
-    angleCalc(startX, startY, endX, endY, rads){
-        let opp = endY - startY;
-        let adj = startX-endX;
-        let tanoutp = opp/adj;
-        if(rads){
-            return Math.atan(tanoutp);
-        }else{
-            return this.radsToDegrees(Math.atan(tanoutp));
-        }
-    
-    } 
-    
     gradient(x1, y1, x2, y2){
         const numer = y2-y1;
         const denom = x2-x1;
@@ -243,6 +230,24 @@ class canal{
     offset(gradient, X, Y){
         return -1 * ((gradient * X) - Y);
     }
+
+    angleCalc(startX, startY, endX, endY, rads, atan2){
+        let opp = endY - startY;
+        let adj = startX - endX
+        let tanoutp = opp/adj;
+        let outp;
+        if(atan2){
+            outp = Math.atan2(tanoutp);
+        }else{
+            outp = Math.atan(tanoutp);
+        }
+        if(rads){
+            return outp;
+        }else{
+            return this.radsToDegrees(outp);
+        }
+    } 
+    
 
     linearIntersect(a1, c1, a2, c2){
         let x = ((-1*c2) + c1)/((-1*a1) + a2);
@@ -283,6 +288,8 @@ class canal{
 
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
+        let position = this.halfwayPoint(this.redStart, this.blackStart);
+        text(this.absoluteAngle, position[0], position[1]);
     }
 
 

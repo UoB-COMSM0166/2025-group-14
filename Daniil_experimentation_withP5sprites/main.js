@@ -26,12 +26,16 @@ function setup() {
   camera.x = player.x;
   camera.y = player.y;
 
-  c1 = new canal(300, 2, 100); //right, up
+  /*c1 = new canal(300, 2, 100); //right, up
   c2 = new canal(770, 4.5, 150); //right, down
   c3 = new lock(470, 7, 130); //left, down
   c4 = new canal(600, 10, 220); //left up
   c5 = new canal(400, 9, 60)
-  network = new canalNetwork(-50, -350, [c1, c2, c3, c4, c5]);
+  network = new canalNetwork(-50, -350, [c1, c2, c3, c4, c5]);*/
+
+  c1 = new canal(500, 0, 100);
+  c2 = new canal(200, 10, 100);
+  network = new canalNetwork(100, 300, [c1, c2]);
 
 }
 
