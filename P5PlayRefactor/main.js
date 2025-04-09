@@ -42,7 +42,7 @@ function setup() {
 
 }
 
-function draw() {
+function draw() { 
 
   // clean the previous frame
   clear();
