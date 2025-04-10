@@ -113,7 +113,7 @@ class canal{
     positionBanks(start, end){
         this.redStart = start;
         this.redEnd = end;
-        this.absoluteAngle = this.angleCalc(start[0], start[1], end[0], end[1], false, true);
+        this.absoluteAngle = this.angleCalc(start[0], start[1], end[0], end[1], false, true, true);
         this.positionBlackBank();
     }
 
@@ -159,7 +159,6 @@ class canal{
     createRedBank(){
         this.redBank = this.createBank(this.redStart, this.redEnd)
         this.redBank.colour = "red";
-        
     }
 
     createBlackBank(){
@@ -248,20 +247,29 @@ class canal{
         return -1 * ((gradient * X) - Y);
     }
 
-    angleCalc(startX, startY, endX, endY, rads, atan2){
+    angleCalc(startX, startY, endX, endY, rads, atan2, abs){
+        let pi = Math.PI;
         let opp = endY - startY;
         let adj = startX - endX
         let tanoutp = opp/adj;
         let outp;
         if(atan2){
-            outp = Math.atan2(tanoutp);
+            outp = (Math.atan2(opp, adj) + pi/2);
         }else{
             outp = Math.atan(tanoutp);
         }
         if(rads){
-            return outp;
+            if(abs){
+                return ((outp - (2 * pi)) % pi) * -1;
+            }else{
+                return outp;
+            }
         }else{
-            return this.radsToDegrees(outp);
+            outp = this.radsToDegrees(outp);
+            if(abs){
+                return ((outp - 360) % 360) * -1;
+            }
+            return outp;
         }
     } 
     
@@ -273,7 +281,7 @@ class canal{
     }
 
     halfwayPoint(start, end){
-        let xStart = start[0];
+        /*let xStart = start[0];
         let yStart = start[1];
 
         let xChange = end[0] - start[0];
@@ -285,7 +293,29 @@ class canal{
         xStart += xChange;
         yStart += yChange;
 
-        return [xStart, yStart];
+        return [xStart, yStart];*/
+
+        return this.pointOnLine(start, end, this.length/2)
+
+    }
+
+    pointOnLine(start, end, distance){
+        let xStart = start[0];
+        let yStart = start[1];
+        let xEnd = end[0];
+        let yEnd = end[1];
+
+        console.log(start);
+
+
+        let angle = this.angleCalc(xStart, yStart, xEnd, yEnd, true, true, false);
+        console.log("angle: " + angle + "\nh/v: " + this.horizontal + "/" + this.vertical);
+    
+
+        let adj = Math.cos(angle) * distance;
+        let opp = Math.sin(angle) * distance;
+
+        return [xStart - opp, yStart - adj];        
 
     }
 
@@ -294,7 +324,7 @@ class canal{
     }
 
     radsToDegrees(rads){
-        return rads *= (180/Math.PI);
+        return rads * (180/Math.PI);
     }
 
     //aesthetic functions
@@ -303,9 +333,10 @@ class canal{
 
     }
 
+
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
-        let position = this.halfwayPoint(this.redStart, this.blackStart);
+
     }
 
     remove(){
@@ -313,7 +344,6 @@ class canal{
             sprite.remove();
         }
     }
-
 
 }
  
