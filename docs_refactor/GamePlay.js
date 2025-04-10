@@ -14,12 +14,12 @@ class GamePlay {
       this.testEdge;
       this.leftBankConstr;
       this.rightBankConstr;
-      this.c1;
+      /*this.c1;
       this.c2;
       this.c3; 
       this.c4; 
-      this.c5;
-      this.network;
+      this.c5;*/
+      this.map;
       this.boatAnimation = loadAnimation("Boat-redbrown.png", [
           [64, 64, 64, 32],
           [0, 0, 64, 32],
@@ -48,12 +48,14 @@ class GamePlay {
 
       this.centreCircle = new CentreCirlce();
     
-      this.c1 = new canal(300, 2, 100); //right, up
+      /*this.c1 = new canal(300, 2, 100); //right, up
       this.c2 = new canal(770, 4.5, 150); //right, down
       this.c3 = new lock(470, 7, 130); //left, down
       this.c4 = new canal(600, 10, 220); //left up
       this.c5 = new canal(400, 9, 60);
-      this.network = new canalNetwork(-50, -350, [this.c1, this.c2, this.c3, this.c4, this.c5]);print("Canal network x and y:" + this.network.x + ", " + this.network.y);
+      this.network = new canalNetwork(-50, -350, [this.c1, this.c2, this.c3, this.c4, this.c5]);print("Canal network x and y:" + this.network.x + ", " + this.network.y);*/
+      this.map = new canalMap();
+    
       
       let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
 
@@ -197,7 +199,7 @@ class GamePlay {
 
       this.healthbar.draw();
 
-      this.network.animate();
+      this.map.animate();
 
 
       this.playerCfg.camera();
