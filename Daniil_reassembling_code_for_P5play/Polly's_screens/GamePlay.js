@@ -1,6 +1,9 @@
 class GamePlay {
     constructor() {
 
+        //canal network visualization (Leah)
+        this.network = null;
+
     }
 /*
     setup() {
@@ -73,11 +76,14 @@ class GamePlay {
         translate(-width / 2, -height / 2);
         ResizeCanvas();
         background(128);
+        
         //background("lightblue");
 
         // For testing - comment out
         //timer.show();
 
+        //create and update canals (Leah)
+        this.handleCanals();
 
         // pursuer object appear and behaviour
         let steering = pursuer.arrive(player);
@@ -99,5 +105,24 @@ class GamePlay {
         if (keyCode == 87){
             state = GameState.WIN;
         }
+    }
+            //handling canals (Leah)
+            handleCanals(){
+                if(this.network != null){
+                    this.network.animate();
+                }else{
+                    this.network = new canalNetwork(0, 0, this.getCanals())
+                }
+            }
+    
+    getCanals(){
+        //list all canals the network will be using and then add to the return array
+        let c1 = new canal(300, 2, 100); //right, up
+        let c2 = new canal(770, 4.5, 150); //right, down
+        let c3 = new canal(470, 7, 130); //left, down
+        let c4 = new canal(600, 10, 220); //left up
+        let c5 = new canal(400, 9, 60);
+
+        return[c1, c2, c3, c4, c5]
     }
 }

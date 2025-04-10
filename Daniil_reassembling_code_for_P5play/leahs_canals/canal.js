@@ -41,7 +41,12 @@ class canal{
         this.blackStart = null;
         this.blackEnd = null;
 
+
+        //the non-relative angle (useful for linking together)
         this.absoluteAngle = null;
+
+        //all sprites created by the canal
+        this.allSprites = [];
         
     }
 
@@ -215,6 +220,7 @@ class canal{
     createBank(start, end){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
+        allSprites.push(outp);
         return outp;
     }
 
@@ -279,8 +285,17 @@ class canal{
         return rads *= (180/Math.PI);
     }
 
-    //aesthetic functions
+    //set the sprites to visible when running
+    reveal(){
+        const l = this.allSprites.length;
+        let current;
+        for(let i = 0; i < l; i++){
+            current = allSprites[i];
+            current.visible = true;
+        }
+    }
 
+    //aesthetic functions
     canalVisualize(){
 
     }
