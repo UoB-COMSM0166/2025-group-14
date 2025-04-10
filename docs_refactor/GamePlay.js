@@ -65,6 +65,107 @@ class GamePlay {
         this.network = new canalNetwork(-50, -350, [this.c1, this.c2, this.c3, this.c4, this.c5]);
         print("Canal network x and y:" + this.network.x + ", " + this.network.y);
       }
+
+          // Post-refactor display
+    display() {
+      // clean the previous frame
+      clear();
+
+      // not necessarily sure what camera.on() does exactly, but if I touch it everything breaks
+      camera.on();
+
+      this.network.animate();
+
+
+      this.playerCfg.camera();
+
+      // coordinateGrid();
+
+      this.playerCfg.movement();
+      this.playerCfg.debug();
+
+      this.pursuerCfg.update();
+
+      // this.mapConstructor();
+
+      this.coordinateGrid();
+
+      // // like with camera on, if I touch it, everything breaks
+      // camera.off();
+
+      // Game control flow logic
+      // Just for now, let's say that you lose when your health get to zero
+      // and you win if I press the w key. Then, transition to win/lose screen.
+      //if (this.player.isHealthZero()){
+      //    state = GameState.LOSE;
+      //}
+      if (keyCode == 87){
+          this.clearSprites();
+          state = GameState.WIN;
+      }
+
+      // If player presses Esc key, go back to start screen
+      if (keyCode == 27) {
+          this.clearSprites();
+          state = GameState.START_SCREEN;
+      }
+    }
+
+      clearSprites() {
+          this.player.remove();
+          this.pursuer.remove();
+          this.centreCircle.remove();
+          //canals
+          /*
+          this.c1.remove();
+          this.c2.remove();
+          this.c3.remove(); 
+          this.c4.remove(); 
+          this.c5.remove();
+          */
+
+          this.c1.removeSprites();
+          this.c2.removeSprites();
+          this.c3.removeSprites();
+          this.c4.removeSprites();
+          this.c5.removeSprites();
+      }
+
+      coordinateGrid() {
+          // this creates the grid with coordinates. Might be useful for Leah when creating maps
+          for (let horPix = -5000; horPix < 5000; horPix += 300) {
+            for (let vewPix = -5000; vewPix < 5000; vewPix += 300) {
+              textSize(15);
+              fill(0);
+              stroke(0);
+              // strokeWeight(4);
+              text(`${horPix} ${vewPix}`, horPix, vewPix);
+            }
+          }
+      }
+    
+  // mapConstructor() {
+  //   // map creation logic
+  //   if (kb.pressing('shift') && mouse.presses()){
+  //     // console.log("Shift if pressed when mouse is clicked");
+  //     this.rightBankConstr.push([mouse.x, mouse.y]);
+  //     if (this.rightBankConstr.length > 1) {
+  //       let rightBank = new Sprite(this.rightBankConstr);
+  //       rightBank.collider = 'static';
+  //       rightBank.colour = "blue";
+  //     }
+  //   }
+  //   else if (mouse.presses()) {
+  //     // console.log("Mouse was clicked");
+  //     this.leftBankConstr.push([mouse.x, mouse.y]);
+  //     if (this.leftBankConstr.length > 1) {
+  //       let leftBank = new Sprite(this.leftBankConstr);
+  //       leftBank.collider = 'static';
+  //       leftBank.colour = "red";
+  //     }
+  //     // console.log(mouse.x);
+  //   }
+  // }
       
     /*
         setup() {
@@ -176,98 +277,5 @@ class GamePlay {
     }
     */
 
-    // Post-refactor display
-    display() {
-        // clean the previous frame
-        clear();
 
-        // not necessarily sure what camera.on() does exactly, but if I touch it everything breaks
-        camera.on();
-
-        this.network.animate();
-
-
-        this.playerCfg.camera();
-
-        // coordinateGrid();
-
-        this.playerCfg.movement();
-        this.playerCfg.debug();
-
-        this.pursuerCfg.update();
-
-        this.mapConstructor();
-
-        this.coordinateGrid();
-
-        // // like with camera on, if I touch it, everything breaks
-        // camera.off();
-
-        // Game control flow logic
-        // Just for now, let's say that you lose when your health get to zero
-        // and you win if I press the w key. Then, transition to win/lose screen.
-        //if (this.player.isHealthZero()){
-        //    state = GameState.LOSE;
-        //}
-        if (keyCode == 87){
-            this.clearSprites();
-            state = GameState.WIN;
-        }
-
-        // If player presses Esc key, go back to start screen
-        if (keyCode == 27) {
-            this.clearSprites();
-            state = GameState.START_SCREEN;
-        }
-    }
-
-    clearSprites() {
-        this.player.remove();
-        this.pursuer.remove();
-        this.centreCircle.remove();
-        //canals
-        /*
-        this.c1.remove();
-        this.c2.remove();
-        this.c3.remove(); 
-        this.c4.remove(); 
-        this.c5.remove();
-        */
-    }
-
-    coordinateGrid() {
-        // this creates the grid with coordinates. Might be useful for Leah when creating maps
-        for (let horPix = -5000; horPix < 5000; horPix += 300) {
-          for (let vewPix = -5000; vewPix < 5000; vewPix += 300) {
-            textSize(15);
-            fill(0);
-            stroke(0);
-            // strokeWeight(4);
-            text(`${horPix} ${vewPix}`, horPix, vewPix);
-          }
-        }
-    }
-      
-      mapConstructor() {
-        // map creation logic
-        if (kb.pressing('shift') && mouse.presses()){
-          // console.log("Shift if pressed when mouse is clicked");
-          this.rightBankConstr.push([mouse.x, mouse.y]);
-          if (this.rightBankConstr.length > 1) {
-            let rightBank = new Sprite(this.rightBankConstr);
-            rightBank.collider = 'static';
-            rightBank.colour = "blue";
-          }
-        }
-        else if (mouse.presses()) {
-          // console.log("Mouse was clicked");
-          this.leftBankConstr.push([mouse.x, mouse.y]);
-          if (this.leftBankConstr.length > 1) {
-            let leftBank = new Sprite(this.leftBankConstr);
-            leftBank.collider = 'static';
-            leftBank.colour = "red";
-          }
-          // console.log(mouse.x);
-        }
-    }
 }
