@@ -326,7 +326,6 @@ class canal{
         this.garbage = new Group();
         this.garbage.amount = 3;
         this.garbage.diameter = 10;
-        // this.garbage.x = 
 
         for (let piece of this.garbage) {
             let offsetAlongCanal = Math.random();
@@ -347,15 +346,8 @@ class canal{
 
         this.player.overlaps(this.garbage, collect);
 
-        // this.player.overlaps(this.garbage, this.collect);
+        this.allSprites.push(this.garbage);
     }
-
-
-    randomCoor
-
-    // collect(player, gem) {
-    //     gem.remove();
-    // }
 
     remove(){
         for(const sprite of this.allSprites){
@@ -370,10 +362,9 @@ class canal{
         ];
     }
 
-
-
 }
  
 function collect(player, gem) {
 	gem.remove();
+    console.log("collected a piece of garbage");
 }
