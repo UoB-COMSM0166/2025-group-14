@@ -218,16 +218,17 @@ class canal{
     createSprites(){
         this.createRedBank();
         this.createBlackBank();
+        this.createGarbage();
     }
 
-    // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
-    // if you have a method that appears both on parent and daughter class, and that method 
-    // is called on a daughter class object, both methods are executed. It's weird, but 
-    // it works: both the banks and gates disappear at restart.
-    removeSprites() { 
-        this.blackBank.remove();
-        this.redBank.remove();
-    }
+    // // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
+    // // if you have a method that appears both on parent and daughter class, and that method 
+    // // is called on a daughter class object, both methods are executed. It's weird, but 
+    // // it works: both the banks and gates disappear at restart.
+    // removeSprites() { 
+    //     this.blackBank.remove();
+    //     this.redBank.remove();
+    // }
 
     createBank(start, end){
         let outp = new Sprite([start, end]);
@@ -303,9 +304,27 @@ class canal{
 
     }
 
+    canalVisualizeWithAllCoordinates() {
+
+    }
+
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
         let position = this.halfwayPoint(this.redStart, this.blackStart);
+    }
+
+    createGarbage() {
+        let offsetAlongCanal = Math.random();
+        // console.log(offsetAlongCanal);
+    
+        let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
+        let redPosition = this.pointBetween(this.redStart, this.redStart, offsetAlongCanal);
+
+        let offsetBetweenCanals = Math.random();
+
+        let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
+
+        let garbage = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
     }
 
     remove(){
@@ -313,6 +332,19 @@ class canal{
             sprite.remove();
         }
     }
+
+    pointBetween(P1, P2, t) {
+        return [
+            (P1[0] + t * (P2[0] - P1[0])), 
+            (P1[1] + t * (P2[1] - P1[1]))
+        ];
+
+        // return {
+        //     x: P1[0] + t * (P2[0] - P1[0]),
+        //     y: P1[1] + t * (P2[1] - P1[1])
+        // };
+    }
+
 
 
 }

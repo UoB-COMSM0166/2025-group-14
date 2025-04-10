@@ -14,22 +14,22 @@ class PlayerConfig {
     this.playerSprite = player;
   
 
-  // player.debug = true;
-  // player.maxSpeed = 5;
-  this.playerSprite.friction = 10;
-  this.playerSprite.drag = 5;
-  this.playerSprite.bounciness = 0.9;
-  // player.collider = 'kinematic';
+    // player.debug = true;
+    // player.maxSpeed = 5;
+    this.playerSprite.friction = 10;
+    this.playerSprite.drag = 5;
+    this.playerSprite.bounciness = 0.9;
+    // player.collider = 'kinematic';
 
-  this.maxSpeed = 4.5;
+    this.maxSpeed = 4.5;
 
-  this.stationary = false;;
-  this.direcitonSave = 0;
-  this.currentVel;
+    this.stationary = false;;
+    this.direcitonSave = 0;
+    this.currentVel;
 
-  this.canals = canals;
+    this.canals = canals;
 
-  this.health = maxHealth; // starts with maxHealth
+    this.health = maxHealth; // starts with maxHealth
     this.maxHealth = maxHealth;
     this.zeroHealth = false;
     this.collisionDamage = collisionDamage;
