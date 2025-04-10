@@ -4,4 +4,8 @@ class CentreCirlce {
     this.centre.colour = "red";
     this.centre.collider = 'static';
   }
+
+  remove() {
+    this.centre.remove();
+  }
 }

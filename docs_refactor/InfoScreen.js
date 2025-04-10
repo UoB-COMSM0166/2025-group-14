@@ -21,18 +21,19 @@ class InfoScreen {
     
 
     display() {
-        let instructionY = -180;
-        let instructionX = -600;
-        let instructionSpacing = 70; 
-        let instructionBoxWidth = 1200;
+        new Canvas(windowWidth, windowHeight);
+        let instructionY = windowHeight*0.25;
+        let instructionX = windowWidth*0.05;
+        let instructionSpacing = windowHeight*0.1; 
+        let instructionBoxWidth = windowWidth*0.9;
         //background("lightblue");
         background(183, 233, 193);
         fill(0);
         
-        let duckX = -450;
-        let duckY = -270;
-        let duckSpacing = 150;
-        let numberOfDucks = 7;
+        let duckX = windowWidth*0.1;
+        let duckY = windowHeight*0.1;
+        let duckSpacing = windowWidth*0.1;
+        let numberOfDucks = 9;
 
         for (let i = 0; i < numberOfDucks; i++) {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
@@ -50,8 +51,9 @@ class InfoScreen {
         textAlign(CENTER);
         textSize(30);
         stroke(3);
-        text("Press [SPACE] to continue", 0, instructionY+(instructionSpacing*6.5));
+        text("Press [SPACE] to continue", windowWidth/2, instructionY+(instructionSpacing*6.5));
         
+        textSize(10);
         // Transition to gameplay screen when player presses the SPACE key
         if (state === GameState.INFO_SCREEN && keyCode == 32) {
           state = GameState.PLAY_GAME;

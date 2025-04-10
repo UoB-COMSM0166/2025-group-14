@@ -9,6 +9,8 @@ class PursuerConfig {
         // This array stores a chain of "snapshots" of the last known player coordinates before the player moves out of sight
         this.lastSeenArray = [];
         this.debugMode = true;
+
+        this.stopPursuing = false;
     }
 
     // Updates the pursuer's target based on player position and line of sight
@@ -31,10 +33,14 @@ class PursuerConfig {
         }
     }
 
+    setStopPursuing(trueOrFalse) { // Daniil: this variable controls whether the game is paused or not
+        this.stopPursuing = trueOrFalse;
+    }
+
     // Moves the pursuer towards the target
     move() {
         // If the pursuer is within 60 pixels of the target, stop moving and set to "sleep" to stop weird jiggling
-        if (this.arrived(this.pursuer, this.player, 60)) {
+        if (this.arrived(this.pursuer, this.player, 60) || this.stopPursuing) {
             this.pursuer.speed = 0;
             this.pursuer.sleeping = true;
             return;

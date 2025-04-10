@@ -1,15 +1,16 @@
 // Declaration
 class PlayerConfig {
   constructor(player) {
-    this.playerSprite = player;
-  
+
+  this.playerSprite = player;
+  this.continueMoving = true;
+
 
   // player.debug = true;
   // player.maxSpeed = 5;
   this.playerSprite.friction = 10;
   this.playerSprite.drag = 5;
   this.playerSprite.bounciness = 0.9;
-  this.playerSprite.colour = 'green'; 
   // player.collider = 'kinematic';
 
   this.maxSpeed = 4.5;
@@ -17,6 +18,10 @@ class PlayerConfig {
   this.stationary = false;;
   this.direcitonSave = 0;
   this.currentVel;
+  }
+
+  setContinueMoving(trueOrFalse) {
+    this.continueMoving = trueOrFalse;
   }
 
   camera() {
@@ -32,10 +37,18 @@ class PlayerConfig {
   movement() {
     // player sprite movement logic
     // applying force to the player's sprite in response to wasd or the arrow keys
-    if (kb.pressing('left')) this.playerSprite.applyForce(-40, 0);
-    else if (kb.pressing('right')) this.playerSprite.applyForce(40, 0);
-    if (kb.pressing('up')) this.playerSprite.applyForce(0, -40);
-    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 40);
+    // pnly if the game is not paused
+    if (this.continueMoving){
+      if (kb.pressing('left')) this.playerSprite.applyForce(-40, 0);
+      else if (kb.pressing('right')) this.playerSprite.applyForce(40, 0);
+      if (kb.pressing('up')) this.playerSprite.applyForce(0, -40);
+      else if (kb.pressing('down')) this.playerSprite.applyForce(0, 40);
+    }
+
+    if (!this.continueMoving) {
+      this.playerSprite.vel.x = 0;
+      this.playerSprite.vel.y = 0;
+    }
 
     // the following code 1) prevents exceeding the maxSpeed  
     this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
