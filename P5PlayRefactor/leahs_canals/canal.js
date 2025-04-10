@@ -219,7 +219,11 @@ class canal{
         this.createBlackBank();
     }
 
-    removeSprites() {
+    // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
+    // if you have a method that appears both on parent and daughter class, and that method 
+    // is called on a daughter class object, both methods are executed. It's weird, but 
+    // it works: both the banks and gates disappear at restart.
+    removeSprites() { 
         this.blackBank.remove();
         this.redBank.remove();
     }

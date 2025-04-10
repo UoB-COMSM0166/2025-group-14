@@ -29,7 +29,7 @@ class lock extends canal {
         this.aftDoors = this.doorSprite(this.redEnd, this.blackEnd, this.next);
     }
 
-    removeSprites() { //Daniil: sorry Leah, I was tired
+    removeSprites() { //Daniil: this function deletes the sprites during the restart of the game
         this.blackBank.remove();
         this.redBank.remove();
         this.foreDoors[0].remove();

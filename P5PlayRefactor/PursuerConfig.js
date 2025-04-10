@@ -33,7 +33,7 @@ class PursuerConfig {
         }
     }
 
-    setStopPursuing(trueOrFalse) {
+    setStopPursuing(trueOrFalse) { // Daniil: this variable controls whether the game is paused or not
         this.stopPursuing = trueOrFalse;
     }
 
