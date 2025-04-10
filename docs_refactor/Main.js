@@ -9,14 +9,15 @@
 class GameState {
   static LOAD_SCREEN = "loading screen";
   static START_SCREEN = "start screen";
+  static LEVEL_SCREEN = "level screen";
   static INFO_SCREEN = "information screen";
   static PLAY_GAME = "playing game";
   static WIN = "win screen";
   static LOSE = "lose screen";
 
   static isValid(state) {
-      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.INFO_SCREEN, GameState.PLAY_GAME,
-        GameState.WIN, GameState.LOSE].includes(state);
+      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.LEVEL_SCREEN, GameState.INFO_SCREEN, 
+        GameState.PLAY_GAME, GameState.WIN, GameState.LOSE].includes(state);
   }
 }
 let state = GameState.START_SCREEN; // Starts on loading screen
@@ -26,6 +27,7 @@ function setup() {
   
   // Instantiate the different screens
   start_screen = new StartScreen();
+  level_screen = new LevelScreen();
   info_screen = new InfoScreen();
   game_screen = new GamePlay();
   win_screen = new WinScreen();
@@ -37,7 +39,10 @@ function draw() {
 
   if (state == GameState.START_SCREEN) {
     start_screen.display();
-    
+  }
+
+  if (state == GameState.LEVEL_SCREEN) {
+    level_screen.display();
   }
 
   if (state == GameState.INFO_SCREEN) {

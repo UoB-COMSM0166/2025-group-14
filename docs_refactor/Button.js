@@ -1,9 +1,11 @@
-// IMPORTANT: If using this button class you must first create the button and then include a repeating call to 
-// setPosition() with the same x, y coords. This is so the button is resized with the canvas correctly. Otherwise 
-// the button may become off-center when the canvas gets resized (this gives it dynamic resizing).
+// IMPORTANT: If using this button class you must first create the button and then include a repeating call (like 
+// in a display/draw function) to setPosition() with the same x, y coords. 
+// This is so the button is resized with the canvas correctly. Otherwise the button may become off-center when 
+// the canvas gets resized (this gives it dynamic resizing).
 
+// Look at startScreen for how a function for button clicks can be passed in as a parameter (callback).
 class Button {
-    constructor(label, x, y, colour, fontSize) {
+    constructor(label, x, y, colour, fontSize, callback) {
         this.label = label;
         this.x = x;
         this.y = y;
@@ -11,6 +13,7 @@ class Button {
         this.fontSize = fontSize || 16; 
         this.hoverColour = this.dim(colour, -30);
         this.clickColour = this.dim(colour, -50);
+        this.callback = callback;
 
         // create a button element
         this.button = createButton(this.label);
@@ -29,11 +32,12 @@ class Button {
         //setPosition(x, y);
         
         // event handling
-        this.button.mousePressed(() => this.click());
+        this.button.mousePressed(() => this.click(callback)); //callback when button is clicked
         this.button.mouseOver(() => this.hoverOver());     
         this.button.mouseOut(() => this.hoverOff());        
     }
 
+    // sets (and resets) the position of the button
     setPosition(x, y) {
         this.x = x;
         this.y = y;
@@ -45,8 +49,12 @@ class Button {
     }
 
     // changes color when mouse is clicking button
+    // also calls the callback function if one is provided
     click() {
         this.button.style('background-color', this.clickColour);
+        if (this.callback) {
+            this.callback(); 
+        }
     }
 
     // changes color when mouse is over the button
@@ -67,5 +75,13 @@ class Button {
     // removes the button from the screen
     remove() {
         this.button.remove();
+    }
+
+    hide() {
+        this.button.hide();
+    }
+    
+    show() {
+        this.button.show();
     }
 }

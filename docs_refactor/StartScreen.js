@@ -1,7 +1,7 @@
 class StartScreen {
 
     constructor() {
-      this.levelButton = new Button("LEVELS", windowWidth / 2, windowHeight / 2 + 150, 'seagreen', 30);
+      this.levelButton = new Button("LEVELS", windowWidth/2, windowHeight/2 + 150, 'seagreen', 30, this.buttonClick.bind(this));
     }
 
     display() {
@@ -27,10 +27,18 @@ class StartScreen {
         //if (state === GameState.START_SCREEN) {
         //    resetVariables();
        // }
+
+        //update position of button in case of resizing
         this.levelButton.setPosition(windowWidth / 2, windowHeight / 2 + 150);
-        // Transition to info screen when player presses the ENTER key
-        if (state === GameState.START_SCREEN && keyCode === 13) {
-          state = GameState.LEVEL_SCREEN;
-        }
+        // Transition to level screen when player clicks on level button
+        
     }
+
+    buttonClick() {
+      console.log("Button clicked!");
+      this.levelButton.remove();
+      if (state === GameState.START_SCREEN) {
+        state = GameState.LEVEL_SCREEN;
+      }
+  }
 }
