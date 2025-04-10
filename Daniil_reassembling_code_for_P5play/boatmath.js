@@ -34,23 +34,3 @@ function limitY(x, grad, offset){
 function limitX(y, grad, offset){
     return (y - offset) / grad;
 }
-
-function length(startX, startY, endX, endY){
-    let vertChange = endX - startX;
-    let horChange = endY - startY;
-    vertChange *= vertChange;
-    horChange *= horChange;
-    return Math.sqrt(vertChange + horChange);
-
-}
-
-function angleIntersect(grad1, grad2){
-    let num = grad1 - grad2;
-    let denom = 1 + (grad1 * grad2);
-    let abs = Math.abs(num/denom);
-    return (Math.atan(abs) * (180/Math.PI));
-}
-
-function toDegrees(rads){
-    return rads * (180/Math.PI);
-}

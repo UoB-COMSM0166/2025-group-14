@@ -7,9 +7,7 @@
 
 let oldWindowWidth;
 let oldWindowHeight;
-let c1, c2, c3, c4, c5, c6;
-// let b;
-const canalWidth = 80;
+
 
 // Game control flow variable
 class GameState {
@@ -39,13 +37,13 @@ function preload() {
   boatJson = loadJSON("boat.json");
   boatSpritesheet = loadImage("Boat-redbrown.png");
   pursuerBoatSpritesheet = loadImage("Boat-grey.png");
-  waterSpritesheet = loadImage("water.png");
+  // waterSpritesheet = loadImage("water.png");
   font = loadFont("./Inconsolata.otf");
 }
 
 // Player health, collion damage and amount of damage taken over time -
 // can be reset at different levels?
-let playerMaxHealth = 100;
+let playerMaxHealth = 1000;
 let playerCollisionDamage = 5;
 let playerDamageOverTime = 1;
 
@@ -55,28 +53,7 @@ function setup() {
   textFont(font);
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
-<<<<<<< HEAD
 
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
-  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
-  c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
-  c1.setConnections(c6, c2);
-  c2.setConnections(c1, c3);
-  c3.setConnections(c2, c4);
-  c4.setConnections(c3, c5);
-  c5.setConnections(c4, c6);
-  c6.setConnections(c5, c1)
-  // b = new boat(2, c1, 250, 200, 10, 20);
-
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
-  player = new Player(160, 320, 5, 3, c6);
-  // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal);
-=======
-  
   
   // Instantiate the different screens
   start_screen = new StartScreen();
@@ -84,30 +61,21 @@ function setup() {
   game_screen = new GamePlay();
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
->>>>>>> p5Play_pursuer
 }
 
 function draw() {
 
   if (state == GameState.START_SCREEN) {
+    console.log("startscreen")
     start_screen.display();
   }
 
-<<<<<<< HEAD
-  c1.visualize();
-  c2.visualize();
-  c3.visualize();
-  c4.visualize();
-  c5.visualize();
-  c6.visualize();
-  console.log("Resetting");
-=======
   if (state == GameState.INFO_SCREEN) {
     info_screen.display();
   }
->>>>>>> p5Play_pursuer
 
   if (state == GameState.PLAY_GAME) {
+    console.log("play screen")
     game_screen.display();
   }
 
@@ -133,28 +101,7 @@ function ResizeCanvas() {
 // Reset the values of the (gameplay) global variables to their initial values
 // (so that the game can restart again after it ends)
 function resetVariables() {
-  waterTileFrame = waterSpritesheet.get(0, 0, 16, 16);
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450, waterTileFrame);
-  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600, waterTileFrame);
-  c3 = new canal(
-    canalWidth,
-    "ThirdElement",
-    200,
-    500,
-    550,
-    620,
-    waterTileFrame
-  );
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100, waterTileFrame);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150, waterTileFrame);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300, waterTileFrame);
-  c1.setConnections(c6, c2);
-  c2.setConnections(c1, c3);
-  c3.setConnections(c2, c4);
-  c4.setConnections(c3, c5);
-  c5.setConnections(c4, c6);
-  c6.setConnections(c5, c1);
-  // b = new boat(2, c1, 250, 200, 10, 20);
+  //here: try out creating a new canal with the p5play library
 
   //TODO: Create helper function or class in a separate file
   //TODO: called "loadSpriteSheet" that takes in the spritesheet and JSON file
@@ -176,7 +123,6 @@ function resetVariables() {
     320,
     5,
     3,
-    c6,
     boatFrames,
     timer,
     playerMaxHealth,
@@ -188,6 +134,6 @@ function resetVariables() {
   healthbar = new HealthBar(playerMaxHealth, player);
 
   // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
+  pursuer = new Pursuer(100, 200, 3, 0.3, pursuerBoatFrames);
 
 }

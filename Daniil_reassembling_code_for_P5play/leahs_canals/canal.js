@@ -41,10 +41,13 @@ class canal{
         this.blackStart = null;
         this.blackEnd = null;
 
+
+        //the non-relative angle (useful for linking together)
         this.absoluteAngle = null;
+
+        //all sprites created by the canal
+        this.allSprites = [];
         
-        this.redBank;
-        this.blackBank;
     }
 
 
@@ -152,8 +155,8 @@ class canal{
     }
 
     createRedBank(){
-        this.redBank = this.createBank(this.redStart, this.redEnd)
-        this.redBank.colour = "red";
+        const redBank = this.createBank(this.redStart, this.redEnd)
+        redBank.colour = "red";
         
     }
 
@@ -178,8 +181,8 @@ class canal{
         this.blackStart = prevSect;
         this.blackEnd = nextSect;
 
-        this.blackBank = this.createBank(prevSect, nextSect);
-        this.blackBank.colour = "black";
+        const blackBank = this.createBank(prevSect, nextSect);
+        blackBank.colour = "black";
 
     }
 
@@ -193,7 +196,6 @@ class canal{
         return rads *= (180/Math.PI);
 
     }
-
 
     getBlackDetails(){return [this.blackGrad, this.blackOff];}
 
@@ -215,18 +217,10 @@ class canal{
         this.createBlackBank();
     }
 
-    // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
-    // if you have a method that appears both on parent and daughter class, and that method 
-    // is called on a daughter class object, both methods are executed. It's weird, but 
-    // it works: both the banks and gates disappear at restart.
-    removeSprites() { 
-        this.blackBank.remove();
-        this.redBank.remove();
-    }
-
     createBank(start, end){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
+        allSprites.push(outp);
         return outp;
     }
 
@@ -291,8 +285,17 @@ class canal{
         return rads *= (180/Math.PI);
     }
 
-    //aesthetic functions
+    //set the sprites to visible when running
+    reveal(){
+        const l = this.allSprites.length;
+        let current;
+        for(let i = 0; i < l; i++){
+            current = allSprites[i];
+            current.visible = true;
+        }
+    }
 
+    //aesthetic functions
     canalVisualize(){
 
     }
@@ -302,6 +305,7 @@ class canal{
         let position = this.halfwayPoint(this.redStart, this.blackStart);
         text(this.absoluteAngle, position[0], position[1]);
     }
+
 
 
 }
