@@ -67,7 +67,7 @@ class PursuerConfig {
     // Sets the array of last seen coordinates
     setPathfinding(currentPoint) {
         if (this.lineOfSight(currentPoint, this.player)) {
-            this.lastSeenCoords = createVector(player.x, player.y);
+            this.lastSeenCoords = createVector(this.player.x, this.player.y);
         } else {
             this.setSnapShot();
         } 
