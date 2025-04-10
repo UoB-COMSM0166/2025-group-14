@@ -3,6 +3,8 @@ class LevelScreen {
     constructor() {
         this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, this.buttonClick.bind(this));
         this.tutorialButton.hide();
+        this.levelOne = new Button("Level 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, this.buttonClick.bind(this));
+        this.levelOne.hide();
     }
 
     display() {
@@ -12,6 +14,7 @@ class LevelScreen {
         
         if (state === GameState.LEVEL_SCREEN) {
             this.tutorialButton.show(); 
+            this.levelOne.show();
             this.tutorialButton.setPosition(windowWidth / 6, windowHeight / 6);
         } else {
             this.tutorialButton.button.hide(); 
