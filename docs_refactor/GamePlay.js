@@ -20,7 +20,12 @@ class GamePlay {
       this.c4; 
       this.c5;*/
       this.map;
-      this.boatAnimation = loadAnimation("Boat-redbrown.png", [
+      this.playerAnimation = loadAnimation("Boat-redbrown.png", [
+          [64, 64, 64, 32],
+          [0, 0, 64, 32],
+          [0, 64, 64, 32],
+        ]);
+        this.pursuerAnimation = loadAnimation("Boat-grey.png", [
           [64, 64, 64, 32],
           [0, 0, 64, 32],
           [0, 64, 64, 32],
@@ -60,11 +65,13 @@ class GamePlay {
       let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
 
       this.player = new Sprite(100, 100, 50, 25);
-      this.player.addAnimation("boat", this.boatAnimation);
+      this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
       this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, canals);
     
       this.pursuer = new Sprite(40, 100, 50, 25);
+      this.pursuer.addAnimation("boat", this.pursuerAnimation);
+      this.pursuer.animation.frameDelay = 18;
       this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
     
       // Instantiate healthbar
