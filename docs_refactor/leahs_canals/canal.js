@@ -14,7 +14,7 @@ to removing sprites cleanly when done.
 
 */
 
-
+let garbagePieceCnt = 0;
 
 class canal{
 
@@ -352,6 +352,7 @@ class canal{
     remove(){
         for(const sprite of this.allSprites){
             sprite.remove();
+            garbagePieceCnt = 0;
         }
     }
 
@@ -366,5 +367,7 @@ class canal{
  
 function collect(player, gem) {
 	gem.remove();
-    console.log("collected a piece of garbage");
+    garbagePieceCnt++;
+    console.log("Pieces of garbage collected: " + garbagePieceCnt);
+    
 }
