@@ -54,7 +54,7 @@ class GameState {
 let state = GameState.START_SCREEN; // Starts on loading screen
 
 function setup() {
-  new Canvas(windowWidth, windowHeight);
+  new Canvas();
   
   // Instantiate the different screens
   start_screen = new StartScreen();
@@ -96,14 +96,14 @@ function draw() {
   
 }
 
-// create a dinamically resizable canvas
-function ResizeCanvas() {
-  if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight) {
-    createCanvas(windowWidth, windowHeight);
-    oldWindowWidth = windowWidth;
-    oldWindowHeight = windowHeight;
-  }
-}
+// // create a dinamically resizable canvas
+// function ResizeCanvas() {
+//   if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight) {
+//     createCanvas(windowWidth, windowHeight);
+//     oldWindowWidth = windowWidth;
+//     oldWindowHeight = windowHeight;
+//   }
+// }
 
 /*
 // Reset the values of the (gameplay) global variables to their initial values
