@@ -324,8 +324,11 @@ class canal{
     createGarbage() {
 
         this.garbage = new Group();
+        this.garbage.amount = 3;
+        this.garbage.diameter = 10;
+        // this.garbage.x = 
 
-        for (let i = 0; i < 3; i++) {
+        for (let piece of this.garbage) {
             let offsetAlongCanal = Math.random();
             // console.log(offsetAlongCanal);
         
@@ -337,16 +340,18 @@ class canal{
             let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
     
             // this.garbagePiece = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
-            let garbagePiece = new this.garbage.Sprite();
-            garbagePiece.x = garbageSpriteCoordinates[0];
-            garbagePiece.y = garbageSpriteCoordinates[1];
-            garbagePiece.diameter = 10;
+            // let garbagePiece = new this.garbage.Sprite();
+            piece.x = garbageSpriteCoordinates[0];
+            piece.y = garbageSpriteCoordinates[1];
         }
 
-        this.player.overlaps(this.garbage, () => this.garbage.remove())
+        this.player.overlaps(this.garbage, collect);
 
         // this.player.overlaps(this.garbage, this.collect);
     }
+
+
+    randomCoor
 
     // collect(player, gem) {
     //     gem.remove();
@@ -369,3 +374,6 @@ class canal{
 
 }
  
+function collect(player, gem) {
+	gem.remove();
+}
