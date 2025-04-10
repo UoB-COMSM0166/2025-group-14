@@ -51,6 +51,12 @@ class canalNetwork{
         return [x, y];
     }
 
+    forAllCanals(callback){
+        for(const canal of this.course){
+            callback(canal);
+        }
+    }
+
     connectCanals(){
         const l = this.course.length;
         let current;
@@ -78,30 +84,14 @@ class canalNetwork{
 
 
     createSprites(){
-        const l = this.course.length;
-        let current;
-        for(let i = 0; i < l; i++){
-            current = this.course[i];
-            current.visualize();
-        }
+        this.forAllCanals(canal => canal.visualize());
     }
 
     animate(){
-        const l = this.course.length;
-        let current;
-        for(let i = 0; i < l; i++){
-            current = this.course[i];
-            current.animate();
-        }
+        this.forAllCanals(canal => canal.animate());
     }
 
     remove(){
-        const l = this.course.length;
-        let current;
-        for(let i = 0; i < l; i++){
-            current = this.course[i];
-            current.remove();
-        }
-
+        this.forAllCanals(canal => canal.remove());
     }
 }
