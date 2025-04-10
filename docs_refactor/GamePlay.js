@@ -248,11 +248,13 @@ class GamePlay {
     this.player.remove();
     this.pursuer.remove();
     this.centreCircle.remove();
-    this.c1.removeSprites();
+    this.map.removeSprites();
+    /*this.c1.removeSprites();
     this.c2.removeSprites();
     this.c3.removeSprites();
     this.c4.removeSprites();
-    this.c5.removeSprites();
+    this.c5.removeSprites();*/
+      
   }
 
   coordinateGrid() {

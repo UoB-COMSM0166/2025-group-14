@@ -9,6 +9,9 @@ four corners of each segment, so you can use them to decorate and add sprites to
 (Leon - I think last time I gave you a Quad_Strip shape with four vertices? that old code is still in docs if
 you want to adapt it for here)
 
+UPDATE!! - if you add any sprites, please add a line to push them to this.allSprites, as that's necessary
+to removing sprites cleanly when done.
+
 */
 
 
@@ -45,6 +48,8 @@ class canal{
         
         this.redBank;
         this.blackBank;
+
+        this.allSprites = [];
     }
 
 
@@ -227,6 +232,7 @@ class canal{
     createBank(start, end){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
+        this.allSprites.push(outp);
         return outp;
     }
 
@@ -300,6 +306,12 @@ class canal{
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
         let position = this.halfwayPoint(this.redStart, this.blackStart);
+    }
+
+    remove(){
+        for(const sprite of this.allSprites){
+            sprite.remove();
+        }
     }
 
 

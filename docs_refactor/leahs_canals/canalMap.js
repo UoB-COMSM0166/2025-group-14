@@ -12,9 +12,16 @@ class canalMap {
         print("Canal network x and y:" + this.networks[0].x + ", " + this.networks[0].y);
     }
 
+
     animate(){
         for(const network of this.networks){
             network.animate();
+        }
+    }
+
+    removeSprites (){
+        for(const network of this.networks){
+            network.remove();
         }
     }
 }
