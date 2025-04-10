@@ -19,7 +19,7 @@ to removing sprites cleanly when done.
 class canal{
 
     //construction functions
-    constructor(length, oClock, width){
+    constructor(length, oClock, width, player){
         //basic attributes
         this.length = length;
         this.oClock = oClock;
@@ -50,6 +50,10 @@ class canal{
         this.blackBank;
 
         this.allSprites = [];
+
+        this.player = player;
+        this.garbage;
+        // this.garbagePiece;
     }
 
 
@@ -311,21 +315,42 @@ class canal{
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
         let position = this.halfwayPoint(this.redStart, this.blackStart);
+
+        // this.player.overlaps(gems, collect);
+
+        
     }
 
     createGarbage() {
-        let offsetAlongCanal = Math.random();
-        // console.log(offsetAlongCanal);
+
+        this.garbage = new Group();
+
+        for (let i = 0; i < 3; i++) {
+            let offsetAlongCanal = Math.random();
+            // console.log(offsetAlongCanal);
+        
+            let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
+            let redPosition = this.pointBetween(this.redStart, this.redStart, offsetAlongCanal);
     
-        let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
-        let redPosition = this.pointBetween(this.redStart, this.redStart, offsetAlongCanal);
+            let offsetBetweenCanals = Math.random();
+    
+            let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
+    
+            // this.garbagePiece = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
+            let garbagePiece = new this.garbage.Sprite();
+            garbagePiece.x = garbageSpriteCoordinates[0];
+            garbagePiece.y = garbageSpriteCoordinates[1];
+            garbagePiece.diameter = 10;
+        }
 
-        let offsetBetweenCanals = Math.random();
+        this.player.overlaps(this.garbage, () => this.garbage.remove())
 
-        let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
-
-        let garbage = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
+        // this.player.overlaps(this.garbage, this.collect);
     }
+
+    // collect(player, gem) {
+    //     gem.remove();
+    // }
 
     remove(){
         for(const sprite of this.allSprites){
@@ -338,11 +363,6 @@ class canal{
             (P1[0] + t * (P2[0] - P1[0])), 
             (P1[1] + t * (P2[1] - P1[1]))
         ];
-
-        // return {
-        //     x: P1[0] + t * (P2[0] - P1[0]),
-        //     y: P1[1] + t * (P2[1] - P1[1])
-        // };
     }
 
 
