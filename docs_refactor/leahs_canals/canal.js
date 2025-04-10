@@ -300,8 +300,8 @@ class canal{
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
         let position = this.halfwayPoint(this.redStart, this.blackStart);
-        text(this.absoluteAngle, position[0], position[1]);
     }
 
 
 }
+ 
