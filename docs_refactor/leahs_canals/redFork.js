@@ -1,13 +1,16 @@
 class redFork extends fork{
-    constructor(length, oClock, width){
-        super(length, oClock, width);
+    constructor(length, oClock, width, player){
+        super(length, oClock, width, player);
     }
 
     createRedBank(){
-        const half = this.halfwayPoint(this.redStart, this.redEnd);
-        //const circle = new Sprite(half[0], half[1], 50)
+        this.setForkPosition(this.redStart, this.redEnd);
+        const circle = new Sprite(this.near[0], this.near[1], 50);
         this.redBank = this.createBank(this.redStart, this.redEnd)
         this.redBank.colour = "red";
+
+        
     }
+
 
 }

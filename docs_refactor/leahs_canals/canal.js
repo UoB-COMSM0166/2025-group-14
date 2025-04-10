@@ -14,12 +14,12 @@ to removing sprites cleanly when done.
 
 */
 
-
+let garbagePieceCnt = 0;
 
 class canal{
 
     //construction functions
-    constructor(length, oClock, width){
+    constructor(length, oClock, width, player){
         //basic attributes
         this.length = length;
         this.oClock = oClock;
@@ -50,6 +50,10 @@ class canal{
         this.blackBank;
 
         this.allSprites = [];
+
+        this.player = player;
+        this.garbage;
+        // this.garbagePiece;
     }
 
 
@@ -217,16 +221,17 @@ class canal{
     createSprites(){
         this.createRedBank();
         this.createBlackBank();
+        this.createGarbage();
     }
 
-    // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
-    // if you have a method that appears both on parent and daughter class, and that method 
-    // is called on a daughter class object, both methods are executed. It's weird, but 
-    // it works: both the banks and gates disappear at restart.
-    removeSprites() { 
-        this.blackBank.remove();
-        this.redBank.remove();
-    }
+    // // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
+    // // if you have a method that appears both on parent and daughter class, and that method 
+    // // is called on a daughter class object, both methods are executed. It's weird, but 
+    // // it works: both the banks and gates disappear at restart.
+    // removeSprites() { 
+    //     this.blackBank.remove();
+    //     this.redBank.remove();
+    // }
 
     createBank(start, end){
         let outp = new Sprite([start, end]);
@@ -281,7 +286,7 @@ class canal{
     }
 
     halfwayPoint(start, end){
-        /*let xStart = start[0];
+        let xStart = start[0];
         let yStart = start[1];
 
         let xChange = end[0] - start[0];
@@ -293,9 +298,7 @@ class canal{
         xStart += xChange;
         yStart += yChange;
 
-        return [xStart, yStart];*/
-
-        return this.pointOnLine(start, end, this.length/2)
+        return [xStart, yStart];
 
     }
 
@@ -305,11 +308,7 @@ class canal{
         let xEnd = end[0];
         let yEnd = end[1];
 
-        console.log(start);
-
-
         let angle = this.angleCalc(xStart, yStart, xEnd, yEnd, true, true, false);
-        console.log("angle: " + angle + "\nh/v: " + this.horizontal + "/" + this.vertical);
     
 
         let adj = Math.cos(angle) * distance;
@@ -327,23 +326,77 @@ class canal{
         return rads * (180/Math.PI);
     }
 
+    getHypotenuse(start, end){
+        return Math.sqrt(Math.pow(start, 2), Math.pow(end, 2));
+    }
+
     //aesthetic functions
 
     canalVisualize(){
 
     }
 
+    canalVisualizeWithAllCoordinates() {
+
+    }
 
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
+        text(this.absoluteAngle, this.redStart[0] + 20, this.redStart[1] + 20)
+        
 
+        // this.player.overlaps(gems, collect);
+
+        
+    }
+
+    createGarbage() {
+
+        this.garbage = new Group();
+        this.garbage.amount = 3;
+        this.garbage.diameter = 10;
+
+        for (let piece of this.garbage) {
+            let offsetAlongCanal = Math.random();
+            // console.log(offsetAlongCanal);
+        
+            let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
+            let redPosition = this.pointBetween(this.redStart, this.redStart, offsetAlongCanal);
+    
+            let offsetBetweenCanals = Math.random();
+    
+            let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
+    
+            // this.garbagePiece = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
+            // let garbagePiece = new this.garbage.Sprite();
+            piece.x = garbageSpriteCoordinates[0];
+            piece.y = garbageSpriteCoordinates[1];
+        }
+
+        this.player.overlaps(this.garbage, collect);
+
+        this.allSprites.push(this.garbage);
     }
 
     remove(){
         for(const sprite of this.allSprites){
             sprite.remove();
+            garbagePieceCnt = 0;
         }
+    }
+
+    pointBetween(P1, P2, t) {
+        return [
+            (P1[0] + t * (P2[0] - P1[0])), 
+            (P1[1] + t * (P2[1] - P1[1]))
+        ];
     }
 
 }
  
+function collect(player, gem) {
+	gem.remove();
+    garbagePieceCnt++;
+    console.log("Pieces of garbage collected: " + garbagePieceCnt);
+    
+}

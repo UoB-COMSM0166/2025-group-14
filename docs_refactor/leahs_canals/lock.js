@@ -1,6 +1,6 @@
 class lock extends canal {
-    constructor(length, oClock, width, fillTime, holdTime){
-        super(length, oClock, width);
+    constructor(length, oClock, width, player, fillTime, holdTime){
+        super(length, oClock, width, player);
         this.fillTime = fillTime;
         this.holdTime = holdTime;
 
@@ -29,17 +29,18 @@ class lock extends canal {
         this.aftDoors = this.doorSprite(this.redEnd, this.blackEnd, this.next);
     }
 
-    removeSprites() { //Daniil: this function deletes the sprites during the restart of the game
-        this.blackBank.remove();
-        this.redBank.remove();
-        this.foreDoors[0].remove();
-        this.foreDoors[1].remove();
-        this.aftDoors[0].remove();
-        this.aftDoors[1].remove();
-    }
+    // removeSprites() { //Daniil: this function deletes the sprites during the restart of the game
+    //     this.blackBank.remove();
+    //     this.redBank.remove();
+    //     this.foreDoors[0].remove();
+    //     this.foreDoors[1].remove();
+    //     this.aftDoors[0].remove();
+    //     this.aftDoors[1].remove();
+    // }
 
     doorSprite(start, end, connection){
         const halfway = this.halfwayPoint(start, end);
+        let circle = new Sprite(halfway[0], halfway[1], 30)
 
         let door1 = this.createBank(start, halfway);
         let door2 = this.createBank(end, halfway);

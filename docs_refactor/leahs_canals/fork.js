@@ -1,10 +1,19 @@
 class fork extends canal {
-    constructor(length, oClock, width){
-        super(length, oClock, width);
+    constructor(length, oClock, width, player){
+        super(length, oClock, width, player);
+        this.near = null;
+        this.far = null;
     }
 
-    createRedBank(){
-        this.redBank = this.createBank(this.redStart, this.redEnd)
-        this.redBank.colour = "green";
+    setForkPosition(start, end){
+        console.log(this.start + "/" + this.end);
+        let length = this.getHypotenuse(start, end);
+        let mid = length/2;
+        let near = mid - this.width/2;
+        let far = mid + this.width/2;
+
+        this.near = this.pointOnLine(start, end, near);
+        this.far = this.pointOnLine(start, end, far);
     }
+
 }

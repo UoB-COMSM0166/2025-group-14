@@ -59,12 +59,14 @@ class GamePlay {
       this.c4 = new canal(600, 10, 220); //left up
       this.c5 = new canal(400, 9, 60);
       this.network = new canalNetwork(-50, -350, [this.c1, this.c2, this.c3, this.c4, this.c5]);print("Canal network x and y:" + this.network.x + ", " + this.network.y);*/
-      this.map = new canalMap();
-    
+
+      this.player = new Sprite(100, 100, 50, 25);
+
+      this.map = new canalMap(this.player);
       
       let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
 
-      this.player = new Sprite(100, 100, 50, 25);
+      // this.player = new Sprite(100, 100, 50, 25);
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
       this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, canals);
