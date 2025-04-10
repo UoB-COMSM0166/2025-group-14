@@ -25,6 +25,8 @@ class GamePlay {
             [0, 0, 64, 32],
             [0, 64, 64, 32],
           ]);
+        this.timer;
+        this.healthbar;
     }
 
     setup() {
@@ -40,30 +42,39 @@ class GamePlay {
         // Post-refactor setup
         
           // world.gravity.y = 5;
-        
+         // Instantiate Timer (to time events that occur over time)
+         this.timer = new Timer();
+         this.timer.startTimer();
+
         this.centreCircle = new CentreCirlce();
-      
-        this.player = new Sprite(100, 100, 50, 25);
-        this.player.addAnimation("boat", this.boatAnimation);
-        this.player.animation.frameDelay = 18;
-        this.playerCfg = new PlayerConfig(this.player);
-      
-        this.pursuer = new Sprite(40, 100, 50, 25);
-        this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
-      
-        this.leftBankConstr = [];
-        this.rightBankConstr = [];
-      
-        camera.x = this.player.x;
-        camera.y = this.player.y;
       
         this.c1 = new canal(300, 2, 100); //right, up
         this.c2 = new canal(770, 4.5, 150); //right, down
         this.c3 = new lock(470, 7, 130); //left, down
         this.c4 = new canal(600, 10, 220); //left up
         this.c5 = new canal(400, 9, 60);
-        this.network = new canalNetwork(-50, -350, [this.c1, this.c2, this.c3, this.c4, this.c5]);
-        print("Canal network x and y:" + this.network.x + ", " + this.network.y);
+        this.network = new canalNetwork(-50, -350, [this.c1, this.c2, this.c3, this.c4, this.c5]);print("Canal network x and y:" + this.network.x + ", " + this.network.y);
+        
+        let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
+
+        this.player = new Sprite(100, 100, 50, 25);
+        this.player.addAnimation("boat", this.boatAnimation);
+        this.player.animation.frameDelay = 18;
+        this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, canals);
+      
+        this.pursuer = new Sprite(40, 100, 50, 25);
+        this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
+      
+        // Instantiate healthbar
+        this.healthbar = new HealthBar(100, this.playerCfg);
+    
+        this.leftBankConstr = [];
+        this.rightBankConstr = [];
+      
+        camera.x = this.player.x;
+        camera.y = this.player.y;
+      
+        
       }
       
     /*
@@ -184,6 +195,8 @@ class GamePlay {
         // not necessarily sure what camera.on() does exactly, but if I touch it everything breaks
         camera.on();
 
+        this.healthbar.draw();
+
         this.network.animate();
 
 
@@ -206,9 +219,10 @@ class GamePlay {
         // Game control flow logic
         // Just for now, let's say that you lose when your health get to zero
         // and you win if I press the w key. Then, transition to win/lose screen.
-        //if (this.player.isHealthZero()){
-        //    state = GameState.LOSE;
-        //}
+        if (this.playerCfg.isHealthZero()){
+            this.clearSprites();
+            state = GameState.LOSE;
+        }
         if (keyCode == 87){
             this.clearSprites();
             state = GameState.WIN;
