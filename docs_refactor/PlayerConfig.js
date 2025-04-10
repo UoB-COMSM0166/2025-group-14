@@ -1,6 +1,16 @@
 // Declaration
+class PlayerStatus {
+  static NONE = "none";
+  static REPAIRING = "repairing";
+  static REPAIRS_FINISHED = "repairs_finished";
+
+  static isValid(status) {
+      return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
+  }
+}
+
 class PlayerConfig {
-  constructor(player) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, canals) {
     this.playerSprite = player;
   
 
@@ -16,6 +26,18 @@ class PlayerConfig {
   this.stationary = false;;
   this.direcitonSave = 0;
   this.currentVel;
+
+  this.canals = canals;
+
+  this.health = maxHealth; // starts with maxHealth
+    this.maxHealth = maxHealth;
+    this.zeroHealth = false;
+    this.collisionDamage = collisionDamage;
+    this.damageOverTime = damageOverTime;
+    this.timer = timer;
+    this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
+    this.repairTimer = new Timer();
+    this.status = PlayerStatus.NONE;
   }
 
   camera() {
@@ -52,6 +74,28 @@ class PlayerConfig {
 
     if (this.stationary === false) this.playerSprite.rotation = this.currentVel.heading();
     else this.playerSprite.rotation = this.direcitonSave;
+
+    // Update damage over time and collision damage
+    this.takeDamageOverTime();
+    //this.takeCollisionDamage();
+
+    // If health is zero, stops player boat until repaired.
+    if (this.zeroHealth) {
+      // Display speech bubble message
+      let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
+        this.playerSprite.x-5, this.playerSprite.y - 10,
+        "OH NO! Your health is zero! Press the 'r' key to make repairs!");
+        zerohealthMessage.show();
+      //this.haltPlayer();
+    }
+/*
+    // If 'r' key is pressed, repair boat
+    if (keyIsDown(82) === true || this.status === PlayerStatus.REPAIRING) {
+      // If health is zero, repairs take twice as long as if health > 0
+      if (this.zeroHealth) this.repair(this.repairTime*2)
+      this.repair();
+    }
+ */
   }
 
   debug() {
@@ -63,5 +107,106 @@ class PlayerConfig {
     // text(`windowHeight/4: ${round(windowHeight/4)} windowHeight*3/4: ${round(windowHeight*3/4)}`, player.x, player.y - 90); 
   }
 
+  isHealthZero() {
+    return this.zeroHealth;
+  }
+
+  // Updates the health attribute based on damage taken
+  takeDamage(damagePoints) {
+    this.health -= damagePoints;
+    if (this.health <= 0) {
+      this.healthIsZero();
+    }
+  }
+
+  // If health is <= zero, makes sure health cannot go below zero and sets
+  // zeroHealth attribute to true.
+  healthIsZero() {
+    this.health = 0; // health cannot go below zero
+    this.zeroHealth = true;
+  }
+
+  // Collision damage
+  takeCollisionDamage() {
+    for (let i = 0; i < this.canals.length; i++) {
+      if (this.playerSprite.collides(this.canals[i])) {
+        this.takeDamage(this.collisionDamage);
+      }
+    }
+    if (this.health <= 0) {
+      this.healthIsZero();
+    }
+  }
+
+  // Decrements health by [damagePoints] points every [timeInterval] seconds.
+  takeDamageOverTime(timeInterval = 2.0) {
+    // Get current time from Main timer (started during setup)
+    let timeElapsed = this.timer.getTime();
+    // Set the comparison value - depends on frame rate. Ensures that condition for taking damage is
+    // only true ONCE per timeInterval (rather than multiple times, which is what you get if you use
+    // integer seconds).
+    let timeLimit = timeInterval / (frameRate() * timeInterval);
+    // need float comparison as calls this functions multiple times in a single second - prevents it decrementing the health multiple times in a given second
+    if (timeElapsed % timeInterval < timeLimit) {
+      this.takeDamage(this.damageOverTime); // If condition true, player takes damage
+    }
+    if (this.health <= 0) {
+      this.healthIsZero();
+    }
+  }
+/*
+  // Returns health attribute to maxHealth
+  repair() {
+    // If health is zero, repairs take twice as long as if health > 0
+    let timeTaken = this.repairTime
+    if (this.zeroHealth) timeTaken = timeTaken * 2;
+    this.status = PlayerStatus.REPAIRING;
+
+    // Stop movement for repairTime
+    this.haltPlayer(timeTaken);
+
+    // Display speech bubble message
+    let repairMessage = new SpeechBubble(this.position.x-150, this.position.y-100, 150, 65, 
+      this.position.x-5, this.position.y - 10,
+      "Repairing...repairs will take " + timeTaken + " seconds...");
+    repairMessage.show();
+
+    if (this.status === PlayerStatus.REPAIRS_FINISHED) {
+      // Update health to maxHealth
+      this.health = this.maxHealth;
+      this.zeroHealth = false;
+    }
+  }
+
+  // Stops boat for a given amount of time
+  haltPlayer(timeHalted = null) {
+    //this.repairTimer.show();
+   // this.halted = true;
+    this.velocityLimit = 0; // halt player
+    this.velocityMagnitudeCopy = this.velocity.mag();
+    this.velocity.setMag(0);
+    // If argument not given, halt player indefinitely (until repairs occur)
+    // If argument IS given, halt player until the given number of seconds have elapsed
+    if (timeHalted != null) {
+      // If timer hasnt already started, start it
+      if (!this.repairTimer.isStarted()) {
+        this.repairTimer.startTimer();
+      }
+      // While timer < timeHalted, boat is immobile. 
+      if (this.repairTimer.hasElapsed(timeHalted) === true) {
+        // Timer reaches timeTaken for repairs. Boat movement reset.
+        // Revert limitVelocity to original value (allow boat to move again)
+        this.velocityLimit = this.originalVelocityLimit;
+        this.velocity.setMag(this.velocityMagnitudeCopy);
+
+        // Reset repairTimer
+        this.repairTimer.resetTimer();
+        this.zeroHealth = false;
+        this.status = PlayerStatus.REPAIRS_FINISHED;
+      }
+      
+    }
+  }
+    */
 
 }
