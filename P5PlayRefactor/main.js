@@ -120,36 +120,47 @@ function coordinateGrid() {
 
 function conditionalGameRestart() {
   if (kb.released('r')) {
-    centreCircle.exterminate();
-
-    c1.removeSprites();
-    c2.removeSprites();
-    c3.removeSprites();
-    c4.removeSprites();
-    c5.removeSprites();
-
-    player.remove();
-    pursuer.remove();
-
-    player = new Sprite(100, 100, 50, 25);
-    player.addAnimation("boat", boatAnimation);
-    playerCfg = new PlayerConfig(player);
-    pursuer = new Sprite(40, 100, 50, 25);
-    pursuerCfg = new PursuerConfig(pursuer, player, 3);
-    pursuerCfg.setStopPursuing(false);
-
-    camera.x = player.x;
-    camera.y = player.y;
-
-    c1 = new canal(300, 2, 100); //right, up
-    c2 = new canal(770, 4.5, 150); //right, down
-    c3 = new lock(470, 7, 130); //left, down
-    c4 = new canal(600, 10, 220); //left up
-    c5 = new canal(400, 9, 60);
-    network = new canalNetwork(-50, -350, [c1, c2, c3, c4, c5]);
-
-    centreCircle.reincarnate();
+    deleteAllSprites();
+    reinstantiateAllSprites();
   }
+}
+
+function deleteAllSprites() {
+  // this part of the function removes all of the sprites
+  // if you only reinstantiate the spirte, duplicate sprite will be created
+  // call this function when transitioning to a different screen
+  centreCircle.exterminate();
+
+  c1.removeSprites();
+  c2.removeSprites();
+  c3.removeSprites();
+  c4.removeSprites();
+  c5.removeSprites();
+
+  player.remove();
+  pursuer.remove();
+}
+
+function reinstantiateAllSprites() {
+  //this part of the function reinstantiates all of the sprites
+  player = new Sprite(100, 100, 50, 25);
+  player.addAnimation("boat", boatAnimation);
+  playerCfg = new PlayerConfig(player);
+  pursuer = new Sprite(40, 100, 50, 25);
+  pursuerCfg = new PursuerConfig(pursuer, player, 3);
+  pursuerCfg.setStopPursuing(false);
+
+  camera.x = player.x;
+  camera.y = player.y;
+
+  c1 = new canal(300, 2, 100); //right, up
+  c2 = new canal(770, 4.5, 150); //right, down
+  c3 = new lock(470, 7, 130); //left, down
+  c4 = new canal(600, 10, 220); //left up
+  c5 = new canal(400, 9, 60);
+  network = new canalNetwork(-50, -350, [c1, c2, c3, c4, c5]);
+
+  centreCircle.reincarnate();
 }
 
 function conditionalGamePause() {
