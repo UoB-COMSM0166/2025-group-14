@@ -22,10 +22,12 @@ class PlayerConfig {
     // player.collider = 'kinematic';
 
     this.maxSpeed = 4.5;
+    this.maxSpeedCopy = 4.5;
 
-    this.stationary = false;;
+    this.stationary = false;
     this.direcitonSave = 0;
     this.currentVel;
+    this.currentVelCopy;
 
     this.canals = canals;
 
@@ -94,14 +96,14 @@ class PlayerConfig {
         //this.haltPlayer();
       }
     }
-/*
+
     // If 'r' key is pressed, repair boat
     if (keyIsDown(82) === true || this.status === PlayerStatus.REPAIRING) {
       // If health is zero, repairs take twice as long as if health > 0
       if (this.zeroHealth) this.repair(this.repairTime*2)
       this.repair();
     }
- */
+ 
   }
 
   debug() {
@@ -160,7 +162,7 @@ class PlayerConfig {
       this.healthIsZero();
     }
   }
-/*
+
   // Returns health attribute to maxHealth
   repair() {
     // If health is zero, repairs take twice as long as if health > 0
@@ -172,8 +174,8 @@ class PlayerConfig {
     this.haltPlayer(timeTaken);
 
     // Display speech bubble message
-    let repairMessage = new SpeechBubble(this.position.x-150, this.position.y-100, 150, 65, 
-      this.position.x-5, this.position.y - 10,
+    let repairMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 65, 
+      this.playerSprite.x-5, this.playerSprite.y - 10,
       "Repairing...repairs will take " + timeTaken + " seconds...");
     repairMessage.show();
 
@@ -188,9 +190,9 @@ class PlayerConfig {
   haltPlayer(timeHalted = null) {
     //this.repairTimer.show();
    // this.halted = true;
-    this.velocityLimit = 0; // halt player
-    this.velocityMagnitudeCopy = this.velocity.mag();
-    this.velocity.setMag(0);
+    this.maxSpeed = 0; // halt player
+    this.currentVelCopy = this.currentVel.mag();
+    this.currentVel.setMag(0);
     // If argument not given, halt player indefinitely (until repairs occur)
     // If argument IS given, halt player until the given number of seconds have elapsed
     if (timeHalted != null) {
@@ -202,8 +204,8 @@ class PlayerConfig {
       if (this.repairTimer.hasElapsed(timeHalted) === true) {
         // Timer reaches timeTaken for repairs. Boat movement reset.
         // Revert limitVelocity to original value (allow boat to move again)
-        this.velocityLimit = this.originalVelocityLimit;
-        this.velocity.setMag(this.velocityMagnitudeCopy);
+        this.maxSpeed = this.maxSpeedCopy;
+        this.currentVel.setMag(this.currentVelCopy);
 
         // Reset repairTimer
         this.repairTimer.resetTimer();
@@ -213,6 +215,6 @@ class PlayerConfig {
       
     }
   }
-    */
+
 
 }
