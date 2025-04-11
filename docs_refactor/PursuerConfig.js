@@ -8,7 +8,7 @@ class PursuerConfig {
         this.lastSeenCoords = createVector(player.x, player.y);
         // This array stores a chain of "snapshots" of the last known player coordinates before the player moves out of sight
         this.lastSeenArray = [];
-        this.debugMode = true;
+        this.debugMode = false;
     }
 
     // Updates the pursuer's target based on player position and line of sight

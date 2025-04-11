@@ -19,7 +19,7 @@ let garbagePieceCnt = 0;
 class canal{
 
     //construction functions
-    constructor(length, oClock, width, player){
+    constructor(length, oClock, width, player, garbageOn = true){
         //basic attributes
         this.length = length;
         this.angle = clockToAngle(oClock);
@@ -69,6 +69,8 @@ class canal{
         this.bankSprites = [];
 
         this.player = player;
+
+        this.garbageOn = garbageOn;
         this.garbage;
         // this.garbagePiece;
     }
@@ -159,7 +161,9 @@ class canal{
     createSprites(){
         this.createRedBank();
         this.createBlackBank();
-        this.createGarbage();
+        if(this.garbageOn){
+            this.createGarbage();
+        }
     }
 
     setCoords(redStart, blackStart, redEnd, blackEnd){
