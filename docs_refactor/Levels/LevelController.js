@@ -8,7 +8,7 @@ class LevelController {
                 levelInstance = new Tutorial();
                 break;
             case 1:
-                levelInstance = new LevelOne();
+                levelInstance = new Level1();
                 break;
             case 2:
                 throw new Error("Invalid level number: " + level);
