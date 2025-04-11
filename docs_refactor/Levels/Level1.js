@@ -1,4 +1,4 @@
-class LevelOne {
+class Level1 {
     
   constructor() {
       // Post-refactor globals
