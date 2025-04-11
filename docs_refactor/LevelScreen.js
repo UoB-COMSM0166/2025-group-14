@@ -1,15 +1,14 @@
 class LevelScreen {
 
     constructor() {
-        this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, this.buttonClick.bind(this));
+        this.selectedLevel = -1; // Default level is -1 (no level selected)
+        this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(0));
         this.tutorialButton.hide();
-        this.levelOne = new Button("Level 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, this.buttonClick.bind(this));
+        this.levelOne = new Button("Level 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(1));
         this.levelOne.hide();
     }
 
     display() {
-        new Canvas(windowWidth, windowHeight);
-        //background("lightblue");
         background(183, 233, 193);
         
         if (state === GameState.LEVEL_SCREEN) {
@@ -19,14 +18,16 @@ class LevelScreen {
         } else {
             this.tutorialButton.button.hide(); 
         }
-
-        // Transition to gameplay screen when player presses the SPACE key
-        if (state === GameState.INFO_SCREEN && keyCode == 32) {
-          state = GameState.PLAY_GAME;
-        }
     }
 
-    buttonClick() {
-        console.log("Button clicked!");
+    selectLevel(levelId) {
+        this.selectedLevel = levelId;
+        this.tutorialButton.hide();
+        this.levelOne.hide();
+        state = GameState.INFO_SCREEN;
+    }
+
+    getSelectedLevel() {
+        return this.selectedLevel;
     }
 }
