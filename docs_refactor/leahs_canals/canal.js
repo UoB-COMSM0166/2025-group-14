@@ -40,14 +40,23 @@ class canal{
         this.vertical = this.getDirection()[1];*/
 
         //placement and relational attributes set by the network
-        //note that prev and next have to be set before black can be determined
-        this.redStart = null;
-        this.redEnd = null;
         this.prev = null;
         this.next = null;
-        //this.blackGrad = null;
-        //this.blackOff= null;
-        //this.blackCoords = null;
+
+        //DEVELOPER ATTRIBUTES
+        //redStart, redEnd, blackStart and blackEnd are initialized by the network and are the four corners
+        //of the canal. 
+
+        //redBank and blackBank are both sprite objects
+
+        //this.bankSprites contains all sprites, there should be a similar one for garbage if you want to make one
+        //Daniil; can you also push all your garbage to this.allSprites?
+        //this.allSprites shold contain all sprites including garbage (and potentially player? not sure)
+
+
+
+        this.redStart = null;
+        this.redEnd = null;
         this.blackStart = null;
         this.blackEnd = null;
 
@@ -103,48 +112,6 @@ class canal{
         this.yWidth = -Math.cos(perp) * this.width;
     }
 
-    //setter functions
-    /*positionBanks(start, end){
-        this.redStart = start;
-        this.redEnd = end;
-        this.absoluteAngle = angleCalc(start[0], start[1], end[0], end[1], false, true, true);
-        this.positionBlackBank();
-    }*/
-
-
-    /*positionBlackBank(){
-        let a = angleCalc(this.redStart[0], this.redStart[1], this.redEnd[0], this.redEnd[1], true, false, false)
-        let opp = Math.sin(a) * this.width;
-        let adj = Math.cos(a) * this.width;
-
-        //maths here is bodged to make use of some of my former functions, will simplify
-
-        let startX, startY, endX, endY;
-
-        if(this.horizontal === "right"){
-            startX = this.redStart[0] + opp;
-            endX = this.redEnd[0] + opp
-            startY = this.redStart[1] + adj;
-            endY = this.redEnd[1] + adj;
-        }else{
-            startX = this.redStart[0] - opp;
-            endX = this.redEnd[0] - opp;
-            startY = this.redStart[1] - adj;
-            endY = this.redEnd[1] - adj
-        }
-
-        this.blackCoords = [startX, startY, endX, endY];
-
-        //below is useful in debugging
-
-        /*let greenBank = new Sprite([[startX, startY], [endX, endY]]);
-        greenBank.colour = "green";
-
-        this.blackGrad = gradient([startX, startY], [endX, endY]);
-        this.blackOff = offset(this.blackGrad, [startX, startY]);
-
-    }*/
-
     connect(prev, next){
         this.prev = prev;
         this.next = next;
@@ -156,33 +123,8 @@ class canal{
     }
 
     createBlackBank(){
-        /*const ours = [this.blackGrad, this.blackOff];
-
-        let nextSect, prevSect, nexts, prevs;
-        if(this.next != null){
-            nexts = this.next.getBlackDetails();
-            nextSect = linearIntersect(ours[0], ours[1], nexts[0], nexts[1]);
-        }else{
-            nextSect = [this.blackCoords[2], this.blackCoords[3]];
-        }
-
-        if(this.prev != null){
-            prevs = this.prev.getBlackDetails();
-            prevSect = linearIntersect(ours[0], ours[1], prevs[0], prevs[1])
-        }else{
-            prevSect = [this.blackCoords[0], this.blackCoords[1]];
-        }
-
-        this.blackStart = prevSect;
-        this.blackEnd = nextSect;
-
-        this.blackBank = this.createBank(prevSect, nextSect);
-        this.blackBank.colour = "black";*/
-
-        this.redBank = this.createBank(this.blackStart, this.blackEnd)
-        this.redBank.colour = "black";
-
-
+        this.blackBank = this.createBank(this.blackStart, this.blackEnd)
+        this.blackBank.colour = "black";
 
     }
 
@@ -201,8 +143,6 @@ class canal{
 
     }
 
-
-    //getBlackDetails(){return [this.blackGrad, this.blackOff];}
 
     //other functions (called externally)
     visualize(){
