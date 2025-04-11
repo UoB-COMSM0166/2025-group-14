@@ -7,13 +7,13 @@ class fork extends canal {
 
     setForkPosition(start, end){
         console.log(this.start + "/" + this.end);
-        let length = this.getHypotenuse(start, end);
+        let length = getHypotenuse(start, end);
         let mid = length/2;
         let near = mid - this.width/2;
         let far = mid + this.width/2;
 
-        this.near = this.pointOnLine(start, end, near);
-        this.far = this.pointOnLine(start, end, far);
+        this.near = pointOnLine(start, end, near);
+        this.far = pointOnLine(start, end, far);
     }
 
 }

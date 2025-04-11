@@ -39,7 +39,7 @@ class lock extends canal {
     // }
 
     doorSprite(start, end, connection){
-        const halfway = this.halfwayPoint(start, end);
+        const halfway = halfwayPoint(start, end);
         let circle = new Sprite(halfway[0], halfway[1], 30)
 
         let door1 = this.createBank(start, halfway);
