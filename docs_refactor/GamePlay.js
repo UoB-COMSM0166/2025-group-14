@@ -69,7 +69,7 @@ class GamePlay {
       // this.player = new Sprite(100, 100, 50, 25);
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
-      this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, canals);
+      this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, this.map);
     
       this.pursuer = new Sprite(40, 100, 50, 25);
       this.pursuer.addAnimation("boat", this.pursuerAnimation);

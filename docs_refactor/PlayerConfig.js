@@ -10,7 +10,7 @@ class PlayerStatus {
 }
 
 class PlayerConfig {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, canals) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map) {
     this.playerSprite = player;
   
 
@@ -27,7 +27,7 @@ class PlayerConfig {
     this.direcitonSave = 0;
     this.currentVel;
 
-    this.canals = canals;
+    this.map = map;
 
     this.health = maxHealth; // starts with maxHealth
     this.maxHealth = maxHealth;
