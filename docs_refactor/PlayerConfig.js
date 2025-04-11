@@ -50,7 +50,8 @@ class PlayerConfig {
     }
   }
 
-  movement() {
+  // added boolean damageOn and healthOn argument so that these can turned off in the tutorial
+  movement(damageOn = true, healthOn = true) {
     // player sprite movement logic
     // applying force to the player's sprite in response to wasd or the arrow keys
     if (kb.pressing('left')) this.playerSprite.applyForce(-40, 0);
@@ -76,17 +77,22 @@ class PlayerConfig {
     else this.playerSprite.rotation = this.direcitonSave;
 
     // Update damage over time and collision damage
+
+    if(damageOn) {
     this.takeDamageOverTime();
     //this.takeCollisionDamage();
+    }
 
-    // If health is zero, stops player boat until repaired.
-    if (this.zeroHealth) {
-      // Display speech bubble message
-      let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
-        this.playerSprite.x-5, this.playerSprite.y - 10,
-        "OH NO! Your health is zero! Press the 'r' key to make repairs!");
-        zerohealthMessage.show();
-      //this.haltPlayer();
+    if(healthOn) {
+      // If health is zero, stops player boat until repaired.
+      if (this.zeroHealth) {
+        // Display speech bubble message
+        let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
+          this.playerSprite.x-5, this.playerSprite.y - 10,
+          "OH NO! Your health is zero! Press the 'r' key to make repairs!");
+          zerohealthMessage.show();
+        //this.haltPlayer();
+      }
     }
 /*
     // If 'r' key is pressed, repair boat
