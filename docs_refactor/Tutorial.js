@@ -29,7 +29,7 @@ class Tutorial {
     }
   
     setup() {
-        this.map = new canalMap();
+        this.map = new canalMap(this.player, false);
         let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
   
         this.player = new Sprite(100, 100, 50, 25);
