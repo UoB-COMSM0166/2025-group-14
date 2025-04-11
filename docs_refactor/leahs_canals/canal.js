@@ -316,9 +316,12 @@ class canal{
         //TO ADD: moving water textures, potentially trash
         let position = this.halfwayPoint(this.redStart, this.blackStart);
 
-        // this.player.overlaps(gems, collect);
+        for (let sprite of this.allSprites) {
+            // if (this.player.collides(sprite)) console.log("COLLISION");
+            // if (sprite.colliding(this.player)) console.log("COLLISION");
+            // if (this.player.collided(sprite)) console.log("COLLISION");
+        }
 
-        
     }
 
     createGarbage() {
@@ -326,13 +329,14 @@ class canal{
         this.garbage = new Group();
         this.garbage.amount = 3;
         this.garbage.diameter = 10;
+        // this.garbage.collider = NONE;
 
         for (let piece of this.garbage) {
             let offsetAlongCanal = Math.random();
             // console.log(offsetAlongCanal);
         
             let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
-            let redPosition = this.pointBetween(this.redStart, this.redStart, offsetAlongCanal);
+            let redPosition = this.pointBetween(this.redStart, this.redEnd, offsetAlongCanal);
     
             let offsetBetweenCanals = Math.random();
     
@@ -342,6 +346,7 @@ class canal{
             // let garbagePiece = new this.garbage.Sprite();
             piece.x = garbageSpriteCoordinates[0];
             piece.y = garbageSpriteCoordinates[1];
+            piece.collider = "none";
         }
 
         this.player.overlaps(this.garbage, collect);
