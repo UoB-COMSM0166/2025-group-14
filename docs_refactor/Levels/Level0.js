@@ -1,4 +1,4 @@
-class Tutorial {
+class Level0 {
 
     constructor() {
         this.banks;

@@ -5,7 +5,7 @@ class LevelController {
         let levelInstance = null;
         switch (level) {
             case 0:
-                levelInstance = new Tutorial();
+                levelInstance = new Level0();
                 break;
             case 1:
                 levelInstance = new Level1();
