@@ -43,6 +43,7 @@ class PlayerConfig {
   }
 
   camera() {
+    camera.zoom = 1;
     // if the player starts to move outside the camera frame, you move the camera
     if (this.playerSprite.canvasPos.x < windowWidth/4 || this.playerSprite.canvasPos.x > windowWidth*3/4) {
       camera.x += this.playerSprite.vel.x;
