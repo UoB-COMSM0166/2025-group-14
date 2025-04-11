@@ -136,8 +136,9 @@ class PlayerConfig {
 
   // Collision damage
   takeCollisionDamage() {
-    for (let i = 0; i < this.canals.length; i++) {
-      if (this.playerSprite.collides(this.canals[i])) {
+    let bankSprites = this.map.getBankSprites();
+    for (let i = 0; i < this.bankSprites.length; i++) {
+      if (this.playerSprite.collides(this.bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
       }
     }

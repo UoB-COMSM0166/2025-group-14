@@ -27,6 +27,9 @@ class LevelOne {
         ]);
       this.timer;
       this.healthbar;
+      this.playerMaxHealth = 100;
+      this.canalCollisionDamage = 3;
+      this.damageOverTime = 1;
   }
 
   setup() {
@@ -39,13 +42,11 @@ class LevelOne {
       this.player = new Sprite(100, 100, 50, 25);
 
       this.map = new canalMap(this.player);
-      
-      let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
 
       // this.player = new Sprite(100, 100, 50, 25);
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
-      this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, canals);
+      this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
     
       this.pursuer = new Sprite(40, 100, 50, 25);
       this.pursuer.addAnimation("boat", this.pursuerAnimation);
@@ -53,7 +54,7 @@ class LevelOne {
       this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
     
       // Instantiate healthbar
-      this.healthbar = new HealthBar(100, this.playerCfg);
+      this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
   
       this.leftBankConstr = [];
       this.rightBankConstr = [];
