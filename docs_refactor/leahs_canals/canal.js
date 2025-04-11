@@ -19,7 +19,7 @@ let garbagePieceCnt = 0;
 class canal{
 
     //construction functions
-    constructor(length, oClock, width, player){
+    constructor(length, oClock, width, player, garbageOn = true){
         //basic attributes
         this.length = length;
         this.oClock = oClock;
@@ -52,6 +52,8 @@ class canal{
         this.allSprites = [];
 
         this.player = player;
+
+        this.garbageOn = garbageOn;
         this.garbage;
         // this.garbagePiece;
     }
@@ -222,7 +224,9 @@ class canal{
     createSprites(){
         this.createRedBank();
         this.createBlackBank();
-        this.createGarbage();
+        if(this.garbageOn){
+            this.createGarbage();
+        }
     }
 
     // // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
