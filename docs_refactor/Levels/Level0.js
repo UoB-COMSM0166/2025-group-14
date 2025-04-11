@@ -14,11 +14,15 @@ class Level0 {
         this.leftBankConstr;
         this.rightBankConstr;
         this.map;
-        this.boatAnimation = loadAnimation("Boat-redbrown.png", [
+        /* this.boatAnimation = loadAnimation("Boat-redbrown.png", [
             [64, 64, 64, 32],
             [0, 0, 64, 32],
             [0, 64, 64, 32],
-        ]);
+        ]); */
+        // below is to make sure that animations are only loaded in once
+        this.boatAnimation = LevelController.playerAnimation;
+        /* this.pursuerAnimation = LevelController.pursuerAnimation; */
+
         this.movementTutorial = {
             up: false,
             down: false,
@@ -52,8 +56,13 @@ class Level0 {
         // clean the previous frame
         clear();
         
-        
         this.setCamera();
+
+        if (keyCode == 27) {
+          this.clearSprites();
+          camera.off();
+          state = GameState.START_SCREEN;
+        }
 
         if (!this.passedMovementTutorial) {
             camera.off();
@@ -83,10 +92,7 @@ class Level0 {
             state = GameState.WIN;
         } */
         //TODO BUG - this escape to go to start screen is broken atm
-        if (keyCode == 27) {
-            this.clearSprites();
-            state = GameState.START_SCREEN;
-        }
+      
     }
 
     setCamera() {
@@ -139,11 +145,13 @@ class Level0 {
       this.player.remove();
       /* this.pursuer.remove(); */
       /* this.centreCircle.remove(); */
-      this.c1.removeSprites();
+      this.map.removeSprites();
+      /*this.c1.removeSprites();
       this.c2.removeSprites();
       this.c3.removeSprites();
       this.c4.removeSprites();
-      this.c5.removeSprites();
+      this.c5.removeSprites();*/
+        
     }
   
     coordinateGrid() {

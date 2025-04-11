@@ -15,16 +15,21 @@ class Level1 {
       this.leftBankConstr;
       this.rightBankConstr;
       this.map;
-      this.playerAnimation = loadAnimation("Boat-redbrown.png", [
+      /* this.playerAnimation = loadAnimation("Boat-redbrown.png", [
           [64, 64, 64, 32],
           [0, 0, 64, 32],
           [0, 64, 64, 32],
-        ]);
-        this.pursuerAnimation = loadAnimation("Boat-grey.png", [
-          [64, 64, 64, 32],
-          [0, 0, 64, 32],
-          [0, 64, 64, 32],
-        ]);
+      ]);
+      this.pursuerAnimation = loadAnimation("Boat-grey.png", [
+        [64, 64, 64, 32],
+        [0, 0, 64, 32],
+        [0, 64, 64, 32],
+      ]); */
+
+      // below is to make sure that animations are only loaded in once
+      this.playerAnimation = LevelController.playerAnimation;
+      this.pursuerAnimation = LevelController.pursuerAnimation;
+
       this.timer;
       this.healthbar;
       this.playerMaxHealth = 100;
@@ -34,8 +39,8 @@ class Level1 {
 
   setup() {
        // Instantiate Timer (to time events that occur over time)
-       this.timer = new Timer();
-       this.timer.startTimer();
+      this.timer = new Timer();
+      this.timer.startTimer();
 
       this.centreCircle = new CentreCirlce();
 
@@ -89,7 +94,7 @@ class Level1 {
           this.clearSprites();
           state = GameState.WIN;
       }
-      // TODO BUG - this escape to go to start screen is broken atm
+      
       if (keyCode == 27) {
           this.clearSprites();
           state = GameState.START_SCREEN;

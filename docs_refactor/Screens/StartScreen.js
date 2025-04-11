@@ -6,6 +6,7 @@ class StartScreen {
 
     display() {
         new Canvas(windowWidth, windowHeight);
+        this.levelButton.show(); 
         //background("lightblue");
         let centerX = windowWidth/2;
         let centerY = windowHeight/2;
@@ -30,13 +31,12 @@ class StartScreen {
 
         //update position of button in case of resizing
         this.levelButton.setPosition(windowWidth / 2, windowHeight / 2 + 150);
-        // Transition to level screen when player clicks on level button
-        
     }
 
+    // Transition to level screen when player clicks on level button
     buttonClick() {
       console.log("Button clicked!");
-      this.levelButton.remove();
+      this.levelButton.hide();
       if (state === GameState.START_SCREEN) {
         state = GameState.LEVEL_SCREEN;
       }

@@ -11,16 +11,12 @@ class LevelScreen {
     display() {
         new Canvas(windowWidth, windowHeight);
         background(183, 233, 193);
-        
-        if (state === GameState.LEVEL_SCREEN) {
-            this.tutorialButton.show(); 
-            this.levelOneButton.show();
-            this.tutorialButton.setPosition(windowWidth/6, windowHeight/6);
-            this.levelOneButton.setPosition(windowWidth *2/6, windowHeight/6);
-        } else {
-            this.tutorialButton.button.hide(); 
-            this.levelOneButton.button.hide();
-        }
+
+        this.tutorialButton.show(); 
+        this.levelOneButton.show();
+        this.tutorialButton.setPosition(windowWidth/6, windowHeight/6);
+        this.levelOneButton.setPosition(windowWidth *2/6, windowHeight/6);
+    
     }
 
     selectLevel(levelId) {
