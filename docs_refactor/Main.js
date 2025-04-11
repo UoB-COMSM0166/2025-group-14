@@ -21,6 +21,7 @@ class GameState {
   }
 }
 let state = GameState.START_SCREEN; // Starts on loading screen
+let selectedLevel = null;
 
 function setup() {
   new Canvas();
@@ -29,7 +30,7 @@ function setup() {
   start_screen = new StartScreen();
   level_screen = new LevelScreen();
   info_screen = new InfoScreen();
-  game_screen = new GamePlay();
+  game_screen = null;
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
 }
@@ -46,9 +47,10 @@ function draw() {
   }
 
   if (state == GameState.INFO_SCREEN) {
+    selectedLevel = level_screen.getSelectedLevel();
     info_screen.display();
-    if (keyCode == 32) {
-      game_screen.setup();
+    if (keyCode == 32) {;
+      game_screen = LevelController.getLevel(selectedLevel);
     }
   }
 

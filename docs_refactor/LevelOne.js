@@ -1,4 +1,4 @@
-class GamePlay {
+class LevelOne {
     
   constructor() {
       // Post-refactor globals
@@ -79,6 +79,7 @@ class GamePlay {
           this.clearSprites();
           state = GameState.WIN;
       }
+      // TODO BUG - this escape to go to start screen is broken atm
       if (keyCode == 27) {
           this.clearSprites();
           state = GameState.START_SCREEN;
