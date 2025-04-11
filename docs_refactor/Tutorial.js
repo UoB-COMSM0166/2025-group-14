@@ -18,7 +18,14 @@ class Tutorial {
             [64, 64, 64, 32],
             [0, 0, 64, 32],
             [0, 64, 64, 32],
-          ]);
+        ]);
+        this.movementTutorial = {
+            up: false,
+            down: false,
+            left: false,
+            right: false,
+        }
+        this.passedMovementTutorial = false;
     }
   
     setup() {
@@ -44,11 +51,18 @@ class Tutorial {
     display() {
         // clean the previous frame
         clear();
-        camera.on();
-  
+        
+        
+        this.setCamera();
+
+        if (!this.passedMovementTutorial) {
+            camera.off();
+            this.runMovementTutorial();
+            this.map.animate();
+            return;
+        }
         this.map.animate();
-  
-        this.playerCfg.camera();
+        //this.playerCfg.camera();
         // turn off damage and health
         this.playerCfg.movement(false, false);
         this.playerCfg.debug();
@@ -57,20 +71,68 @@ class Tutorial {
         
         this.mapConstructor();
         this.coordinateGrid();
+        this.setMovementProgress();
   
         /* if (this.playerCfg.isHealthZero()){
             this.clearSprites();
             state = GameState.LOSE;
         } */
-        if (keyCode == 87){
+ 
+        /* if (keyCode == 87){
             this.clearSprites();
             state = GameState.WIN;
-        }
+        } */
         //TODO BUG - this escape to go to start screen is broken atm
         if (keyCode == 27) {
             this.clearSprites();
             state = GameState.START_SCREEN;
         }
+    }
+
+    setCamera() {
+        camera.on();
+        camera.zoomTo(3, 0.005);
+        camera.x = this.player.x;
+        camera.y = this.player.y;
+    }
+
+    setMovementProgress() {
+        if(this.movementTutorial.up && this.movementTutorial.down
+            && this.movementTutorial.left && this.movementTutorial.right) {
+            this.passedMovementTutorial = true;
+        }
+
+        if (kb.pressing(UP_ARROW)) this.movementTutorial.up = true;
+        console.log(this.movementTutorial.up);
+        if (kb.pressing(DOWN_ARROW)) this.movementTutorial.down = true;
+        console.log(this.movementTutorial.down);
+        if (kb.pressing(LEFT_ARROW)) this.movementTutorial.left = true;
+        console.log(this.movementTutorial.left);
+        if (kb.pressing(RIGHT_ARROW)) this.movementTutorial.right = true;
+        console.log(this.movementTutorial.right);
+    }
+
+    runMovementTutorial() {
+        //camera.off();
+        push();
+        fill(0);
+        textSize(24);
+        stroke(2);
+        textAlign(LEFT);
+        let text1 = "Lets try moving left and right, press the left arrow and the right arrow on your keyboard";
+        let padding = 10;
+        let textWidth1 = textWidth(text1);
+
+        
+        fill(255); 
+        stroke(0); 
+        rectMode(LEFT);
+        rect(100 - padding, windowHeight*8/10 - 25, textWidth1 + padding*2, 25 + padding*2);
+        fill(0); // White text
+        text(text1, 100, windowHeight*8/10);
+        pop();
+
+        this.setMovementProgress();
     }
   
     clearSprites() {
