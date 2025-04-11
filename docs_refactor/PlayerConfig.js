@@ -82,8 +82,8 @@ class PlayerConfig {
     // Update damage over time and collision damage
 
     if(damageOn) {
-    this.takeDamageOverTime();
-    //this.takeCollisionDamage();
+      this.takeDamageOverTime();
+      this.takeCollisionDamage();
     }
 
     if(healthOn) {
@@ -138,8 +138,8 @@ class PlayerConfig {
   // Collision damage
   takeCollisionDamage() {
     let bankSprites = this.map.getBankSprites();
-    for (let i = 0; i < this.bankSprites.length; i++) {
-      if (this.playerSprite.collides(this.bankSprites[i])) {
+    for (let i = 0; i < bankSprites.length; i++) {
+      if (this.playerSprite.collides(bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
       }
     }
