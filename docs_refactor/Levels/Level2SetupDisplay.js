@@ -32,7 +32,7 @@ class Level2 {
 
       this.timer;
       this.healthbar;
-      this.playerMaxHealth = 1000;
+      this.playerMaxHealth = 100;
       this.canalCollisionDamage = 3;
       this.damageOverTime = 1;
   }
@@ -44,7 +44,7 @@ class Level2 {
 
       // this.centreCircle = new CentreCirlce();
 
-      this.player = new Sprite(265, -328, 35, 20);
+      this.player = new Sprite(265, -328, 35, 25);
 
       this.map = new Level2CanalMap(this.player);
 
