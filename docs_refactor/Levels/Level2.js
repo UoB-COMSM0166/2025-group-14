@@ -104,7 +104,7 @@ class Level2 {
         this.clearSprites();
         state = GameState.LOSE;
     }
-    if (keyCode == 87 || finishLineCrossed){
+    if (keyCode == 86 || finishLineCrossed){ // changes w keycode to q
         this.clearSprites();
         state = GameState.WIN;
         finishLineCrossed = false;
