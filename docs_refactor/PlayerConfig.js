@@ -21,8 +21,8 @@ class PlayerConfig {
     this.playerSprite.bounciness = 0.9;
     // player.collider = 'kinematic';
 
-    this.maxSpeed = 4.5;
-    this.maxSpeedCopy = 4.5;
+    this.maxSpeed = 3;
+    this.maxSpeedCopy = 3;
 
     this.stationary = false;
     this.direcitonSave = 0;
@@ -57,10 +57,10 @@ class PlayerConfig {
   movement(damageOn = true, healthOn = true) {
     // player sprite movement logic
     // applying force to the player's sprite in response to wasd or the arrow keys
-    if (kb.pressing('left')) this.playerSprite.applyForce(-40, 0);
-    else if (kb.pressing('right')) this.playerSprite.applyForce(40, 0);
-    if (kb.pressing('up')) this.playerSprite.applyForce(0, -40);
-    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 40);
+    if (kb.pressing('left')) this.playerSprite.applyForce(-30, 0);
+    else if (kb.pressing('right')) this.playerSprite.applyForce(30, 0);
+    if (kb.pressing('up')) this.playerSprite.applyForce(0, -30);
+    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 30);
 
     // the following code 1) prevents exceeding the maxSpeed  
     this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);

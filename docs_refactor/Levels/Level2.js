@@ -32,7 +32,7 @@ class Level2 {
 
       this.timer;
       this.healthbar;
-      this.playerMaxHealth = 100;
+      this.playerMaxHealth = 1000;
       this.canalCollisionDamage = 3;
       this.damageOverTime = 1;
   }
@@ -44,19 +44,18 @@ class Level2 {
 
       // this.centreCircle = new CentreCirlce();
 
-      this.player = new Sprite(100, 100, 50, 25);
+      this.player = new Sprite(265, -328, 35, 20);
 
       this.map = new Level2CanalMap(this.player);
 
-      // this.player = new Sprite(100, 100, 50, 25);
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
       this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
     
-      this.pursuer = new Sprite(40, 100, 50, 25);
+      this.pursuer = new Sprite(-442, -327, 25, 15);
       this.pursuer.addAnimation("boat", this.pursuerAnimation);
       this.pursuer.animation.frameDelay = 18;
-      this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
+      this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 0);
     
       // Instantiate healthbar
       this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
@@ -66,39 +65,69 @@ class Level2 {
     
       camera.x = this.player.x;
       camera.y = this.player.y;
+
+      camera.zoom = 1;
+
+      // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
+
+
     }
 
   // Post-refactor display
   display() {
-      // clean the previous frame
-      clear();
-      camera.on();
-      this.healthbar.draw();
+    // clean the previous frame
+    clear();
 
-      this.map.animate();
+    textSize(20);
+    fill(0);
+    stroke(256);
+    strokeWeight(4);
+    text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY);
 
-      this.playerCfg.camera();
-      this.playerCfg.movement();
-      this.playerCfg.debug();
+    camera.on();
+    this.healthbar.draw();
 
-      this.pursuerCfg.update();
-      
-      this.mapConstructor();
-      this.coordinateGrid();
+    this.map.animate();
 
-      if (this.playerCfg.isHealthZero()){
-          this.clearSprites();
-          state = GameState.LOSE;
-      }
-      if (keyCode == 87){
-          this.clearSprites();
-          state = GameState.WIN;
-      }
-      
-      if (keyCode == 27) {
-          this.clearSprites();
-          state = GameState.START_SCREEN;
-      }
+    this.playerCfg.camera();
+    this.playerCfg.movement();
+    this.playerCfg.debug();
+
+    this.pursuerCfg.update();
+    
+    // this.mapConstructor();
+    this.coordinateGrid();
+
+    this.moveCamera();
+
+    if (this.playerCfg.isHealthZero()){
+        this.clearSprites();
+        state = GameState.LOSE;
+    }
+    if (keyCode == 87){
+        this.clearSprites();
+        state = GameState.WIN;
+    }
+    
+    if (keyCode == 27) {
+        this.clearSprites();
+        state = GameState.START_SCREEN;
+    }
+
+
+  }
+
+  moveCamera() {
+    if (kb.pressing('j')) camera.x -= 20;
+    else if (kb.pressing('l')) camera.x += 20;
+    if (kb.pressing('i')) camera.y -= 20;
+    else if (kb.pressing('k')) camera.y += 20;
+    if (kb.pressing('u')) {
+      camera.x = this.player.x;
+      camera.y = this.player.y;
+    }
+    // when you zoom out, for some reason the player and pursuer objects disappear and you have to restart
+    if (kb.pressing('[')) camera.zoomTo(0.2, 1);
   }
 
   clearSprites() {
@@ -127,26 +156,26 @@ class Level2 {
       }
   }
     
-    mapConstructor() {
-      // map creation logic
-      if (kb.pressing('shift') && mouse.presses()){
-        // console.log("Shift if pressed when mouse is clicked");
-        this.rightBankConstr.push([mouse.x, mouse.y]);
-        if (this.rightBankConstr.length > 1) {
-          let rightBank = new Sprite(this.rightBankConstr);
-          rightBank.collider = 'static';
-          rightBank.colour = "blue";
-        }
+  mapConstructor() {
+    // map creation logic
+    if (kb.pressing('shift') && mouse.presses()){
+      // console.log("Shift if pressed when mouse is clicked");
+      this.rightBankConstr.push([mouse.x, mouse.y]);
+      if (this.rightBankConstr.length > 1) {
+        let rightBank = new Sprite(this.rightBankConstr);
+        rightBank.collider = 'static';
+        rightBank.colour = "blue";
       }
-      else if (mouse.presses()) {
-        // console.log("Mouse was clicked");
-        this.leftBankConstr.push([mouse.x, mouse.y]);
-        if (this.leftBankConstr.length > 1) {
-          let leftBank = new Sprite(this.leftBankConstr);
-          leftBank.collider = 'static';
-          leftBank.colour = "red";
-        }
-        // console.log(mouse.x);
+    }
+    else if (mouse.presses()) {
+      // console.log("Mouse was clicked");
+      this.leftBankConstr.push([mouse.x, mouse.y]);
+      if (this.leftBankConstr.length > 1) {
+        let leftBank = new Sprite(this.leftBankConstr);
+        leftBank.collider = 'static';
+        leftBank.colour = "red";
       }
+      // console.log(mouse.x);
+    }
   }
 }
