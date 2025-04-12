@@ -21,8 +21,8 @@ class PlayerConfig {
     this.playerSprite.bounciness = 0.9;
     // player.collider = 'kinematic';
 
-    this.maxSpeed = 3;
-    this.maxSpeedCopy = 3;
+    this.maxSpeed = 4.5;
+    this.maxSpeedCopy = 4.5;
 
     this.stationary = false;
     this.direcitonSave = 0;

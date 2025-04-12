@@ -15,11 +15,12 @@ to removing sprites cleanly when done.
 */
 
 let garbagePieceCnt = 0;
+let playerInFinalSegment = false;
 
 class canal{
 
     //construction functions
-    constructor(length, oClock, width, player, garbageOn = true){
+    constructor(length, oClock, width, player, garbageOn = true, finish = false){
         //basic attributes
         this.length = length;
         this.angle = clockToAngle(oClock);
@@ -73,6 +74,7 @@ class canal{
         this.garbageOn = garbageOn;
         this.garbage;
         // this.garbagePiece;
+        this.finish = finish; 
     }
 
     getDirection(){
@@ -164,6 +166,10 @@ class canal{
         if(this.garbageOn){
             this.createGarbage();
         }
+        if(this.finish) {
+            this.closeMapEnd();
+            console.log("4 vertexes of the last canal segment: \n", this.redStart, this.blackStart, this.redEnd, this.blackEnd);
+        }
     }
 
     setCoords(redStart, blackStart, redEnd, blackEnd){
@@ -205,21 +211,31 @@ class canal{
 
     }
 
+    closeMapEnd() {
+        let endMapBank = new Sprite([this.redEnd, this.blackEnd]);
+        // let finishLine = new Sprite([this.redStart, this.blackStart]);
+        endMapBank.collider = STA;
+        // finishLine.collider = "none";
+        this.allSprites.push(endMapBank);
+        // this.allSprites.push(finishLine);
+    }
+
     createGarbage() {
 
         this.garbage = new Group();
-        this.garbage.amount = 3;
+        this.garbage.amount = this.getRandomInt(1, 4);
+        // console.log(this.garbage.amount);
         this.garbage.diameter = 10;
         // this.garbage.collider = NONE;
 
         for (let piece of this.garbage) {
-            let offsetAlongCanal = Math.random();
+            let offsetAlongCanal = this.getRandomFloat(0.1, 0.9);
             // console.log(offsetAlongCanal);
         
             let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
             let redPosition = this.pointBetween(this.redStart, this.redEnd, offsetAlongCanal);
     
-            let offsetBetweenCanals = Math.random();
+            let offsetBetweenCanals = this.getRandomFloat(0.05, 0.95);;
     
             let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
     
@@ -249,11 +265,22 @@ class canal{
         ];
     }
 
+    getRandomFloat(min, max) {
+        return (Math.random() * (max - min) + min);
+    }
+
+    getRandomInt(min, max) {
+        return (Math.floor(Math.random() * (max - min + 1)) + min);
+    }
+
 }
  
 function collect(player, gem) {
 	gem.remove();
     garbagePieceCnt++;
     console.log("Pieces of garbage collected: " + garbagePieceCnt);
+}
+
+function finish(player, finishBar) {
     
 }

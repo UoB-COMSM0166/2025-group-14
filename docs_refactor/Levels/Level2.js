@@ -114,6 +114,16 @@ class Level2 {
         state = GameState.START_SCREEN;
     }
 
+    // if 
+
+
+  }
+
+  leftRightFinal() {
+
+  }
+
+  upDownFinal() {
 
   }
 
