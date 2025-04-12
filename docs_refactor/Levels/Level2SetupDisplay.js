@@ -1,3 +1,8 @@
+// reminder for the cooldown variables:
+// both pursuerMoveCooldown and pursuerDamageCooldown are global variables that are instantiated in the pursuer config file above pursuer class
+// pursuerMoveCooldown is assigned a cooldown number of frames in the collect function in the canal file (which is at the bottom)
+// pursuerDamageCooldown is assigned a cooldown number of frames in the movement method of the player config
+
 class Level2 {
     
   constructor() {
@@ -96,7 +101,7 @@ class Level2 {
     this.pursuerCfg.update();
     
     // this.mapConstructor();
-    this.coordinateGrid();
+    // this.coordinateGrid();
 
     this.moveCamera();
 
@@ -115,16 +120,6 @@ class Level2 {
         state = GameState.START_SCREEN;
     }
 
-    // if 
-
-
-  }
-
-  leftRightFinal() {
-
-  }
-
-  upDownFinal() {
 
   }
 
@@ -165,28 +160,5 @@ class Level2 {
           text(`${horPix} ${vewPix}`, horPix, vewPix);
         }
       }
-  }
-    
-  mapConstructor() {
-    // map creation logic
-    if (kb.pressing('shift') && mouse.presses()){
-      // console.log("Shift if pressed when mouse is clicked");
-      this.rightBankConstr.push([mouse.x, mouse.y]);
-      if (this.rightBankConstr.length > 1) {
-        let rightBank = new Sprite(this.rightBankConstr);
-        rightBank.collider = 'static';
-        rightBank.colour = "blue";
-      }
-    }
-    else if (mouse.presses()) {
-      // console.log("Mouse was clicked");
-      this.leftBankConstr.push([mouse.x, mouse.y]);
-      if (this.leftBankConstr.length > 1) {
-        let leftBank = new Sprite(this.leftBankConstr);
-        leftBank.collider = 'static';
-        leftBank.colour = "red";
-      }
-      // console.log(mouse.x);
-    }
   }
 }

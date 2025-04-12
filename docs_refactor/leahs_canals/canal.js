@@ -243,8 +243,6 @@ class canal{
     
             let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
     
-            // this.garbagePiece = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
-            // let garbagePiece = new this.garbage.Sprite();
             piece.x = garbageSpriteCoordinates[0];
             piece.y = garbageSpriteCoordinates[1];
             piece.collider = "none";
@@ -282,7 +280,8 @@ class canal{
 function collect(player, gem) {
 	gem.remove();
     garbagePieceCnt++;
-    console.log("Pieces of garbage collected: " + garbagePieceCnt);
+    pursuerMoveCooldown += 15;
+    console.log(pursuerMoveCooldown);
 }
 
 function finish(player) {
