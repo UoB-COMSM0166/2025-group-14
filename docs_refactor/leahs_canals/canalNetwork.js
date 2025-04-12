@@ -26,21 +26,93 @@ class canalNetwork{
         this.y = y;
         this.course = course;
 
-        this.coords = null;
-        this.setCoordinates();
+        this.redCoords = null;
+        this.setRedCoords();      
+        this.blackCoords = null;
+        this.setBlackCoords();
 
         this.connectCanals();
+
+        this.bestowCoords();
         this.createSprites();
+        
+        this.bankSprites = null;
+        this.setBankSprites();
     }
 
-    setCoordinates(){
-        this.coords = [[this.x, this.y]];
-        let prev;
-        for(let i = 0; i < this.course.length; i++){
-            prev = this.coords[i];
-            this.coords.push(this.findNextCoords(prev, this.course[i]));
+    getBankSprites(){ return this.bankSprites};
+
+    setBankSprites(){
+        this.bankSprites = [];
+        let tmp = []
+        this.forAllCanals(canal => tmp.push(canal.getBanks()));
+        for(const entry of tmp){
+            for(const subentry of entry){
+                this.bankSprites.push(subentry);
+            }
         }
 
+        console.log("Inner: " + this.bankSprites.length);
+    }
+
+    bestowCoords(){
+        for(let i = 0; i < this.course.length; i++){
+            let c = this.course[i];
+            let red = this.redCoords[i];
+            let black = this.blackCoords[i];
+            let nextRed = this.redCoords[i + 1];
+            let nextBlack = this.blackCoords[i + 1];
+            c.setCoords(red, black, nextRed, nextBlack);
+        }
+    }
+
+    setRedCoords(){
+        this.redCoords = [[this.x, this.y]];
+        let prev;
+        for(let i = 0; i < this.course.length; i++){
+            prev = this.redCoords[i];
+            this.redCoords.push(this.findNextCoords(prev, this.course[i]));
+        }
+    }
+    
+    setBlackCoords(){
+        let blackChanges = []
+        this.forAllCanals(canal =>
+            blackChanges.push(canal.getWidthChanges())
+        )
+
+        let bc = [];
+        let rc = this.redCoords;
+        
+        let first = rc[0];
+        let firstBlack = blackChanges[0];
+        bc.push([first[0] + firstBlack[0], first[1] + firstBlack[1]]);
+
+        let i;
+        for(i = 1; i < rc.length -1; i++){
+            let red = rc[i];
+            let prev = blackChanges[i - 1];
+            let next = blackChanges[i];
+            let prevEnd = [red[0] + prev[0], red[1] + prev[1]];
+            let nextStart = [red[0] + next[0], red[1] + next[1]];
+            let pRed = rc[i - 1];
+            let nRed = rc[i + 1];
+            let pGrad = gradient(pRed, red);
+            let nGrad = gradient(red, nRed);
+            let prevOff = offset(pGrad, prevEnd);
+            let nextOff = offset(nGrad, nextStart);
+            let int = linearIntersect(pGrad, prevOff, nGrad, nextOff);
+            bc.push(int);
+        }
+
+        let last = rc[i];
+        let lastChange = blackChanges[i - 1];
+        bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])
+
+        
+
+        this.blackCoords = bc;
+    
     }
 
     findNextCoords(coordinates, canal){;
@@ -64,8 +136,6 @@ class canalNetwork{
         let next;
         for(let i = 0; i < l; i++){
             current = this.course[i];
-            current.positionBanks(this.coords[i], this.coords[i + 1]);
-
             if(i === 0){
                 prev = null;
             }else{
@@ -77,7 +147,6 @@ class canalNetwork{
             }else{
                 next = this.course[i + 1];
             }
-
             current.connect(prev, next);
         }
     }
@@ -89,6 +158,8 @@ class canalNetwork{
 
     animate(){
         this.forAllCanals(canal => canal.animate());
+
+        //throw Error("breakpoint lol");
     }
 
     remove(){

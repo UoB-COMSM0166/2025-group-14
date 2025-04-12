@@ -55,27 +55,6 @@ function setup() {
   textFont(font);
   oldWindowWidth = windowWidth;
   oldWindowHeight = windowHeight;
-<<<<<<< HEAD
-
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450);
-  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600);
-  c3 = new canal(canalWidth, "ThirdElement", 200, 500, 550, 620);
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300)
-  c1.setConnections(c6, c2);
-  c2.setConnections(c1, c3);
-  c3.setConnections(c2, c4);
-  c4.setConnections(c3, c5);
-  c5.setConnections(c4, c6);
-  c6.setConnections(c5, c1)
-  // b = new boat(2, c1, 250, 200, 10, 20);
-
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal 
-  player = new Player(160, 320, 5, 3, c6);
-  // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal);
-=======
   
   
   // Instantiate the different screens
@@ -84,7 +63,6 @@ function setup() {
   game_screen = new GamePlay();
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
->>>>>>> p5Play_pursuer
 }
 
 function draw() {
@@ -93,19 +71,9 @@ function draw() {
     start_screen.display();
   }
 
-<<<<<<< HEAD
-  c1.visualize();
-  c2.visualize();
-  c3.visualize();
-  c4.visualize();
-  c5.visualize();
-  c6.visualize();
-  console.log("Resetting");
-=======
   if (state == GameState.INFO_SCREEN) {
     info_screen.display();
   }
->>>>>>> p5Play_pursuer
 
   if (state == GameState.PLAY_GAME) {
     game_screen.display();

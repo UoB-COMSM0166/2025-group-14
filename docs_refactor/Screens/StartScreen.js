@@ -1,11 +1,12 @@
 class StartScreen {
 
     constructor() {
-
+      this.levelButton = new Button("LEVELS", windowWidth/2, windowHeight/2 + 150, 'seagreen', 30, this.buttonClick.bind(this));
     }
 
     display() {
         new Canvas(windowWidth, windowHeight);
+        this.levelButton.show(); 
         //background("lightblue");
         let centerX = windowWidth/2;
         let centerY = windowHeight/2;
@@ -20,17 +21,24 @@ class StartScreen {
         text("NARROWBOAT CHASE!", centerX, centerY);
         textSize(20);
         stroke(2);
-        text("Press [ENTER] to start the game!", centerX, centerY+80);
+        //text("Press [ENTER] to start the game!", centerX, centerY+80);
 
         // Re-initialise the gameplay variables to their starting values
         // (this ensures that the game can be restarted).
         //if (state === GameState.START_SCREEN) {
         //    resetVariables();
        // }
-        
-        // Transition to info screen when player presses the ENTER key
-        if (state === GameState.START_SCREEN && keyCode === 13) {
-          state = GameState.INFO_SCREEN;
-        }
+
+        //update position of button in case of resizing
+        this.levelButton.setPosition(windowWidth / 2, windowHeight / 2 + 150);
     }
+
+    // Transition to level screen when player clicks on level button
+    buttonClick() {
+      console.log("Button clicked!");
+      this.levelButton.hide();
+      if (state === GameState.START_SCREEN) {
+        state = GameState.LEVEL_SCREEN;
+      }
+  }
 }

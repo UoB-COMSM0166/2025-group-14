@@ -20,8 +20,7 @@ class HealthBar {
     textSize(15);
     textAlign(LEFT)
     //text("Healthbar: " + this.health, this.x, this.y - 10);
-    // text("Healthbar: " + this.health, this.playerBoat.playerSprite.x-(windowWidth/2)+20, this.playerBoat.playerSprite.y - (windowHeight/2));
-    text("Healthbar: " + this.health, this.playerBoat.playerSprite.x-(windowWidth/2)+20, this.playerBoat.playerSprite.y - (windowHeight/2));
+    text("Healthbar: " + this.health, camera.x-(windowWidth/2)+20, camera.y - (windowHeight/2)+15);
 
     // Draw empty health bar box
     stroke(0);
@@ -45,6 +44,6 @@ class HealthBar {
     this.health = this.playerBoat.health;
     // Move with playerBoat
     this.x = camera.x - (windowWidth/2)+20;
-    this.y = camera.y - (windowHeight/2)+20;
+    this.y = camera.y - (windowHeight/2)+25;
   }
 }

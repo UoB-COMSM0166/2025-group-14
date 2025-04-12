@@ -10,7 +10,7 @@ class PlayerStatus {
 }
 
 class PlayerConfig {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, canals) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map) {
     this.playerSprite = player;
   
 
@@ -22,12 +22,14 @@ class PlayerConfig {
     // player.collider = 'kinematic';
 
     this.maxSpeed = 4.5;
+    this.maxSpeedCopy = 4.5;
 
-    this.stationary = false;;
+    this.stationary = false;
     this.direcitonSave = 0;
     this.currentVel;
+    this.currentVelCopy;
 
-    this.canals = canals;
+    this.map = map;
 
     this.health = maxHealth; // starts with maxHealth
     this.maxHealth = maxHealth;
@@ -41,6 +43,7 @@ class PlayerConfig {
   }
 
   camera() {
+    camera.zoom = 1;
     // if the player starts to move outside the camera frame, you move the camera
     if (this.playerSprite.canvasPos.x < windowWidth/4 || this.playerSprite.canvasPos.x > windowWidth*3/4) {
       camera.x += this.playerSprite.vel.x;
@@ -50,7 +53,8 @@ class PlayerConfig {
     }
   }
 
-  movement() {
+  // added boolean damageOn and healthOn argument so that these can turned off in the tutorial
+  movement(damageOn = true, healthOn = true) {
     // player sprite movement logic
     // applying force to the player's sprite in response to wasd or the arrow keys
     if (kb.pressing('left')) this.playerSprite.applyForce(-40, 0);
@@ -76,26 +80,31 @@ class PlayerConfig {
     else this.playerSprite.rotation = this.direcitonSave;
 
     // Update damage over time and collision damage
-    this.takeDamageOverTime();
-    //this.takeCollisionDamage();
 
-    // If health is zero, stops player boat until repaired.
-    if (this.zeroHealth) {
-      // Display speech bubble message
-      let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
-        this.playerSprite.x-5, this.playerSprite.y - 10,
-        "OH NO! Your health is zero! Press the 'r' key to make repairs!");
-        zerohealthMessage.show();
-      //this.haltPlayer();
+    if(damageOn) {
+      this.takeDamageOverTime();
+      this.takeCollisionDamage();
     }
-/*
+
+    if(healthOn) {
+      // If health is zero, stops player boat until repaired.
+      if (this.zeroHealth) {
+        // Display speech bubble message
+        let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
+          this.playerSprite.x-5, this.playerSprite.y - 10,
+          "OH NO! Your health is zero! Press the 'r' key to make repairs!");
+          zerohealthMessage.show();
+        //this.haltPlayer();
+      }
+    }
+
     // If 'r' key is pressed, repair boat
     if (keyIsDown(82) === true || this.status === PlayerStatus.REPAIRING) {
       // If health is zero, repairs take twice as long as if health > 0
       if (this.zeroHealth) this.repair(this.repairTime*2)
       this.repair();
     }
- */
+ 
   }
 
   debug() {
@@ -128,8 +137,9 @@ class PlayerConfig {
 
   // Collision damage
   takeCollisionDamage() {
-    for (let i = 0; i < this.canals.length; i++) {
-      if (this.playerSprite.collides(this.canals[i])) {
+    let bankSprites = this.map.getBankSprites();
+    for (let i = 0; i < bankSprites.length; i++) {
+      if (this.playerSprite.collides(bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
       }
     }
@@ -154,7 +164,7 @@ class PlayerConfig {
       this.healthIsZero();
     }
   }
-/*
+
   // Returns health attribute to maxHealth
   repair() {
     // If health is zero, repairs take twice as long as if health > 0
@@ -166,8 +176,8 @@ class PlayerConfig {
     this.haltPlayer(timeTaken);
 
     // Display speech bubble message
-    let repairMessage = new SpeechBubble(this.position.x-150, this.position.y-100, 150, 65, 
-      this.position.x-5, this.position.y - 10,
+    let repairMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 65, 
+      this.playerSprite.x-5, this.playerSprite.y - 10,
       "Repairing...repairs will take " + timeTaken + " seconds...");
     repairMessage.show();
 
@@ -182,9 +192,9 @@ class PlayerConfig {
   haltPlayer(timeHalted = null) {
     //this.repairTimer.show();
    // this.halted = true;
-    this.velocityLimit = 0; // halt player
-    this.velocityMagnitudeCopy = this.velocity.mag();
-    this.velocity.setMag(0);
+    this.maxSpeed = 0; // halt player
+    this.currentVelCopy = this.currentVel.mag();
+    this.currentVel.setMag(0);
     // If argument not given, halt player indefinitely (until repairs occur)
     // If argument IS given, halt player until the given number of seconds have elapsed
     if (timeHalted != null) {
@@ -196,8 +206,8 @@ class PlayerConfig {
       if (this.repairTimer.hasElapsed(timeHalted) === true) {
         // Timer reaches timeTaken for repairs. Boat movement reset.
         // Revert limitVelocity to original value (allow boat to move again)
-        this.velocityLimit = this.originalVelocityLimit;
-        this.velocity.setMag(this.velocityMagnitudeCopy);
+        this.maxSpeed = this.maxSpeedCopy;
+        this.currentVel.setMag(this.currentVelCopy);
 
         // Reset repairTimer
         this.repairTimer.resetTimer();
@@ -207,6 +217,6 @@ class PlayerConfig {
       
     }
   }
-    */
+
 
 }

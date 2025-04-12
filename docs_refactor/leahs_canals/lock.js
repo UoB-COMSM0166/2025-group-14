@@ -1,6 +1,6 @@
 class lock extends canal {
-    constructor(length, oClock, width, fillTime, holdTime){
-        super(length, oClock, width);
+    constructor(length, oClock, width, player, fillTime, holdTime){
+        super(length, oClock, width, player);
         this.fillTime = fillTime;
         this.holdTime = holdTime;
 
@@ -39,7 +39,8 @@ class lock extends canal {
     // }
 
     doorSprite(start, end, connection){
-        const halfway = this.halfwayPoint(start, end);
+        const halfway = halfwayPoint(start, end);
+        let circle = new Sprite(halfway[0], halfway[1], 30)
 
         let door1 = this.createBank(start, halfway);
         let door2 = this.createBank(end, halfway);

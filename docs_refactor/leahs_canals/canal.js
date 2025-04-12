@@ -19,140 +19,99 @@ let garbagePieceCnt = 0;
 class canal{
 
     //construction functions
-    constructor(length, oClock, width, player){
+    constructor(length, oClock, width, player, garbageOn = true){
         //basic attributes
         this.length = length;
-        this.oClock = oClock;
+        this.angle = clockToAngle(oClock);
+        this.oClock = oClock;//remove if this works
         this.width = width;
+
 
         //trigonometric attributes used by the network
         this.horizontal = null;
         this.vertical = null;
         this.xChange = null;
         this.yChange = null;
+        this.xWidth = null;
+        this.yWidth = null;
         this.setDirectionalAttributes();
 
+        /*this.horizontal = this.getDirection()[0];
+        this.vertical = this.getDirection()[1];*/
+
         //placement and relational attributes set by the network
-        //note that prev and next have to be set before black can be determined
-        this.redStart = null;
-        this.redEnd = null;
         this.prev = null;
         this.next = null;
-        this.blackGrad = null;
-        this.blackOff= null;
-        this.blackCoords = null;
+
+        //DEVELOPER ATTRIBUTES
+        //redStart, redEnd, blackStart and blackEnd are initialized by the network and are the four corners
+        //of the canal. 
+
+        //redBank and blackBank are both sprite objects
+
+        //this.bankSprites contains all sprites, there should be a similar one for garbage if you want to make one
+        //Daniil; can you also push all your garbage to this.allSprites?
+        //this.allSprites shold contain all sprites including garbage (and potentially player? not sure)
+
+
+
+        this.redStart = null;
+        this.redEnd = null;
         this.blackStart = null;
         this.blackEnd = null;
 
-        this.absoluteAngle = null;
+        //this.absoluteAngle = null;
         
         this.redBank;
         this.blackBank;
 
         this.allSprites = [];
+        this.bankSprites = [];
 
         this.player = player;
+
+        this.garbageOn = garbageOn;
         this.garbage;
         // this.garbagePiece;
     }
 
+    getDirection(){
+        let a = this.getAngle(true)
+        let outp = [];
+        if (a <= 180){
+            outp.push("right");
+        }else{
+            outp.push("left");
+        }
+        if (a <= 90 || a > 270){
+            outp.push("up");
+        }else{
+            outp.push("down");
+        }
+
+        return outp;
+
+    }
+
+    //getters
+
+    getAngle(degrees){
+        if(degrees){
+            return radsToDegrees(this.angle);
+        }else{
+            return this.angle;
+        }
+    }
 
     setDirectionalAttributes(){
+        let angle = this.getAngle();
+        this.xChange = Math.sin(angle) * this.length;
+        this.yChange = -Math.cos(angle) * this.length;
 
-        //note that at the moment this uses a decimal clock face
-        //ie, "3.3" is "3 and a third", not "3 and a half";
+        const perp = angle + Math.PI / 2;
 
-        const half = Math.PI;
-        const quart = Math.PI/2;
-        let angle;
-        let opp;
-        let adj
-
-        const fullAngle = this.clockToAngle(this.oClock);
-
-        if(this.oClock <= 3){
-            angle = quart - fullAngle;
-            adj = Math.cos(angle) * this.length;
-            opp = Math.sin(angle) * this.length;
-
-            this.horizontal = "right";
-            this.vertical = "up";
-            this.xChange = adj;
-            this.yChange = opp * -1
-        }else if(this.oClock <= 6){
-            angle = half - fullAngle;
-            adj = Math.cos(angle) * this.length;
-            opp = Math.sin(angle) * this.length;
-
-            this.horizontal = "right";
-            this.vertical = "down";
-            this.xChange = opp;
-            this.yChange = adj;
-        }else if(this.oClock <= 9){
-            
-            angle = half + quart - fullAngle;
-            adj = Math.cos(angle) * this.length;
-            opp = Math.sin(angle) * this.length;
-
-            this.horizontal = "left";
-            this.vertical = "down";
-            this.xChange = adj * -1;
-            this.yChange = opp;
-        }else if(this.oClock <= 12){
-            
-            angle = half + half - fullAngle;
-            adj = Math.cos(angle) * this.length;
-            opp = Math.sin(angle) * this.length;
-
-            this.horizontal = "left";
-            this.vertical = "up";
-            this.xChange = opp * -1;
-            this.yChange = adj * -1
-        }else{
-            throw new Error("Angles must be less than or equal to twelve");
-        }
-    }
-
-    //setter functions
-    positionBanks(start, end){
-        this.redStart = start;
-        this.redEnd = end;
-        this.absoluteAngle = this.angleCalc(start[0], start[1], end[0], end[1], false, true);
-        this.positionBlackBank();
-    }
-
-
-    positionBlackBank(){
-        let a = this.angleCalc(this.redStart[0], this.redStart[1], this.redEnd[0], this.redEnd[1], true, false)
-        let opp = Math.sin(a) * this.width;
-        let adj = Math.cos(a) * this.width;
-
-        //maths here is bodged to make use of some of my former functions, will simplify
-
-        let startX, startY, endX, endY;
-
-        if(this.horizontal === "right"){
-            startX = this.redStart[0] + opp;
-            endX = this.redEnd[0] + opp
-            startY = this.redStart[1] + adj;
-            endY = this.redEnd[1] + adj;
-        }else{
-            startX = this.redStart[0] - opp;
-            endX = this.redEnd[0] - opp;
-            startY = this.redStart[1] - adj;
-            endY = this.redEnd[1] - adj
-        }
-
-        this.blackCoords = [startX, startY, endX, endY];
-
-        //below is useful in debugging
-
-        /*let greenBank = new Sprite([[startX, startY], [endX, endY]]);
-        greenBank.colour = "green";*/
-
-        this.blackGrad = this.gradient(startX, startY, endX, endY);
-        this.blackOff = this.offset(this.blackGrad, startX, startY);
-
+        this.xWidth = Math.sin(perp) * this.width;
+        this.yWidth = -Math.cos(perp) * this.width;
     }
 
     connect(prev, next){
@@ -163,31 +122,10 @@ class canal{
     createRedBank(){
         this.redBank = this.createBank(this.redStart, this.redEnd)
         this.redBank.colour = "red";
-        
     }
 
     createBlackBank(){
-        const ours = [this.blackGrad, this.blackOff];
-
-        let nextSect, prevSect, nexts, prevs;
-        if(this.next != null){
-            nexts = this.next.getBlackDetails();
-            nextSect = this.linearIntersect(ours[0], ours[1], nexts[0], nexts[1]);
-        }else{
-            nextSect = [this.blackCoords[2], this.blackCoords[3]];
-        }
-
-        if(this.prev != null){
-            prevs = this.prev.getBlackDetails();
-            prevSect = this.linearIntersect(ours[0], ours[1], prevs[0], prevs[1])
-        }else{
-            prevSect = [this.blackCoords[0], this.blackCoords[1]];
-        }
-
-        this.blackStart = prevSect;
-        this.blackEnd = nextSect;
-
-        this.blackBank = this.createBank(prevSect, nextSect);
+        this.blackBank = this.createBank(this.blackStart, this.blackEnd)
         this.blackBank.colour = "black";
 
     }
@@ -197,14 +135,16 @@ class canal{
         return [this.xChange, this.yChange];
     }
 
+    getWidthChanges(){
+        return [this.xWidth, this.yWidth];
+    }
+
     getOClockInDegrees(){
-        let rads = this.clockToAngle(this.oClock);
+        let rads = clockToAngle(this.oClock);
         return rads *= (180/Math.PI);
 
     }
 
-
-    getBlackDetails(){return [this.blackGrad, this.blackOff];}
 
     //other functions (called externally)
     visualize(){
@@ -218,11 +158,19 @@ class canal{
         this.canalAnimate();
     }
 
-
     createSprites(){
         this.createRedBank();
         this.createBlackBank();
-        this.createGarbage();
+        if(this.garbageOn){
+            this.createGarbage();
+        }
+    }
+
+    setCoords(redStart, blackStart, redEnd, blackEnd){
+        this.redStart = redStart;
+        this.redEnd = redEnd;
+        this.blackStart = blackStart;
+        this.blackEnd = blackEnd;
     }
 
     // // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
@@ -238,70 +186,11 @@ class canal{
         let outp = new Sprite([start, end]);
         outp.collider = "static";
         this.allSprites.push(outp);
+        this.bankSprites.push(outp);
         return outp;
     }
 
-    //other useful functions (called internally)
-    gradient(x1, y1, x2, y2){
-        const numer = y2-y1;
-        const denom = x2-x1;
-        const outp = numer/denom;
-        return outp;
-    }
-
-    offset(gradient, X, Y){
-        return -1 * ((gradient * X) - Y);
-    }
-
-    angleCalc(startX, startY, endX, endY, rads, atan2){
-        let opp = endY - startY;
-        let adj = startX - endX
-        let tanoutp = opp/adj;
-        let outp;
-        if(atan2){
-            outp = Math.atan2(tanoutp);
-        }else{
-            outp = Math.atan(tanoutp);
-        }
-        if(rads){
-            return outp;
-        }else{
-            return this.radsToDegrees(outp);
-        }
-    } 
-    
-
-    linearIntersect(a1, c1, a2, c2){
-        let x = ((-1*c2) + c1)/((-1*a1) + a2);
-        let y = ((c1*a2) - (c2*a1))/((-1*a1)+a2);
-        return [x, y];
-    }
-
-    halfwayPoint(start, end){
-        let xStart = start[0];
-        let yStart = start[1];
-
-        let xChange = end[0] - start[0];
-        let yChange = end[1] - start[1];
-
-        xChange /= 2;
-        yChange /= 2;
-
-        xStart += xChange;
-        yStart += yChange;
-
-        return [xStart, yStart];
-
-    }
-
-    clockToAngle(oClock){
-        return oClock * Math.PI / 6;
-    }
-
-    radsToDegrees(rads){
-        return rads *= (180/Math.PI);
-    }
-
+    getBanks(){return this.bankSprites}
     //aesthetic functions
 
     canalVisualize(){
@@ -314,7 +203,8 @@ class canal{
 
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
-        let position = this.halfwayPoint(this.redStart, this.blackStart);
+        text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20)
+        
 
         for (let sprite of this.allSprites) {
             // if (this.player.collides(sprite)) console.log("COLLISION");
