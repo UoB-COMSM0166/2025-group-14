@@ -15,7 +15,8 @@ to removing sprites cleanly when done.
 */
 
 let garbagePieceCnt = 0;
-let playerInFinalSegment = false;
+// let playerInFinalSegment = false;
+let finishLineCrossed = false;
 
 class canal{
 
@@ -213,11 +214,14 @@ class canal{
 
     closeMapEnd() {
         let endMapBank = new Sprite([this.redEnd, this.blackEnd]);
-        // let finishLine = new Sprite([this.redStart, this.blackStart]);
+        let finishLine = new Sprite([this.redStart, this.blackStart]);
+        // finishLine.overlaps(allSprites);
+        this.player.overlaps(finishLine, finish);
+        finishLine.visible = false;
         endMapBank.collider = STA;
         // finishLine.collider = "none";
         this.allSprites.push(endMapBank);
-        // this.allSprites.push(finishLine);
+        this.allSprites.push(finishLine);
     }
 
     createGarbage() {
@@ -281,6 +285,8 @@ function collect(player, gem) {
     console.log("Pieces of garbage collected: " + garbagePieceCnt);
 }
 
-function finish(player, finishBar) {
-    
+function finish(player) {
+    finishLineCrossed = true;
+    // state = GameState.WIN;
+    // console.log(finishLineCrossed);
 }
