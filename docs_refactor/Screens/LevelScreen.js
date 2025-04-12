@@ -6,6 +6,8 @@ class LevelScreen {
         this.tutorialButton.hide();
         this.levelOneButton = new Button("Level 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(1));
         this.levelOneButton.hide();
+        this.levelTwoButton = new Button("Level 2", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(2));
+        this.levelTwoButton.hide();
     }
 
     display() {
@@ -14,8 +16,10 @@ class LevelScreen {
 
         this.tutorialButton.show(); 
         this.levelOneButton.show();
+        this.levelTwoButton.show();
         this.tutorialButton.setPosition(windowWidth/6, windowHeight/6);
         this.levelOneButton.setPosition(windowWidth *2/6, windowHeight/6);
+        this.levelTwoButton.setPosition(windowWidth *3/6, windowHeight/6);
     
     }
 
@@ -23,6 +27,7 @@ class LevelScreen {
         this.selectedLevel = levelId;
         this.tutorialButton.hide();
         this.levelOneButton.hide();
+        this.levelTwoButton.hide();
         state = GameState.INFO_SCREEN;
     }
 
