@@ -5,8 +5,8 @@
 
 class Level {
     
-  constructor() {
-      // Post-refactor globals
+  constructor(levelNumber) {
+      this.levelNumber = levelNumber;
       this.player;
       this.playerCfg;
       this.pursuer;
@@ -34,7 +34,7 @@ class Level {
 
       this.player = new Sprite(265, -328, 35, 25);
 
-      this.map = MapController.getMap2(this.player);
+      this.map = MapController.getMap(this.levelNumber, this.player);
 
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
