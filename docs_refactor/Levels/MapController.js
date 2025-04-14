@@ -14,9 +14,9 @@ class MapController {
     }
 
     static getMap0(player) {
-        let c1 = new canal(300, 2, 100, player, false); //right, up
-        
-        let network = new canalNetwork(50, -350, [c1/* , c2, c3, c4 , c5 */]); 
+        let c1 = new canal(400, 9, 150, player, false); //right, up
+
+        let network = new canalNetwork(0, 0, [c1/* , c2, c3, c4 , c5 */]); 
         return new canalMap(player, false, network); 
     }
     

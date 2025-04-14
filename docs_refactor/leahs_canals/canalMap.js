@@ -15,7 +15,6 @@ class canalMap {
             let c4 = new canal(600, 10, 220, this.player, garbageOn); //left up
             let c5 = new canal(400, 9, 60, this.player, garbageOn);
             this.networks.push(new canalNetwork(50, -350, [c1, c2, c3, c4 , c5]));  
-        //Adam: else use the custom network provided
         } else {
             this.networks.push(customNetwork);
         }
