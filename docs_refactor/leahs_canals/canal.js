@@ -354,8 +354,9 @@ function collect(player, gem) {
 	gem.remove();
     gem.ripple.remove();
     garbagePieceCnt++;
-    pursuerMoveCooldown += 15;
-    console.log(pursuerMoveCooldown);
+    pursuerMoveCooldown += pursuerFreezeFrames;
+    // print(difficultyLevel);
+    // console.log(pursuerMoveCooldown);
 }
 
 function finish(player) {

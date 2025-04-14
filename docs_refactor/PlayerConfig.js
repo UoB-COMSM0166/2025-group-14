@@ -12,7 +12,7 @@ class PlayerStatus {
 
 
 class PlayerConfig {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map, speed) {
     this.playerSprite = player;
   
 
@@ -23,8 +23,8 @@ class PlayerConfig {
     this.playerSprite.bounciness = 0.9;
     // player.collider = 'kinematic';
 
-    this.maxSpeed = 4.5;
-    this.maxSpeedCopy = 4.5;
+    this.maxSpeed = speed;
+    this.maxSpeedCopy = speed;
 
     this.stationary = false;
     this.direcitonSave = 0;

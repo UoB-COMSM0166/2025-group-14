@@ -55,7 +55,7 @@ class InfoScreen {
         
         textSize(10);
         // Transition to gameplay screen when player presses the SPACE key
-        if (state === GameState.INFO_SCREEN && keyCode == 32) {
+        if (state === GameState.INFO_SCREEN && kb.pressed(' ')) {
           state = GameState.PLAY_GAME;
         }
     }
