@@ -37,46 +37,57 @@ class Level2 {
 
       this.timer;
       this.healthbar;
-      this.playerMaxHealth = 100;
-      this.canalCollisionDamage = 3;
-      this.damageOverTime = 1;
+
+      if (difficultyLevel === 0) {
+        this.playerMaxHealth = 100;
+        this.canalCollisionDamage = 3;
+        this.damageOverTime = 1;
+      } else if (difficultyLevel === 1) {
+        this.playerMaxHealth = 70;
+        this.canalCollisionDamage = 5;
+        this.damageOverTime = 1.2;
+      } else if (difficultyLevel === 2) {
+        this.playerMaxHealth = 50;
+        this.canalCollisionDamage = 10;
+        this.damageOverTime = 1.5;
+      }
   }
 
   setup() {
-       // Instantiate Timer (to time events that occur over time)
-      this.timer = new Timer();
-      this.timer.startTimer();
+    // Instantiate Timer (to time events that occur over time)
+    this.timer = new Timer();
+    this.timer.startTimer();
 
-      // this.centreCircle = new CentreCirlce();
+    // this.centreCircle = new CentreCirlce();
 
-      this.player = new Sprite(265, -328, 35, 25);
+    this.player = new Sprite(265, -328, 35, 25);
 
-      this.map = new Level2CanalMap(this.player);
+    this.map = new Level2CanalMap(this.player);
 
-      this.player.addAnimation("boat", this.playerAnimation);
-      this.player.animation.frameDelay = 18;
-      this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
-    
-      this.pursuer = new Sprite(-442, -327, 25, 15);
-      this.pursuer.addAnimation("boat", this.pursuerAnimation);
-      this.pursuer.animation.frameDelay = 18;
-      this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 0);
-    
-      // Instantiate healthbar
-      this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
+    this.player.addAnimation("boat", this.playerAnimation);
+    this.player.animation.frameDelay = 18;
+    this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
   
-      this.leftBankConstr = [];
-      this.rightBankConstr = [];
-    
-      camera.x = this.player.x;
-      camera.y = this.player.y;
+    this.pursuer = new Sprite(-442, -327, 25, 15);
+    this.pursuer.addAnimation("boat", this.pursuerAnimation);
+    this.pursuer.animation.frameDelay = 18;
+    this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 0);
+  
+    // Instantiate healthbar
+    this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
 
-      camera.zoom = 1;
+    this.leftBankConstr = [];
+    this.rightBankConstr = [];
+  
+    camera.x = this.player.x;
+    camera.y = this.player.y;
 
-      // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
+    camera.zoom = 1;
+
+    // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
 
 
-    }
+  }
 
   // Post-refactor display
   display() {

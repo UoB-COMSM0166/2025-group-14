@@ -62,14 +62,15 @@ function draw() {
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
     if (keyCode == 32) {
-      print("was here " + selectedDifficulty);
-      game_screen = LevelController.getLevel(selectedLevel);
+      // print("was here " + selectedDifficulty);
       if (!(selectedDifficulty === -1)) {
         difficultyLevel = difficulty_screen.getSelectedDifficulty();
       } else {
         difficultyLevel = 0; //i.e. the default seleciton
       }
+      game_screen = LevelController.getLevel(selectedLevel);
       difficulty_screen.resetSelectedDifficulty();
+      level_screen.resetSelectedLevel();
     }
   }
 

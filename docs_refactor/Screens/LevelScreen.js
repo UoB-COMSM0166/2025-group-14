@@ -40,7 +40,7 @@ class LevelScreen {
         return this.selectedLevel;
     }
 
-    // resetSelectedLevel() {
-    //     this.selectedLevel = -1;
-    // }
+    resetSelectedLevel() {
+        this.selectedLevel = -1;
+    }
 }
