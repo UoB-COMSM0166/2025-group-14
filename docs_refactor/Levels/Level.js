@@ -27,7 +27,7 @@ class Level {
   
         this.player = new Sprite(265, -328, 35, 25);
   
-        this.map = Maps.getMap(this.levelNumber, this.player);
+        this.map = LevelMap.getMap(this.levelNumber, this.player);
   
         this.player.addAnimation("boat", this.playerAnimation);
         this.player.animation.frameDelay = 18;

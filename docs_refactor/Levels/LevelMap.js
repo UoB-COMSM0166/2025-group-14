@@ -1,13 +1,13 @@
-class Maps {   
+class LevelMap {   
 
     static getMap(levelNumber, player) {
         switch(levelNumber) {
             case 0:
-                return Maps.getMap0(player);
+                return LevelMap.getMap0(player);
             case 1:
-                return Maps.getMap1(player);
+                return LevelMap.getMap1(player);
             case 2:
-                return Maps.getMap2(player);
+                return LevelMap.getMap2(player);
             default:
                 throw new Error("Invalid level number: " + levelNumber);
         }

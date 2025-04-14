@@ -33,7 +33,7 @@ class Level0 {
     }
   
     setup() {
-        this.map = Maps.getMap0(this.player);
+        this.map = LevelMap.getMap0(this.player);
         let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
   
         this.player = new Sprite(100, 100, 50, 25);
