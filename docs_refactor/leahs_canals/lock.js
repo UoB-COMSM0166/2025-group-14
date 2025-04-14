@@ -31,7 +31,8 @@ class lock extends canal {
 
     doorSprite(start, end, connection){
         const halfway = halfwayPoint(start, end);
-        let circle = new Sprite(halfway[0], halfway[1], 30)
+        //comment out for now to not cause start screen bug (big circles that don't clear)
+        //let circle = new Sprite(halfway[0], halfway[1], 30)
 
         let door1 = this.createBank(start, halfway);
         let door2 = this.createBank(end, halfway);
