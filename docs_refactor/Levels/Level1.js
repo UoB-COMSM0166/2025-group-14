@@ -39,18 +39,21 @@ class Level1 {
       this.damageOverTime = 1;
       this.playerSpeed = 4.5;
       this.pursuerSpeed = 3;
+      pursuerFreezeFrames = 15;
     } else if (difficultyLevel === 1) { //medium level
       this.playerMaxHealth = 70;
       this.canalCollisionDamage = 5;
       this.damageOverTime = 1.2;
       this.playerSpeed = 4.5
       this.pursuerSpeed = 3;
+      pursuerFreezeFrames = 10;
     } else if (difficultyLevel === 2) { //hard level
       this.playerMaxHealth = 50;
       this.canalCollisionDamage = 10;
       this.damageOverTime = 1.5;
       this.playerSpeed = 4.5
       this.pursuerSpeed = 3;
+      pursuerFreezeFrames = 5;
     }
 }
 
@@ -58,7 +61,7 @@ class Level1 {
        // Instantiate Timer (to time events that occur over time)
       this.timer = new Timer();
       this.timer.startTimer();
-      
+
       this.player = new Sprite(100, 100, 50, 25, this.playerSpeed);
 
       this.map = new canalMap(this.player);

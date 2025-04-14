@@ -28,6 +28,7 @@ let state = GameState.START_SCREEN; // Starts on loading screen
 // if a level does not have a difficulty selection option, the default is set automatically
 let selectedLevel = null;
 let difficultyLevel = null; 
+let pursuerFreezeFrames = 0;
 
 function setup() {
   new Canvas();
