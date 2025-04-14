@@ -1,30 +1,12 @@
 class Level1 {
     
   constructor() {
-    // Post-refactor globals
-    this.banks;
-    this.leftBankConstr; 
-    this.rightBankConstr;
     this.player;
     this.playerCfg;
     this.pursuer;
     this.pursuerCfg;
     this.centreCircle;
-    //canals
-    this.testEdge;
-    this.leftBankConstr;
-    this.rightBankConstr;
     this.map;
-    /* this.playerAnimation = loadAnimation("Boat-redbrown.png", [
-        [64, 64, 64, 32],
-        [0, 0, 64, 32],
-        [0, 64, 64, 32],
-    ]);
-    this.pursuerAnimation = loadAnimation("Boat-grey.png", [
-      [64, 64, 64, 32],
-      [0, 0, 64, 32],
-      [0, 64, 64, 32],
-    ]); */
 
     // below is to make sure that animations are only loaded in once
     this.playerAnimation = LevelController.playerAnimation;
@@ -71,9 +53,8 @@ class Level1 {
 
       this.player = new Sprite(100, 100, 35, 25);
 
-      this.map = new canalMap(this.player);
+      this.map = MapController.getMap(1, this.player);
 
-      // this.player = new Sprite(100, 100, 50, 25);
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
       this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
@@ -108,7 +89,6 @@ class Level1 {
 
       this.pursuerCfg.update();
       
-      this.mapConstructor();
       this.coordinateGrid();
 
       if (this.playerCfg.isHealthZero()){
@@ -143,29 +123,6 @@ class Level1 {
           // strokeWeight(4);
           text(`${horPix} ${vewPix}`, horPix, vewPix);
         }
-      }
-  }
-    
-    mapConstructor() {
-      // map creation logic
-      if (kb.pressing('shift') && mouse.presses()){
-        // console.log("Shift if pressed when mouse is clicked");
-        this.rightBankConstr.push([mouse.x, mouse.y]);
-        if (this.rightBankConstr.length > 1) {
-          let rightBank = new Sprite(this.rightBankConstr);
-          rightBank.collider = 'static';
-          rightBank.colour = "blue";
-        }
-      }
-      else if (mouse.presses()) {
-        // console.log("Mouse was clicked");
-        this.leftBankConstr.push([mouse.x, mouse.y]);
-        if (this.leftBankConstr.length > 1) {
-          let leftBank = new Sprite(this.leftBankConstr);
-          leftBank.collider = 'static';
-          leftBank.colour = "red";
-        }
-        // console.log(mouse.x);
       }
   }
 }
