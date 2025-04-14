@@ -99,9 +99,6 @@ class Level2 {
     this.playerCfg.debug();
 
     this.pursuerCfg.update();
-    
-    // this.mapConstructor();
-    // this.coordinateGrid();
 
     this.moveCamera();
 
@@ -139,26 +136,6 @@ class Level2 {
   clearSprites() {
     this.player.remove();
     this.pursuer.remove();
-    // this.centreCircle.remove();
     this.map.removeSprites();
-    /*this.c1.removeSprites();
-    this.c2.removeSprites();
-    this.c3.removeSprites();
-    this.c4.removeSprites();
-    this.c5.removeSprites();*/
-      
-  }
-
-  coordinateGrid() {
-      // this creates the grid with coordinates. Might be useful for Leah when creating maps
-      for (let horPix = -5000; horPix < 5000; horPix += 300) {
-        for (let vewPix = -5000; vewPix < 5000; vewPix += 300) {
-          textSize(15);
-          fill(0);
-          stroke(0);
-          // strokeWeight(4);
-          text(`${horPix} ${vewPix}`, horPix, vewPix);
-        }
-      }
   }
 }
