@@ -111,7 +111,7 @@ class Level {
         
     }
   
-    coordinateGrid() {
+   /*  coordinateGrid() {
         // this creates the grid with coordinates. Might be useful for Leah when creating maps
         for (let horPix = -5000; horPix < 5000; horPix += 300) {
           for (let vewPix = -5000; vewPix < 5000; vewPix += 300) {
@@ -122,5 +122,5 @@ class Level {
             text(`${horPix} ${vewPix}`, horPix, vewPix);
           }
         }
-    }
+    } */
   }
