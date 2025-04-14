@@ -38,6 +38,13 @@ class Level2 {
       this.timer;
       this.healthbar;
 
+    //what each parameter does:
+    // 1) playerMaxHealth - maximum HP assigned to the player at the beginning
+    // 2) canalCollisionDamage - amount of HP deducted when you bump into a bank and 
+    //when the pursuer catches you
+    // 3) damageOverTime - deduction of HP every second
+    // 4-5) playerSpeed & pursuerSpeed - limit for the amount of pixels changed per frame (there are 60 frames per second)
+    // 6) pursuerFreezeFrames - the amount of frames the pursuer freezes upon picking a piece of garbage
       if (difficultyLevel === 0) { //easy level
         this.playerMaxHealth = 100;
         this.canalCollisionDamage = 3;
