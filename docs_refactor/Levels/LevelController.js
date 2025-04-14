@@ -12,9 +12,12 @@ class LevelController {
                 levelInstance = new Level0();
                 break;
             case 1:
-                levelInstance = new Level1();
+                levelInstance = new Level(1, 100, 100);
                 break;
             case 2:
+                levelInstance = new Level(2, 265, -328);
+                break;
+            case 3:
                 throw new Error("Invalid level number: " + level);
         }
         levelInstance.setup();

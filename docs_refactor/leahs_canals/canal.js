@@ -15,11 +15,13 @@ to removing sprites cleanly when done.
 */
 
 let garbagePieceCnt = 0;
+// let playerInFinalSegment = false;
+let finishLineCrossed = false;
 
 class canal{
 
     //construction functions
-    constructor(length, oClock, width, player, garbageOn = true){
+    constructor(length, oClock, width, player, garbageOn = true, finish = false){
         //basic attributes
         this.length = length;
         this.angle = clockToAngle(oClock);
@@ -73,6 +75,7 @@ class canal{
         this.garbageOn = garbageOn;
         this.garbage;
         // this.garbagePiece;
+        this.finish = finish; 
     }
 
     getDirection(){
@@ -164,6 +167,10 @@ class canal{
         if(this.garbageOn){
             this.createGarbage();
         }
+        if(this.finish) {
+            this.closeMapEnd();
+            console.log("4 vertexes of the last canal segment: \n", this.redStart, this.blackStart, this.redEnd, this.blackEnd);
+        }
     }
 
     setCoords(redStart, blackStart, redEnd, blackEnd){
@@ -172,15 +179,6 @@ class canal{
         this.blackStart = blackStart;
         this.blackEnd = blackEnd;
     }
-
-    // // Daniil: I am not that familiar how inheritance works in JavaScript, but apparently
-    // // if you have a method that appears both on parent and daughter class, and that method 
-    // // is called on a daughter class object, both methods are executed. It's weird, but 
-    // // it works: both the banks and gates disappear at restart.
-    // removeSprites() { 
-    //     this.blackBank.remove();
-    //     this.redBank.remove();
-    // }
 
     createBank(start, end){
         let outp = new Sprite([start, end]);
@@ -206,32 +204,48 @@ class canal{
         text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20)
         
 
-        // this.player.overlaps(gems, collect);
+        // for (let sprite of this.allSprites) {
+        //     // if (this.player.collides(sprite)) console.log("COLLISION");
+        //     // if (sprite.colliding(this.player)) console.log("COLLISION");
+        //     // if (this.player.collided(sprite)) console.log("COLLISION");
+        // }
 
-        
+    }
+
+    closeMapEnd() {
+        let endMapBank = new Sprite([this.redEnd, this.blackEnd]);
+        let finishLine = new Sprite([this.redStart, this.blackStart]);
+        // finishLine.overlaps(allSprites);
+        this.player.overlaps(finishLine, finish);
+        finishLine.visible = false;
+        endMapBank.collider = STA;
+        // finishLine.collider = "none";
+        this.allSprites.push(endMapBank);
+        this.allSprites.push(finishLine);
     }
 
     createGarbage() {
 
         this.garbage = new Group();
-        this.garbage.amount = 3;
+        this.garbage.amount = this.getRandomInt(1, 4);
+        // console.log(this.garbage.amount);
         this.garbage.diameter = 10;
+        // this.garbage.collider = NONE;
 
         for (let piece of this.garbage) {
-            let offsetAlongCanal = Math.random();
+            let offsetAlongCanal = this.getRandomFloat(0.1, 0.9);
             // console.log(offsetAlongCanal);
         
             let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
-            let redPosition = this.pointBetween(this.redStart, this.redStart, offsetAlongCanal);
+            let redPosition = this.pointBetween(this.redStart, this.redEnd, offsetAlongCanal);
     
-            let offsetBetweenCanals = Math.random();
+            let offsetBetweenCanals = this.getRandomFloat(0.05, 0.95);;
     
             let garbageSpriteCoordinates = this.pointBetween(balckPosition, redPosition, offsetBetweenCanals);
     
-            // this.garbagePiece = new Sprite(garbageSpriteCoordinates[0], garbageSpriteCoordinates[1], 10);
-            // let garbagePiece = new this.garbage.Sprite();
             piece.x = garbageSpriteCoordinates[0];
             piece.y = garbageSpriteCoordinates[1];
+            piece.collider = "none";
         }
 
         this.player.overlaps(this.garbage, collect);
@@ -253,11 +267,25 @@ class canal{
         ];
     }
 
+    getRandomFloat(min, max) {
+        return (Math.random() * (max - min) + min);
+    }
+
+    getRandomInt(min, max) {
+        return (Math.floor(Math.random() * (max - min + 1)) + min);
+    }
+
 }
  
 function collect(player, gem) {
 	gem.remove();
     garbagePieceCnt++;
-    console.log("Pieces of garbage collected: " + garbagePieceCnt);
-    
+    pursuerMoveCooldown += 15;
+    console.log(pursuerMoveCooldown);
+}
+
+function finish(player) {
+    finishLineCrossed = true;
+    // state = GameState.WIN;
+    // console.log(finishLineCrossed);
 }

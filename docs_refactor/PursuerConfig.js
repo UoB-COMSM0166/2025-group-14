@@ -1,3 +1,7 @@
+let pursuerCatched = false;
+let pursuerMoveCooldown = 0;
+let pursuerDamageCooldown = 0;
+
 class PursuerConfig {
     // Constructor takes a pursuer, player and speed as arguments
     constructor(pursuer, player, speed) {
@@ -18,6 +22,7 @@ class PursuerConfig {
             this.lastSeenArray = [];
             this.target = this.player;
             this.lastSeenCoords = createVector(this.player.x, this.player.y);
+            
         } else {
             if (this.lastSeenArray.length === 0) {
                 this.setSnapShot();
@@ -29,14 +34,21 @@ class PursuerConfig {
         if (this.debugMode) {
             this.debug();
         }
+        if (pursuerMoveCooldown !== 0) {
+            pursuerMoveCooldown -= 1;
+        }
     }
 
     // Moves the pursuer towards the target
     move() {
-        // If the pursuer is within 60 pixels of the target, stop moving and set to "sleep" to stop weird jiggling
-        if (this.arrived(this.pursuer, this.player, 60)) {
+        // If the pursuer is within 60 pixels of the target, stop moving and set to "sleep" to stop weird jiggling 
+        if (this.arrived(this.pursuer, this.player, 60) || pursuerMoveCooldown !== 0) {
             this.pursuer.speed = 0;
             this.pursuer.sleeping = true;
+            if (this.arrived(this.pursuer, this.player, 60) && pursuerDamageCooldown === 0) {
+                pursuerCatched = true;
+                // print("pursuer catched");
+            }
             return;
         // If the pursuer has reached a target other than player remove it by shifting array down
         } else if (this.lastSeenArray[0]) {

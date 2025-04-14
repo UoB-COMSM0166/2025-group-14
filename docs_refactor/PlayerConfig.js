@@ -9,8 +9,10 @@ class PlayerStatus {
   }
 }
 
+
+
 class PlayerConfig {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, canals) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map) {
     this.playerSprite = player;
   
 
@@ -29,7 +31,7 @@ class PlayerConfig {
     this.currentVel;
     this.currentVelCopy;
 
-    this.canals = canals;
+    this.map = map;
 
     this.health = maxHealth; // starts with maxHealth
     this.maxHealth = maxHealth;
@@ -40,6 +42,7 @@ class PlayerConfig {
     this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
+    // this.pursuerDamageCooldown = 0;
   }
 
   camera() {
@@ -57,10 +60,10 @@ class PlayerConfig {
   movement(damageOn = true, healthOn = true) {
     // player sprite movement logic
     // applying force to the player's sprite in response to wasd or the arrow keys
-    if (kb.pressing('left')) this.playerSprite.applyForce(-40, 0);
-    else if (kb.pressing('right')) this.playerSprite.applyForce(40, 0);
-    if (kb.pressing('up')) this.playerSprite.applyForce(0, -40);
-    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 40);
+    if (kb.pressing('left')) this.playerSprite.applyForce(-30, 0);
+    else if (kb.pressing('right')) this.playerSprite.applyForce(30, 0);
+    if (kb.pressing('up')) this.playerSprite.applyForce(0, -30);
+    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 30);
 
     // the following code 1) prevents exceeding the maxSpeed  
     this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
@@ -82,8 +85,17 @@ class PlayerConfig {
     // Update damage over time and collision damage
 
     if(damageOn) {
-    this.takeDamageOverTime();
-    //this.takeCollisionDamage();
+      this.takeDamageOverTime();
+      this.takeCollisionDamage();
+      if (pursuerCatched && pursuerDamageCooldown === 0){
+        pursuerCatched = false;
+        pursuerDamageCooldown = 60;
+        this.takeDamage(this.collisionDamage);
+        // print("Pursuer catched");
+      } 
+      if (pursuerDamageCooldown !== 0) {
+        pursuerDamageCooldown -= 1;
+      }
     }
 
     if(healthOn) {
@@ -137,8 +149,9 @@ class PlayerConfig {
 
   // Collision damage
   takeCollisionDamage() {
-    for (let i = 0; i < this.canals.length; i++) {
-      if (this.playerSprite.collides(this.canals[i])) {
+    let bankSprites = this.map.getBankSprites();
+    for (let i = 0; i < bankSprites.length; i++) {
+      if (this.playerSprite.collides(bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
       }
     }
