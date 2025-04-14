@@ -5,9 +5,11 @@
 
 class Level {
     
-  constructor(levelNumber) {
+  constructor(levelNumber, playerX, playerY) {
       this.levelNumber = levelNumber;
       this.player;
+      this.playerX = playerX;
+      this.playerY = playerY;
       this.playerCfg;
       this.pursuer;
       this.pursuerCfg;
@@ -32,7 +34,7 @@ class Level {
 
       // this.centreCircle = new CentreCirlce();
 
-      this.player = new Sprite(265, -328, 35, 25);
+      this.player = new Sprite(this.playerX, this.playerY, 35, 25);
 
       this.map = MapController.getMap(this.levelNumber, this.player);
 

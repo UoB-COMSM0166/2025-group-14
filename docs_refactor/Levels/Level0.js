@@ -1,26 +1,15 @@
 class Level0 {
 
     constructor() {
-        this.banks;
-        this.leftBankConstr; 
-        this.rightBankConstr;
         this.player;
         this.playerCfg;
         /* this.pursuer;
         this.pursuerCfg; */
         /* this.centreCircle; */
         //canals
-        this.testEdge;
-        this.leftBankConstr;
-        this.rightBankConstr;
         this.map;
-        /* this.boatAnimation = loadAnimation("Boat-redbrown.png", [
-            [64, 64, 64, 32],
-            [0, 0, 64, 32],
-            [0, 64, 64, 32],
-        ]); */
         // below is to make sure that animations are only loaded in once
-        this.boatAnimation = LevelController.playerAnimation;
+        this.playerAnimation = LevelController.playerAnimation;
         /* this.pursuerAnimation = LevelController.pursuerAnimation; */
 
         this.movementTutorial = {
@@ -33,19 +22,15 @@ class Level0 {
     }
   
     setup() {
-        this.map = MapController.getMap0(this.player);
-        let canals = [this.c1, this.c2, this.c3, this.c4, this.c5];
-  
         this.player = new Sprite(100, 100, 50, 25);
-        this.player.addAnimation("boat", this.boatAnimation);
+        this.map = MapController.getMap0(this.player);
+  
+        this.player.addAnimation("boat", this.playerAnimation);
         this.player.animation.frameDelay = 18;
-        this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, canals);
+        this.playerCfg = new PlayerConfig(this.player, 100, 3, 1, this.timer, this.map);
       
        /*  this.pursuer = new Sprite(40, 100, 50, 25);
         this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3); */
-    
-        this.leftBankConstr = [];
-        this.rightBankConstr = [];
       
         camera.x = this.player.x;
         camera.y = this.player.y;
@@ -77,22 +62,15 @@ class Level0 {
         this.playerCfg.debug();
   
         /* this.pursuerCfg.update(); */
-        
-        this.mapConstructor();
-        this.coordinateGrid();
-        this.setMovementProgress();
-  
+        /* this.coordinateGrid(); */
         /* if (this.playerCfg.isHealthZero()){
             this.clearSprites();
             state = GameState.LOSE;
         } */
- 
         /* if (keyCode == 87){
             this.clearSprites();
             state = GameState.WIN;
-        } */
-        //TODO BUG - this escape to go to start screen is broken atm
-      
+        } */ 
     }
 
     setCamera() {
