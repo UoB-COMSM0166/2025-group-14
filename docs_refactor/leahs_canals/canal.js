@@ -228,6 +228,7 @@ class canal{
 
         this.garbage = new Group();
         this.garbage.amount = this.getRandomInt(1, 4);
+        // this.garbage.amount = 0;
         // console.log(this.garbage.amount);
         this.garbage.diameter = 10;
         // this.garbage.collider = NONE;

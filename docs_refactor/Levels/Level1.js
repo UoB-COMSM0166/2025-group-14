@@ -69,14 +69,14 @@ class Level1 {
       this.timer = new Timer();
       this.timer.startTimer();
 
-      this.player = new Sprite(100, 100, 50, 25, this.playerSpeed);
+      this.player = new Sprite(100, 100, 35, 25);
 
       this.map = new canalMap(this.player);
 
       // this.player = new Sprite(100, 100, 50, 25);
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
-      this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
+      this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
     
       this.pursuer = new Sprite(40, 100, 50, 25);
       this.pursuer.addAnimation("boat", this.pursuerAnimation);
@@ -115,7 +115,7 @@ class Level1 {
         this.clearSprites();
         state = GameState.LOSE;
       }
-      if (kb.pressed('q') || finishLineCrossed){ // changes w keycode to q
+      if (kb.pressed('q') || finishLineCrossed){
           this.clearSprites();
           state = GameState.WIN;
           finishLineCrossed = false;
