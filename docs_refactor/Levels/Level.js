@@ -27,7 +27,7 @@ class Level {
   
         this.player = new Sprite(265, -328, 35, 25);
   
-        this.map = LevelMap.getMap(this.levelNumber, this.player);
+        this.map = MapController.getMap(this.levelNumber, this.player);
   
         this.player.addAnimation("boat", this.playerAnimation);
         this.player.animation.frameDelay = 18;
@@ -103,12 +103,6 @@ class Level {
       this.pursuer.remove();
       // this.centreCircle.remove();
       this.map.removeSprites();
-      /*this.c1.removeSprites();
-      this.c2.removeSprites();
-      this.c3.removeSprites();
-      this.c4.removeSprites();
-      this.c5.removeSprites();*/
-        
     }
   
    /*  coordinateGrid() {
