@@ -1,23 +1,16 @@
-class Level1 {
-    constructor() {
+class Level {
+    constructor(levelNumber) {
         // Post-refactor globals
-        this.banks;
-        this.leftBankConstr; 
-        this.rightBankConstr;
+        this.levelNumber = levelNumber;
         this.player;
         this.playerCfg;
         this.pursuer;
         this.pursuerCfg;
         this.centreCircle;
-        //canals
-        this.testEdge;
-        this.leftBankConstr;
-        this.rightBankConstr;
         this.map;
         // below is to make sure that animations are only loaded in once
         this.playerAnimation = LevelController.playerAnimation;
         this.pursuerAnimation = LevelController.pursuerAnimation;
-  
         this.timer;
         this.healthbar;
         this.playerMaxHealth = 100;
@@ -32,9 +25,9 @@ class Level1 {
   
         // this.centreCircle = new CentreCirlce();
   
-        this.player = new Sprite(100, 100, 50, 25);
+        this.player = new Sprite(265, -328, 35, 25);
   
-        this.map = Maps.getMap1(this.player);
+        this.map = Maps.getMap(this.levelNumber, this.player);
   
         this.player.addAnimation("boat", this.playerAnimation);
         this.player.animation.frameDelay = 18;
@@ -47,18 +40,10 @@ class Level1 {
       
         // Instantiate healthbar
         this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
-    
-        this.leftBankConstr = [];
-        this.rightBankConstr = [];
-      
+
         camera.x = this.player.x;
         camera.y = this.player.y;
-  
         camera.zoom = 1;
-  
-        // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
-  
-  
       }
   
     // Post-refactor display
@@ -82,9 +67,6 @@ class Level1 {
       this.playerCfg.debug();
   
       this.pursuerCfg.update();
-      
-      // this.mapConstructor();
-      // this.coordinateGrid();
   
       this.moveCamera();
   
@@ -97,13 +79,10 @@ class Level1 {
           state = GameState.WIN;
           finishLineCrossed = false;
       }
-      
       if (keyCode == 27) {
           this.clearSprites();
           state = GameState.START_SCREEN;
       }
-  
-  
     }
   
     moveCamera() {

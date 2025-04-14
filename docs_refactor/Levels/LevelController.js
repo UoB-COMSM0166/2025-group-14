@@ -9,13 +9,13 @@ class LevelController {
         let levelInstance = null;
         switch (level) {
             case 0:
-                levelInstance = new Level0();
+                levelInstance = new Level(0);
                 break;
             case 1:
-                levelInstance = new Level1();
+                levelInstance = new Level(1);
                 break;
             case 2:
-                levelInstance = new Level2();
+                levelInstance = new Level(2);
                 break;
             case 3:
                 throw new Error("Invalid level number: " + level);

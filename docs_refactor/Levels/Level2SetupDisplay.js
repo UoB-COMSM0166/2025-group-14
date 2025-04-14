@@ -20,17 +20,6 @@ class Level2 {
       this.leftBankConstr;
       this.rightBankConstr;
       this.map;
-      /* this.playerAnimation = loadAnimation("Boat-redbrown.png", [
-          [64, 64, 64, 32],
-          [0, 0, 64, 32],
-          [0, 64, 64, 32],
-      ]);
-      this.pursuerAnimation = loadAnimation("Boat-grey.png", [
-        [64, 64, 64, 32],
-        [0, 0, 64, 32],
-        [0, 64, 64, 32],
-      ]); */
-
       // below is to make sure that animations are only loaded in once
       this.playerAnimation = LevelController.playerAnimation;
       this.pursuerAnimation = LevelController.pursuerAnimation;
@@ -51,7 +40,7 @@ class Level2 {
 
       this.player = new Sprite(265, -328, 35, 25);
 
-      this.map = new Level2CanalMap(this.player);
+      this.map = Maps.getMap2(this.player);
 
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
