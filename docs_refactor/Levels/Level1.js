@@ -44,7 +44,7 @@ class Level1 {
 
       this.centreCircle = new CentreCirlce();
 
-      this.player = new Sprite(100, 100, 50, 25);
+      this.player = new Sprite(100, 100, 50, 25, 4.5);
 
       this.map = new canalMap(this.player);
 

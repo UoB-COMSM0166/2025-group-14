@@ -61,7 +61,7 @@ function draw() {
     selectedLevel = level_screen.getSelectedLevel();
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
-    if (keyCode == 32) {
+    if (kb.pressed(' ')) {
       // print("was here " + selectedDifficulty);
       if (!(selectedDifficulty === -1)) {
         difficultyLevel = difficulty_screen.getSelectedDifficulty();

@@ -38,18 +38,24 @@ class Level2 {
       this.timer;
       this.healthbar;
 
-      if (difficultyLevel === 0) {
+      if (difficultyLevel === 0) { //easy level
         this.playerMaxHealth = 100;
         this.canalCollisionDamage = 3;
         this.damageOverTime = 1;
-      } else if (difficultyLevel === 1) {
+        this.playerSpeed = 4.5;
+        this.pursuerSpeed = 3;
+      } else if (difficultyLevel === 1) { //medium level
         this.playerMaxHealth = 70;
         this.canalCollisionDamage = 5;
         this.damageOverTime = 1.2;
-      } else if (difficultyLevel === 2) {
+        this.playerSpeed = 4.5
+        this.pursuerSpeed = 3;
+      } else if (difficultyLevel === 2) { //hard level
         this.playerMaxHealth = 50;
         this.canalCollisionDamage = 10;
         this.damageOverTime = 1.5;
+        this.playerSpeed = 4.5
+        this.pursuerSpeed = 3;
       }
   }
 
@@ -60,7 +66,7 @@ class Level2 {
 
     // this.centreCircle = new CentreCirlce();
 
-    this.player = new Sprite(265, -328, 35, 25);
+    this.player = new Sprite(265, -328, 35, 25, this.playerSpeed);
 
     this.map = new Level2CanalMap(this.player);
 
@@ -71,7 +77,7 @@ class Level2 {
     this.pursuer = new Sprite(-442, -327, 25, 15);
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
-    this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 0);
+    this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, this.pursuerSpeed);
   
     // Instantiate healthbar
     this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
@@ -117,13 +123,13 @@ class Level2 {
         this.clearSprites();
         state = GameState.LOSE;
     }
-    if (keyCode == 86 || finishLineCrossed){ // changes w keycode to q
+    if (kb.pressed('q') || finishLineCrossed){ // changes w keycode to q
         this.clearSprites();
         state = GameState.WIN;
         finishLineCrossed = false;
     }
     
-    if (keyCode == 27) {
+    if (kb.pressed('escape')) {
         this.clearSprites();
         state = GameState.START_SCREEN;
     }

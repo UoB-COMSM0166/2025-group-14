@@ -58,7 +58,7 @@ class PursuerConfig {
             }
         }
         this.pursuer.moveTowards(this.target);
-        this.pursuer.speed = 3;
+        this.pursuer.speed = this.speed;
         this.pursuer.direction = this.pursuer.angleTo(this.target);
         this.pursuer.rotation = this.pursuer.direction;
     }
