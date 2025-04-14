@@ -280,7 +280,11 @@ class canal{
 function collect(player, gem) {
 	gem.remove();
     garbagePieceCnt++;
-    pursuerMoveCooldown += 15;
+    if (difficultyLevel === 0) pursuerMoveCooldown += 15;
+    else if (difficultyLevel === 1) pursuerMoveCooldown += 10;
+    else if (difficultyLevel === 2) pursuerMoveCooldown += 5;
+    print(difficultyLevel);
+    // pursuerMoveCooldown += 15;
     console.log(pursuerMoveCooldown);
 }
 

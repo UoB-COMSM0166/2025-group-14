@@ -14,14 +14,20 @@ class GameState {
   static PLAY_GAME = "playing game";
   static WIN = "win screen";
   static LOSE = "lose screen";
+  static DIFFICULTY_SCREEN = "difficulty screen";
 
   static isValid(state) {
       return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.LEVEL_SCREEN, GameState.INFO_SCREEN, 
-        GameState.PLAY_GAME, GameState.WIN, GameState.LOSE].includes(state);
+        GameState.PLAY_GAME, GameState.WIN, GameState.LOSE, GameState.DIFFICULTY_SCREEN].includes(state);
   }
 }
 let state = GameState.START_SCREEN; // Starts on loading screen
+
+//about the difficulty levels: 
+// 0 = easy, 1 = medium, 2 = hard
+// if a level does not have a difficulty selection option, the default is set automatically
 let selectedLevel = null;
+let difficultyLevel = null; 
 
 function setup() {
   new Canvas();
@@ -33,6 +39,7 @@ function setup() {
   game_screen = null;
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
+  difficulty_screen = new DifficultyScreen();
 }
 
 
@@ -46,11 +53,23 @@ function draw() {
     level_screen.display();
   }
 
+  if (state == GameState.DIFFICULTY_SCREEN) {
+    difficulty_screen.display();
+  }
+
   if (state == GameState.INFO_SCREEN) {
     selectedLevel = level_screen.getSelectedLevel();
+    selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
-    if (keyCode == 32) {;
+    if (keyCode == 32) {
+      print("was here " + selectedDifficulty);
       game_screen = LevelController.getLevel(selectedLevel);
+      if (!(selectedDifficulty === -1)) {
+        difficultyLevel = difficulty_screen.getSelectedDifficulty();
+      } else {
+        difficultyLevel = 0; //i.e. the default seleciton
+      }
+      difficulty_screen.resetSelectedDifficulty();
     }
   }
 
