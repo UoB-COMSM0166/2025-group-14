@@ -66,7 +66,8 @@ class Level2 {
 
     this.player.addAnimation("boat", this.playerAnimation);
     this.player.animation.frameDelay = 18;
-    this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
+    this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
+      this.timer, this.map, this.playerSpeed);
   
     this.pursuer = new Sprite(-442, -327, 25, 15);
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
