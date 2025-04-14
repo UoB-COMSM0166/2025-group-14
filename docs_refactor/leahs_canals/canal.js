@@ -357,6 +357,9 @@ function collect(player, gem) {
     pursuerMoveCooldown += pursuerFreezeFrames;
     // print(difficultyLevel);
     // console.log(pursuerMoveCooldown);
+    pursuerMoveCooldown += pursuerFreezeFrames;
+    // print(difficultyLevel);
+    // console.log(pursuerMoveCooldown);
 }
 
 function finish(player) {
