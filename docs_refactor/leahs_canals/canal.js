@@ -44,6 +44,7 @@ class canal{
         //placement and relational attributes set by the network
         this.prev = null;
         this.next = null;
+        this.exit = [];
 
         //DEVELOPER ATTRIBUTES
         //redStart, redEnd, blackStart and blackEnd are initialized by the network and are the four corners
@@ -54,8 +55,6 @@ class canal{
         //this.bankSprites contains all sprites, there should be a similar one for garbage if you want to make one
         //Daniil; can you also push all your garbage to this.allSprites?
         //this.allSprites shold contain all sprites including garbage (and potentially player? not sure)
-
-
 
         this.redStart = null;
         this.redEnd = null;
@@ -120,7 +119,24 @@ class canal{
     connect(prev, next){
         this.prev = prev;
         this.next = next;
+        this.setExits();
     }
+
+    setExits(){
+        //this will look different for forks
+        if(this.prev === null){
+            console.log("redstart before push: " + this.redStart);
+            this.exit.push([this.redStart, this.blackStart]);
+            console.log("pushed first exit: " + this.exit);
+        }
+        if(this.next === null){
+            this.exit.push([this.redEnd, this.blackEnd]);
+            console.log("pushed second exit: " + this.exit);
+        }
+    }
+
+    getExits(){return this.exit}
+
 
     createRedBank(){
         this.redBank = this.createBank(this.redStart, this.redEnd)

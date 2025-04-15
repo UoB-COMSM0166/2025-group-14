@@ -2,7 +2,7 @@
 // 1) Line 5: Added the optional customNetwork parameter to the constructor to allow for different networks to be passed in.
 // 2) Lines 11 - 21: Added if/else: if no custom network is provided then create the default one, else use the custom one provided
 class canalMap {
-    constructor(player, garbageOn = true, customNetwork = null){
+    constructor(player, garbageOn = true, customNetwork = null, linkages = null){
         this.networks = [];
         this.player = player;
         this.garbageOn = garbageOn;
@@ -23,7 +23,12 @@ class canalMap {
 
         this.bankSprites = null
         this.setBankSprites()
+
+        this.linkages = linkages;
+        this.setLinkages();
     }
+
+    setLinkages(){}
 
     getBankSprites(){return this.bankSprites};
 

@@ -31,13 +31,16 @@ class canalNetwork{
         this.blackCoords = null;
         this.setBlackCoords();
 
-        this.connectCanals();
-
         this.bestowCoords();
         this.createSprites();
+
+        this.connectCanals();
         
         this.bankSprites = null;
         this.setBankSprites();
+
+        this.exits = [];
+        this.setExits();
     }
 
     getBankSprites(){ return this.bankSprites};
@@ -64,6 +67,18 @@ class canalNetwork{
             let nextBlack = this.blackCoords[i + 1];
             c.setCoords(red, black, nextRed, nextBlack);
         }
+    }
+    
+    setExits(){
+        //this is for linking together networks
+        this.forAllCanals(canal => 
+            {for(const exit of canal.getExits()){
+                console.log("Push to network " + exit);
+                this.exits.push(exit)
+            }
+        }
+        )
+
     }
 
     setRedCoords(){
@@ -151,6 +166,10 @@ class canalNetwork{
         }
     }
 
+    getExits(){
+        return this.exits;
+    }
+
 
     createSprites(){
         this.forAllCanals(canal => canal.visualize());
@@ -158,6 +177,11 @@ class canalNetwork{
 
     animate(){
         this.forAllCanals(canal => canal.animate());
+        console.log("Exits at draw-time: " + this.getExits());
+        for(const exit of this.getExits()){
+            fill("green");
+            circle(exit[0][0], exit[0][1], 20);
+        }
 
         //throw Error("breakpoint lol");
     }
