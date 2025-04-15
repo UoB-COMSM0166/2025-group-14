@@ -14,9 +14,11 @@ class MapController {
     }
 
     static getMap0(player) {
-        let c1 = new canal(400, 9, 150, player, false); //right, up
+        let c1 = new canal(1000, 3, 150, player, false, false); //TODO would be nice to have the start also blocked (like reverse of finish)
+        let c2 = new canal(500, 2, 100, player, false);
+        let c3 = new canal(500, 4, 80, player, false);
 
-        let network = new canalNetwork(0, 0, [c1/* , c2, c3, c4 , c5 */]); 
+        let network = new canalNetwork(0, 0, [c1, c2, c3/*, c4 , c5 */]); 
         return new canalMap(player, false, network); 
     }
     

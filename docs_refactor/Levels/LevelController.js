@@ -17,7 +17,7 @@ class LevelController {
             case 2:
                 levelInstance = new Level2();
                 break;
-            case 3:
+            default:
                 throw new Error("Invalid level number: " + level);
         }
         levelInstance.setup();
