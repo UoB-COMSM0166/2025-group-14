@@ -36,6 +36,8 @@ class canal{
         this.yChange = null;
         this.xWidth = null;
         this.yWidth = null;
+        this.gradient = null;
+        this.offset = null;
         this.setDirectionalAttributes();
 
         /*this.horizontal = this.getDirection()[0];
@@ -61,7 +63,10 @@ class canal{
         this.blackStart = null;
         this.blackEnd = null;
 
-        //this.absoluteAngle = null;
+        //gradient and offsets are useful for working out line intersections
+        this.gradient = null;
+        this.redOff = null;
+        this.blackOff = null;
         
         this.redBank;
         this.blackBank;
@@ -105,6 +110,8 @@ class canal{
         }
     }
 
+    getPlayer(){return this.player}
+
     setDirectionalAttributes(){
         let angle = this.getAngle();
         this.xChange = Math.sin(angle) * this.length;
@@ -116,26 +123,37 @@ class canal{
         this.yWidth = -Math.cos(perp) * this.width;
     }
 
-    connect(prev, next){
+   connect(prev, next){
         this.prev = prev;
         this.next = next;
-        this.setExits();
+        //this.setExits();
     }
 
-    setExits(){
+   /* setExits(){
         //this will look different for forks
         if(this.prev === null){
-            console.log("redstart before push: " + this.redStart);
             this.exit.push([this.redStart, this.blackStart]);
-            console.log("pushed first exit: " + this.exit);
         }
         if(this.next === null){
             this.exit.push([this.redEnd, this.blackEnd]);
-            console.log("pushed second exit: " + this.exit);
+        }
+    }*/
+
+    getExits(){
+        //will also look different for forks
+        //AN (leah): this may be buggy if used irresponsibly. Probably wouldn't work if you have a network
+        //which is just a single canal, or if you have a fork with both of its ends unconnected. so
+        //don't do that
+        if(this.prev === null){
+            return [this.redStart, this.blackStart];
+        }else if(this.next === null){
+            return [this.redEnd, this.blackEnd];
+        }else{
+            return false;
         }
     }
 
-    getExits(){return this.exit}
+    //getExits(){return this.exit}
 
 
     createRedBank(){
@@ -164,13 +182,6 @@ class canal{
 
     }
 
-
-    //other functions (called externally)
-    visualize(){
-        this.canalVisualize();    
-        this.createSprites();
-    }
-
     animate(){
         //structured this way to allow subclasses to call their own animation methods on top 
         //of a standard canal one.
@@ -194,6 +205,9 @@ class canal{
         this.redEnd = redEnd;
         this.blackStart = blackStart;
         this.blackEnd = blackEnd;
+        this.gradient = gradient(redStart, redEnd);
+        this.redOff = offset(this.gradient, redStart);
+        this.blackOff = offset(this.gradient, blackStart);
     }
 
     createBank(start, end){
@@ -205,19 +219,22 @@ class canal{
     }
 
     getBanks(){return this.bankSprites}
+
+    getGradient(){return this.gradient}
+
+    getOffset(bank){
+        if(bank === "red"){
+            return this.redOff;
+        }else if(bank === "black"){
+            return this.blackOff
+        }
+        throw new Error("Incorrect use of canal.getOffset; has to be red or black. Message leah with any questions");
+    }
     //aesthetic functions
-
-    canalVisualize(){
-
-    }
-
-    canalVisualizeWithAllCoordinates() {
-
-    }
 
     canalAnimate(){
         //TO ADD: moving water textures, potentially trash
-        text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20)
+        //text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20)
         
 
         // for (let sprite of this.allSprites) {

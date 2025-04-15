@@ -21,7 +21,7 @@ finally, add canalNetwork.animate(); to your draw function.
 */
 
 class canalNetwork{
-    constructor(x, y, course){
+    constructor(x, y, course, linkages){
         this.x = x;
         this.y = y;
         this.course = course;
@@ -31,17 +31,61 @@ class canalNetwork{
         this.blackCoords = null;
         this.setBlackCoords();
 
+        this.connectCanals();
+
         this.bestowCoords();
         this.createSprites();
-
-        this.connectCanals();
         
         this.bankSprites = null;
         this.setBankSprites();
 
-        this.exits = [];
-        this.setExits();
+        /*this.exits = [];
+        this.setExits();*/
+
+        this.linkages = this.setLinkages(linkages);
+
     }
+    
+    getStartCoords(){return [this.x, this.y]}
+
+    setLinkages(input){
+        if(input === null || input.length < 1){
+            return [];
+        }
+        for(const link of input){
+            let origin = link[0];
+            if(!this.course.includes(origin)){
+                throw new Error("Attempting to link via a canal outside this network");
+            }
+            if(!origin.getExits()){
+                throw new Error("Attempting to link via an unavailable canal");
+            }
+            if(link.length != 2){
+                throw new Error("Links must specify exactly two canals");
+            }
+            if((!link[0] instanceof canal) || (!link[1] instanceof canal)){
+                throw new Error("Links must be between canal objects")
+            }
+        }
+        return input;
+    }
+
+    getLinkages(){return this.linkages;}
+
+    /*getLinkages(){
+        if(!this.linkages.length > 0){
+            for (const link of this.linkages){
+                if(!this.course.includes(link[0])){
+                    throw new Error("Attempting to link via a canal outside this network");
+                } 
+                if(!link[0].checkExits() || !link[1].checkExits){
+                    throw new Error("Attempting to link via an unavailable canal");
+                }
+            }
+        }
+        return(this.linkages);
+    }*/
+
 
     getBankSprites(){ return this.bankSprites};
 
@@ -73,7 +117,6 @@ class canalNetwork{
         //this is for linking together networks
         this.forAllCanals(canal => 
             {for(const exit of canal.getExits()){
-                console.log("Push to network " + exit);
                 this.exits.push(exit)
             }
         }
@@ -144,7 +187,15 @@ class canalNetwork{
         }
     }
 
+    checkForCanal(canal){
+        if(this.course.includes(canal)){
+            return true;
+        }
+        return false;        
+    }
+
     connectCanals(){
+
         const l = this.course.length;
         let current;
         let prev;
@@ -172,17 +223,11 @@ class canalNetwork{
 
 
     createSprites(){
-        this.forAllCanals(canal => canal.visualize());
+        this.forAllCanals(canal => canal.createSprites());
     }
 
     animate(){
         this.forAllCanals(canal => canal.animate());
-        console.log("Exits at draw-time: " + this.getExits());
-        for(const exit of this.getExits()){
-            fill("green");
-            circle(exit[0][0], exit[0][1], 20);
-        }
-
         //throw Error("breakpoint lol");
     }
 

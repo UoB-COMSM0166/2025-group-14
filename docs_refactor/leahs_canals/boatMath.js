@@ -3,7 +3,49 @@ function coordinateArgs(first, second, callback){
 
 }
 
- function gradient(start, end){
+function checkCrossBetweenBounds(one, two){
+    let grad1 = gradient([one[0], one[1]], [one[2], one[3]]);
+    let off1 = offset(grad1, [one[0], one[1]]);
+
+    let grad2 = gradient([two[0], two[1]], [two[2], two[3]]);
+    let off2 = offset(grad2, [two[0], two[1]]);
+
+    let intersect = linearIntersect(grad1, off1, grad2, off2);
+
+    if(!checkPointInSegment(one, intersect) && !checkPointInSegment(two, intersect)){
+        return false;
+    }
+    
+    return true;
+
+}
+
+function checkPointInSegment(seg, point){
+    let x1 = seg[0];
+    let y1 = seg[1];
+    let x2 = seg[2];
+    let y2 = seg[3];
+
+    let minX = Math.min(x1, x2);
+    let minY = Math.min(y1, y2); 
+
+    let maxX = Math.max(x1, x2);
+    let maxY = Math.max(y1, y2);
+
+    let px = point[0];
+    let py = point[1];
+
+    if(px <= minX || px >= maxX){
+        return false; 
+    }
+    if(py <= minY || py >= maxY){
+        return false;
+    }
+    
+    return true;
+}
+
+function gradient(start, end){
     let x1 = start[0];
     let y1 = start[1];
     let x2 = end[0];
@@ -90,6 +132,10 @@ function pointOnLine(start, end, distance){
 
 function clockToAngle(oClock){
     return oClock * Math.PI / 6;
+}
+
+function angleToClock(angle){
+    return angle * 6 / Math.PI;
 }
 
 function radsToDegrees(rads){
