@@ -13,20 +13,6 @@ class lock extends canal {
         //set after connections as part of the createSprites function
         this.foreDoors;
         this.aftDoors;
-
-
-        /*this.foreHalf = null;
-        this.aftHalf = null;
-        this.foreDoors = null;
-        this.aftDoors = null;
-
-        this.absForeGreen = null;
-        this.absForeMag = null;
-        this.absAftGreen = null;
-        this.absAftMag = null;
-
-        this.foreDoorsOpen = false;
-        this.aftDoorsOpen = false;*/
     }
 
 
@@ -38,8 +24,6 @@ class lock extends canal {
     }
 
     createDoors(){
-        /*this.foreDoors = this.doorSprite(this.redStart, this.blackStart, this.prev);
-        this.aftDoors = this.doorSprite(this.redEnd, this.blackEnd, this.next);*/
         this.foreDoors = new doors(this, this.prev);
         this.aftDoors = new doors(this, this.next);
 
@@ -55,20 +39,6 @@ class lock extends canal {
             this.allSprites.push(sprite);
         }
     }
-
-    /*doorSprite(start, end, connection){
-        const halfway = halfwayPoint(start, end);
-        //comment out for now to not cause start screen bug (big circles that don't clear)
-        //let circle = new Sprite(halfway[0], halfway[1], 30)
-
-        let door1 = this.createBank(start, halfway);
-        let door2 = this.createBank(end, halfway);
-        door1.colour = "magenta";
-        door2.colour = "green";
-        door1.rotationSpeed = 30;
-
-        return [door1, door2];
-    }*/
 
     animate(){
         this.canalAnimate();
@@ -107,16 +77,6 @@ class lock extends canal {
                 break;
         }
     }
-
-    /*openDoors(gate, connection){
-        // remember when comparing it to "next"
-        //the absolute angle is reversed
-        let targ = connection.getOClockInDegrees();
-
-        if(gate[1].rotation < targ){
-            gate[1].rotation = (frameCount) % 360;
-        }
-    }*/
 
     getFullStatus(){
         let mod = (frameCount/60) % this.cycle;
