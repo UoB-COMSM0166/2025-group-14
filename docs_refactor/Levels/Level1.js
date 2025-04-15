@@ -44,6 +44,8 @@ class Level1 {
       this.pursuerSpeed = 3;
       pursuerFreezeFrames = 5;
     }
+    this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
+    this.isPaused = false;
 }
 
   setup() {
@@ -88,23 +90,32 @@ class Level1 {
       this.playerCfg.debug();
 
       this.pursuerCfg.update();
+
+      // Show pause button
+      this.pauseButton.show();
+      //update position of button to follow camera
+      this.pauseButton.setPosition(windowWidth/2.5, windowHeight/18);
       
       this.coordinateGrid();
 
       if (this.playerCfg.isHealthZero()){
         this.clearSprites();
+        this.pauseButton.remove();
         state = GameState.LOSE;
       }
       if (kb.pressed('q') || finishLineCrossed){
           this.clearSprites();
+          this.pauseButton.remove();
           state = GameState.WIN;
           finishLineCrossed = false;
       }
       
       if (kb.pressed('escape')) {
           this.clearSprites();
+          this.pauseButton.remove();
           state = GameState.START_SCREEN;
       }
+
   }
 
   clearSprites() {
@@ -125,4 +136,32 @@ class Level1 {
         }
       }
   }
+
+  pauseGame() {
+    noLoop(); // stops looping over draw/display.
+  }
+
+  resumeGame() {
+    loop(); // resumes looping
+  }
+
+  // If game is paused, click button to play. If game is playing, click button pauses it
+  buttonClick() {
+    console.log("Button clicked!");
+    if (this.isPaused) {
+      //this.pauseButton.setColour("seagreen");
+      this.pauseButton.setLabel("PAUSE");
+      this.pauseButton.show();
+      this.resumeGame();
+      this.isPaused = false;
+    }
+    else {
+      //this.pauseButton.setColour("skyblue");
+      this.pauseButton.setLabel("PLAY");
+      this.pauseButton.show();
+      this.pauseGame();
+      this.isPaused = true;
+    }
+}
+
 }
