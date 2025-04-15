@@ -115,19 +115,6 @@ class canal{
         this.ripples;
         // this.garbagePiece;
         this.finish = finish; 
-
-        // this.garbageAnis = {
-        //     flipflop: flipflopAni,
-        //     tire: tireAni,
-        //     mask: maskAni,
-        //     bottle: bottleAni,
-        //     takeoutbox: takeoutboxAni,
-        // }
-        // console.log("garbageAnis loaded: ", this.garbageAnis);
-        // console.log("flipflopAni loaded: "+this.garbageAnis.flipflop);
-        // console.log("tireAni loaded: "+this.garbageAnis.tire);
-        // this.rippleAni = rippleAni;
-        // console.log("rippleAni loaded: "+this.rippleAni.frameCount);
     }
 
     getDirection(){
@@ -251,10 +238,34 @@ class canal{
 
     }
 
+    displayWater(){
+        // each canal is split into two triangles and filled with blue colour to represent water
+        // triangle #1
+        push();
+        noStroke();
+        fill(0, 0, 96, 100); // semi-transparent blue for water
+        beginShape();
+        vertex(this.blackStart[0], this.blackStart[1]);
+        vertex(this.blackEnd[0], this.blackEnd[1]);
+        vertex(this.redEnd[0], this.redEnd[1]);
+        endShape(CLOSE);
+        pop();
+
+        // triangle #2
+        push();
+        noStroke();
+        fill(0, 0, 96, 100); // semi-transparent blue for water
+        beginShape();
+        vertex(this.redEnd[0], this.redEnd[1]);
+        vertex(this.redStart[0], this.redStart[1]);
+        vertex(this.blackStart[0], this.blackStart[1]);
+        endShape(CLOSE);
+        pop();
+    }
+
     canalAnimate(){
-        //TO ADD: moving water textures, potentially trash
-        text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20)
-        
+        text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20);
+        this.displayWater();
 
         // for (let sprite of this.allSprites) {
         //     // if (this.player.collides(sprite)) console.log("COLLISION");
@@ -293,7 +304,6 @@ class canal{
         for (let piece of this.garbage) {
             this.ripples[rippleIndex].addAni(rippleAni);
             this.ripples[rippleIndex].ani = rippleAni;
-
             piece.ripple = this.ripples[rippleIndex];
 
             let offsetAlongCanal = this.getRandomFloat(0.1, 0.9);
