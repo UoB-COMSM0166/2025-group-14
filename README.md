@@ -145,35 +145,42 @@ This is my first stab at a class diagram. We can update it once we've consolidat
 
 ##### 'Thinking Aloud' Evaluation
 
-We have split our evaluation into three sections – the first two being feedback from the user, and the last being our team’s analysis of the feedback: 
-(1) Constructive Criticism; (2) Positives; (3) Analysis, based on the user’s feedback.
+For our Thinking Aloud evaluation, we asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without being caught by the pursuing boat. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results.
 
-**(1) Constructive Criticism**
-- Corners difficult to navigate with current movement mechanics. Glitches occur on corner collisions; and too much bounce when colliding with the walls of the canals.
-- Pursuer too fast and/or starts too close to the Player.
+We have split our evaluation into four sections. Sections 1 (Constructive criticism) and 2 (Positive Feedback) detail the feedback we recived from our participants, and Section 3 (Analysis) describes our team’s analysis of the feedback.
+
+###### 1. Constructive Criticism
+
+- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occur on corner collision
 - The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
-- Repair function not very intuitive and too slow to repair.
-- Health bar too small; bigger bar would be easier to notice.
-- More small bends would be good, not just straight lines.
-- How do you win the game? Unclear objective.
+- Users thought that there was too much bounce when colliding with the walls of the canals.
+- The pursuer was too fast and/or starts too close to the Player. It was almost impossible to win against the pursuer in its current state.
+- The repair functionality was not very intuitive, and repairs took too much time.
+- The health bar was too small. One participant didn't actually notice that there was a health bar until partway through playing, and was surprised to find that health was being tracked. They suggested that a bigger bar would be easier to notice immediately.
+- Changes to the shape of the canal network were suggested: more small bends would be good, not just straight lines.
+- Participants questioned how does the player win the game? The objective of the game at the present time is unclear.
 
-**(2) Positives**
-- Map shape was interesting because of the sharp corners.
-- Original game idea; never played a game like it before.
-- User liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
-- Aesthetics (boats and water texture) received compliments. 
+###### 2. Positive Feeback
 
-**(3) Analysis**
-- We need to improve collision detection between the player and canal walls. Collisions occur when they should not; being close to the corner as you go around it, but not actually touching the wall, may register as a collision and bounce the player back. This has a big impact on the user’s experience and is therefore high priority.
-- We should consider reducing the amount which the player bounces away from the wall when they collide.
+- The canal map shape was interesting because of the sharp corners.
+- The game idea was interesting and original; one participant mentioned that they had never played a game like it before.
+- Participants liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
+- The aesthetics (boats and water texture) received compliments. 
+
+###### 3. Analysis
+
+- We decided that we need to improve collision detection between the player and canal walls. Collisions occur when they should not; being close to the corner as you go around it, but not actually touching the wall, may register as a collision and bounce the player back. This has a big impact on the user’s experience and is therefore high priority.
+- We decided to consider reducing the amount which the player bounces away from the wall when they collide.
 - A simple tutorial on the controls and objective(s) of the game would make the experience more enjoyable and reduce the learning curve.
-- We could also add sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. The tutorial would also help with this.
-- We should consider adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
+- We posited adding sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. The tutorial would also help with this.
+- We considered adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
 - To produce a more difficult level, we can change the camera to scroll the map into view instead of showing the entire map on the screen; not seeing upcoming corners will make it more difficult.
 
 
 
 ##### Heuristic Evaluation
+
+In the heuristic evaluation, two participants played the game for a short period of time (10 minutes) to familiarise themselves with the controls and gameplay. They then completed a heuristic evaluation of the game's useability, using Nielson's ten useabibility principles. The results are shown in the table below.
 
 | Interface     | Issue         | Heuristics    |Frequency (0-4)| Impact (0-4)  |Persistence (0-4)| Severity (0-4)|
 | ------------- |-------------  | ------------- |:-------------:|:-------------:| :-------------: |:-------------:|
@@ -187,20 +194,31 @@ The feedback from our heuristic evaluation highlighted several usability issues 
 
 #### Quantitative Evaluation
 
+In the quantitative evaluation, we used two methodologies (the System Useability Survey and the NASA Task Load Index) to measure and compare the system useability of two levels of our game. 
+
+The differences between the Easy level and the Difficult level were as follows:
+- In the Easy level, the player did not take damage over time. In the Difficult level, the player took 1 point of damage per second
+- In the Easy level, the player took 3 points of damage when they collided with the canal; in the Difficult level, the player took 5 points of damage when colliding with the canal
+- In the Easy level, there was no pursuer chasing the player. In the Difficult level, an AI pursuer chased the player boat, adding challenge and tension to gameplay.
+
+Ten participants took part in our quantitative evaluation. Each participant played the game at each of the two levels (we asked them to complete two loops around our prototype canal circuit). To control for bias that could arise from participants always playing levels in the same order (thus causing their learning in the first level to affect the useability results of the second level), we alternated the order in which participants played each level. I.e. the first participant played Easy-then-Difficult, the second played Difficult-then-Easy, etc. After completing each level, the participant completed the SUS and the NASA TLX. The results are shown below. 
+
 ##### System Useability Survey (SUS)
+
+The questions used in the SUS can be seen on [the Nielson Norman Group website](https://www.nngroup.com/articles/measuring-perceived-usability/). The responses are scores on a sclae between 1 to 5, where 1 means 'Strongly disagree' and 5 means 'Strongly agree'. 
 
 | SUS Question | Average SUS Score (Easy) | Average SUS Level (Difficult) |
 |---|---|---|
-| 1 | 65 | 47.5 |
-| 2 |	55 | 65 |
-| 3	| 80 | 72.5 |
-| 4	| 85 | 72.5 |
-| 5	| 65 | 62.5 |
-| 6	| 82.5 | 77.5 |
-| 7	| 55 | 35 |
-| 8	| 90 | 82.5 |
-| 9	| 57.5 | 65 |
-| 10 |87.5 | 80 |
+|1. I think that I would like to use this system frequently| 65 | 47.5 |
+|2. I found the system unnecessarily complex|	55 | 65 |
+|3. I thought the system was easy to use| 80 | 72.5 |
+|4. I think that I would need the support of a technical person to be able to use this system| 85 | 72.5 |
+|5.	I found the various functions in this system were well integrated| 65 | 62.5 |
+|6.	I thought there was too much inconsistency in this system| 82.5 | 77.5 |
+|7.	I would imagine that most people would learn to use this system very quickly| 55 | 35 |
+|8.	I found the system very cumbersome to use| 90 | 82.5 |
+|9.	I felt very confident using the system| 57.5 | 65 |
+|10. I needed to learn a lot of things before I could get going with this system| 87.5 | 80 |
 | **Average** | **72.25** | **66** |
 
 Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
@@ -219,6 +237,8 @@ Based on this, we can conclude that there is a satisfactorily significant differ
 
 ##### NASA Task Load Index (TLX)
 
+The NASA TLX asks a user to rate the perceived workload of a system (i.e. how effortful it is to use the system) in 6 categories. The results of our evaluation are shown below.
+
 | TLX Question | W value | Sample size | Result significance (at p<0.5) |
 |---|---|---| ---|
 | Mental Demand | 0 | 9 | significant |
@@ -228,25 +248,16 @@ Based on this, we can conclude that there is a satisfactorily significant differ
 | Performance | 5 | 9 | significant |
 | Frustration | 8 | 10 | significant |
 
-**Mental demand & Effort:** 
+- **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We conclude from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
+- **Physical demand**: The difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
+- **Temporal demand**: The difference between the groups was not statistically significant, because there was no time limit in completing the task in each case. 
+- **Performance**: We expected the difference not to be statistically significant because of the way the nature of the task (make *n* number of laps around a canal circuit). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was alternated.
+- **Frustration**: At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
 
-The result was expectedly statistically significant, because increasing the difficulty level implies putting more effort into game play.  Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant
 
-**Physical demand:**
+#### Response to the Evaluation
 
-Expectedly, the difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
 
-**Temporal demand:**
-
-Expectedly, the difference between the groups was not statistically significant, because there was no time limit in completing the task in each case. 
-
-**Performance:**
-
-We expected the difference not to be statistically significant because of the way the nature of the task (make n number of laps around a circle track). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was randomised.
-
-**Frustration:**
-
-At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
 
 ### Process 
 
