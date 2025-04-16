@@ -1,9 +1,9 @@
 class DepthBar {
   //constructor(x, y, maxHealth, player) {
-  constructor(x, y, isEmpty, isFull) {
+  constructor(isEmpty) {
     textAlign(LEFT);
-    this.x = x;
-    this.y = y;
+    this.x;
+    this.y;
     this.width = 100;
     this.height = 10;
     this.maxDepth = 100;
@@ -12,9 +12,9 @@ class DepthBar {
     else this.depth = this.maxDepth;
   }
 
-  draw(depthPercent) {
+  draw(depthPercent, x, y) {
     // Update healthBar attributes
-    this.update(depthPercent);
+    this.update(depthPercent, x, y);
 
     // Text
     fill(0, 0, 0);
@@ -46,10 +46,9 @@ class DepthBar {
   }
 
   // Update depth based on lock filling/emptying
-  update(depthPercent) {
+  update(depthPercent, x, y) {
     this.depth = depthPercent;
-    // Move with playerBoat
-    //this.x = camera.x - (windowWidth/2)+20;
-    //this.y = camera.y - (windowHeight/2)+25;
+    this.x = x;
+    this.y = y;
   }
 }
