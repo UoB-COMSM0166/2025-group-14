@@ -13,6 +13,11 @@ class lock extends canal {
         //set after connections as part of the createSprites function
         this.foreDoors;
         this.aftDoors;
+
+        // depth bar
+        let depthBarX = 600;  // provisional, not sure how to get lock coordinates
+        let depthBarY = 120;
+        this.depthBar = new DepthBar(depthBarX, depthBarY, true);
     }
 
 
@@ -40,6 +45,7 @@ class lock extends canal {
         }
     }
 
+
     animate(){
         this.canalAnimate();
         this.lockAnimate();
@@ -48,6 +54,10 @@ class lock extends canal {
     lockAnimate(){
         //this.openDoors(this.aftDoors, this.next);
         this.status = this.getFullStatus();
+        // Update depth bar based on percent depth
+        let depth = this.getPercentDepth();
+        this.depthBar.draw(depth);
+
         text(this.status, this.redStart[0] + 20, this.redStart[1] + 20);
         let illegal = this.illegal;
         switch(this.status){
@@ -92,6 +102,22 @@ class lock extends canal {
         }else if(mod >= this.endFull){
             console.log("status: emptying , mod: " + mod + " , %: " + ((mod-this.endFull)/this.fillTime)*100);
             return "emptying";
+        }else{
+            throw new Error("Lock status error, message Leah about it")
+        }
+    }
+
+    // Returns the % depth of the lock currently
+    getPercentDepth(){
+        let mod = (frameCount/60) % this.cycle;
+        if(mod < this.openTime){
+            return 0;
+        }else if(mod >= this.openTime && mod < this.startFull){
+            return ((mod-this.openTime)/this.fillTime)*100;
+        }else if(mod >= this.startFull && mod < this.endFull){
+            return 100;
+        }else if(mod >= this.endFull){
+            return 100 - (((mod-this.endFull)/this.fillTime)*100);
         }else{
             throw new Error("Lock status error, message Leah about it")
         }
