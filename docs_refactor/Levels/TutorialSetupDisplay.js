@@ -1,3 +1,6 @@
+//Daniil: the only thing that I have changed here is the name of the class, 
+// everything else is the same
+
 class TutorialSetupDisplay {
 
     constructor() {
