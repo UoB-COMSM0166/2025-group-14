@@ -40,6 +40,7 @@ class canal{
         this.prev = null;
         this.next = null;
         this.exit = [];
+        this.link = null;
 
         //DEVELOPER ATTRIBUTES
         //redStart, redEnd, blackStart and blackEnd are initialized by the network and are the four corners
@@ -118,10 +119,43 @@ class canal{
         this.yWidth = -Math.cos(perp) * this.width;
     }
 
-   connect(prev, next){
+    setLink(link){
+        this.link = link;
+    }
+
+    getLink(link){
+        return this.link;
+    }
+
+    connect(prev, next){
         this.prev = prev;
         this.next = next;
         //this.setExits();
+    }
+
+    getConnections(type){
+        switch(type){
+            case "prev":
+                return this.prev;
+            case "next":
+                return this.next;
+            case "link":
+                return this.link;
+        }    
+    }
+
+    getCoord(selection){
+        switch(selection){
+            case "redStart":
+                return this.redStart;
+            case "redEnd":
+                return this.redEnd;
+            case "blackStart":
+                return this.blackStart;
+            case "blackEnd":
+                return this.blackEnd;
+        }    
+
     }
 
 
@@ -213,6 +247,12 @@ class canal{
             return this.blackOff
         }
         throw new Error("Incorrect use of canal.getOffset; has to be red or black. Message leah with any questions");
+    }
+
+    rebuildToExit(red, black){
+        if(this.link === null){
+            throw new Error("Improper use of rebuildToExit function");
+        }
     }
     //aesthetic functions
 

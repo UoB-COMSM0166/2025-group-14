@@ -37,9 +37,6 @@ class canalNetwork extends linearConnect{
         
         this.setBankSprites();
 
-        /*this.exits = [];
-        this.setExits();*/
-
         this.linkages = this.setLinkages(linkages);
 
     }
@@ -54,9 +51,6 @@ class canalNetwork extends linearConnect{
             let origin = link[0];
             if(!this.course.includes(origin)){
                 throw new Error("Attempting to link via a canal outside this network");
-            }
-            if(!origin.getExits()){
-                throw new Error("Attempting to link via an unavailable canal");
             }
             if(link.length != 2){
                 throw new Error("Links must specify exactly two canals");
@@ -81,17 +75,6 @@ class canalNetwork extends linearConnect{
             let nextBlack = this.blackCoords[i + 1];
             c.setCoords(red, black, nextRed, nextBlack);
         }
-    }
-    
-    setExits(){
-        //this is for linking together networks
-        this.forAllCanals(canal => 
-            {for(const exit of canal.getExits()){
-                this.exits.push(exit)
-            }
-        }
-        )
-
     }
 
     setRedCoords(){
@@ -147,10 +130,6 @@ class canalNetwork extends linearConnect{
             }
             current.connect(prev, next);
         }
-    }
-
-    getExits(){
-        return this.exits;
     }
 
     animate(){

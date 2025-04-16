@@ -3,8 +3,8 @@ class linkage extends linearConnect{
         super();
         this.origin = origin;
         this.destination = destination;
-        this.outbound = outbound;
-        this.inbound = inbound;
+        this.outbound = this.setCanal(outbound);
+        this.inbound = this.setCanal(inbound);
 
         //filled by "positionLink" which is called by the map after duplicate linkages are removed
         this.link = null;   
@@ -51,13 +51,22 @@ class linkage extends linearConnect{
         this.link = new canal(length, oClock, width, player);
     }
 
-    determineLength(){
-        
+    determineTopLine(input){
+        let start1 = [input[0][0][0], input[0][0][1]];
+        let end1 = [input[0][1][0], input[0][1][1]];
+        let start2 = [input[1][0][0], input[1][0][1]];
+        let end2 = [input[1][1][0], input[1][1][1]];
+
+        if(start1[1] <= start2[1]){
+            return[start1, end1];
+        }else{
+            return[start2, end2];
+        }
     }
 
     findValidLines(){
-        let outExit = this.outbound.getExits();
-        let inExit = this.inbound.getExits();
+        let outExit = this.getCanalExits(this.outbound);
+        let inExit = this.getCanalExits(this.inbound);
 
         let lineOne = [outExit[0][0], outExit[0][1], inExit[0][0], inExit[0][1]];
         let lineTwo = [outExit[1][0], outExit[1][1], inExit[1][0], inExit[1][1]];
@@ -84,11 +93,23 @@ class linkage extends linearConnect{
 
     getBankSprites(){return this.bankSprites}
 
+    getCanalExits(canal){
+        if(canal.getConnections("next") === null){
+            return[canal.getCoord("redEnd"), canal.getCoord("blackEnd")];
+        }else if(canal.getConnections("prev") === null){
+            return[canal.getCoord("redStart"), canal.getCoord("blackStart")];
+        }else{
+            throw new Error("Feature under construction, shouldn't have seen this bit yet");
+        }
+    }
+
     getDestination(){return this.destination;}
 
     getInbound(){return this.inbound;}
 
     getOrigin(){return this.origin;}
+
+    getOutbound(){return this.outbound;}
 
     getDestination(){return this.destination;}
 
@@ -98,25 +119,9 @@ class linkage extends linearConnect{
         this.setBlackCoords();
         this.bestowCoords();
         this.createSprites();
-        
         this.setBankSprites();
-
-        console.log("Wait, that worked?")
-
-
-        /*let valid = this.findValidLines();
-        let redStart = valid[0][0];
-        let redEnd = valid[0][1];
-        let blackStart = valid[1][0];
-        let blackEnd = valid[1][1];
-
-        let link = new linker(redStart, redEnd, blackStart, blackEnd, this.outbound, this.inbound);
-       
-
-        this.link = link;
-        this.link.createSprites();
-        this.bankSprites = this.link.getBanks();*/
-
+        this.outbound.rebuildToExit(this.link.getCoord("redStart"), this.link.getCoord("blackStart"));
+        this.inbound.rebuildToExit(this.link.getCoord("redEnd"), this.link.getCoord("blackEnd"));
     }
 
     remove(){
@@ -124,8 +129,14 @@ class linkage extends linearConnect{
         this.bankSprites = [];
     }
 
+    setCanal(input){
+        input.setLink(this);
+        return input;
+    }
+
     setRedCoords(){
         let valid = this.findValidLines();
-        this.redCoords = [[valid[0][0][0], valid[0][0][1]], [valid[0][1][0], valid[0][1][1]]];
+        let line = this.determineTopLine(valid);
+        this.redCoords = [[line[0][0], line[0][1]], [line[1][0], line[1][1]]];
     }
 }

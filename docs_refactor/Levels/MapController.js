@@ -30,11 +30,11 @@ class MapController {
         let c6 = new canal(600, 8, 60, player);
         let c7 = new canal(500, 4, 60, player);
 
-        let n1 = new canalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c5, c6]]); 
+        let n1 = new canalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6]]); 
 
         //leah adding a new network to check multinetwork capability
 
-        let n2 = new canalNetwork(-500, 350, [c6, c7], [[c6, c5]])
+        let n2 = new canalNetwork(-500, 350, [c6, c7], [[c6, c4]])
 
         return new canalMap(player, true, [n1, n2]); 
     }
