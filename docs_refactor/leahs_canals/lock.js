@@ -15,9 +15,7 @@ class lock extends canal {
         this.aftDoors;
 
         // depth bar
-        let depthBarX = 600;  // provisional, not sure how to get lock coordinates
-        let depthBarY = 120;
-        this.depthBar = new DepthBar(depthBarX, depthBarY, true);
+        this.depthBar = new DepthBar(true);
     }
 
 
@@ -54,9 +52,12 @@ class lock extends canal {
     lockAnimate(){
         //this.openDoors(this.aftDoors, this.next);
         this.status = this.getFullStatus();
+        // Depth bar position
+        let depthBarX = Math.abs(this.redStart[0] - this.width);  
+        let depthBarY = Math.abs(this.redStart[1] - (this.length/2));
         // Update depth bar based on percent depth
         let depth = this.getPercentDepth();
-        this.depthBar.draw(depth);
+        this.depthBar.draw(depth, depthBarX, depthBarY);
 
         text(this.status, this.redStart[0] + 20, this.redStart[1] + 20);
         let illegal = this.illegal;
@@ -91,16 +92,12 @@ class lock extends canal {
     getFullStatus(){
         let mod = (frameCount/60) % this.cycle;
         if(mod < this.openTime){
-            console.log("status: empty , mod: " + mod);
             return "empty";
         }else if(mod >= this.openTime && mod < this.startFull){
-            console.log("status: filling , mod: " + mod + " , %: " + ((mod-this.openTime)/this.fillTime)*100);
             return "filling";
         }else if(mod >= this.startFull && mod < this.endFull){
-            console.log("status: full , mod: " + mod);
             return "full";
         }else if(mod >= this.endFull){
-            console.log("status: emptying , mod: " + mod + " , %: " + ((mod-this.endFull)/this.fillTime)*100);
             return "emptying";
         }else{
             throw new Error("Lock status error, message Leah about it")
