@@ -30,7 +30,7 @@ class StartScreen {
       console.log("Button clicked!");
       this.levelButton.hide();
       if (state === GameState.START_SCREEN) {
-        state = GameState.LEVEL_SCREEN;
+        state = GameState.MAP_SELECTION_SCREEN;
       }
   }
 }
