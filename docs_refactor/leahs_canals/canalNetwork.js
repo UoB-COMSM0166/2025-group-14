@@ -71,6 +71,17 @@ class canalNetwork extends linearConnect{
     getLinkages(){return this.linkages;}
 
     getBankSprites(){ return this.bankSprites};
+
+    bestowCoords(){
+        for(let i = 0; i < this.course.length; i++){
+            let c = this.course[i];
+            let red = this.redCoords[i];
+            let black = this.blackCoords[i];
+            let nextRed = this.redCoords[i + 1];
+            let nextBlack = this.blackCoords[i + 1];
+            c.setCoords(red, black, nextRed, nextBlack);
+        }
+    }
     
     setExits(){
         //this is for linking together networks
