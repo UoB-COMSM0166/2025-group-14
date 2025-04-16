@@ -81,12 +81,16 @@ class lock extends canal {
     getFullStatus(){
         let mod = (frameCount/60) % this.cycle;
         if(mod < this.openTime){
+            console.log("status: empty , mod: " + mod);
             return "empty";
         }else if(mod >= this.openTime && mod < this.startFull){
+            console.log("status: filling , mod: " + mod + " , %: " + ((mod-this.openTime)/this.fillTime)*100);
             return "filling";
         }else if(mod >= this.startFull && mod < this.endFull){
+            console.log("status: full , mod: " + mod);
             return "full";
         }else if(mod >= this.endFull){
+            console.log("status: emptying , mod: " + mod + " , %: " + ((mod-this.endFull)/this.fillTime)*100);
             return "emptying";
         }else{
             throw new Error("Lock status error, message Leah about it")

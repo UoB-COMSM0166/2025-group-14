@@ -33,6 +33,9 @@ function setup() {
   game_screen = null;
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
+
+  // for testing only
+  frameRate(15);
 }
 
 
