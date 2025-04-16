@@ -1,4 +1,4 @@
-class Level0 {
+class TutorialSetupDisplay {
 
     constructor() {
         this.player;

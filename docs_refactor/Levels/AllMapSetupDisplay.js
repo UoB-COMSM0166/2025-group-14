@@ -1,4 +1,4 @@
-class MapSetupDisplay {
+class AllMapsSetupDisplay {
   
     constructor() {
     // Post-refactor globals
@@ -36,24 +36,18 @@ class MapSetupDisplay {
 
   setup() {
 
-    this.setDifficultyParameters();
-
     // Instantiate Timer (to time events that occur over time)
     this.timer = new Timer();
     this.timer.startTimer();
 
-    // this.centreCircle = new CentreCirlce();
-
-    this.player = new Sprite(265, -328, 35, 25);
-
-    this.map = MapController.getMap(2, this.player);
+    this.setDifficultyParameters();
 
     this.player.addAnimation("boat", this.playerAnimation);
     this.player.animation.frameDelay = 18;
     this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
       this.timer, this.map, this.playerSpeed);
 
-    this.pursuer = new Sprite(-442, -327, 25, 15);
+    
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
     this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, this.pursuerSpeed);
@@ -73,10 +67,12 @@ class MapSetupDisplay {
   }
 
   setDifficultyParameters() {
-    switch (mapIndex) {
+    switch (selectedMap) {
       case 1:
-      case 2:
-        switch (difficultyLevel) { // are there any other cases like -1? //how do I implement map dependency?
+        this.player = new Sprite(100, 100, 35, 25);
+        this.map = MapController.getMap(1, this.player);
+        this.pursuer = new Sprite(40, 100, 50, 25);
+        switch (difficultyLevel) { 
           case 0:
             this.playerMaxHealth = 100;
             this.canalCollisionDamage = 3;
@@ -102,7 +98,38 @@ class MapSetupDisplay {
             pursuerFreezeFrames = 5;
             break;
         }
-      break;
+        break;
+      case 2:
+        this.player = new Sprite(265, -328, 35, 25);
+        this.map = MapController.getMap(2, this.player);
+        this.pursuer = new Sprite(-442, -327, 25, 15);
+        switch (difficultyLevel) { 
+          case 0:
+            this.playerMaxHealth = 100;
+            this.canalCollisionDamage = 3;
+            this.damageOverTime = 1;
+            this.playerSpeed = 4.5;
+            this.pursuerSpeed = 3;
+            pursuerFreezeFrames = 15;
+            break;
+          case 1:
+            this.playerMaxHealth = 70;
+            this.canalCollisionDamage = 5;
+            this.damageOverTime = 1.2;
+            this.playerSpeed = 4.5
+            this.pursuerSpeed = 3;
+            pursuerFreezeFrames = 10;
+            break;
+          case 2:
+            this.playerMaxHealth = 50;
+            this.canalCollisionDamage = 10;
+            this.damageOverTime = 1.5;
+            this.playerSpeed = 4.5
+            this.pursuerSpeed = 3;
+            pursuerFreezeFrames = 5;
+            break;
+        }
+        break;
     }
 
   }

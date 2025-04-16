@@ -9,13 +9,14 @@ class LevelController {
         let levelInstance = null;
         switch (level) {
             case 0:
-                levelInstance = new Level0();
+                levelInstance = new TutorialSetupDisplay();
                 break;
             case 1:
-                levelInstance = new Level1();
-                break;
+                // levelInstance = new AllMapsSetupDisplay();
+                // break;
             case 2:
-                levelInstance = new Level2();
+                levelInstance = new AllMapsSetupDisplay();
+                // levelInstance = new Level2();
                 break;
             case 3:
                 throw new Error("Invalid level number: " + level);

@@ -5,9 +5,9 @@ class MapSelectionScreen{
         this.selectedMapId = -1; // Default level is -1 (no level selected)
         this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(0));
         this.tutorialButton.hide();
-        this.levelOneButton = new Button("Level 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(1));
+        this.levelOneButton = new Button("Map 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(1));
         this.levelOneButton.hide();
-        this.levelTwoButton = new Button("Level 2", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(2));
+        this.levelTwoButton = new Button("Map 2", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(2));
         this.levelTwoButton.hide();
     }
 
