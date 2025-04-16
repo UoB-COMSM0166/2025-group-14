@@ -12,11 +12,8 @@ class LevelController {
                 levelInstance = new TutorialSetupDisplay();
                 break;
             case 1:
-                // levelInstance = new AllMapsSetupDisplay();
-                // break;
             case 2:
                 levelInstance = new AllMapsSetupDisplay();
-                // levelInstance = new Level2();
                 break;
             case 3:
                 throw new Error("Invalid level number: " + level);

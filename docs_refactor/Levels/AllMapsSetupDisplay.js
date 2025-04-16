@@ -40,6 +40,8 @@ class AllMapsSetupDisplay {
     this.timer = new Timer();
     this.timer.startTimer();
 
+    this.initPlayerPursuerMap();
+    
     this.setDifficultyParameters();
 
     this.player.addAnimation("boat", this.playerAnimation);
@@ -66,43 +68,26 @@ class AllMapsSetupDisplay {
     // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
   }
 
-  setDifficultyParameters() {
-    switch (selectedMap) {
+  initPlayerPursuerMap(){
+    switch (selectedMap){
       case 1:
         this.player = new Sprite(100, 100, 35, 25);
         this.map = MapController.getMap(1, this.player);
         this.pursuer = new Sprite(40, 100, 50, 25);
-        switch (difficultyLevel) { 
-          case 0:
-            this.playerMaxHealth = 100;
-            this.canalCollisionDamage = 3;
-            this.damageOverTime = 1;
-            this.playerSpeed = 4.5;
-            this.pursuerSpeed = 3;
-            pursuerFreezeFrames = 15;
-            break;
-          case 1:
-            this.playerMaxHealth = 70;
-            this.canalCollisionDamage = 5;
-            this.damageOverTime = 1.2;
-            this.playerSpeed = 4.5
-            this.pursuerSpeed = 3;
-            pursuerFreezeFrames = 10;
-            break;
-          case 2:
-            this.playerMaxHealth = 50;
-            this.canalCollisionDamage = 10;
-            this.damageOverTime = 1.5;
-            this.playerSpeed = 4.5
-            this.pursuerSpeed = 3;
-            pursuerFreezeFrames = 5;
-            break;
-        }
         break;
       case 2:
         this.player = new Sprite(265, -328, 35, 25);
         this.map = MapController.getMap(2, this.player);
         this.pursuer = new Sprite(-442, -327, 25, 15);
+        break;
+    }
+
+  }
+
+  setDifficultyParameters() {
+    switch (selectedMap) {
+      case 1:
+      case 2:
         switch (difficultyLevel) { 
           case 0:
             this.playerMaxHealth = 100;
