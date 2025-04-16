@@ -105,6 +105,8 @@ class canal{
 
     getPlayer(){return this.player}
 
+    getWidth(){return this.width}
+
     setDirectionalAttributes(){
         let angle = this.getAngle();
         this.xChange = Math.sin(angle) * this.length;
@@ -152,6 +154,7 @@ class canal{
     getChanges(){
         return [this.xChange, this.yChange];
     }
+
 
     getWidthChanges(){
         return [this.xWidth, this.yWidth];

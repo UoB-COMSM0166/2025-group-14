@@ -20,15 +20,14 @@ finally, add canalNetwork.animate(); to your draw function.
 - put something in to handle if we have a canal swallow another (currently this fucks the blackbanks)
 */
 
-class canalNetwork{
+class canalNetwork extends linearConnect{
     constructor(x, y, course, linkages){
+        super()
         this.x = x;
         this.y = y;
         this.course = course;
 
-        this.redCoords = null;
         this.setRedCoords();      
-        this.blackCoords = null;
         this.setBlackCoords();
 
         this.connectCanals();
@@ -36,7 +35,6 @@ class canalNetwork{
         this.bestowCoords();
         this.createSprites();
         
-        this.bankSprites = null;
         this.setBankSprites();
 
         /*this.exits = [];
@@ -72,46 +70,7 @@ class canalNetwork{
 
     getLinkages(){return this.linkages;}
 
-    /*getLinkages(){
-        if(!this.linkages.length > 0){
-            for (const link of this.linkages){
-                if(!this.course.includes(link[0])){
-                    throw new Error("Attempting to link via a canal outside this network");
-                } 
-                if(!link[0].checkExits() || !link[1].checkExits){
-                    throw new Error("Attempting to link via an unavailable canal");
-                }
-            }
-        }
-        return(this.linkages);
-    }*/
-
-
     getBankSprites(){ return this.bankSprites};
-
-    setBankSprites(){
-        this.bankSprites = [];
-        let tmp = []
-        this.forAllCanals(canal => tmp.push(canal.getBanks()));
-        for(const entry of tmp){
-            for(const subentry of entry){
-                this.bankSprites.push(subentry);
-            }
-        }
-
-        console.log("Inner: " + this.bankSprites.length);
-    }
-
-    bestowCoords(){
-        for(let i = 0; i < this.course.length; i++){
-            let c = this.course[i];
-            let red = this.redCoords[i];
-            let black = this.blackCoords[i];
-            let nextRed = this.redCoords[i + 1];
-            let nextBlack = this.blackCoords[i + 1];
-            c.setCoords(red, black, nextRed, nextBlack);
-        }
-    }
     
     setExits(){
         //this is for linking together networks
@@ -133,46 +92,6 @@ class canalNetwork{
         }
     }
     
-    setBlackCoords(){
-        let blackChanges = []
-        this.forAllCanals(canal =>
-            blackChanges.push(canal.getWidthChanges())
-        )
-
-        let bc = [];
-        let rc = this.redCoords;
-        
-        let first = rc[0];
-        let firstBlack = blackChanges[0];
-        bc.push([first[0] + firstBlack[0], first[1] + firstBlack[1]]);
-
-        let i;
-        for(i = 1; i < rc.length -1; i++){
-            let red = rc[i];
-            let prev = blackChanges[i - 1];
-            let next = blackChanges[i];
-            let prevEnd = [red[0] + prev[0], red[1] + prev[1]];
-            let nextStart = [red[0] + next[0], red[1] + next[1]];
-            let pRed = rc[i - 1];
-            let nRed = rc[i + 1];
-            let pGrad = gradient(pRed, red);
-            let nGrad = gradient(red, nRed);
-            let prevOff = offset(pGrad, prevEnd);
-            let nextOff = offset(nGrad, nextStart);
-            let int = linearIntersect(pGrad, prevOff, nGrad, nextOff);
-            bc.push(int);
-        }
-
-        let last = rc[i];
-        let lastChange = blackChanges[i - 1];
-        bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])
-
-        
-
-        this.blackCoords = bc;
-    
-    }
-
     findNextCoords(coordinates, canal){;
         let x = coordinates[0];
         let y = coordinates[1];
@@ -181,11 +100,13 @@ class canalNetwork{
         return [x, y];
     }
 
+    
     forAllCanals(callback){
         for(const canal of this.course){
             callback(canal);
         }
     }
+
 
     checkForCanal(canal){
         if(this.course.includes(canal)){
@@ -219,11 +140,6 @@ class canalNetwork{
 
     getExits(){
         return this.exits;
-    }
-
-
-    createSprites(){
-        this.forAllCanals(canal => canal.createSprites());
     }
 
     animate(){

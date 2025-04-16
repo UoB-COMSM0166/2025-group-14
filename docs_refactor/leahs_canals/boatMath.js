@@ -143,5 +143,7 @@ function radsToDegrees(rads){
 }
 
 function getHypotenuse(start, end){
-    return Math.sqrt(Math.pow(start, 2), Math.pow(end, 2));
+    let xChange = end[0] - start[0];
+    let yChange = end[1] - start[1]
+    return Math.sqrt(Math.pow(xChange, 2), Math.pow(yChange, 2));
 }
