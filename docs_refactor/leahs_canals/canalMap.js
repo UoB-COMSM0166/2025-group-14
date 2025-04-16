@@ -115,6 +115,7 @@ class canalMap {
 
     removeSprites(){
         this.forAllNetworks(network => network.remove());
+        this.forAllLinkages(linkage => linkage.remove());
     }
 
 }

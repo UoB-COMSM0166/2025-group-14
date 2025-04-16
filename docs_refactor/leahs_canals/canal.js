@@ -30,18 +30,11 @@ class canal{
 
 
         //trigonometric attributes used by the network
-        this.horizontal = null;
-        this.vertical = null;
         this.xChange = null;
         this.yChange = null;
         this.xWidth = null;
         this.yWidth = null;
-        this.gradient = null;
-        this.offset = null;
         this.setDirectionalAttributes();
-
-        /*this.horizontal = this.getDirection()[0];
-        this.vertical = this.getDirection()[1];*/
 
         //placement and relational attributes set by the network
         this.prev = null;
@@ -129,15 +122,6 @@ class canal{
         //this.setExits();
     }
 
-   /* setExits(){
-        //this will look different for forks
-        if(this.prev === null){
-            this.exit.push([this.redStart, this.blackStart]);
-        }
-        if(this.next === null){
-            this.exit.push([this.redEnd, this.blackEnd]);
-        }
-    }*/
 
     getExits(){
         //will also look different for forks
@@ -152,9 +136,6 @@ class canal{
             return false;
         }
     }
-
-    //getExits(){return this.exit}
-
 
     createRedBank(){
         this.redBank = this.createBank(this.redStart, this.redEnd)
@@ -306,6 +287,23 @@ class canal{
 
     getRandomInt(min, max) {
         return (Math.floor(Math.random() * (max - min + 1)) + min);
+    }
+
+    determineIntersects(canal){
+        let grad = this.getGradient();
+        let rOff = this.getOffset("red");
+        let bOff = this.getOffset("black");
+
+        let cGrad = canal.getGradient();
+        let cROff = canal.getOffset("red");
+        let cBOff = canal.getOffset("black");
+
+        console.log("grad, cgrad: " + grad + " , " + cGrad);
+
+        let rSect = linearIntersect(grad, rOff, cGrad, cROff);
+        let bSect = linearIntersect(grad, bOff, cGrad, cBOff);
+        return [rSect, bSect]
+
     }
 
 }
