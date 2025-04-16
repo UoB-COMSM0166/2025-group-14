@@ -2,13 +2,13 @@
     
 class MapSelectionScreen{
     constructor() {
-        this.selectedMapId = -1; // Default level is -1 (no level selected)
-        this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(0));
+        this.selectedMapId = -1; // Default map is -1 (no map selected)
+        this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(0));
         this.tutorialButton.hide();
-        this.levelOneButton = new Button("Map 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(1));
-        this.levelOneButton.hide();
-        this.levelTwoButton = new Button("Map 2", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectLevel(2));
-        this.levelTwoButton.hide();
+        this.mapOneButton = new Button("Map 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(1));
+        this.mapOneButton.hide();
+        this.mapTwoButton = new Button("Map 2", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(2));
+        this.mapTwoButton.hide();
     }
 
     display() {
@@ -16,19 +16,19 @@ class MapSelectionScreen{
         background(183, 233, 193);
 
         this.tutorialButton.show(); 
-        this.levelOneButton.show();
-        this.levelTwoButton.show();
+        this.mapOneButton.show();
+        this.mapTwoButton.show();
         this.tutorialButton.setPosition(windowWidth/6, windowHeight/6);
-        this.levelOneButton.setPosition(windowWidth *2/6, windowHeight/6);
-        this.levelTwoButton.setPosition(windowWidth *3/6, windowHeight/6);
+        this.mapOneButton.setPosition(windowWidth *2/6, windowHeight/6);
+        this.mapTwoButton.setPosition(windowWidth *3/6, windowHeight/6);
     
     }
 
-    selectLevel(levelId) {
-        this.selectedMapId = levelId;
+    selectMap(mapId) {
+        this.selectedMapId = mapId;
         this.tutorialButton.hide();
-        this.levelOneButton.hide();
-        this.levelTwoButton.hide();
+        this.mapOneButton.hide();
+        this.mapTwoButton.hide();
         if (this.selectedMapId === 2) {
             state = GameState.DIFFICULTY_SCREEN;
         } else {
