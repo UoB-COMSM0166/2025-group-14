@@ -158,6 +158,24 @@ class canal{
 
     }
 
+    getDirection(){
+        let a = this.getAngle(true)
+        let outp = [];
+        if (a <= 180){
+            outp.push("right");
+        }else{
+            outp.push("left");
+        }
+        if (a <= 90 || a > 270){
+            outp.push("up");
+        }else{
+            outp.push("down");
+        }
+
+        return outp;
+
+    }
+
 
     getExits(){
         //will also look different for forks

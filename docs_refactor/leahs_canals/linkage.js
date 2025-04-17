@@ -155,7 +155,11 @@ class linkage extends linearConnect{
         let grad = canal.getGradient();
         let off = canal.getOffset(bank);
         let coord = canal.getCoord(bank.concat(pos));
-        let xOut = coord[0] - x;
+        if(canal.getDirection()[0] === "left"){
+            x *= -1;
+        }
+
+        let xOut = x + coord[0];
         let yOut = (xOut * grad) + off;
         return[xOut, yOut];
     }
