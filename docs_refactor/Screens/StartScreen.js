@@ -1,12 +1,12 @@
 class StartScreen {
 
     constructor() {
-      this.levelButton = new Button("LEVELS", windowWidth/2, windowHeight/2 + 150, 'seagreen', 30, this.buttonClick());
+      this.startButton = new Button("Start game", windowWidth/2, windowHeight/2 + 150, 'seagreen', 30, this.buttonClick.bind(this));
     }
 
     display() {
         new Canvas(windowWidth, windowHeight);
-        this.levelButton.show(); 
+        this.startButton.show(); 
         //background("lightblue");
         let centerX = windowWidth/2;
         let centerY = windowHeight/2;
@@ -22,15 +22,15 @@ class StartScreen {
         textSize(20);
         stroke(2);
         //update position of button in case of resizing
-        this.levelButton.setPosition(windowWidth / 2, windowHeight / 2 + 150);
+        this.startButton.setPosition(windowWidth / 2, windowHeight / 2 + 150);
     }
 
-    // Transition to level screen when player clicks on level button
+    // Transition to map selection screen when player clicks on start button
     buttonClick() {
       console.log("Button clicked!");
-      this.levelButton.hide();
+      this.startButton.hide();
       if (state === GameState.START_SCREEN) {
-        state = GameState.LEVEL_SCREEN;
+        state = GameState.MAP_SELECTION_SCREEN;
       }
   }
 }

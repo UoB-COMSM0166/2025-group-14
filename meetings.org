@@ -243,3 +243,49 @@ Leah to Adam’s to Daniil to main
 - Leah: Map canal coordinates for water/rubbish, add canal forks
 - Adam: Design tutorial level/narrative integration
 - Leon: Animate water texture, finalize sustainability doc
+* 15/04/2025
+** notes
+Main branch is in 'docs_refactor'
+*** Daniil
+He has created a tutorial level and a second level. He is going to go ahead on creating more maps but wanted to bring up how we can approach this going forward
+
+**** discussion on map progression approaches
+1. easy/ medium/ hard difficulties conistent across every map
+2. difficulty per map
+
+Daniil prefers the first.
+Leon and Leah tend to prefer the first approach. Polly likes the idea of setting the difficulty once.
+
+Seems to be general consensus on approach one.
+
+*** Leah
+Connecting lakes together in a Network. She has been trying to generalise this to make map creation easier and to create forks in the map.
+
+The focus currenty is on forks. Locks will happen later. Cutting through the jungle with a machete.
+
+*** what Casey could work on
+- locks. Link up with leah to talk about this at some point.
+- sounds
+
+*** Leon
+animations for rubbish in the canals. Water in the canals at a later point.
+
+Randomly generated rubbish in the canal. Ripples around the garbage. Tried webgl but it seemed like too much of a headache. Filled the canals with a translucent colour. He is thinking about adding p5 'noise' but he's not sure.
+
+*** Polly
+Made the info screen, and the pause button. Refactored the game control logic entirely. Used the button class.
+
+She has suggested that we jazz up our report by going through previously highly marked projects
+
+*** Adam
+Working on pursuer, creates a route based off of the player path. Levels files, making a tutorial level at the moment.
+
+** planning for the report
+- Leah is happy to get shifted into working on the report once she has finished with her side.
+- Daniil is happy to get started on the report soon.
+- Polly would like to add to the report too
+
+*** dates
+- Starting now: report
+- WB 21/05/2025 planning video
+- WB 28/05/2025 making the video

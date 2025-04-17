@@ -248,6 +248,52 @@ We expected the difference not to be statistically significant because of the wa
 
 At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
 
+
+### Sustainability Analysis
+
+We conducted an analysis of the sustainability impacts of our game, based on the Sustainability Awareness Framework (https://www.suso.academy/en/sustainability-awareness-framework-susaf/).
+
+This was measured across five dimensions of sustainability: (1) Individual, (2) Social, (3) Environmental, (4) Economic, (5) Technical, and across three temporal dimensions: Immediate, Enabling (medium-term), and Structural (longer-term).
+
+We concluded that the economic and technical impacts were less significant and therefore have focused on the other three in greater depth.
+
+**(1) Individual impact**
+The engaging and enjoyable gameplay may relieve stress and provide mental health benefits, as well as offering cognitive stimulation. The player is able to strategise about the route they take through the canal system and how they make use of the locks to escape from the pursuer; we believe player agency is key to an immersive and enjoyable gaming experience.
+
+To ensure that our game does not have a negative impact on health due to prolonged playing sessions, like eye strain or fatigue, we implemented a 30-minute timer that encourages the user to take a break. Also, the player can pause the game at any point in their session, as we wanted to avoid situations where the player is forced to complete the level they are currently playing before they can pause the game and take a break. 
+
+Additionally, there is an element of learning and environmental literacy in our game, which is especially important for encouraging future generations to be conscious of their impact on the environment and how they can make a positive contribution. In our game, players can pick up a variety of litter that is floating in the canal to slow down the pursuer and gain an advantage, thereby reinforcing positive behaviour with a reward, without forcefully pushing the message and interrupting the gameplay.
+
+Lastly, no personal data is collected as it is unnecessary for the purposes of our game. While this means you cannot save your progress, we decided it was worth the tradeoff as the game is quick and easy to jump into without a login process, and the user maintains complete privacy.
+
+**(2) Social impact**
+The backstory we initially came up with for our game was problematic because it could negatively impact inclusiveness and diversity and people’s sense of belonging/community. Our initial backstory was that the player is a drug smuggler and is being chased by the police through the canals. Although this is a provocative and interesting setting, and suits the “chase” theme of this game, it could negatively impact public perception of boat owners in the UK and further marginalise people in that community who do not associate with this kind of image and lifestyle.
+
+Although trends show a rapidly growing ownership of canal boats over the last decade (https://www.economist.com/britain/2024/10/31/a-growing-number-of-britons-live-on-canal-boat), with around 35,000 boats on canals in England and Wales, our game still represents a niche part of British history, culture and society, which is underrepresented. We now recognise the responsibility that comes with creating a game, or any kind of media, that represents a specific community (especially one that is a minority), and have therefore decided to change the messaging of our game moving forward. Moving forward, we are looking to change the backstory/theme of our game to something with more positive messaging (e.g. turning it into a historic canal race, akin to the Goodwood Revival, which is a historic motorsport festival).
+
+**(3) Environmental impact**
+The active development of our game, and hosting, contributes to electricity usage and energy consumed by data centers, plus all of the hardware required throughout the entire process across production, deployment, and operation. However, our game is small relative to many other games, so the impact is likely miniscule. We are also confident that choosing GitHub as our hosting provider will offset some of these impacts, due to their strong commitment to environmental sustainability. (https://github.com/social-impact/focus-areas/environmental-sustainability)
+
+There is potential for our game to positively support canal biodiversity by ensuring we convey messages about environmental awareness and sustainability through the gameplay, as mentioned in the Individual and Social sections above. In the long-term, if the number of players grows to a substantial size and we continue developing the game in a way that promotes such messaging, the game could contribute to a greater awareness and appreciation of British canals and public support for canal preservation. This may also lead to an increase in tourism, both domestic and international. And while heavy pedestrian traffic may negatively impact canal biodiversity, we hope that those who were attracted to the canals because of our game will keep in mind the importance of preserving those canals. 
+
+Chain of Effects diagram
+Below is a diagram which shows the potential chains of effect that may happen when many people use this product over several years.
+
+![Sustainability Diagram](https://github.com/user-attachments/assets/1fb71942-a06a-4de6-96e4-89cee56ae224)
+
+#### Green Software Patterns
+
+In an effort to reduce our software emissions, we have implemented three "Green Software Patterns", reviewed and curated by the Green Software Foundation (https://patterns.greensoftware.foundation/).
+
+**(1) Avoid tracking unnecessary data**
+We have designed our game in a way that does not ask for any data from the user, thereby reducing the overall workload for page loads, decreasing overall page weight of the site, and protecting and preserving the user’s privacy.
+
+**(2) Remove unused CSS definitions**
+We maintain a single CSS file to reduce the amount of requests and amount of time the browser needs to retrieve all CSS definitions at once, and ensure that any unused CSS definitions are removed.
+
+**(3) Remove unused assets**
+We regularly (after each sprint and integration) scan the assets we are storing and remove any unused assets.
+
 ### Process 
 
 - 15% ~750 words
