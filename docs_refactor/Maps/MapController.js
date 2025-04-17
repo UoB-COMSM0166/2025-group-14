@@ -1,7 +1,7 @@
 class MapController {   
 
-    static getMap(levelNumber, player) {
-        switch(levelNumber) {
+    static getMap(mapNumber, player) {
+        switch(mapNumber) {
             case 0:
                 return MapController.getMap0(player);
             case 1:
@@ -9,7 +9,7 @@ class MapController {
             case 2:
                 return MapController.getMap2(player);
             default:
-                throw new Error("Invalid level number: " + levelNumber);
+                throw new Error("Invalid map number: " + mapNumber);
         }
     }
 
