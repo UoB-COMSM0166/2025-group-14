@@ -7,6 +7,11 @@ class linearConnect{
     }
 
     
+    animate(){
+        this.forAllCanals(canal => canal.animate());
+        //throw Error("breakpoint lol");
+    }
+    
     createSprites(){
         this.forAllCanals(canal => canal.createSprites());
     }

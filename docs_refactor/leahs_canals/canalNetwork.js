@@ -132,11 +132,6 @@ class canalNetwork extends linearConnect{
         }
     }
 
-    animate(){
-        this.forAllCanals(canal => canal.animate());
-        //throw Error("breakpoint lol");
-    }
-
     remove(){
         this.forAllCanals(canal => canal.remove());
     }

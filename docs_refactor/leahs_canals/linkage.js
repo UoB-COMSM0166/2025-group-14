@@ -6,10 +6,30 @@ class linkage extends linearConnect{
         this.outbound = this.setCanal(outbound);
         this.inbound = this.setCanal(inbound);
 
+        this.linkWidth = outbound.getWidth();
+
         //filled by "positionLink" which is called by the map after duplicate linkages are removed
         this.link = null;   
         this.bankSprites = null;
+
+        this.testTick = 0;
     }
+
+    aimLink(){
+        let placeholder = this.segmentPosition(this.testTick, this.outbound, "red", "Start");
+        fill("seagreen")
+        circle(placeholder[0], placeholder[1], 20);
+
+    }
+
+    
+    animate(){
+        this.forAllCanals(canal => canal.animate());
+        this.aimLink();
+        this.testTick += 0.1
+        //throw Error("breakpoint lol");
+    }
+
 
     bestowCoords(){
         let red = this.redCoords[0];
@@ -46,7 +66,7 @@ class linkage extends linearConnect{
 
         let length = getHypotenuse(start, end);
         let oClock = angleToClock(angle);
-        let width = this.outbound.getWidth();
+        let width = this.linkWidth;
         let player = this.outbound.getPlayer();
         this.link = new canal(length, oClock, width, player);
     }
@@ -65,6 +85,7 @@ class linkage extends linearConnect{
     }
 
     findValidLines(){
+        this.aimLink();
         let outExit = this.getCanalExits(this.outbound);
         let inExit = this.getCanalExits(this.inbound);
 
@@ -127,6 +148,16 @@ class linkage extends linearConnect{
     remove(){
         this.link.remove();
         this.bankSprites = [];
+    }
+
+    segmentPosition(x, canal, bank, pos){
+        let width = this.width;
+        let grad = canal.getGradient();
+        let off = canal.getOffset(bank);
+        let coord = canal.getCoord(bank.concat(pos));
+        let xOut = coord[0] - x;
+        let yOut = (xOut * grad) + off;
+        return[xOut, yOut];
     }
 
     setCanal(input){

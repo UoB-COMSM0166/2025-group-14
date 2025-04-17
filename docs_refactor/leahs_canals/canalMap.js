@@ -111,6 +111,7 @@ class canalMap {
     
     animate(){
         this.forAllNetworks(network => network.animate());
+        this.forAllLinkages(linkage => linkage.animate());
     }
 
     removeSprites(){
