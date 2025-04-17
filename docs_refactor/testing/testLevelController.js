@@ -15,7 +15,7 @@ class LevelController {
                 levelInstance = new Level(1, 100, 100);
                 break;
             case 2:
-                levelInstance = new testLevel(2, 265, -328);
+                levelInstance = new testLevel(2, -330, -266);
                 break;
             case 3:
                 throw new Error("Invalid level number: " + level);
