@@ -129,7 +129,7 @@ Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
 This is my first stab at a class diagram. We can update it once we've consolidated the core features and/or planned which features to implement next. For now, it's just a rough and ready template.
 
-![UML Class Diagram of Narrowboat Game core features](./Diagrams/NarrowboatGameUMLv0.1.png)
+![UML Class Diagram of Narrowboat Game core features](./Diagrams/DGRM.png)
 
 ### Implementation
 
