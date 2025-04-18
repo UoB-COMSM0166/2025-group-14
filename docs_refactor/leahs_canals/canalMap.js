@@ -42,7 +42,7 @@ class canalMap {
                 let inbound = link[1];
                 let origin = network;
                 let destination = this.getNetworkByCanal(inbound);
-                this.linkages.push(new linkage(origin, destination, outbound, inbound));
+                this.linkages.push(new linkage(origin, destination, outbound, inbound, this));
 
             }
 
@@ -61,7 +61,25 @@ class canalMap {
         }
     }
 
-
+    clearRoute(start, end){
+        let networkCanals = []
+        this.forAllNetworks(network => network.forAllCanals(canal => networkCanals.push(canal)));
+        for(const c of networkCanals){
+            let redCoords = [c.getCoord("redStart"), c.getCoord("redEnd")];
+            let blackCoords = [c.getCoord("blackStart"), c.getCoord("blackEnd")];
+            let crossable = true;
+            if(checkCrossBetweenBounds([start, end], redCoords, true)){
+                crossable = false;
+            }
+            if(checkCrossBetweenBounds([start, end], blackCoords, true)){
+                crossable = false;
+            }
+            if(crossable){
+                return true;
+            }
+        }
+        return false;
+    }
 
     connectNetworks(origin, destination, outCanal, inCanal){
         let exit = outCanal.checkExits();

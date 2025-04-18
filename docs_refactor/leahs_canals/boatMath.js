@@ -3,7 +3,7 @@ function coordinateArgs(first, second, callback){
 
 }
 
-function checkCrossBetweenBounds(one, two){
+function checkCrossBetweenBounds(one, two, canTouch = false){
     let grad1 = gradient([one[0], one[1]], [one[2], one[3]]);
     let off1 = offset(grad1, [one[0], one[1]]);
 
@@ -20,7 +20,7 @@ function checkCrossBetweenBounds(one, two){
 
 }
 
-function checkPointInSegment(seg, point){
+function checkPointInSegment(seg, point, canTouch = false){
     let x1 = seg[0];
     let y1 = seg[1];
     let x2 = seg[2];
@@ -35,10 +35,24 @@ function checkPointInSegment(seg, point){
     let px = point[0];
     let py = point[1];
 
-    if(px <= minX || px >= maxX){
+    let pxLminX, pxGmaxX, pyLminY, pyGmaxY
+    if(canTouch){
+        pxLminX = px < minX;
+        pxGmaxX = px > maxX;
+        pyLminY = py < minY;
+        pyGmaxY = py < maxY;
+    }else{
+        pxLminX = px <= minX;
+        pxGmaxX = px >= maxX;
+        pyLminY = py <= minY;
+        pyGmaxY = py <= maxY;
+
+    }
+
+    if(pxLminX || pxGmaxX){
         return false; 
     }
-    if(py <= minY || py >= maxY){
+    if(pyLminY || pyGmaxY){
         return false;
     }
     
@@ -98,6 +112,7 @@ function linearIntersect(a1, c1, a2, c2){
 }
 
 function halfwayPoint(start, end){
+    console.log("end: " + end);
     let xStart = start[0];
     let yStart = start[1];
 
@@ -144,6 +159,6 @@ function radsToDegrees(rads){
 
 function getHypotenuse(start, end){
     let xChange = end[0] - start[0];
-    let yChange = end[1] - start[1]
-    return Math.sqrt(Math.pow(xChange, 2), Math.pow(yChange, 2));
+    let yChange = end[1] - start[1];
+    return Math.sqrt(Math.pow(xChange, 2) + Math.pow(yChange, 2));
 }

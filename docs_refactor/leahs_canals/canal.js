@@ -133,6 +133,8 @@ class canal{
         //this.setExits();
     }
 
+    getLength(){return this.length;}
+
     getConnections(type){
         switch(type){
             case "prev":
