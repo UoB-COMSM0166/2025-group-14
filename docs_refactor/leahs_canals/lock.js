@@ -21,9 +21,8 @@ class lock extends canal {
 
 
     createSprites(){
-        this.createRedBank();
-        this.createBlackBank();
-        this.createDoors();
+        this.canalSetup();
+        this.lockSetup();
     }
 
     createDoors(){
@@ -87,6 +86,10 @@ class lock extends canal {
                 }
                 break;
         }
+    }
+
+    lockSetup(){
+        this.createDoors()
     }
 
     getFullStatus(){

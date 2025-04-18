@@ -37,8 +37,8 @@ class MapController {
 
         //leah adding a new network to check multinetwork capability
 
-        let n2 = new canalNetwork(-500, 250, [c6, c7], [[c6, c4]])
-        let n3 = new canalNetwork(700, -400, [c8, c9], [[c8, c2]])
+        let n2 = new canalNetwork(-500, 250, [c6, c7], [])
+        let n3 = new canalNetwork(700, -400, [c8, c9], [])
 
         return new canalMap(player, true, [n1, n2, n3]); 
     }

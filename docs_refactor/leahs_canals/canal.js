@@ -227,6 +227,10 @@ class canal{
     }
 
     createSprites(){
+        this.canalSetup();
+    }
+
+    canalSetup(){
         this.createRedBank();
         this.createBlackBank();
         if(this.garbageOn){
@@ -247,7 +251,7 @@ class canal{
         this.blackOff = offset(this.gradient, blackStart);
     }
 
-    createBank(start, end, colour = null;){
+    createBank(start, end, colour = null){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
         if(colour != null){

@@ -59,8 +59,6 @@ class linkage extends linearConnect{
     
     animate(){
         this.forAllCanals(canal => canal.animate());
-        this.testTick += 0.1
-        //throw Error("breakpoint lol");
     }
 
 
@@ -123,16 +121,24 @@ class linkage extends linearConnect{
         let rsI = this.inbound.getCoord("redStart");
         let bsI = this.inbound.getCoord("blackStart");
 
-        let bhO = halfwayPoint(rs0, this.outbound.getCoord("redEnd"));
-        let rhO = halfwayPoint(bs0, this.outbound.getCoord("blackEnd"));
-        let bhO = halfwayPoint(rs0, this.outbound.getCoord("redEnd"));
-        let rhO = halfwayPoint(bs0, this.outbound.getCoord("blackEnd"));
+        let rhO = halfwayPoint(rsO, this.outbound.getCoord("redEnd"));
+        let bhO = halfwayPoint(bsO, this.outbound.getCoord("blackEnd"));
+        let rhI = halfwayPoint(rsI, this.inbound.getCoord("redEnd"));
+        let bhI = halfwayPoint(bsI, this.inbound.getCoord("blackEnd"));
+
+        let rs2rs = getHypotenuse(rhO, rhI);
+        let rs2bs = getHypotenuse(rhO, bhI);
+        let bs2bs = getHypotenuse(bhO, bhI);
+        let bs2rs = getHypotenuse(bhO, rhI);
+
+        this.tmpOutRedHalf = rhO;
+        this.tmpInRedHalf = rhI;
+
+        console.log("rs2rs (right): " + rs2rs);
+        console.log("bs2bs (current) " + bs2bs);
 
 
-        let rs2rs = getHypotenuse(rsO, rsI);
-        let rs2bs = getHypotenuse(rsO, bsI);
-        let bs2bs = getHypotenuse(bsO, bsI);
-        let bs2rs = getHypotenuse(bsO, rsI);
+
 
         let min = Math.min(rs2rs, rs2bs, bs2bs, bs2rs);
         switch(min){
