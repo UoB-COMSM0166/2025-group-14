@@ -234,7 +234,6 @@ class canal{
         }
         if(this.finish) {
             this.closeMapEnd();
-            console.log("4 vertexes of the last canal segment: \n", this.redStart, this.blackStart, this.redEnd, this.blackEnd);
         }
     }
 
@@ -361,12 +360,43 @@ class canal{
         let cROff = canal.getOffset("red");
         let cBOff = canal.getOffset("black");
 
-        console.log("grad, cgrad: " + grad + " , " + cGrad);
-
         let rSect = linearIntersect(grad, rOff, cGrad, cROff);
         let bSect = linearIntersect(grad, bOff, cGrad, cBOff);
         return [rSect, bSect]
+    }
 
+    removeOneBank(target){
+        if(target === "red"){
+            this.redBank.remove();
+        }else if(target === "black"){
+            this.blackBank.remove();
+        }else{
+            throw new Error("Improper use of removeOneBank function.")
+        }
+    }
+
+    rebuildBank(targetBank, c1, c2){
+        let start = this.getCoord(targetBank.concat("Start"));
+        let end = this.getCoord(targetBank.concat("End"));
+
+        let c1FromStart = getHypotenuse(start, c1);
+        let c2FromStart = getHypotenuse(start, c2);
+        let closePoint = Math.min(c1FromStart, c2FromStart);
+        let nearPoint, farPoint;
+        if(closePoint === c1FromStart){
+            nearPoint = c1;
+            farPoint = c2;
+        }else{
+            nearPoint = c2;
+            farPoint = c1;
+        }
+
+        let firstLinkPiece = this.createBank(start, nearPoint);
+        firstLinkPiece.colour = targetBank;
+        let secondLinkPiece = this.createBank(farPoint, end);
+        secondLinkPiece.colour = targetBank;
+
+        //remember to push the banks! 
     }
 
 }
@@ -375,7 +405,6 @@ function collect(player, gem) {
 	gem.remove();
     garbagePieceCnt++;
     pursuerMoveCooldown += 15;
-    console.log(pursuerMoveCooldown);
 }
 
 function finish(player) {

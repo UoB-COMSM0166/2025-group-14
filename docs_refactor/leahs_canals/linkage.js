@@ -8,7 +8,7 @@ class linkage extends linearConnect{
 
         this.map = map;
 
-        this.linkWidth = outbound.getWidth();
+        this.linkWidth = Math.min(outbound.getWidth(), inbound.getWidth());
 
         //filled by "positionLink" which is called by the map after duplicate linkages are removed
         this.link = null;   
@@ -19,6 +19,28 @@ class linkage extends linearConnect{
         this.inCoords = null;
 
         this.testTick = 0;
+    }
+
+    adjustCoords(){
+        let linkGrad = this.link.getGradient();
+        let lROff = this.link.getOffset("red");
+        let lBOff = this.link.getOffset("black");
+
+        let outGrad = this.outbound.getGradient();
+        let outOff = this.outbound.getOffset(this.outBank);
+
+        let inGrad = this.inbound.getGradient();
+        let inOff = this.inbound.getOffset(this.inBank);
+
+        let redStart = linearIntersect(linkGrad, lROff, outGrad, outOff);
+        let redEnd = linearIntersect(linkGrad, lROff, inGrad, inOff);
+        let blackStart = linearIntersect(linkGrad, lBOff, outGrad, outOff);
+        let blackEnd = linearIntersect(linkGrad, lBOff, inGrad, inOff);
+
+        this.redCoords = [redStart, redEnd];
+        this.blackCoords = [blackStart, blackEnd];
+
+
     }
 
     aimLink(){
@@ -37,7 +59,6 @@ class linkage extends linearConnect{
     
     animate(){
         this.forAllCanals(canal => canal.animate());
-        this.aimLink();
         this.testTick += 0.1
         //throw Error("breakpoint lol");
     }
@@ -112,36 +133,34 @@ class linkage extends linearConnect{
             case rs2rs:
                 this.outBank = "red";
                 this.inBank = "red";
-                return ["red", "red"];
+                break;
             case rs2bs:
                 this.outBank = "red";
                 this.inBank = "black";
-                return ["red", "black"];
+                break;
             case bs2bs:
                 this.outBank = "black";
                 this.inBank = "black";
-                return ["black", "black"];
+                break;
             case bs2rs:
                 this.outBank = "black";
                 this.inBank = "red";
-                return ["black", "red"];
+                break;
+            default:
+                throw new Error("FacingBanks switch statement error, contact Leah");
         }
 
 
 
     }
 
-    findExitPoints(banks){
-        let outBank = banks[0];
-        let inBank = banks[1];
-
+    findExitPoints(){
+ 
         let outStart = this.outbound.getCoord(this.outBank.concat("Start"));
         let outEnd = this.outbound.getCoord(this.outBank.concat("End"));
         
         let inStart = this.inbound.getCoord(this.inBank.concat("Start"));
         let inEnd = this.inbound.getCoord(this.inBank.concat("End"));
-
-        console.log("inEnd: " + inEnd);
         let inPoint = halfwayPoint(this.inbound.getCoord(this.inBank.concat("Start")), inEnd);
         let outPoint = halfwayPoint(outStart, outEnd);
         if(!this.map.clearRoute(inPoint, outPoint)){
@@ -161,7 +180,6 @@ class linkage extends linearConnect{
 
     //condemned I hope
     findValidLines(){
-        this.aimLink();
         let outExit = this.getCanalExits(this.outbound);
         let inExit = this.getCanalExits(this.inbound);
 
@@ -211,14 +229,32 @@ class linkage extends linearConnect{
     getDestination(){return this.destination;}
 
     positionLink(){
+        console.log("positioning link...");
         this.setRedCoords();
         this.createLink();
         this.setBlackCoords();
+
+        //set coords once to get the gradient and offset, then adjust and reset before creating sprites!
         this.bestowCoords();
+        this.adjustCoords();
+        this.bestowCoords();
+
         this.createSprites();
         this.setBankSprites();
-        this.outbound.rebuildToExit(this.link.getCoord("redStart"), this.link.getCoord("blackStart"));
-        this.inbound.rebuildToExit(this.link.getCoord("redEnd"), this.link.getCoord("blackEnd"));
+        console.log("about to rebuild banks")
+        this.rebuildBanks();
+
+        //this.outbound.rebuildToExit(this.link.getCoord("redStart"), this.link.getCoord("blackStart"));
+        //this.inbound.rebuildToExit(this.link.getCoord("redEnd"), this.link.getCoord("blackEnd"));
+    }
+
+    rebuildBanks(){
+        console.log("rebuilding banks")
+        this.outbound.removeOneBank(this.outBank);
+        this.inbound.removeOneBank(this.inBank);
+
+        this.outbound.rebuildBank(this.outBank, this.redCoords[0], this.blackCoords[0]);
+        this.inbound.rebuildBank(this.inBank, this.redCoords[1], this.blackCoords[1]);
     }
 
     remove(){
@@ -269,8 +305,9 @@ class linkage extends linearConnect{
     }
 
     setRedCoords(){
-        let banks = this.facingBanks();
-        let points = this.findExitPoints(banks);
+        console.log("setting red coords...");
+        this.facingBanks();
+        this.findExitPoints();
         //let valid = this.findValidLines(banks);
         //let line = this.determineTopLine(valid);
         //this.redCoords = [[line[0][0], line[0][1]], [line[1][0], line[1][1]]];
