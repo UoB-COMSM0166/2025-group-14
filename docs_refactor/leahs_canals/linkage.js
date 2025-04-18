@@ -123,6 +123,12 @@ class linkage extends linearConnect{
         let rsI = this.inbound.getCoord("redStart");
         let bsI = this.inbound.getCoord("blackStart");
 
+        let bhO = halfwayPoint(rs0, this.outbound.getCoord("redEnd"));
+        let rhO = halfwayPoint(bs0, this.outbound.getCoord("blackEnd"));
+        let bhO = halfwayPoint(rs0, this.outbound.getCoord("redEnd"));
+        let rhO = halfwayPoint(bs0, this.outbound.getCoord("blackEnd"));
+
+
         let rs2rs = getHypotenuse(rsO, rsI);
         let rs2bs = getHypotenuse(rsO, bsI);
         let bs2bs = getHypotenuse(bsO, bsI);
@@ -229,7 +235,8 @@ class linkage extends linearConnect{
     getDestination(){return this.destination;}
 
     positionLink(){
-        console.log("positioning link...");
+        this.facingBanks();
+        this.findExitPoints();
         this.setRedCoords();
         this.createLink();
         this.setBlackCoords();
@@ -305,9 +312,6 @@ class linkage extends linearConnect{
     }
 
     setRedCoords(){
-        console.log("setting red coords...");
-        this.facingBanks();
-        this.findExitPoints();
         //let valid = this.findValidLines(banks);
         //let line = this.determineTopLine(valid);
         //this.redCoords = [[line[0][0], line[0][1]], [line[1][0], line[1][1]]];

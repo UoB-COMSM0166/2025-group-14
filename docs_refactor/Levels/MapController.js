@@ -27,16 +27,20 @@ class MapController {
         let c4 = new canal(600, 10, 220, player); //left up
         let c5 = new canal(400, 9, 60, player); 
 
-        let c6 = new canal(600, 10, 60, player);
-        let c7 = new canal(500, 7, 60, player);
+        let c6 = new canal(600, 4, 60, player); //originally 600, 10
+        let c7 = new canal(500, 6, 60, player); //originally 500, 7
 
-        let n1 = new canalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6]]); 
+        let c8 = new canal(600, 4, 60, player); //originally 600, 10
+        let c9 = new canal(500, 3, 60, player); //originally 500, 7
+
+        let n1 = new canalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6], [c2, c8]]); 
 
         //leah adding a new network to check multinetwork capability
 
-        let n2 = new canalNetwork(-100, 450, [c6, c7], [[c6, c4]]) //originally 500, 350
+        let n2 = new canalNetwork(-500, 250, [c6, c7], [[c6, c4]])
+        let n3 = new canalNetwork(700, -400, [c8, c9], [[c8, c2]])
 
-        return new canalMap(player, true, [n1, n2]); 
+        return new canalMap(player, true, [n1, n2, n3]); 
     }
 
     static getMap2(player) {
