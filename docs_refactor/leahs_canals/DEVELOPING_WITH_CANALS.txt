@@ -24,6 +24,7 @@ CONTENTS
     (a) Where to make changes
     (b) Creating new sprites
     (c) Redbank and Blackbank
+    (d) Lock doors
 
 
 
@@ -185,8 +186,11 @@ as an argument for the function, the line will not have a set colour.
 
 Ideally, both banks should look the same, and should either be invisible or have some nice
 pattern (cobbled rocks or whatever). If you edit the createBank function, that will make these
-changes. 
+changes. It'd probably be nice to have a seperate bank design for locks; the locks currentlyuse the
+inherited createBank function but if you make them a new one, you can make it  different.
 
+(d) Lock doors
+In the makeDoors function in doors.js you canchange how the door sprites look. 
 
 
 
