@@ -14,6 +14,8 @@ CONTENTS
     (a) Locks
     (b) Links
 (3) Debugging and Best Practices
+    (a) general
+    (b) facingBanks switch statement error
 (4) Changing how the canals are set up and drawn
     (a) Where to make changes
     (b) Creating new sprites
@@ -105,6 +107,7 @@ of the two connecting canals.
 
 
 (3) Debugging and Best Practices
+(a) - general
 This code is not (no pun intended) waterproof. there are angles and positions of canals that
 will not link together, or will make the sprites go all out of whack. I'm happy to look at bugs, 
 but there's also a degree of "thinking for you" that I can't get the code to do in the timeframe
@@ -128,6 +131,10 @@ This, I should mention, is all "debugging" in the sense of, "help, my canalnetwo
 of disconnected sprites", not "help, I've gotten an error message." If you get an error message,
 feel free to message right away.
 
+(b) - facingBanks switch statement error
+This is the most fragile code I've written. You can probably solve it by arbitrarily futzing some
+canals around your linked networks, but I'm still not fully sure of this one, so hit me up if 
+you run into it. 
 
 (4) Changing how the canals are setup and drawn
 

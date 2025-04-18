@@ -121,6 +121,8 @@ class linkage extends linearConnect{
         let rsI = this.inbound.getCoord("redStart");
         let bsI = this.inbound.getCoord("blackStart");
 
+        console.log("blackendI: " + this.inbound.getCoord("blackEnd"));
+
         let rhO = halfwayPoint(rsO, this.outbound.getCoord("redEnd"));
         let bhO = halfwayPoint(bsO, this.outbound.getCoord("blackEnd"));
         let rhI = halfwayPoint(rsI, this.inbound.getCoord("redEnd"));
@@ -130,15 +132,6 @@ class linkage extends linearConnect{
         let rs2bs = getHypotenuse(rhO, bhI);
         let bs2bs = getHypotenuse(bhO, bhI);
         let bs2rs = getHypotenuse(bhO, rhI);
-
-        this.tmpOutRedHalf = rhO;
-        this.tmpInRedHalf = rhI;
-
-        console.log("rs2rs (right): " + rs2rs);
-        console.log("bs2bs (current) " + bs2bs);
-
-
-
 
         let min = Math.min(rs2rs, rs2bs, bs2bs, bs2rs);
         switch(min){

@@ -112,7 +112,6 @@ function linearIntersect(a1, c1, a2, c2){
 }
 
 function halfwayPoint(start, end){
-    console.log("end: " + end);
     let xStart = start[0];
     let yStart = start[1];
 
