@@ -10,6 +10,9 @@ class doors{
         this.redDoor = null;
         this.blackDoor = null;
         this.createSprites()
+
+        this.redHeight = null;
+        this.blackHeight = null;
     }
 
     //functions to complete
@@ -20,21 +23,23 @@ class doors{
         //ideally (for canal-ishness) it should be two sprites, forming a pair of double doors
         //on either side of the canal
         this.redDoor = this.makeDoor(this.redSect, "red");
+        this.redHeight = this.redDoor.height;
         this.blackDoor = this.makeDoor(this.blackSect, "black");
+        this.blackHeight = this.blackDoor.height;
     }
 
     open(){
         //rotates the two door sprites outwards so they lie flush with the banks of the
         //canal attached to the lock
-        this.redDoor.remove();
-        this.blackDoor.remove();
+        this.redDoor.rotation = 90;
+        this.blackDoor.rotation = 90;
 
     }
 
     close(){
         //opposite of the open function; closes the sprites so that they
-        console.log("closing")
-        this.createSprites();
+        this.redDoor.rotation = 0;
+        this.blackDoor.rotation = 0;
         
     }
 
