@@ -34,7 +34,7 @@ class TutorialSetupDisplay {
 
         this.timer; 
         this.kbPressCount = 0;
-        this.kbMaxPresses = 4;
+        this.kbMaxPresses = 6;
 
         this.textbox = null;
     }
@@ -44,7 +44,7 @@ class TutorialSetupDisplay {
         this.timer = new Timer();
         this.timer.startTimer();
 
-        this.player = new Sprite(-200, -70, 50, 25);
+        this.player = new Sprite(100, 70, 50, 25);
         this.map = MapController.getMap0(this.player);
   
         this.player.addAnimation("boat", this.playerAnimation);
@@ -63,15 +63,6 @@ class TutorialSetupDisplay {
     display() {
         // clean the previous frame
         clear();
-
-        push();
-        textSize(20);
-        fill(0);
-        stroke(256);
-        strokeWeight(4);
-        text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY)
-        pop();
-        
         this.setCamera(1.5, this.player.x, this.player.y);
 
         if (keyCode == 27) {
@@ -99,10 +90,6 @@ class TutorialSetupDisplay {
         this.playerCfg.debug();
   
         /* this.pursuerCfg.update(); */
-        /* if (this.playerCfg.isHealthZero()){
-            this.clearSprites();
-            state = GameState.LOSE;
-        } */
     }
 
     setCamera(zoom, x, y) {
@@ -132,7 +119,7 @@ class TutorialSetupDisplay {
     runMovementTutorial() {
         this.textBox = new SpeechBubble(this.player.x-150, this.player.y-100, 150, 75, 
         this.player.x-5, this.player.y - 10,
-        "Lets try moving around the canal, use the arrow keys to navigate");
+        this.textboxLookUp());
         this.textBox.show();
         this.playerCfg.movement();
         this.setMovementProgress();
@@ -157,19 +144,19 @@ class TutorialSetupDisplay {
             this.player.y - 10
         );
         this.textBox.show();
-        if(this.health > 0) {
+        if(this.health > 0 && this.kbPressCount >= 6) {
             this.playerCfg.movement(true, true);
+        } 
+        if (this.kbPressCount == 6) {
+            this.health = 0;
         }
         if(this.health == 0) {
             this.kbPressCount = 5;
-            console.log(this.kbPressCount);
         } else if(kb.pressed(' ')) {
             this.kbPressCount++;
             this.textBox.addText(this.textboxLookUp());
             this.textBox.show();
         }
-
-
     }
 
     textboxLookUp(specificText = null) {
@@ -192,10 +179,17 @@ class TutorialSetupDisplay {
                 text = "You will also slowly lose health over time due to wear and tear [SPACE]"
                 break;
             case 4:
-                text = "Try hitting the canal sides until your health is drained"
+                text = "When your health drops to zero you must repair by pressing the \'r\' key [SPACE]"
                 break;
+            case 5:
+                text = "Let's have a go at this now [SPACE]"
+                break;
+            case 6:
+                text = ""
+            break;
             default:
-                text = this.textboxLookUp(this.kbMaxPresses);
+                this.kbPressCount = this.kbMaxPresses;
+                text = this.textboxLookUp(this.kbPressCount);
         }
         return text;
     }
