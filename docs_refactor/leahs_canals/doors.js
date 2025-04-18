@@ -26,14 +26,15 @@ class doors{
     open(){
         //rotates the two door sprites outwards so they lie flush with the banks of the
         //canal attached to the lock
-        console.log("opening!")
-
+        this.redDoor.remove();
+        this.blackDoor.remove();
 
     }
 
     close(){
         //opposite of the open function; closes the sprites so that they
         console.log("closing")
+        this.createSprites();
         
     }
 

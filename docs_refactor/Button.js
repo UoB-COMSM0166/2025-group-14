@@ -48,6 +48,16 @@ class Button {
         this.button.position(this.x - buttonWidth / 2, this.y - buttonHeight / 2);
     }
 
+    // Sets the label of the button to a different value (e.g. from pause to play and back)
+    setLabel(newLabel) {
+        this.button.html(newLabel);
+    }
+
+    // Sets colour of button to a new colour
+    setColour(newColour) {
+        this.button.style('background-color', newColour);
+    }
+
     // changes color when mouse is clicking button
     // also calls the callback function if one is provided
     click() {

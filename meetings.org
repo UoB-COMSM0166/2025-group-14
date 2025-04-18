@@ -222,6 +222,7 @@ Polly - start menu
 Daniel - camera movement
 
 * 08/04/2025
+Notes taken by Leon
 ** Updates
 
 - Leah: Rebuilt canals in p5play lock spins, needs fix
@@ -231,15 +232,80 @@ Daniel - camera movement
 - Leon: Sustainability analysis pending Ruzanna's input, added boat animation to p5play
 
 ** Merging Process
-
 Polly merges to main
 Leah to Adam’s to Daniil to main
 
 ** Next Steps
-
 - General: Multi-level support, Level 1 popup instructions, win/lose conditions, Polly to finalize
 - Daniil: Collaborate with Leah on canal rubbish generation
 - Polly: Implement pause feature
 - Leah: Map canal coordinates for water/rubbish, add canal forks
 - Adam: Design tutorial level/narrative integration
 - Leon: Animate water texture, finalize sustainability doc
+* 15/04/2025
+** notes
+Main branch is in 'docs_refactor'
+*** Daniil
+He has created a tutorial level and a second level. He is going to go ahead on creating more maps but wanted to bring up how we can approach this going forward
+
+**** discussion on map progression approaches
+1. easy/ medium/ hard difficulties conistent across every map
+2. difficulty per map
+
+Daniil prefers the first.
+Leon and Leah tend to prefer the first approach. Polly likes the idea of setting the difficulty once.
+
+Seems to be general consensus on approach one.
+
+*** Leah
+Connecting lakes together in a Network. She has been trying to generalise this to make map creation easier and to create forks in the map.
+
+The focus currenty is on forks. Locks will happen later. Cutting through the jungle with a machete.
+
+*** what Casey could work on
+- locks. Link up with leah to talk about this at some point.
+- sounds
+
+*** Leon
+animations for rubbish in the canals. Water in the canals at a later point.
+
+Randomly generated rubbish in the canal. Ripples around the garbage. Tried webgl but it seemed like too much of a headache. Filled the canals with a translucent colour. He is thinking about adding p5 'noise' but he's not sure.
+
+*** Polly
+Made the info screen, and the pause button. Refactored the game control logic entirely. Used the button class.
+
+She has suggested that we jazz up our report by going through previously highly marked projects
+
+*** Adam
+Working on pursuer, creates a route based off of the player path. Levels files, making a tutorial level at the moment.
+
+** planning for the report
+- Leah is happy to get shifted into working on the report once she has finished with her side.
+- Daniil is happy to get started on the report soon.
+- Polly would like to add to the report too
+
+*** dates
+- Starting now: report
+- WB 21/05/2025 planning video
+- WB 28/05/2025 making the video
+
+* 18/04/2025
+** Daniil
+Been working on the UML diagrams. He wants the other members of the group to let him know classes, methods and variables for their respective parts of the code.
+
+** Adam
+Has been working on the tutorial level
+** Casey
+Working on locks. Early stages
+** Leah
+- Thinking it would be good to be able to control the speed of the boat.
+- We need to develop some maps and start mapping out the game.
+- Developing the aesthetics
+- Locks functioning at a very basic level for prototyping purposes
+- Procedural generation is going to be tough as bugs are there.
+- Alot of what she's doing ironing out bugs
+- Canals now have ends
+
+We need to effectively lock in all the features now and write the game. Level creation and the basic features listed above.
+
+Casey agreed with this and believes more people in the group are needed to be working on these features than are currently. There seems to be general agreement although some feel this is not necessary. No resolution on this

@@ -89,8 +89,8 @@ get in!
 Locks do, however, take two additional args: fillTime and openTime. These are given in seconds. 
 both gates will stay open for openTime, and the periods where both doors are shut last for fillTime.
 
-Locks are still under construction, and may not work yet - however, you can still include
-them in levels and pretend they're working to get a feel for them.
+At the moment, lock gates simply disappear when they open and reappear when closed. Hopefully something
+more elegant is forthcoming!
 
 (b) Links
 Linkages are a type of network created by the map to link two other networks. You should not use
