@@ -308,4 +308,7 @@ Working on locks. Early stages
 
 We need to effectively lock in all the features now and write the game. Level creation and the basic features listed above.
 
-Casey agreed with this and believes more people in the group are needed to be working on these features than are currently. There seems to be general agreement although some feel this is not necessary. No resolution on this
+Casey agreed with this and believes more people in the group are needed to be working on these features than are currently. There seems to be general agreement although some also feel this is not necessary.
+
+** finishing notes (from Leah)
+Adam raised the prospect of changing back to an old approach to movement (where you steer rather than just use directional arrows). We didn't decide to do it or not, we figured that if Adam and Leah could get some maps out, then they could see how necessary it was.
