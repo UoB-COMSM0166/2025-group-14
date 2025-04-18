@@ -34,7 +34,6 @@ class canalMap {
     }
 
     setLinkages(){
-        console.log("Setting map linkages")
         this.forAllNetworks(network => {
             let linkages = network.getLinkages();
             for(const link of linkages){ 

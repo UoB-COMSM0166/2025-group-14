@@ -121,7 +121,6 @@ class linkage extends linearConnect{
         let rsI = this.inbound.getCoord("redStart");
         let bsI = this.inbound.getCoord("blackStart");
 
-        console.log("blackendI: " + this.inbound.getCoord("blackEnd"));
 
         let rhO = halfwayPoint(rsO, this.outbound.getCoord("redEnd"));
         let bhO = halfwayPoint(bsO, this.outbound.getCoord("blackEnd"));
@@ -247,7 +246,6 @@ class linkage extends linearConnect{
 
         this.createSprites();
         this.setBankSprites();
-        console.log("about to rebuild banks")
         this.rebuildBanks();
 
         //this.outbound.rebuildToExit(this.link.getCoord("redStart"), this.link.getCoord("blackStart"));
@@ -255,7 +253,6 @@ class linkage extends linearConnect{
     }
 
     rebuildBanks(){
-        console.log("rebuilding banks")
         this.outbound.removeOneBank(this.outBank);
         this.inbound.removeOneBank(this.inBank);
 

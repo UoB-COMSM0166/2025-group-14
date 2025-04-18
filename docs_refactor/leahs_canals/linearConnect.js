@@ -24,8 +24,6 @@ class linearConnect{
                 this.bankSprites.push(subentry);
             }
         }
-
-        console.log("Inner: " + this.bankSprites.length);
     }
 
     setBlackCoords(){
