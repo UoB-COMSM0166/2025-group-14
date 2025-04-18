@@ -194,13 +194,13 @@ class canal{
     }
 
     createRedBank(){
-        this.redBank = this.createBank(this.redStart, this.redEnd)
-        this.redBank.colour = "red";
+        this.redBank = this.createBank(this.redStart, this.redEnd, "red")
+
     }
 
     createBlackBank(){
-        this.blackBank = this.createBank(this.blackStart, this.blackEnd)
-        this.blackBank.colour = "black";
+        this.blackBank = this.createBank(this.blackStart, this.blackEnd, "black")
+
 
     }
 
@@ -247,9 +247,12 @@ class canal{
         this.blackOff = offset(this.gradient, blackStart);
     }
 
-    createBank(start, end){
+    createBank(start, end, colour = null;){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
+        if(colour != null){
+            outp.color = colour;
+        }
         this.allSprites.push(outp);
         this.bankSprites.push(outp);
         return outp;
@@ -391,10 +394,10 @@ class canal{
             farPoint = c1;
         }
 
-        let firstLinkPiece = this.createBank(start, nearPoint);
-        firstLinkPiece.colour = targetBank;
-        let secondLinkPiece = this.createBank(farPoint, end);
-        secondLinkPiece.colour = targetBank;
+        let firstLinkPiece = this.createBank(start, nearPoint, targetBank);
+
+        let secondLinkPiece = this.createBank(farPoint, end, targetBank);
+
 
         //remember to push the banks! 
     }
