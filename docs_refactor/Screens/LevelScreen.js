@@ -28,10 +28,19 @@ class LevelScreen {
         this.tutorialButton.hide();
         this.levelOneButton.hide();
         this.levelTwoButton.hide();
-        state = GameState.INFO_SCREEN;
+        if (this.selectedLevel === 2) {
+            state = GameState.DIFFICULTY_SCREEN;
+        } else {
+            state = GameState.INFO_SCREEN;
+        }
+        // state = GameState.INFO_SCREEN;
     }
 
     getSelectedLevel() {
         return this.selectedLevel;
+    }
+
+    resetSelectedLevel() {
+        this.selectedLevel = -1;
     }
 }

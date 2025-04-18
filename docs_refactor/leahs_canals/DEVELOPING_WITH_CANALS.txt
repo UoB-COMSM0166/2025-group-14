@@ -17,6 +17,7 @@ CONTENTS
 (3) Debugging and Best Practices
     (a) general
     (b) facingBanks switch statement error
+    (c)
 (4) Changing how the canals are set up and drawn
     (a) Where to make changes
     (b) Creating new sprites

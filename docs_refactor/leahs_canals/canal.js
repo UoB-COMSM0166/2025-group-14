@@ -18,6 +18,44 @@ let garbagePieceCnt = 0;
 // let playerInFinalSegment = false;
 let finishLineCrossed = false;
 
+let flipflopAni, bottleAni, maskAni, tireAni, takeoutboxAni, rippleAni;
+let garbageAnis = [];
+
+function preload() {
+    flipflopAni = loadAni("assets/garbage/flipflopidle.png", {
+      frameSize: [32, 32], // width and height of a single frame
+      frames: 4            // total number of frames in the sheet
+    });
+    bottleAni = loadAni("assets/garbage/bottleidle.png", {
+    frameSize: [32, 32],
+    frames: 4
+    });
+    maskAni = loadAni("assets/garbage/maskidle.png", {
+    frameSize: [32, 32],
+    frames: 4
+    });
+    tireAni = loadAni("assets/garbage/tireidle.png", {
+    frameSize: [32, 32],
+    frames: 4
+    });
+    takeoutboxAni = loadAni("assets/garbage/boxidle.png", {
+    frameSize: [32, 32],
+    frames: 4
+    });
+    rippleAni = loadAni("assets/ripple.png", {
+    frameSize: [32, 32],
+    frames: 4
+    });
+    flipflopAni.frameDelay = 20;
+    bottleAni.frameDelay = 20;
+    maskAni.frameDelay = 20;
+    tireAni.frameDelay = 20;
+    takeoutboxAni.frameDelay = 20;
+    rippleAni.frameDelay = 20;
+    garbageAnis.push(flipflopAni, bottleAni, maskAni, tireAni, takeoutboxAni);
+  }
+
+
 class canal{
 
     //construction functions
@@ -72,8 +110,22 @@ class canal{
 
         this.garbageOn = garbageOn;
         this.garbage;
+        this.ripples;
         // this.garbagePiece;
         this.finish = finish; 
+
+        // this.garbageAnis = {
+        //     flipflop: flipflopAni,
+        //     tire: tireAni,
+        //     mask: maskAni,
+        //     bottle: bottleAni,
+        //     takeoutbox: takeoutboxAni,
+        // }
+        // console.log("garbageAnis loaded: ", this.garbageAnis);
+        // console.log("flipflopAni loaded: "+this.garbageAnis.flipflop);
+        // console.log("tireAni loaded: "+this.garbageAnis.tire);
+        // this.rippleAni = rippleAni;
+        // console.log("rippleAni loaded: "+this.rippleAni.frameCount);
     }
 
     getDirection(){
@@ -316,12 +368,23 @@ class canal{
     createGarbage() {
 
         this.garbage = new Group();
+        this.ripples = new Group();
+
         this.garbage.amount = this.getRandomInt(1, 4);
+        this.ripples.amount = this.garbage.amount;
         // console.log(this.garbage.amount);
         this.garbage.diameter = 10;
+        this.ripples.diameter = 15;
         // this.garbage.collider = NONE;
 
+        let rippleIndex = 0;
+
         for (let piece of this.garbage) {
+            this.ripples[rippleIndex].addAni(rippleAni);
+            this.ripples[rippleIndex].ani = rippleAni;
+
+            piece.ripple = this.ripples[rippleIndex];
+
             let offsetAlongCanal = this.getRandomFloat(0.1, 0.9);
             // console.log(offsetAlongCanal);
         
@@ -335,11 +398,21 @@ class canal{
             piece.x = garbageSpriteCoordinates[0];
             piece.y = garbageSpriteCoordinates[1];
             piece.collider = "none";
+
+            this.ripples[rippleIndex].x = garbageSpriteCoordinates[0];
+            this.ripples[rippleIndex].y = garbageSpriteCoordinates[1];
+            this.ripples[rippleIndex].collider = "none";
+            
+            let randomAni = random(garbageAnis);
+            piece.addAni(randomAni);
+            piece.ani = randomAni;
+
+            rippleIndex++;
         }
 
         this.player.overlaps(this.garbage, collect);
 
-        this.allSprites.push(this.garbage);
+        this.allSprites.push(this.garbage, this.ripples);
     }
 
     remove(){
@@ -416,8 +489,14 @@ class canal{
  
 function collect(player, gem) {
 	gem.remove();
+    gem.ripple.remove();
     garbagePieceCnt++;
-    pursuerMoveCooldown += 15;
+    pursuerMoveCooldown += pursuerFreezeFrames;
+    // print(difficultyLevel);
+    // console.log(pursuerMoveCooldown);
+    pursuerMoveCooldown += pursuerFreezeFrames;
+    // print(difficultyLevel);
+    // console.log(pursuerMoveCooldown);
 }
 
 function finish(player) {

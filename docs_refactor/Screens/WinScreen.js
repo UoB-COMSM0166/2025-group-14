@@ -18,7 +18,7 @@ class WinScreen {
         text("Press SPACE to play the game again.", centerX, centerY+30);
         
         // if space key is pressed, go back to start screen.
-        if (state === GameState.WIN && keyCode === 32) {
+        if (state === GameState.WIN && kb.pressed(' ')) {
             state = GameState.START_SCREEN;
         }
     }
