@@ -1,3 +1,5 @@
+IMPORTANT - please read this document on Leah's branch as it gets updated regularly.
+
 Hello!
 
 The canals are now at a point where we can start developing levels with them, and also
@@ -17,7 +19,7 @@ CONTENTS
 (3) Debugging and Best Practices
     (a) general
     (b) facingBanks switch statement error
-    (c)
+    (c) six oclock error
 (4) Changing how the canals are set up and drawn
     (a) Where to make changes
     (b) Creating new sprites
@@ -141,6 +143,9 @@ feel free to message right away.
 This is the most fragile code I've written. You can probably solve it by arbitrarily futzing some
 canals around your linked networks, but I'm still not fully sure of this one, so hit me up if 
 you run into it. 
+
+(c) - six Oclock errors
+Canals currently don't work if you try and set them straight down. this is a high priority to fix. 
 
 (4) Changing how the canals are setup and drawn
 
