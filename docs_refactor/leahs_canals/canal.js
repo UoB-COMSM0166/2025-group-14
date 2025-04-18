@@ -262,6 +262,12 @@ class canal{
         return outp;
     }
 
+    createEnd(position){
+        let black = "black".concat(position);
+        let red = "red".concat(position);
+        this.createBank(this.getCoord(black), this.getCoord(red), "black");
+    }
+
     getBanks(){return this.bankSprites}
 
     getGradient(){return this.gradient}

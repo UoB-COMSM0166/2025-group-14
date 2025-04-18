@@ -10,9 +10,10 @@ CONTENTS
     (a) canals
     (b) networks
     (c) maps
-(2) Advanced Features - Locks and Links
+(2) Advanced Features
     (a) Locks
     (b) Links
+    (c) Ends
 (3) Debugging and Best Practices
     (a) general
     (b) facingBanks switch statement error
@@ -104,6 +105,10 @@ halfway point of each one can be reached from the other without obstruction.
 
 Also worth noting is that the new canal created by the linkage has the same width as the THINNEST
 of the two connecting canals. 
+
+(c) ends
+Networks automaticall draw an black bank at the start and end of their course. To turn this off,
+comment-out the "createEndSprites();" method in the constructor method in canalNetwork.js
 
 
 (3) Debugging and Best Practices

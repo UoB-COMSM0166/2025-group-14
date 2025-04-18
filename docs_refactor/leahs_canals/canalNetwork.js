@@ -34,12 +34,19 @@ class canalNetwork extends linearConnect{
 
         this.bestowCoords();
         this.createSprites();
+        this.createEndSprites()
         
         this.setBankSprites();
 
         this.linkages = this.setLinkages(linkages);
 
     }
+
+    createEndSprites(){
+        this.course[0].createEnd("Start");
+        this.course[this.course.length - 1].createEnd("End");
+    }
+
     
     getStartCoords(){return [this.x, this.y]}
 
