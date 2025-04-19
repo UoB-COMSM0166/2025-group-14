@@ -30,11 +30,16 @@ class TutorialSetupDisplay {
 
         this.passedDamageTutorial = false;
         this.startedDamageTutorial = false;
+        this.startedPursuerTutorial = false;
         this.passedMovementTutorial = false;
+        this.startedRepair = false;
+        this.endRepair = false;
 
         this.timer; 
         this.kbPressCount = 0;
-        this.kbMaxPresses = 6;
+        this.kbMaxPresses = 10;
+
+        this.midRepair = false;
 
         this.textbox = null;
     }
@@ -83,10 +88,16 @@ class TutorialSetupDisplay {
             this.map.animate();
             return;
         }
+
+        if (!this.passedPursuerTutorial) {
+            this.runPursuerTutorial();
+            this.map.animate();
+            return;
+        }
         this.map.animate();
         //this.playerCfg.camera();
         // turn off damage and health
-        this.playerCfg.movement(false, false);
+        this.playerCfg.movement(true, true);
         this.playerCfg.debug();
   
         /* this.pursuerCfg.update(); */
@@ -129,33 +140,53 @@ class TutorialSetupDisplay {
       //camera.off();
         if (!this.startedDamageTutorial) {
             this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
-            this.health = this.playerMaxHealth;
+            this.playerCfg.health = this.playerMaxHealth;
             this.kbPressCount++;
             this.textBox = new SpeechBubble(this.player.x-150, this.player.y-100, 150, 75, 
                 this.player.x-5, this.player.y - 10,
                 this.textboxLookUp() );
             this.startedDamageTutorial = true;
         }
-        this.healthbar.draw();
-        this.textBox.updatePosition(
-            this.player.x - 150, 
-            this.player.y - 100, 
-            this.player.x - 5, 
-            this.player.y - 10
-        );
-        this.textBox.show();
-        if(this.health > 0 && this.kbPressCount >= 6) {
+
+        if (this.kbPressCount == 5) { 
             this.playerCfg.movement(true, true);
-        } 
-        if (this.kbPressCount == 6) {
-            this.health = 0;
+            if(!this.startedRepair){
+                this.playerCfg.health = 20;
+                this.startedRepair = true;
+            }
         }
-        if(this.health == 0) {
-            this.kbPressCount = 5;
-        } else if(kb.pressed(' ')) {
+
+        if (kb.pressed('r') && this.kbPressCount == 5) {
+            this.kbPressCount = 6;
+            this.midRepair = true;
+            this.textBox = null;  
+        }
+
+        if (this.startedRepair && this.playerCfg.health != 0 && !this.midRepair) {
+            this.endRepair = true;
+            this.midRepair = false;
+            this.textBox.addText(this.textboxLookUp());
+        }
+
+        if (!this.midRepair) {
+            this.textBox.updatePosition(
+                this.player.x - 150,
+                this.player.y - 100,
+                this.player.x - 5,
+                this.player.y - 10
+            );
+            this.textBox.show();
+        }
+        
+        this.healthbar.draw();
+    
+        
+        if (this.kbPressCount < 5 && kb.pressed(' ')) {
             this.kbPressCount++;
             this.textBox.addText(this.textboxLookUp());
-            this.textBox.show();
+        } 
+        if (this.endRepair && kb.pressed(' ')) {
+            this.passedDamageTutorial = true;
         }
     }
 
@@ -167,26 +198,38 @@ class TutorialSetupDisplay {
         } else textKey = this.kbPressCount;
         switch (textKey) {
             case 0:
-                text = "Lets try moving around the canal, use the arrow keys to navigate"
+                text = "Use the arrow keys to try and reach the end of the canal"
                 break;
             case 1:
-                text = "Nice one! Now look at the top left corner and you'll see a healthbar [SPACE]"
+                text = "Good job! Check your health bar at the top left [SPACE]"
                 break;
             case 2:
-                text = "Hitting the edge of the canal will cause your health to drain [SPACE]"
+                text = "Colliding with the canal edges reduces your health [SPACE]"
                 break;
             case 3:
-                text = "You will also slowly lose health over time due to wear and tear [SPACE]"
+                text = "Health also depletes slowly from wear and tear [SPACE]"
                 break;
             case 4:
-                text = "When your health drops to zero you must repair by pressing the \'r\' key [SPACE]"
+                text = "If your health fully depletes then you lose the game [SPACE]"
                 break;
             case 5:
-                text = "Let's have a go at this now [SPACE]"
+                text = "Let's try a repair now, press 'r' to fix your boat [SPACE]"
                 break;
             case 6:
-                text = ""
-            break;
+                text = "You're fully repaired! [SPACE]"
+                break;
+            case 7:
+                text = "Now the challenge begins — a pursuer is after you! [SPACE]"
+                break;
+            case 8:
+                text = "Collecting rubbish in the canal will slow them down [SPACE]"
+                break;
+            case 9:
+                text = "If the pursuer catches up to you your health will deplete [SPACE]"
+                break;
+            case 10:
+                text = "Try reaching the end of the canal before the pursuer catches up to you"
+                break;
             default:
                 this.kbPressCount = this.kbMaxPresses;
                 text = this.textboxLookUp(this.kbPressCount);
@@ -194,12 +237,37 @@ class TutorialSetupDisplay {
         return text;
     }
 
-    runGarbageTutorial() {
-        
-    }
-
     runPursuerTutorial() {
+        if (!this.startedPursuerTutorial) {
+            this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
+            this.playerCfg.health = this.playerMaxHealth;
+            this.kbPressCount = 7;
+            this.textBox = new SpeechBubble(this.player.x-150, this.player.y-100, 150, 75, 
+                this.player.x-5, this.player.y - 10,
+                this.textboxLookUp() );
+            this.kbPressCount++;
+            this.startedPursuerTutorial = true;
+        }
+        this.healthbar.draw();
+        this.textBox.updatePosition(
+            this.player.x - 150, 
+            this.player.y - 100, 
+            this.player.x - 5, 
+            this.player.y - 10
+        );
+        this.textBox.show();
 
+        if(this.kbPressCount <= 10 && kb.pressed(' ')) {
+            this.textBox.addText(this.textboxLookUp());
+            this.textBox.show();
+            this.kbPressCount++;
+        }
+
+        if(this.kbPressCount > 10) {
+            this.playerCfg.movement(true, true)
+        }
+        
+        
     }
   
     clearSprites() {
