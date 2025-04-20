@@ -291,7 +291,9 @@ class TutorialSetupDisplay {
         this.healthbar.draw();
 
         if (this.kbPressCount == 7) {
-            this.runCutScene(this.pursuer.x, this.pursuer.y);
+            this.runCutScene(this.player.x, this.player.y, 
+                this.pursuer.x, this.pursuer.y);
+            this.textBox.show();
             return;
         }
     
@@ -326,29 +328,38 @@ class TutorialSetupDisplay {
         }
     }
 
-    // runs a *cinematic* pan from the player to a given location
-    runCutScene(x, y) {
+    // run a *cinematic* pan from the player to a given location
+    runCutScene(fromX, fromY, toX, toY) {
         // only want to initialise on first call
         if (!this.cutsceneActive) {
             this.cutsceneActive = true;
             //take a timestamp of when the cutscene started
             this.cutsceneStartTime = millis();
             this.cutsceneDuration = 2000; 
-            this.cutsceneFromX = this.player.x;
-            this.cutsceneFromY = this.player.y;
-            this.cutsceneToX = x;
-            this.cutsceneToY = y;
+            // add additional delay to allow user to read text box
+            this.initialDelay = 1000;
+            this.cutsceneFromX = fromX;
+            this.cutsceneFromY = fromY;
+            this.cutsceneToX = toX;
+            this.cutsceneToY = toY;
+            //check if camera is back to where it should be 
+            this.returnedToStart = false;
         }
         //how long has passed since cutscene started
         let timeElapsed = millis() - this.cutsceneStartTime;
 
+        //wait for initial delay
+        if (timeElapsed < this.initialDelay) {
+            return;
+        }
+
         //lerp below needs to have a value between 0-1 to work out the progress of the panning
-        let cutSceneProgress = Math.min(timeElapsed/this.cutsceneDuration, 1);
+        let cutSceneProgress = Math.min(timeElapsed - this.initialDelay/this.cutsceneDuration, 1);
     
         // use lerp to set camera smoothly from point A to B (calculates each point on a line between the two)
         let cameraX = lerp(this.cutsceneFromX, this.cutsceneToX, cutSceneProgress);
         let cameraY = lerp(this.cutsceneFromY, this.cutsceneToY, cutSceneProgress);
-        this.setCamera(1, cameraX, cameraY);
+        this.setCamera(1.2, cameraX, cameraY);
     
         if (cutSceneProgress == 1) {
             this.cutsceneActive = false;
