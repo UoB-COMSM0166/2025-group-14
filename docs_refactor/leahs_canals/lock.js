@@ -3,6 +3,7 @@ class lock extends canal {
         super(length, oClock, width, player);
         this.fillTime = fillTime;
         this.openTime = openTime;
+        this.checkTimes();
 
         this.cycle = this.fillTime + this.fillTime + this.openTime + this.openTime;
         this.startFull = this.openTime + this.fillTime;
@@ -16,6 +17,12 @@ class lock extends canal {
 
         // depth bar
         this.depthBar = new DepthBar(true);
+    }
+
+    checkTimes(){
+        if(this.fillTime === null || this.openTime === null){
+            throw new Error("Remember a lock takes two extra arguments, fillTime and openTime; please set these");
+        }
     }
 
     createSprites(){
