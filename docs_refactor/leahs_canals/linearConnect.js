@@ -25,7 +25,7 @@ class linearConnect{
         }
     }
 
-    setBlackCoords(){
+    setBlackCoords(loop = false){
         let blackChanges = []
         this.forAllCanals(canal =>
             blackChanges.push(canal.getWidthChanges())
@@ -45,7 +45,8 @@ class linearConnect{
         bc.push([first[0] + firstBlack[0], first[1] + firstBlack[1]]);
 
         let i;
-        for(i = 1; i < rc.length -1; i++){
+        let rclength = rc.length - 1;
+        for(i = 1; i < rclength; i++){
             let red = rc[i];
             let prev = blackChanges[i - 1];
             let next = blackChanges[i];
@@ -74,9 +75,14 @@ class linearConnect{
             }
         }
 
-        let last = rc[i];
-        let lastChange = blackChanges[i - 1];
-        bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])
+        if(loop){
+            bc.push(bc[0])
+        }else{
+
+            let lastChange = blackChanges[i - 1];
+            bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])
+        }
+            
 
         this.blackCoords = bc;
     

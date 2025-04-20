@@ -1,4 +1,10 @@
 IMPORTANT - please read this document on Leah's branch as it gets updated regularly.
+Latest updates: 
+    - six oclock error now resolved
+    - canals can now link to other canals in the same network
+    - length, oClock, width and player can now be input into a canal as a single array of length 4.
+    - the network course array now can take individaul canals or canals collected into a sub-array
+    - new boolean "loop" value for network adds a new canal connecting the first canal to the end
 
 Hello!
 

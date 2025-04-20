@@ -369,7 +369,7 @@ class canal{
     }
 
     canalAnimate(){
-        text(radsToDegrees(this.angle), this.redStart[0] + 20, this.redStart[1] + 20);
+        text(this.getConnections("prev"), this.redStart[0] + 20, this.redStart[1] + 20);
         this.displayWater();
 
         // for (let sprite of this.allSprites) {

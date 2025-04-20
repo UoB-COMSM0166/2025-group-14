@@ -27,14 +27,16 @@ class canalNetwork extends linearConnect{
         this.y = y;
         this.course = this.extractCourse(course);
 
-        this.setRedCoords();      
-        this.setBlackCoords();
+        this.setRedCoords(loop);      
+        this.setBlackCoords(loop);
 
-        this.connectCanals();
+        this.connectCanals(loop);
 
         this.bestowCoords();
         this.createSprites();
-        this.createEndSprites()
+        if(!loop){
+            this.createEndSprites();
+        }
         
         this.setBankSprites();
 
@@ -99,12 +101,16 @@ class canalNetwork extends linearConnect{
         }
     }
 
-    setRedCoords(){
+    setRedCoords(loop){
         this.redCoords = [[this.x, this.y]];
         let prev;
         for(let i = 0; i < this.course.length; i++){
             prev = this.redCoords[i];
             this.redCoords.push(this.findNextCoords(prev, this.course[i]));
+        }
+        if(loop){
+            this.redCoords.push([this.x, this.y]);
+            this.pushLoopCanal();
         }
     }
     
@@ -131,8 +137,7 @@ class canalNetwork extends linearConnect{
         return false;        
     }
 
-    connectCanals(){
-
+    connectCanals(loop){
         const l = this.course.length;
         let current;
         let prev;
@@ -152,6 +157,25 @@ class canalNetwork extends linearConnect{
             }
             current.connect(prev, next);
         }
+        if(loop){
+            let first = this.course[0];
+            let last = this.course[this.course.length - 1];
+            first.connect(last, first.getConnections("next"));
+            last.connect(last.getConnections("prev"), first);
+        }
+    }
+
+    pushLoopCanal(){
+        let penultimate = this.redCoords[this.redCoords.length - 2];
+        let penX = penultimate[0];
+        let penY = penultimate[1];
+
+        let length = getHypotenuse(penultimate, [this.x, this.y]);
+        let oClock = angleToClock(angleCalc(penX, penY, this.x, this.y, true, true, true));
+        let width = this.course[0].getWidth();
+        let player = this.course[0].getPlayer();
+        this.course.push(new canal(length, oClock, width, player));
+
     }
 
     remove(){
