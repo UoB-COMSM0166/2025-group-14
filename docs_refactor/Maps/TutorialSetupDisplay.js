@@ -59,7 +59,61 @@ class TutorialSetupDisplay {
         this.playerMaxHealth = 100;
         this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
     
-      }
+    }
+
+    
+    textboxLookUp(specificText = null) {
+        let text = null;
+        let textKey = null;
+        if (specificText) {
+            textKey = specificText;
+        } else textKey = this.kbPressCount;
+        switch (textKey) {
+            case 0:
+                text = "Use the arrow keys to move around the canal"
+                break;
+            case 1:
+                text = "Good job! Check your health bar at the top left [SPACE]"
+                break;
+            case 2:
+                text = "Colliding with the canal edges reduces your health [SPACE]"
+                break;
+            case 3:
+                text = "Health also depletes slowly from wear and tear [SPACE]"
+                break;
+            case 4:
+                text = "If your health fully depletes then you lose the game [SPACE]"
+                break;
+            case 5:
+                text = "Let's try a repair now, press 'r' to fix your boat [SPACE]"
+                break;
+            case 6:
+                text = "You're fully repaired! [SPACE]"
+                break;
+            case 7:
+                text = "Now the challenge begins — a pursuer is after you! [SPACE]"
+                break;
+            case 8:
+                text = "Collecting rubbish in the canal will slow them down [SPACE]"
+                break;
+            case 9:
+                text = "If the pursuer catches up to you your health will deplete [SPACE]"
+                break;
+            case 10:
+                text = "The canal contains locks. Enter these before the pursuer to allow time for repairs [SPACE]"
+                break;
+            case 11:
+                text = "Try reaching the end of the canal before the pursuer catches up to you"
+                break;
+            case 12:
+                text = "You died - lets try that again!"
+                break;
+            default:
+                this.kbPressCount = this.kbMaxPresses;
+                text = this.textboxLookUp(this.kbPressCount);
+        }
+        return text;
+    }
   
     // Post-refactor display
     display() {
@@ -91,12 +145,6 @@ class TutorialSetupDisplay {
             this.map.animate();
             return;
         }
-
-
-        //show win screen when player reaches the final canal
-        this.map.animate();
-        this.playerCfg.movement(true, true);
-        this.playerCfg.debug();
   
     }
 
@@ -206,62 +254,11 @@ class TutorialSetupDisplay {
         }
     }
 
-    textboxLookUp(specificText = null) {
-        let text = null;
-        let textKey = null;
-        if (specificText) {
-            textKey = specificText;
-        } else textKey = this.kbPressCount;
-        switch (textKey) {
-            case 0:
-                text = "Use the arrow keys to move around the canal"
-                break;
-            case 1:
-                text = "Good job! Check your health bar at the top left [SPACE]"
-                break;
-            case 2:
-                text = "Colliding with the canal edges reduces your health [SPACE]"
-                break;
-            case 3:
-                text = "Health also depletes slowly from wear and tear [SPACE]"
-                break;
-            case 4:
-                text = "If your health fully depletes then you lose the game [SPACE]"
-                break;
-            case 5:
-                text = "Let's try a repair now, press 'r' to fix your boat [SPACE]"
-                break;
-            case 6:
-                text = "You're fully repaired! [SPACE]"
-                break;
-            case 7:
-                text = "Now the challenge begins — a pursuer is after you! [SPACE]"
-                break;
-            case 8:
-                text = "Collecting rubbish in the canal will slow them down [SPACE]"
-                break;
-            case 9:
-                text = "If the pursuer catches up to you your health will deplete [SPACE]"
-                break;
-            case 10:
-                text = "The canal contains locks. Enter these before the pursuer to allow time for repairs [SPACE]"
-                break;
-            case 11:
-                text = "Try reaching the end of the canal before the pursuer catches up to you"
-                break;
-            case 12:
-                text = "You died - lets try that again!"
-                break;
-            default:
-                this.kbPressCount = this.kbMaxPresses;
-                text = this.textboxLookUp(this.kbPressCount);
-        }
-        return text;
-    }
-
     runPursuerTutorial() {
+        camera.on();
         if (!this.startedPursuerTutorial) {
             this.kbPressCount = 7;  
+            this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
             this.textBox = new SpeechBubble(
                 this.player.x - 150, this.player.y - 100, 150, 75, 
                 this.player.x - 5, this.player.y - 10,
@@ -272,6 +269,8 @@ class TutorialSetupDisplay {
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.startedPursuerTutorial = true;  
         }
+        
+        this.healthbar.draw();
     
         if (this.kbPressCount >= 11) { 
             this.playerCfg.movement(true, true); 
@@ -288,8 +287,6 @@ class TutorialSetupDisplay {
             camera.on();
         }
         
-        this.healthbar.draw();
-
         if (this.kbPressCount == 7) {
             this.runCutScene(this.player.x, this.player.y, 
                 this.pursuer.x, this.pursuer.y);
@@ -326,10 +323,13 @@ class TutorialSetupDisplay {
             state = GameState.WIN;
             finishLineCrossed = false;
         }
+
+        if (this.playerCfg.isHealthZero()) {
+
+        }
     }
 
-    // run a *cinematic* pan from the player to a given location
-    // the final bool is needed as the function will be called again inside the function
+    // run a *cinematic* camera pan from the point A to B and back
     runCutScene(fromX, fromY, toX, toY) {
         // only want to initialise on first call
         if (!this.cutsceneActive) {
@@ -350,7 +350,7 @@ class TutorialSetupDisplay {
         let timeElapsed = millis() - this.cutsceneStartTime;
 
         //wait for initial delay
-        if (timeElapsed < this.initialDelay && !this.returningToStart && !this.returningToStart) {
+        if (timeElapsed < this.initialDelay && !this.returningToStart) {
             return;
         }
 

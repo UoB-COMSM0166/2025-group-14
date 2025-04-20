@@ -22,8 +22,6 @@ class LevelController {
         return levelInstance;
     }
 
-    // Quick and dirty fix to load assets in only once - p5Play *really* doesn't like it when you try to add an animation to
-    // the same sprite twice (crashes). Think there is probably a much more elegant way to do this with preload but haven't figured it out yet.
     static loadAssets() {
         if (LevelController.firstTimeLoading) {
             LevelController.playerAnimation = loadAnimation("Boat-redbrown.png", [
