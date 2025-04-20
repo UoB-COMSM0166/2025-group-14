@@ -66,7 +66,6 @@ function setup() {
 function draw() {
 
   if (state == GameState.START_SCREEN) {
-    console.log("startscreen")
     start_screen.display();
   }
 
@@ -75,7 +74,6 @@ function draw() {
   }
 
   if (state == GameState.PLAY_GAME) {
-    console.log("play screen")
     game_screen.display();
   }
 
