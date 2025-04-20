@@ -34,6 +34,8 @@ class TutorialSetupDisplay {
         this.passedMovementTutorial = false;
         this.startedRepair = false;
         this.endRepair = false;
+        this.hasDied = false;
+        this.cutsceneActive = false;
 
         this.timer; 
         this.kbPressCount = 0;
@@ -56,19 +58,13 @@ class TutorialSetupDisplay {
         this.player.animation.frameDelay = 18;
         this.playerMaxHealth = 100;
         this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
-      
-       /*  this.pursuer = new Sprite(40, 100, 50, 25);
-        this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3); */
-      
-        /* camera.x = this.player.x;
-        camera.y = this.player.y; */
+    
       }
   
     // Post-refactor display
     display() {
         // clean the previous frame
         clear();
-        this.setCamera(1.5, this.player.x, this.player.y);
 
         if (keyCode == 27) {
           this.clearSprites();
@@ -77,13 +73,14 @@ class TutorialSetupDisplay {
         }
 
         if (!this.passedMovementTutorial) {
+            this.setCamera(1.5, this.player.x, this.player.y);
             this.runMovementTutorial();
             this.map.animate();
             return;
         }
 
-        this.setCamera(1, this.player.x, this.player.y);
         if (!this.passedDamageTutorial) {
+            this.setCamera(1, this.player.x, this.player.y);
             this.runDamageTutorial();
             this.map.animate();
             return;
@@ -252,6 +249,9 @@ class TutorialSetupDisplay {
             case 11:
                 text = "Try reaching the end of the canal before the pursuer catches up to you"
                 break;
+            case 12:
+                text = "You died - lets try that again!"
+                break;
             default:
                 this.kbPressCount = this.kbMaxPresses;
                 text = this.textboxLookUp(this.kbPressCount);
@@ -267,8 +267,9 @@ class TutorialSetupDisplay {
                 this.player.x - 5, this.player.y - 10,
                 this.textboxLookUp()
             );
-            this.pursuer = new Sprite(40, 100, 50, 25);
+            this.pursuer = new Sprite(200, 70, 50, 25);
             this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
+            this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.startedPursuerTutorial = true;  
         }
     
@@ -286,8 +287,13 @@ class TutorialSetupDisplay {
             pop();
             camera.on();
         }
-    
+        
         this.healthbar.draw();
+
+        if (this.kbPressCount == 7) {
+            this.runCutScene(this.pursuer.x, this.pursuer.y);
+            return;
+        }
     
         if (this.kbPressCount < 11 && kb.pressed(' ')) {
             this.kbPressCount++;
@@ -297,20 +303,62 @@ class TutorialSetupDisplay {
                 this.textboxLookUp()
             );
         }
-    
-        if (this.textBox && this.kbPressCount < 11) {
+
+        if (this.kbPressCount < 11) {
+            this.setCamera(1, this.pursuer.x, this.pursuer.y);
+            camera.off();
             this.textBox.updatePosition(
                 this.player.x - 150,
                 this.player.y - 100,
                 this.player.x - 5,
                 this.player.y - 10
             );
+            camera.on();
             this.textBox.show();
+        } else {
+            this.setCamera(1, this.player.x, this.player.y);
+        }
+
+        if (finishLineCrossed){ 
+            this.clearSprites();
+            state = GameState.WIN;
+            finishLineCrossed = false;
         }
     }
+
+    // runs a *cinematic* pan from the player to a given location
+    runCutScene(x, y) {
+        // only want to initialise on first call
+        if (!this.cutsceneActive) {
+            this.cutsceneActive = true;
+            //take a timestamp of when the cutscene started
+            this.cutsceneStartTime = millis();
+            this.cutsceneDuration = 2000; 
+            this.cutsceneFromX = this.player.x;
+            this.cutsceneFromY = this.player.y;
+            this.cutsceneToX = x;
+            this.cutsceneToY = y;
+        }
+        //how long has passed since cutscene started
+        let timeElapsed = millis() - this.cutsceneStartTime;
+
+        //lerp below needs to have a value between 0-1 to work out the progress of the panning
+        let cutSceneProgress = Math.min(timeElapsed/this.cutsceneDuration, 1);
+    
+        // use lerp to set camera smoothly from point A to B (calculates each point on a line between the two)
+        let cameraX = lerp(this.cutsceneFromX, this.cutsceneToX, cutSceneProgress);
+        let cameraY = lerp(this.cutsceneFromY, this.cutsceneToY, cutSceneProgress);
+        this.setCamera(1, cameraX, cameraY);
+    
+        if (cutSceneProgress == 1) {
+            this.cutsceneActive = false;
+            this.kbPressCount++; //increment kb press to break the cutscene
+        }
+    }
+
     clearSprites() {
       this.player.remove();
-      /* this.pursuer.remove(); */
+      this.pursuer.remove();
       this.map.removeSprites();
     }
 }
