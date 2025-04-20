@@ -6,12 +6,12 @@ class TutorialSetupDisplay {
     constructor() {
         this.player;
         this.playerCfg;
-        /* this.pursuer;
-        this.pursuerCfg; */
+        this.pursuer;
+        this.pursuerCfg;
         this.map;
         // below is to make sure that animations are only loaded in once
         this.playerAnimation = LevelController.playerAnimation;
-        /* this.pursuerAnimation = LevelController.pursuerAnimation; */
+        this.pursuerAnimation = LevelController.pursuerAnimation; 
 
         this.healthbar;
         this.playerMaxHealth = 100;
@@ -94,18 +94,18 @@ class TutorialSetupDisplay {
             this.map.animate();
             return;
         }
+
+
+        //show win screen when player reaches the final canal
         this.map.animate();
-        //this.playerCfg.camera();
-        // turn off damage and health
         this.playerCfg.movement(true, true);
         this.playerCfg.debug();
   
-        /* this.pursuerCfg.update(); */
     }
 
     setCamera(zoom, x, y) {
         camera.on();
-        //camera.zoomTo(zoom, 0.005);
+        camera.zoomTo(zoom, 0.005);
         camera.x = x;
         camera.y = y;
     }
@@ -122,7 +122,10 @@ class TutorialSetupDisplay {
         if (this.movementTutorial.left) count++;
         if (this.movementTutorial.right) count++;
     
-        if (count >= 3) {
+        if (count >= 3 && this.movementDirectionsTimer === undefined) {
+            this.movementDirectionsTimer = millis();
+        }
+        if (millis() - this.movementDirectionsTimer > 2000) {
             this.passedMovementTutorial = true;
         }
     }
@@ -142,33 +145,50 @@ class TutorialSetupDisplay {
             this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
             this.playerCfg.health = this.playerMaxHealth;
             this.kbPressCount++;
-            this.textBox = new SpeechBubble(this.player.x-150, this.player.y-100, 150, 75, 
-                this.player.x-5, this.player.y - 10,
-                this.textboxLookUp() );
+            this.textBox = new SpeechBubble(this.player.x - 150, this.player.y - 100, 150, 75, 
+                this.player.x - 5, this.player.y - 10,
+                this.textboxLookUp());
             this.startedDamageTutorial = true;
         }
 
-        if (this.kbPressCount == 5) { 
+        if (this.kbPressCount >= 5) { 
             this.playerCfg.movement(true, true);
-            if(!this.startedRepair){
+        } else {
+            camera.off();
+            push();
+            textAlign(CENTER, CENTER);
+            textSize(32); 
+            fill(0); 
+            noStroke(); 
+            text('PAUSED', windowWidth/2, 50);
+            pop();
+            camera.on()
+        }
+    
+        if (this.kbPressCount == 5) {
+            if (!this.startedRepair) {
                 this.playerCfg.health = 20;
                 this.startedRepair = true;
             }
         }
-
-        if (kb.pressed('r') && this.kbPressCount == 5) {
+        
+        if (kb.pressed('r') && this.kbPressCount == 5 && this.startedRepair && !this.midRepair) {
             this.kbPressCount = 6;
             this.midRepair = true;
-            this.textBox = null;  
+            this.repairStartTime = millis();
+            this.textBox = null;
         }
-
-        if (this.startedRepair && this.playerCfg.health != 0 && !this.midRepair) {
+        
+        if (this.midRepair && millis() - this.repairStartTime > 3000) {
+            this.playerCfg.health = this.playerMaxHealth;
             this.endRepair = true;
             this.midRepair = false;
-            this.textBox.addText(this.textboxLookUp());
+            this.textBox = new SpeechBubble(this.player.x - 150, this.player.y - 100, 150, 75,
+                this.player.x - 5, this.player.y - 10,
+                this.textboxLookUp());  // Shows "You're fully repaired"
         }
-
-        if (!this.midRepair) {
+        
+        if (!this.midRepair && this.textBox) {
             this.textBox.updatePosition(
                 this.player.x - 150,
                 this.player.y - 100,
@@ -179,12 +199,11 @@ class TutorialSetupDisplay {
         }
         
         this.healthbar.draw();
-    
-        
         if (this.kbPressCount < 5 && kb.pressed(' ')) {
             this.kbPressCount++;
             this.textBox.addText(this.textboxLookUp());
-        } 
+        }
+        
         if (this.endRepair && kb.pressed(' ')) {
             this.passedDamageTutorial = true;
         }
@@ -198,7 +217,7 @@ class TutorialSetupDisplay {
         } else textKey = this.kbPressCount;
         switch (textKey) {
             case 0:
-                text = "Use the arrow keys to try and reach the end of the canal"
+                text = "Use the arrow keys to move around the canal"
                 break;
             case 1:
                 text = "Good job! Check your health bar at the top left [SPACE]"
@@ -228,6 +247,9 @@ class TutorialSetupDisplay {
                 text = "If the pursuer catches up to you your health will deplete [SPACE]"
                 break;
             case 10:
+                text = "The canal contains locks. Enter these before the pursuer to allow time for repairs [SPACE]"
+                break;
+            case 11:
                 text = "Try reaching the end of the canal before the pursuer catches up to you"
                 break;
             default:
@@ -239,37 +261,53 @@ class TutorialSetupDisplay {
 
     runPursuerTutorial() {
         if (!this.startedPursuerTutorial) {
-            this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
-            this.playerCfg.health = this.playerMaxHealth;
-            this.kbPressCount = 7;
-            this.textBox = new SpeechBubble(this.player.x-150, this.player.y-100, 150, 75, 
-                this.player.x-5, this.player.y - 10,
-                this.textboxLookUp() );
-            this.kbPressCount++;
-            this.startedPursuerTutorial = true;
+            this.kbPressCount = 7;  
+            this.textBox = new SpeechBubble(
+                this.player.x - 150, this.player.y - 100, 150, 75, 
+                this.player.x - 5, this.player.y - 10,
+                this.textboxLookUp()
+            );
+            this.pursuer = new Sprite(40, 100, 50, 25);
+            this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
+            this.startedPursuerTutorial = true;  
         }
+    
+        if (this.kbPressCount >= 11) { 
+            this.playerCfg.movement(true, true); 
+            this.pursuerCfg.update();
+        } else {
+            camera.off();
+            push();
+            textAlign(CENTER, CENTER);
+            textSize(32); 
+            fill(0); 
+            noStroke(); 
+            text('PAUSED', windowWidth / 2, 50);
+            pop();
+            camera.on();
+        }
+    
         this.healthbar.draw();
-        this.textBox.updatePosition(
-            this.player.x - 150, 
-            this.player.y - 100, 
-            this.player.x - 5, 
-            this.player.y - 10
-        );
-        this.textBox.show();
-
-        if(this.kbPressCount <= 10 && kb.pressed(' ')) {
-            this.textBox.addText(this.textboxLookUp());
-            this.textBox.show();
+    
+        if (this.kbPressCount < 11 && kb.pressed(' ')) {
             this.kbPressCount++;
+            this.textBox = new SpeechBubble(
+                this.player.x - 150, this.player.y - 100, 150, 75,
+                this.player.x - 5, this.player.y - 10,
+                this.textboxLookUp()
+            );
         }
-
-        if(this.kbPressCount > 10) {
-            this.playerCfg.movement(true, true)
+    
+        if (this.textBox && this.kbPressCount < 11) {
+            this.textBox.updatePosition(
+                this.player.x - 150,
+                this.player.y - 100,
+                this.player.x - 5,
+                this.player.y - 10
+            );
+            this.textBox.show();
         }
-        
-        
     }
-  
     clearSprites() {
       this.player.remove();
       /* this.pursuer.remove(); */
