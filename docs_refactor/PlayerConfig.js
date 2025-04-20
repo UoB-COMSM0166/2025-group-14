@@ -105,7 +105,8 @@ class PlayerConfig {
         let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
           this.playerSprite.x-5, this.playerSprite.y - 10,
           "OH NO! Your health is zero! Press the 'r' key to make repairs!");
-          zerohealthMessage.show();
+          //Adam: commented this out as I think game ends if health is zero?
+          //zerohealthMessage.show();
         //this.haltPlayer();
       }
     }

@@ -264,7 +264,7 @@ class TutorialSetupDisplay {
                 this.player.x - 5, this.player.y - 10,
                 this.textboxLookUp()
             );
-            this.pursuer = new Sprite(200, 70, 50, 25);
+            this.pursuer = new Sprite(100, 70, 50, 25);
             this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.startedPursuerTutorial = true;  
@@ -325,7 +325,18 @@ class TutorialSetupDisplay {
         }
 
         if (this.playerCfg.isHealthZero()) {
-
+            this.playerCfg.health = this.playerMaxHealth;
+            this.kbPressCount = 12;
+            this.player.x = 100;
+            this.player.y = 70;
+            this.pursuer.x = 10;
+            this.pursuer.y = 70;
+            this.textBox = new SpeechBubble(
+                this.player.x - 150, this.player.y - 100, 150, 75, 
+                this.player.x - 5, this.player.y - 10,
+                this.textboxLookUp()
+            );
+            return;
         }
     }
 
