@@ -3,7 +3,6 @@ class linearConnect{
         this.redCoords = null;
         this.blackCoords = null;
         this.bankSprites = null;
-
     }
 
     

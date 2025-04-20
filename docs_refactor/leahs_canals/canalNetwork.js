@@ -21,7 +21,7 @@ finally, add canalNetwork.animate(); to your draw function.
 */
 
 class canalNetwork extends linearConnect{
-    constructor(x, y, course, links){
+    constructor(x, y, course, links, loop = false){
         super()
         this.x = x;
         this.y = y;
