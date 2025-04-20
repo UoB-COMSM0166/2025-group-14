@@ -1,5 +1,6 @@
-//Daniil: the only thing that I have changed here is the name of the class, 
-// everything else is the same
+// Runs a tutorial level with three distinct parts - movement, damage and pursuer
+// After these tutorials becomes a normal and easy mission to reach the end of the canal
+// Feel free to update the text in textbox look up so that info is accurate (fyi adding new textboxes is a little trickier so wouldnt recommend if possible)
 
 class TutorialSetupDisplay {
 
@@ -17,10 +18,13 @@ class TutorialSetupDisplay {
         this.playerMaxHealth = 100;
         
         this.playerSpeed;
+
+        this.textbox = null;
         
         this.canalCollisionDamage = 3;
         this.damageOverTime = 1;
 
+        //flags for seeing if player has successfully moved
         this.movementTutorial = {
             up: false,
             down: false,
@@ -28,6 +32,7 @@ class TutorialSetupDisplay {
             right: false,
         }
 
+        //bools to check if each part of tutorial is a success
         this.passedDamageTutorial = false;
         this.startedDamageTutorial = false;
         this.startedPursuerTutorial = false;
@@ -36,16 +41,16 @@ class TutorialSetupDisplay {
         this.endRepair = false;
         this.hasDied = false;
         this.cutsceneActive = false;
-
-        this.timer; 
-        this.kbPressCount = 0;
-        this.kbMaxPresses = 10;
-
         this.midRepair = false;
 
-        this.textbox = null;
+        this.timer; 
+
+        //counter to track which textbox to display and overall flow of tutorial
+        this.kbPressCount = 0;
+        this.kbMaxPresses = 12;
     }
-  
+    
+    //normal set up, healthbar and pursuer initialised in their respective tutorials
     setup() {
 
         this.timer = new Timer();
@@ -61,7 +66,7 @@ class TutorialSetupDisplay {
     
     }
 
-    
+    //switch that displays correct textbox for each point in the game (please edit as you want)
     textboxLookUp(specificText = null) {
         let text = null;
         let textKey = null;
@@ -120,19 +125,21 @@ class TutorialSetupDisplay {
         // clean the previous frame
         clear();
 
+        //press esc to go to start
         if (keyCode == 27) {
           this.clearSprites();
           camera.off();
           state = GameState.START_SCREEN;
         }
 
+        // movement tutorial function run with zoomed in camera
         if (!this.passedMovementTutorial) {
             this.setCamera(1.5, this.player.x, this.player.y);
             this.runMovementTutorial();
             this.map.animate();
             return;
         }
-
+        // damage tutorial function run with normal camera
         if (!this.passedDamageTutorial) {
             this.setCamera(1, this.player.x, this.player.y);
             this.runDamageTutorial();
@@ -140,14 +147,16 @@ class TutorialSetupDisplay {
             return;
         }
 
+        // pursuer tutorial and normal game logic in the runPursuerTutorial function (has win lose conditions)
         if (!this.passedPursuerTutorial) {
             this.runPursuerTutorial();
             this.map.animate();
             return;
         }
   
-    }
+    }   
 
+    //camera function that zooms to a particular 'zoom' level and a target x/y
     setCamera(zoom, x, y) {
         camera.on();
         camera.zoomTo(zoom, 0.005);
@@ -155,6 +164,7 @@ class TutorialSetupDisplay {
         camera.y = y;
     }
 
+    //checks if player has tried at least 3 move keys and ends movement tutorial when true
     setMovementProgress() {
         if (kb.pressing(UP_ARROW)) this.movementTutorial.up = true;
         if (kb.pressing(DOWN_ARROW)) this.movementTutorial.down = true;
@@ -170,11 +180,13 @@ class TutorialSetupDisplay {
         if (count >= 3 && this.movementDirectionsTimer === undefined) {
             this.movementDirectionsTimer = millis();
         }
-        if (millis() - this.movementDirectionsTimer > 2000) {
+        // addded a small delay to this so its less jarring 
+        if (millis() - this.movementDirectionsTimer > 3000) {
             this.passedMovementTutorial = true;
         }
     }
 
+    //movement tutorial logic with single speech bubble
     runMovementTutorial() {
         this.textBox = new SpeechBubble(this.player.x-150, this.player.y-100, 150, 75, 
         this.player.x-5, this.player.y - 10,
@@ -184,8 +196,10 @@ class TutorialSetupDisplay {
         this.setMovementProgress();
     }
 
+    //damage tutorial logic
     runDamageTutorial() {
       //camera.off();
+      //when first run initialise a healthbar speechbubble etc
         if (!this.startedDamageTutorial) {
             this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
             this.playerCfg.health = this.playerMaxHealth;
@@ -193,11 +207,14 @@ class TutorialSetupDisplay {
             this.textBox = new SpeechBubble(this.player.x - 150, this.player.y - 100, 150, 75, 
                 this.player.x - 5, this.player.y - 10,
                 this.textboxLookUp());
+            //so it doesnt run again
             this.startedDamageTutorial = true;
         }
 
+        //when you've reached textbox 5 allow movement
         if (this.kbPressCount >= 5) { 
             this.playerCfg.movement(true, true);
+        //else display pause text on screen
         } else {
             camera.off();
             push();
@@ -209,14 +226,16 @@ class TutorialSetupDisplay {
             pop();
             camera.on()
         }
-    
+        
+        //set player health to 20 for demo purposes
         if (this.kbPressCount == 5) {
             if (!this.startedRepair) {
                 this.playerCfg.health = 20;
                 this.startedRepair = true;
             }
-        }
+        }   
         
+        //when player hits r makesure that textbox disappears for same amount of time (3 seconds) otherwise health popup is drawn over
         if (kb.pressed('r') && this.kbPressCount == 5 && this.startedRepair && !this.midRepair) {
             this.kbPressCount = 6;
             this.midRepair = true;
@@ -224,15 +243,17 @@ class TutorialSetupDisplay {
             this.textBox = null;
         }
         
+        // Shows "You're fully repaired" when fully repaired
         if (this.midRepair && millis() - this.repairStartTime > 3000) {
             this.playerCfg.health = this.playerMaxHealth;
             this.endRepair = true;
             this.midRepair = false;
             this.textBox = new SpeechBubble(this.player.x - 150, this.player.y - 100, 150, 75,
                 this.player.x - 5, this.player.y - 10,
-                this.textboxLookUp());  // Shows "You're fully repaired"
+                this.textboxLookUp());  
         }
         
+        //update textbox position (when not in mid repair)
         if (!this.midRepair && this.textBox) {
             this.textBox.updatePosition(
                 this.player.x - 150,
@@ -244,6 +265,7 @@ class TutorialSetupDisplay {
         }
         
         this.healthbar.draw();
+        //cycle through textboxes when space pressed
         if (this.kbPressCount < 5 && kb.pressed(' ')) {
             this.kbPressCount++;
             this.textBox.addText(this.textboxLookUp());
@@ -255,10 +277,11 @@ class TutorialSetupDisplay {
     }
 
     runPursuerTutorial() {
+        //camera is off for some reason when this function is started
         camera.on();
+        //intitialise pursuer
         if (!this.startedPursuerTutorial) {
             this.kbPressCount = 7;  
-            this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);
             this.textBox = new SpeechBubble(
                 this.player.x - 150, this.player.y - 100, 150, 75, 
                 this.player.x - 5, this.player.y - 10,
@@ -267,18 +290,21 @@ class TutorialSetupDisplay {
             this.pursuer = new Sprite(100, 70, 50, 25);
             this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
+            this.pursuer.animation.frameDelay = 18;
+            pursuerFreezeFrames = 15;
             this.startedPursuerTutorial = true;  
         }
         
         this.healthbar.draw();
 
+        //health = zero you lose 
         if (this.playerCfg.isHealthZero()){
             this.clearSprites(); 
             state = GameState.LOSE;
           }
-    
+        
+        //when on textbox 11+ allow movement (pursuer has been explained and normal game logic applies)
         if (this.kbPressCount >= 11) { 
-            console.log("You can move");
             this.playerCfg.movement(true, true); 
             this.pursuerCfg.update();
         } else {
@@ -293,13 +319,15 @@ class TutorialSetupDisplay {
             camera.on();
         }
         
+        //run cutscene on textbox 7
         if (this.kbPressCount == 7) {
             this.runCutScene(this.player.x, this.player.y, 
                 this.pursuer.x, this.pursuer.y);
             this.textBox.show();
             return;
         }
-    
+        
+        //cycle textboxes when space pressed
         if (this.kbPressCount < 11 && kb.pressed(' ')) {
             this.kbPressCount++;
             this.textBox = new SpeechBubble(
@@ -309,21 +337,20 @@ class TutorialSetupDisplay {
             );
         }
 
-        if (this.kbPressCount < 13) {
-            this.setCamera(1, this.player.x, this.player.y);
-            camera.off();
-            this.textBox.updatePosition(
-                this.player.x - 150,
-                this.player.y - 100,
-                this.player.x - 5,
-                this.player.y - 10
-            );
-            camera.on();
-            this.textBox.show();
-        } else {
-            this.setCamera(1, this.player.x, this.player.y);
-        }
 
+        this.setCamera(1, this.player.x, this.player.y);
+        camera.off();
+        this.textBox.updatePosition(
+            this.player.x - 150,
+            this.player.y - 100,
+            this.player.x - 5,
+            this.player.y - 10
+        );
+        camera.on();
+        this.textBox.show();
+        
+
+        //win condition passe
         if (finishLineCrossed){ 
             this.clearSprites();
             state = GameState.WIN;
