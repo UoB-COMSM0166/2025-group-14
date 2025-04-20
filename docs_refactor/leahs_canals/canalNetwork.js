@@ -20,40 +20,58 @@ finally, add canalNetwork.animate(); to your draw function.
 - put something in to handle if we have a canal swallow another (currently this fucks the blackbanks)
 */
 
-class canalNetwork{
-    constructor(x, y, course){
+class canalNetwork extends linearConnect{
+    constructor(x, y, course, linkages){
+        super()
         this.x = x;
         this.y = y;
         this.course = course;
 
-        this.redCoords = null;
         this.setRedCoords();      
-        this.blackCoords = null;
         this.setBlackCoords();
 
         this.connectCanals();
 
         this.bestowCoords();
         this.createSprites();
+        this.createEndSprites()
         
-        this.bankSprites = null;
         this.setBankSprites();
+
+        this.linkages = this.setLinkages(linkages);
+
     }
 
-    getBankSprites(){ return this.bankSprites};
+    createEndSprites(){
+        this.course[0].createEnd("Start");
+        this.course[this.course.length - 1].createEnd("End");
+    }
 
-    setBankSprites(){
-        this.bankSprites = [];
-        let tmp = []
-        this.forAllCanals(canal => tmp.push(canal.getBanks()));
-        for(const entry of tmp){
-            for(const subentry of entry){
-                this.bankSprites.push(subentry);
+    
+    getStartCoords(){return [this.x, this.y]}
+
+    setLinkages(input){
+        if(input === null || input.length < 1){
+            return [];
+        }
+        for(const link of input){
+            let origin = link[0];
+            if(!this.course.includes(origin)){
+                throw new Error("Attempting to link via a canal outside this network");
+            }
+            if(link.length != 2){
+                throw new Error("Links must specify exactly two canals");
+            }
+            if((!link[0] instanceof canal) || (!link[1] instanceof canal)){
+                throw new Error("Links must be between canal objects")
             }
         }
-
-        console.log("Inner: " + this.bankSprites.length);
+        return input;
     }
+
+    getLinkages(){return this.linkages;}
+
+    getBankSprites(){ return this.bankSprites};
 
     bestowCoords(){
         for(let i = 0; i < this.course.length; i++){
@@ -75,46 +93,6 @@ class canalNetwork{
         }
     }
     
-    setBlackCoords(){
-        let blackChanges = []
-        this.forAllCanals(canal =>
-            blackChanges.push(canal.getWidthChanges())
-        )
-
-        let bc = [];
-        let rc = this.redCoords;
-        
-        let first = rc[0];
-        let firstBlack = blackChanges[0];
-        bc.push([first[0] + firstBlack[0], first[1] + firstBlack[1]]);
-
-        let i;
-        for(i = 1; i < rc.length -1; i++){
-            let red = rc[i];
-            let prev = blackChanges[i - 1];
-            let next = blackChanges[i];
-            let prevEnd = [red[0] + prev[0], red[1] + prev[1]];
-            let nextStart = [red[0] + next[0], red[1] + next[1]];
-            let pRed = rc[i - 1];
-            let nRed = rc[i + 1];
-            let pGrad = gradient(pRed, red);
-            let nGrad = gradient(red, nRed);
-            let prevOff = offset(pGrad, prevEnd);
-            let nextOff = offset(nGrad, nextStart);
-            let int = linearIntersect(pGrad, prevOff, nGrad, nextOff);
-            bc.push(int);
-        }
-
-        let last = rc[i];
-        let lastChange = blackChanges[i - 1];
-        bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])
-
-        
-
-        this.blackCoords = bc;
-    
-    }
-
     findNextCoords(coordinates, canal){;
         let x = coordinates[0];
         let y = coordinates[1];
@@ -123,13 +101,23 @@ class canalNetwork{
         return [x, y];
     }
 
+    
     forAllCanals(callback){
         for(const canal of this.course){
             callback(canal);
         }
     }
 
+
+    checkForCanal(canal){
+        if(this.course.includes(canal)){
+            return true;
+        }
+        return false;        
+    }
+
     connectCanals(){
+
         const l = this.course.length;
         let current;
         let prev;
@@ -149,17 +137,6 @@ class canalNetwork{
             }
             current.connect(prev, next);
         }
-    }
-
-
-    createSprites(){
-        this.forAllCanals(canal => canal.visualize());
-    }
-
-    animate(){
-        this.forAllCanals(canal => canal.animate());
-
-        //throw Error("breakpoint lol");
     }
 
     remove(){

@@ -95,12 +95,4 @@ class canalNetwork{
         }
     }
 
-    reveal(){
-        const l = this.course.length;
-        let current;
-        for(let i = 0; i < l; i++){
-            current = this.course[i];
-            current.reveal();
-        }
-    }
 }

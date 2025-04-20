@@ -9,7 +9,7 @@
 class GameState {
   static LOAD_SCREEN = "loading screen";
   static START_SCREEN = "start screen";
-  static LEVEL_SCREEN = "level screen";
+  static MAP_SELECTION_SCREEN = "level screen"; //MAP_SELECTION_SCREEN map_selection_screen
   static INFO_SCREEN = "information screen";
   static PLAY_GAME = "playing game";
   static WIN = "win screen";
@@ -17,7 +17,7 @@ class GameState {
   static DIFFICULTY_SCREEN = "difficulty screen";
 
   static isValid(state) {
-      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.LEVEL_SCREEN, GameState.INFO_SCREEN, 
+      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.MAP_SELECTION_SCREEN, GameState.INFO_SCREEN, 
         GameState.PLAY_GAME, GameState.WIN, GameState.LOSE, GameState.DIFFICULTY_SCREEN].includes(state);
   }
 }
@@ -26,7 +26,7 @@ let state = GameState.START_SCREEN; // Starts on loading screen
 //about the difficulty levels: 
 // 0 = easy, 1 = medium, 2 = hard
 // if a level does not have a difficulty selection option, the default is set automatically
-let selectedLevel = null;
+let selectedMap = null;
 let difficultyLevel = null; 
 let pursuerFreezeFrames = 0;
 
@@ -35,7 +35,7 @@ function setup() {
   
   // Instantiate the different screens
   start_screen = new StartScreen();
-  level_screen = new LevelScreen();
+  map_selection_screen = new MapSelectionScreen();
   info_screen = new InfoScreen();
   game_screen = null;
   win_screen = new WinScreen();
@@ -50,8 +50,8 @@ function draw() {
     start_screen.display();
   }
 
-  if (state == GameState.LEVEL_SCREEN) {
-    level_screen.display();
+  if (state == GameState.MAP_SELECTION_SCREEN) {
+    map_selection_screen.display();
   }
 
   if (state == GameState.DIFFICULTY_SCREEN) {
@@ -59,7 +59,7 @@ function draw() {
   }
 
   if (state == GameState.INFO_SCREEN) {
-    selectedLevel = level_screen.getSelectedLevel();
+    selectedMap = map_selection_screen.getSelectedMapId();
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
     if (kb.pressed(' ')) {
@@ -69,9 +69,9 @@ function draw() {
       } else {
         difficultyLevel = 0; //i.e. the default seleciton
       }
-      game_screen = LevelController.getLevel(selectedLevel);
+      game_screen = LevelController.getLevel(selectedMap);
       difficulty_screen.resetSelectedDifficulty();
-      level_screen.resetSelectedLevel();
+      map_selection_screen.resetSelectedMapId();
     }
   }
 

@@ -9,9 +9,7 @@ class lock extends lockcomponent{
         this.cycle = this.fillTime + this.fillTime + this.openTime + this.openTime;
         this.startFull = this.openTime + this.fillTime;
         this.endFull = this.openTime + this.fillTime + this.openTime;
-        this.level = null;
-
-
+        this.status = null;
     }
 
     getFullStatus(){
