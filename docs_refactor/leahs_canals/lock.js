@@ -24,8 +24,8 @@ class lock extends canal {
     }
 
     createDoors(){
-        this.foreDoors = new doors(this, this.prev);
-        this.aftDoors = new doors(this, this.next);
+        this.foreDoors = new doors(this, this.prev, this.inLink);
+        this.aftDoors = new doors(this, this.next, this.inLink);
 
         let sprites = []
         for(const sprite of this.foreDoors.getSprites()){

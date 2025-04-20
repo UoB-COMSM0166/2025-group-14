@@ -60,6 +60,18 @@ class canal{
 
     //construction functions
     constructor(length, oClock, width, player, garbageOn = true, finish = false){
+        //allows passing of length, oclock, width and player as array
+        //useful when making lots of identical canals!
+        if(length.length === 4){
+            oClock = length[1];
+            width = length[2];
+            player = length[3];
+            garbageOn = true;
+            finish = false;
+            length = length[0];
+        }
+
+
         //basic attributes
         this.length = length;
         this.angle = clockToAngle(oClock);
@@ -134,6 +146,10 @@ class canal{
     }
 
     //getters
+
+    getUniqueID(){
+        return this.length + this.angle + this.width;
+    }
 
     getAngle(degrees){
         if(degrees){

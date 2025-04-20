@@ -70,6 +70,7 @@ class linkage extends linearConnect{
         if(this.inbound != input.outbound){
             return false;
         }*/
+       console.log("Duplicate linkage identified")
         return true;
     }
 
@@ -83,6 +84,7 @@ class linkage extends linearConnect{
         let width = this.linkWidth;
         let player = this.outbound.getPlayer();
         this.link = new canal(length, oClock, width, player);
+        this.link.connect(this.outbound, this.inbound)
     }
 
     determineTopLine(input){

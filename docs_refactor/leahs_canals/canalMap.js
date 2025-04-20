@@ -46,7 +46,7 @@ class canalMap {
             }
 
         })
-        for(const linkOne of this.linkages){
+        /*for(const linkOne of this.linkages){
             for(const linkTwo of this.linkages){
                 if(linkOne.checkInverse(linkTwo)){
                     let crosshairs = this.linkages.indexOf(linkTwo);
@@ -54,7 +54,7 @@ class canalMap {
 
                 }
             }
-        }
+        }*/
         for(const link of this.linkages){
             link.positionLink();
         }
@@ -81,6 +81,7 @@ class canalMap {
     }
 
     getNetworkByCanal(c){
+        console.log("canal: " + c);
         let found = false;
         let i = 0;
         let network;

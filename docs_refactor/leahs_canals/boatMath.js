@@ -75,6 +75,9 @@ function gradient(start, end){
 function offset(gradient, coords){
     let X = coords[0];
     let Y = coords[1];
+    if(gradient === Infinity || gradient === -Infinity){
+        return X;
+    }
     return -1 * ((gradient * X) - Y);
 }
 
@@ -106,8 +109,17 @@ function angleCalc(startX, startY, endX, endY, rads, atan2, abs){
 
 
 function linearIntersect(a1, c1, a2, c2){
-    let x = ((-1*c2) + c1)/((-1*a1) + a2);
-    let y = ((c1*a2) - (c2*a1))/((-1*a1)+a2);
+    let x, y;
+    if(a1 === Infinity || a1 === -Infinity){
+        x = c1;
+        y = a2 * x + c2;
+    }else if(a2 === Infinity || a2 === -Infinity){
+        x = c2;
+        y = a1 * x + c1;
+    }else{
+        x = ((-1*c2) + c1)/((-1*a1) + a2);
+        y = ((c1*a2) - (c2*a1))/((-1*a1)+a2);
+    }
     return [x, y];
 }
 
@@ -145,7 +157,8 @@ function pointOnLine(start, end, distance){
 }
 
 function clockToAngle(oClock){
-    return oClock * Math.PI / 6;
+
+    return (oClock * Math.PI) / 6;
 }
 
 function angleToClock(angle){

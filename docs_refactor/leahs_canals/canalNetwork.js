@@ -25,7 +25,7 @@ class canalNetwork extends linearConnect{
         super()
         this.x = x;
         this.y = y;
-        this.course = course;
+        this.course = this.extractCourse(course);
 
         this.setRedCoords();      
         this.setBlackCoords();
@@ -40,6 +40,21 @@ class canalNetwork extends linearConnect{
 
         this.links = this.setLinks(links);
 
+    }
+
+    extractCourse(course){
+        let output = []
+        for(let c of course){
+            if(c instanceof canal){
+                output.push(c)
+            }else{
+                let extracted = this.extractCourse(c);
+                for(let e of extracted){
+                    output.push(e);
+                }
+            }
+        }
+        return output;
     }
 
     createEndSprites(){

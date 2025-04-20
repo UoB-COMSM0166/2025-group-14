@@ -32,6 +32,12 @@ class linearConnect{
             blackChanges.push(canal.getWidthChanges())
         )
 
+        let widths = []
+        this.forAllCanals(canal =>
+            widths.push(canal.getWidth())
+
+        )
+
         let bc = [];
         let rc = this.redCoords;
         
@@ -50,10 +56,23 @@ class linearConnect{
             let nRed = rc[i + 1];
             let pGrad = gradient(pRed, red);
             let nGrad = gradient(red, nRed);
-            let prevOff = offset(pGrad, prevEnd);
-            let nextOff = offset(nGrad, nextStart);
-            let int = linearIntersect(pGrad, prevOff, nGrad, nextOff);
-            bc.push(int);
+            if(pGrad === nGrad){
+                let pWidth = widths[i - 1];
+                let nWidth = widths[i];
+                if(pWidth === nWidth){
+                    console.log("STraight " + next);
+                    let x = red[0] + next[0];
+                    let y = red[1] + next[1];    
+                    bc.push([x, y])              
+                }else{
+                    throw new Error("You can't connect two canals of different widths in a straight line")
+                }
+            }else{
+                let prevOff = offset(pGrad, prevEnd);
+                let nextOff = offset(nGrad, nextStart);
+                let int = linearIntersect(pGrad, prevOff, nGrad, nextOff);
+                bc.push(int);
+            }
         }
 
         let last = rc[i];
