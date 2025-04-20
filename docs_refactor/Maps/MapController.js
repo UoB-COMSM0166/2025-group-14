@@ -16,17 +16,17 @@ class MapController {
     }
 
     static getMap0(player) {
-        let c1 = new canal(1000, 3, 150, player, true, false); //TODO update this with new canal structure
-        let c2 = new canal(500, 2, 150, player, true);
-        let c3 = new canal(1000, 3, 150, player, true);
-        let c4 = new canal(500, 2.5, 150, player, true)
-        let c5 = new canal(500, 3.5, 150, player, true)
-        let c6 = new canal(200, 2, 150, player, true)
-        let c7 = new canal(200, 12, 150, player, true)
-        let c8 = new canal(200, 11, 150, player, true, true)
+        let c1 = new canal(1000, 3, 150, player); //TODO update this with new canal structure
+        let c2 = new canal(500, 2, 150, player);
+        let c3 = new canal(1000, 3, 150, player);
+        let c4 = new canal(500, 2.5, 150, player);
+        let c5 = new canal(500, 3.5, 150, player);
+        let c6 = new lock(500, 2, 150, player);
+        let c7 = new canal(500, 12.5, 150, player);
+        let c8 = new canal(500, 11, 150, player, true, true);
 
-        let network = new canalNetwork(0, 0, [c1, c2, c3, c4 , c5]); 
-        return new canalMap(player, false, network); 
+        let network = new canalNetwork(0, 0, [c1, c2, c3, c4 , c5, c6, c7, c8], []); 
+        return new canalMap(player, true, [network]); 
     }
     
     static getMap1(player) {
