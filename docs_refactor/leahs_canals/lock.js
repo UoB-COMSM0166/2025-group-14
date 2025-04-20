@@ -18,8 +18,6 @@ class lock extends canal {
         this.depthBar = new DepthBar(true);
     }
 
-
-
     createSprites(){
         this.canalSetup();
         this.lockSetup();

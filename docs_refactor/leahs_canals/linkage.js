@@ -12,13 +12,10 @@ class linkage extends linearConnect{
 
         //filled by "positionLink" which is called by the map after duplicate linkages are removed
         this.link = null;   
-        this.bankSprites = null;
         this.outBank = null;
         this.outCoords = null;
         this.inBank = null;
         this.inCoords = null;
-
-        this.testTick = 0;
     }
 
     adjustCoords(){
@@ -42,20 +39,6 @@ class linkage extends linearConnect{
 
 
     }
-
-    aimLink(){
-        let face = this.facingBanks();
-        let placeholder = this.segmentPosition(this.testTick, this.outbound, face[0], "Start");
-        let placeholdex = this.segmentPosition(this.testTick, this.inbound, face[1], "Start")
-        fill("seagreen")
-        circle(placeholder[0][0], placeholder[0][1], 20);
-        circle(placeholder[1][0], placeholder[1][1], 20);
-        circle(placeholdex[0][0], placeholdex[0][1], 20);
-        circle(placeholdex[1][0], placeholdex[1][1], 20);
-        
-
-    }
-
     
     animate(){
         this.forAllCanals(canal => canal.animate());
@@ -182,7 +165,7 @@ class linkage extends linearConnect{
     }
 
 
-    //condemned I hope
+   /* //condemned I hope
     findValidLines(){
         let outExit = this.getCanalExits(this.outbound);
         let inExit = this.getCanalExits(this.inbound);
@@ -196,13 +179,15 @@ class linkage extends linearConnect{
 
         lineOne = [outExit[0][0], outExit[0][1], inExit[1][0], inExit[1][1]];
         lineTwo = [outExit[1][0], outExit[1][1], inExit[0][0], inExit[0][1]];
+        
+        console.log("outexit: " + outExit[0]);
 
         if(!checkCrossBetweenBounds(lineOne, lineTwo)){
             return [[outExit[0], inExit[1]], [outExit[1], inExit[0]]];
         }
 
         throw new Error("findValidLines error; message Leah and tell her that her maths is off")
-    }
+    }*/
 
     
     forAllCanals(callback){

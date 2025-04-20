@@ -35,7 +35,7 @@ class canalMap {
 
     setLinkages(){
         this.forAllNetworks(network => {
-            let linkages = network.getLinkages();
+            let linkages = network.getLinks();
             for(const link of linkages){ 
                 let outbound = link[0];
                 let inbound = link[1];
@@ -78,13 +78,6 @@ class canalMap {
             }
         }
         return false;
-    }
-
-    connectNetworks(origin, destination, outCanal, inCanal){
-        let exit = outCanal.checkExits();
-        let entrance = inCanal.checkExits();
-        //BOOKMARK, as this has gotten complicated! Let's make sure we're visualizing this right 
-        //before we continue        
     }
 
     getNetworkByCanal(c){

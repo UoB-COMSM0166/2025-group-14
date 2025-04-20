@@ -21,7 +21,7 @@ finally, add canalNetwork.animate(); to your draw function.
 */
 
 class canalNetwork extends linearConnect{
-    constructor(x, y, course, linkages){
+    constructor(x, y, course, links){
         super()
         this.x = x;
         this.y = y;
@@ -38,7 +38,7 @@ class canalNetwork extends linearConnect{
         
         this.setBankSprites();
 
-        this.linkages = this.setLinkages(linkages);
+        this.links = this.setLinks(links);
 
     }
 
@@ -50,7 +50,7 @@ class canalNetwork extends linearConnect{
     
     getStartCoords(){return [this.x, this.y]}
 
-    setLinkages(input){
+    setLinks(input){
         if(input === null || input.length < 1){
             return [];
         }
@@ -69,7 +69,7 @@ class canalNetwork extends linearConnect{
         return input;
     }
 
-    getLinkages(){return this.linkages;}
+    getLinks(){return this.links;}
 
     getBankSprites(){ return this.bankSprites};
 
