@@ -271,8 +271,14 @@ class TutorialSetupDisplay {
         }
         
         this.healthbar.draw();
+
+        if (this.playerCfg.isHealthZero()){
+            this.clearSprites(); 
+            state = GameState.LOSE;
+          }
     
         if (this.kbPressCount >= 11) { 
+            console.log("You can move");
             this.playerCfg.movement(true, true); 
             this.pursuerCfg.update();
         } else {
@@ -303,7 +309,7 @@ class TutorialSetupDisplay {
             );
         }
 
-        if (this.kbPressCount < 11) {
+        if (this.kbPressCount < 13) {
             this.setCamera(1, this.player.x, this.player.y);
             camera.off();
             this.textBox.updatePosition(
@@ -324,20 +330,6 @@ class TutorialSetupDisplay {
             finishLineCrossed = false;
         }
 
-        if (this.playerCfg.isHealthZero()) {
-            this.playerCfg.health = this.playerMaxHealth;
-            this.kbPressCount = 12;
-            this.player.x = 100;
-            this.player.y = 70;
-            this.pursuer.x = 10;
-            this.pursuer.y = 70;
-            this.textBox = new SpeechBubble(
-                this.player.x - 150, this.player.y - 100, 150, 75, 
-                this.player.x - 5, this.player.y - 10,
-                this.textboxLookUp()
-            );
-            return;
-        }
     }
 
     // run a *cinematic* camera pan from the point A to B and back
