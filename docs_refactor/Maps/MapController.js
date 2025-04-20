@@ -38,7 +38,7 @@ class MapController {
         let startwidth = 100;
 
         let c1 = new canal(300, 4, 100, player);
-        let l1 = new lock(300, 3, 100, player, 1, 3); //for now - 1, 3
+        let l1 = new canal(300, 3, 100, player); //for now - 1, 3
         let c2 = new canal(300, 2, 100, player)
         let c3 = new canal(longzig, 5, startwidth-(decrement * i++), player);
         let c4 = new canal(longzig, 2, startwidth-(decrement * i++), player);
