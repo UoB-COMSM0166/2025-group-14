@@ -13,9 +13,10 @@ class LevelController {
                 break;
             case 1:
             case 2:
+            case 3:
                 levelInstance = new AllMapsSetupDisplay();
                 break;
-            case 3:
+            case 4:
                 throw new Error("Invalid level number: " + level);
         }
         levelInstance.setup();

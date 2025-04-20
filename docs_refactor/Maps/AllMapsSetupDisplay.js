@@ -75,6 +75,11 @@ class AllMapsSetupDisplay {
         this.map = MapController.getMap(2, this.player);
         this.pursuer = new Sprite(-442, -327, 25, 15);
         break;
+      case 3:
+        this.player = new Sprite(30, 0, 35, 25);
+        this.map = MapController.getMap(3, this.player);
+        this.pursuer = new Sprite(0, 0, 25, 15);
+        break;
     }
 
   }
