@@ -78,6 +78,9 @@ class linearConnect{
         if(loop){
             bc.push(bc[0])
         }else{
+            //note that this this is slightly ugly and leads to some non parallel canals.
+            //I could potentially fix it but that's a low priority. 
+            
 
             let lastChange = blackChanges[i - 1];
             bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])

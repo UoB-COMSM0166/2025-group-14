@@ -109,3 +109,12 @@ My first attempt at a Map
         /* next up - one where the boat is chasing you along a straight line and you pass many open locks and have to dive in?
 
         */
+
+        A LOOOP 
+
+                let canals = [];
+        for (let i = 1; i < 12; i++){
+            canals.push(new canal(200, i, 100, player));
+        }
+        let network = new canalNetwork(0, 0, canals, [], true);
+        return new canalMap(player, false, [network]);

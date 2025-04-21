@@ -31,15 +31,17 @@ class doors{
     open(){
         //rotates the two door sprites outwards so they lie flush with the banks of the
         //canal attached to the lock
-        this.redDoor.rotation = 90;
-        this.blackDoor.rotation = 90;
+        /*this.redDoor.rotation = 90;
+        this.blackDoor.rotation = 90;*/
+        console.log("opening")
 
     }
 
     close(){
         //opposite of the open function; closes the sprites so that they
-        this.redDoor.rotation = 0;
-        this.blackDoor.rotation = 0;
+        /*this.redDoor.rotation = 0;
+        this.blackDoor.rotation = 0;*/
+        console.log("closing")
         
     }
 

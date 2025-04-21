@@ -9,8 +9,7 @@ class lock extends canal {
         this.startFull = this.openTime + this.fillTime;
         this.endFull = this.openTime + this.fillTime + this.openTime;
         this.status = null;
-        this.illegal = null;
-
+        
         //set after connections as part of the createSprites function
         this.foreDoors;
         this.aftDoors;
@@ -64,31 +63,18 @@ class lock extends canal {
         this.depthBar.draw(depth, depthBarX, depthBarY);
 
         text(this.status, this.redStart[0] + 20, this.redStart[1] + 20);
-        let illegal = this.illegal;
         switch(this.status){
             case("empty"):
-                if(illegal != "empty"){
-                    this.foreDoors.open();
-                    this.illegal = "empty"
-                }
+                this.foreDoors.open();
                 break;
             case("filling"):
-                if(illegal != "filling"){
-                    this.foreDoors.close();
-                    this.illegal = "filling"
-                }
+                this.foreDoors.close();
                 break;
             case("full"):
-                if(illegal != "full"){
-                    this.aftDoors.open();
-                    this.illegal = "full"
-                }
+                this.aftDoors.open();
                 break;
             case("emptying"):
-                if(illegal != "emptying"){
-                    this.aftDoors.close();
-                    this.illegal = "emptying"
-                }
+                this.aftDoors.close();
                 break;
         }
     }
