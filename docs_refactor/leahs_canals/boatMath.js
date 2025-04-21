@@ -107,6 +107,8 @@ function angleCalc(startX, startY, endX, endY, rads, atan2, abs){
     }
 } 
 
+function degreesToRadians(d) { return d * Math.PI / 180; }
+
 
 function linearIntersect(a1, c1, a2, c2){
     let x, y;

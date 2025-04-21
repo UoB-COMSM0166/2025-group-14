@@ -38,7 +38,7 @@ class MapController {
         let startwidth = 100;
 
         let c1 = new canal(300, 4, 100, player);
-        let l1 = new canal(300, 3, 100, player); //for now - 1, 3
+        let l1 = new lock(300, 3, 100, player, 1, 3); //for now - 1, 3
         let c2 = new canal(300, 2, 100, player)
         let c3 = new canal(longzig, 5, startwidth-(decrement * i++), player);
         let c4 = new canal(longzig, 2, startwidth-(decrement * i++), player);
@@ -46,7 +46,8 @@ class MapController {
         let c6 = new canal(longzig, 2, startwidth-(decrement * i++), player);
         let c7 = new canal(longzig, 5, startwidth-(decrement * i++), player);
         let c8 = new canal(longzig, 2, startwidth-(decrement * i++), player);
-        let c23 = new canal(1000, 10, startwidth, player);
+        let c23 = new lock(1000, 10, startwidth, player, 1, 3);
+        let zwoop = new canal(300, 9, 100, player)
         
 
         let harsh = 60;
@@ -95,7 +96,7 @@ class MapController {
 
 
 
-        let long = new canalNetwork(0, 0, [c1, l1, c2, c3, c4, c5, c6, c7, c8, c23], [[c2, c9], [c23, c30]]);
+        let long = new canalNetwork(0, 0, [c1, l1, c2, c3, c4, c5, c6, c7, c8, c23, zwoop], [[c2, c9]]);
         let short = new canalNetwork(400, -80, [c9, c10, c11, c12, c13, shortZigs, c30, loopArc, c42], [[c42, loopArc[0]]]);
         let wrap = new canalNetwork(3500, -800, [loopWrap], []) //3500, -800
 

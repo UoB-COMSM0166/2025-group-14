@@ -83,7 +83,7 @@ class linkage extends linearConnect{
         let oClock = angleToClock(angle);
         let width = this.linkWidth;
         let player = this.outbound.getPlayer();
-        this.link = new canal(length, oClock, width, player);
+        this.link = new lock(length, oClock, width, player, 4, 4, this.outBound, this.inBound);
         this.link.connect(this.outbound, this.inbound)
     }
 

@@ -1,5 +1,5 @@
 class lock extends canal {
-    constructor(length, oClock, width, player, fillTime, openTime){
+    constructor(length, oClock, width, player, fillTime, openTime, prev = null, next = null){
         super(length, oClock, width, player);
         this.fillTime = fillTime;
         this.openTime = openTime;
@@ -9,6 +9,7 @@ class lock extends canal {
         this.startFull = this.openTime + this.fillTime;
         this.endFull = this.openTime + this.fillTime + this.openTime;
         this.status = null;
+        this.relativeFrames = 0;
         
         //set after connections as part of the createSprites function
         this.foreDoors;
@@ -16,6 +17,13 @@ class lock extends canal {
 
         // depth bar
         this.depthBar = new DepthBar(true);
+
+        if(prev != null){
+            this.prev = prev;
+            this.next = next;
+        }
+
+
     }
 
     checkTimes(){
@@ -30,8 +38,8 @@ class lock extends canal {
     }
 
     createDoors(){
-        this.foreDoors = new doors(this, this.prev, this.inLink);
-        this.aftDoors = new doors(this, this.next, this.inLink);
+        this.foreDoors = new doors(this, this.prev, this.inLink, "open", false);
+        this.aftDoors = new doors(this, this.next, this.inLink, "closed", true);
 
         let sprites = []
         for(const sprite of this.foreDoors.getSprites()){
@@ -48,6 +56,7 @@ class lock extends canal {
 
 
     animate(){
+        this.relativeFrames++;
         this.canalAnimate();
         this.lockAnimate();
     }
@@ -61,6 +70,7 @@ class lock extends canal {
         // Update depth bar based on percent depth
         let depth = this.getPercentDepth();
         this.depthBar.draw(depth, depthBarX, depthBarY);
+
 
         text(this.status, this.redStart[0] + 20, this.redStart[1] + 20);
         switch(this.status){
@@ -84,7 +94,7 @@ class lock extends canal {
     }
 
     getFullStatus(){
-        let mod = (frameCount/60) % this.cycle;
+        let mod = (this.relativeFrames/60) % this.cycle;
         if(mod < this.openTime){
             return "empty";
         }else if(mod >= this.openTime && mod < this.startFull){
@@ -100,7 +110,7 @@ class lock extends canal {
 
     // Returns the % depth of the lock currently
     getPercentDepth(){
-        let mod = (frameCount/60) % this.cycle;
+        let mod = (this.relativeFrames/60) % this.cycle;
         if(mod < this.openTime){
             return 0;
         }else if(mod >= this.openTime && mod < this.startFull){

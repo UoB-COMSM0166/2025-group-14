@@ -60,7 +60,6 @@ class linearConnect{
                 let pWidth = widths[i - 1];
                 let nWidth = widths[i];
                 if(pWidth === nWidth){
-                    console.log("STraight " + next);
                     let x = red[0] + next[0];
                     let y = red[1] + next[1];    
                     bc.push([x, y])              
@@ -81,9 +80,9 @@ class linearConnect{
             //note that this this is slightly ugly and leads to some non parallel canals.
             //I could potentially fix it but that's a low priority. 
             
-
+            let last = rc[i];
             let lastChange = blackChanges[i - 1];
-            bc.push([last[0] + lastChange[0], last[1] + lastChange[1]])
+            bc.push([last[0] + lastChange[0], last[1] + lastChange[1]]);
         }
             
 
