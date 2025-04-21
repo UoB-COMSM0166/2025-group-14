@@ -39,9 +39,15 @@ class canalMap {
             for(const link of linkages){ 
                 let outbound = link[0];
                 let inbound = link[1];
+                let lock = false;
+                let lockDetails = [];
+                if(link.length === 5){
+                    lock = true;
+                    lockDetails = [link[2], link[3], link[4]]
+                }
                 let origin = network;
                 let destination = this.getNetworkByCanal(inbound);
-                this.linkages.push(new linkage(origin, destination, outbound, inbound, this));
+                this.linkages.push(new linkage(origin, destination, outbound, inbound, this, lock, lockDetails));
 
             }
 

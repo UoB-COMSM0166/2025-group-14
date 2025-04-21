@@ -1,10 +1,26 @@
 IMPORTANT - please read this document on Leah's branch as it gets updated regularly.
 Latest updates: 
+    21/04
+    - you can create a lockSegment as a linkage by making a link that has five entries - the two canals to link and the 
+    three arguments a lockSegment constructor take. For example:
+    let long = new canalNetwork(0, 0, [c1, l1, c2, c3, c4, c5, c6, c7, c8, c23], [[c2, c9], [c23, c30, 2, 2, 0.3]]);
+    ... links c2 and c9 normally, but links c23 and c30 using a locksegment with openSecs of 2, closedSecs of 3 and 
+    speed of 0.3
+
+    20/04
     - six oclock error now resolved
     - canals can now link to other canals in the same network
     - length, oClock, width and player can now be input into a canal as a single array of length 4.
     - the network course array now can take individaul canals or canals collected into a sub-array
-    - new boolean "loop" value for network adds a new canal connecting the first canal to the end
+    - new boolean "loop" value for network adds a new canal connecting the first canal to the end. The below code will make
+    a circular canal loop:
+
+                 let canals = [];
+        for (let i = 1; i < 12; i++){
+            canals.push(new canal(200, i, 100, player));
+        }
+        let network = new canalNetwork(0, 0, canals, [], true); //that true at the end is the key variable
+        return new canalMap(player, false, [network]);
 
 Hello!
 

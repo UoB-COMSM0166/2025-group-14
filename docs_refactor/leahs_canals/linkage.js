@@ -1,10 +1,12 @@
 class linkage extends linearConnect{
-    constructor(origin, destination, outbound, inbound, map){
+    constructor(origin, destination, outbound, inbound, map, lock, lockDetails){
         super();
         this.origin = origin;
         this.destination = destination;
         this.outbound = this.setCanal(outbound);
         this.inbound = this.setCanal(inbound);
+        this.lock = lock;
+        this.lockDetails = lockDetails;
 
         this.map = map;
 
@@ -83,7 +85,11 @@ class linkage extends linearConnect{
         let oClock = angleToClock(angle);
         let width = this.linkWidth;
         let player = this.outbound.getPlayer();
-        this.link = new lock(length, oClock, width, player, 4, 4, this.outBound, this.inBound);
+        if(this.lock){
+            this.link = new lockSegment(length, oClock, width, player, this.lockDetails[0], this.lockDetails[1], this.lockDetails[3]);
+        }else{
+            this.link = new canal(length, oClock, width, player);
+        }
         this.link.connect(this.outbound, this.inbound)
     }
 

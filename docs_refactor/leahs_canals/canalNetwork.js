@@ -76,7 +76,7 @@ class canalNetwork extends linearConnect{
             if(!this.course.includes(origin)){
                 throw new Error("Attempting to link via a canal outside this network");
             }
-            if(link.length != 2){
+            if(link.length != 2 && link.length != 5){
                 throw new Error("Links must specify exactly two canals");
             }
             if((!link[0] instanceof canal) || (!link[1] instanceof canal)){
@@ -84,6 +84,7 @@ class canalNetwork extends linearConnect{
             }
         }
         return input;
+
     }
 
     getLinks(){return this.links;}
