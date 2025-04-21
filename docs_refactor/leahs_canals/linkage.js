@@ -166,7 +166,6 @@ class linkage extends linearConnect{
         throw new Error("no way to link two networks without crossing a line.");
     }
 
-
    /* //condemned I hope
     findValidLines(){
         let outExit = this.getCanalExits(this.outbound);

@@ -10,7 +10,6 @@ class doors{
         this.midway = halfwayPoint(this.redSect, this.blackSect);
         this.setSects();
         this.startPos = startPos
-        console.log("Aft: " + this.aft);
         this.speed = speed;
 
         // maintains state: open, closing, closed, opening
