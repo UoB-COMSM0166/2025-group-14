@@ -378,6 +378,22 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
 
+
+# Appendix 1
+
+## Raw SUS data - Easy Level
+
+![Raw SUS data - easy level](./Diagrams/Raw_SUS_data_EasyLevel.png)
+
+## Raw SUS data - Difficult Level
+
+![Raw SUS data - difficult level](./Diagrams/Raw_SUS_data_DifficultLevel.png)
+
+## Raw NASA TLX data
+
+![Raw NASA TLX data](./Diagrams/Raw_NASA_TLX_data.png)
+
+
 ### Additional Marks
 
 You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
