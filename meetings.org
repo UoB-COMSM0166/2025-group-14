@@ -37,7 +37,6 @@ We want the camera to follow
 - each feature has it's own branch
 - each person has their own branch
 
-
 * 11/02/2025
 ** topics
 *** catch up on progress
@@ -123,7 +122,6 @@ We want the camera to follow
 *** create git branches
 - each feature has it's own branch
 - each person has their own branch
-
 
 * 11/02/2025
 ** topics
@@ -312,3 +310,65 @@ Casey agreed with this and believes more people in the group are needed to be wo
 
 ** finishing notes (from Leah)
 Adam raised the prospect of changing back to an old approach to movement (where you steer rather than just use directional arrows). We didn't decide to do it or not, we figured that if Adam and Leah could get some maps out, then they could see how necessary it was.
+
+* 22/04/2025
+** Leah
+Prototyped and demo'd a new map with lock segments and raised some concerns.
+
+*** repair mechanic with locks
+Leah expressed a desired for more realistic Locks, and that under the current lock design the repair mechanic feels pointless. She talked about making the repair functionality more intuitive or happen under particular conditions with the new locks. Casey expressed the fact that his lock design can change and this should be easy.
+
+The group agreed that the repair mechanic should still be a global ability you can use anywhere at any time, but perhaps only under special condditions such as placement outside a lock.
+
+Casey disagreed on this.
+
+*** lock design
+Leah communicated that in this case she desires the following further development of the locks.
+
+A timer to make pairs of gates act as following:
+1. 1st gate opens
+2. time passes
+3. 2nd gate opens
+4. time passes
+5. second gate closes
+
+This could also have a 'lock bar' as Polly previously developed.
+
+Everybody agreed.
+
+Leah expressed desire to take locks over from Casey, but he said he would be happy to continue.
+
+*** game prettification
+Leah brought up that this is of high importance
+
+*** boat placement
+There was an issue in the map creation where the boats are not inside the canal but outside of the border. She liased with Daniil to try to diagnose this issue and this should be an easy fix.
+
+** Casey
+Has developed locks which act as a gates in game, but did not demo this.
+
+*** timeline for the project
+Casey brought up a discussion on reaching agreement about the importance of the game vs the report in the project. It was agreed that the report was of higher importance currently, especially with the deadline being sooner than the demo.
+
+Casey disagreed against this consensus. He believes this focus is myopic and the game is of equal importance overall.
+
+**** report focus switch
+- Casey can jump in on the game mechanics, class diagrams, flow diagrams.
+- Leah expressed a desire to write the introduction
+
+*** tips on sw-engineering exam
+Casey wanted to get everyones advice on exam preperation.
+
+- Daniil has been working through the lectures
+- Leah has been doing flashcards. Karslkrona manifesto, recommended readings
+- Adam too. Ruzanna mentioned these questions that'll definitely come up:
+1. sustainability
+2. SUSAF framework
+- Polly is going to memorise as much as possible as it'll be largely based on recall.
+
+** Adam
+Has developed a tutorial but did not demo this.
+
+** next steps
+- Leah talked about doing a 'report sprint' for Thursday, which was agreed upon.
+- Feature demo's from Casey and Adam
