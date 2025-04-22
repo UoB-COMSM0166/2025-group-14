@@ -1,0 +1,93 @@
+;; -*- mode: emacs-lisp; eval: (progn (pp-buffer) (indent-buffer)) -*-
+((def-persp nil
+            ((def-buffer "TAGS"
+                         "/Users/caseycronyn/Developer/bristol/sw-engineering/2025-group-14/docs_refactor/TAGS"
+                         tags-table-mode))
+            (def-wconf
+             (((min-height . 4) (min-width . 10) (min-height-ignore . 2)
+               (min-width-ignore . 5) (min-height-safe . 1) (min-width-safe . 2)
+               (min-pixel-height . 56) (min-pixel-width . 70)
+               (min-pixel-height-ignore . 28) (min-pixel-width-ignore . 35)
+               (min-pixel-height-safe . 14) (min-pixel-width-safe . 14))
+              leaf (pixel-width . 576) (pixel-height . 490) (total-width . 82)
+              (total-height . 35) (normal-height . 1.0) (normal-width . 1.0)
+              (buffer "*scratch*" (selected . t) (hscroll . 0)
+                      (fringes 8 8 nil nil) (margins nil)
+                      (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0)
+                      (dedicated) (point . 1) (start . 1))))
+            (def-params nil) t nil t)
+ (def-persp "main"
+            ((def-buffer "config.el"
+                         "/Users/caseycronyn/.dotfiles/.doom.d/config.el"
+                         emacs-lisp-mode))
+            (def-wconf
+             (((min-height . 4) (min-width . 10) (min-height-ignore . 3)
+               (min-width-ignore . 5) (min-height-safe . 1) (min-width-safe . 2)
+               (min-pixel-height . 56) (min-pixel-width . 70)
+               (min-pixel-height-ignore . 42) (min-pixel-width-ignore . 35)
+               (min-pixel-height-safe . 14) (min-pixel-width-safe . 14))
+              leaf (pixel-width . 576) (pixel-height . 462) (total-width . 82)
+              (total-height . 33) (normal-height . 1.0) (normal-width . 1.0)
+              (parameters
+               (better-jumper-struct
+                . #s(better-jumper-jump-list-struct
+                     (0 2
+                        . [("/Users/caseycronyn/.dotfiles/.doom.d/config.el" 1
+                            "r70nlb")
+                           ("*scratch*" 1 "85swjh") nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil])
+                     -1)))
+              (buffer "config.el" (selected . t) (hscroll . 0)
+                      (fringes 8 8 nil nil) (margins nil)
+                      (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0)
+                      (dedicated) (point . 521) (start . 1))
+              (prev-buffers ("*scratch*" 1 1))))
+            (def-params nil) nil nil nil)
+ (def-persp "2025-group-14"
+            ((def-buffer "index.html"
+                         "/Users/caseycronyn/Developer/bristol/sw-engineering/2025-group-14/docs_refactor/index.html"
+                         mhtml-mode))
+            (def-wconf
+             (((min-height . 4) (min-width . 10) (min-height-ignore . 3)
+               (min-width-ignore . 5) (min-height-safe . 1) (min-width-safe . 2)
+               (min-pixel-height . 56) (min-pixel-width . 70)
+               (min-pixel-height-ignore . 42) (min-pixel-width-ignore . 35)
+               (min-pixel-height-safe . 14) (min-pixel-width-safe . 14))
+              leaf (pixel-width . 576) (pixel-height . 490) (total-width . 82)
+              (total-height . 35) (normal-height . 1.0) (normal-width . 1.0)
+              (parameters
+               (better-jumper-struct
+                . #s(better-jumper-jump-list-struct
+                     (0 1
+                        . [("/Users/caseycronyn/Developer/bristol/sw-engineering/2025-group-14/docs_refactor/index.html"
+                            1571 "dcplo0")
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil nil nil nil nil nil
+                           nil nil nil nil nil nil nil nil])
+                     -1)))
+              (buffer "index.html" (selected . t) (hscroll . 0)
+                      (fringes 8 8 nil nil) (margins nil)
+                      (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0)
+                      (dedicated) (point . 1018) (start . 493))
+              (prev-buffers ("*scratch*" 1 1) ("t27.h" 1196 1495)
+                            ("config.el" 1991 2485) ("canal.js" 1 1045)
+                            ("fork.js" 1 1) ("index.html" 2359 2713)
+                            ("README.org" 129 1437) ("init.el" 1216 2167)
+                            ("Main.js" 469 906) ("notes" 1 126)
+                            ("com~apple~CloudDocs" 1 308) ("bristol" 1 134)
+                            ("README.org<2>" 1 1) ("packages.el" 1 62))))
+            (def-params
+             ((+workspace-project
+               . "/Users/caseycronyn/Developer/bristol/sw-engineering/2025-group-14/")))
+            nil nil nil))
