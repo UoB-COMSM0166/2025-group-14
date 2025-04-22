@@ -35,7 +35,10 @@ class AllMapsSetupDisplay {
 
     //this method fetches the selected map from MapController 
     // and creates the player and pursuer sprites setting their location depending on the map
-    this.initPlayerPursuerMap();
+
+    this.player = MapController.getPlayer(selectedMap);
+    this.pursuer = MapController.getPursuer(selectedMap);
+    this.map = MapController.getMap(selectedMap, this.player);
 
     // this method sets the values of the variables that are dependent 
     // on the difficulty level
@@ -60,27 +63,6 @@ class AllMapsSetupDisplay {
     camera.zoom = 1;
 
     // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
-  }
-
-  // the selectedMap variable is assigned a value in main (when the player clicks which map they want to play)
-  initPlayerPursuerMap(){
-    switch (selectedMap){
-      case 1:
-        this.player = new Sprite(100, 100, 35, 25);
-        this.map = MapController.getMap(1, this.player);
-        this.pursuer = new Sprite(40, 100, 25, 15);
-        break;
-      case 2:
-        this.player = new Sprite(265, -328, 35, 25);
-        this.map = MapController.getMap(2, this.player);
-        this.pursuer = new Sprite(-442, -327, 25, 15);
-        break;
-      case 3:
-        this.player = new Sprite(186, 52, 35, 25);
-        this.map = MapController.getMap(3, this.player);
-        this.pursuer = new Sprite(37, 39, 25, 15);
-    }
-
   }
 
   // the selectedMap variable is assigned a value in main (when the player clicks which map they want to play)

@@ -15,6 +15,38 @@ class MapController {
         }
     }
 
+    // initialises a player sprite at desired location
+    static getPlayer(mapNumber) {
+        switch(mapNumber) {
+            case 0:
+                return new Sprite(100, 70, 35, 25);
+            case 1:
+                return new Sprite(100, 100, 35, 25);
+            case 2:
+                return new Sprite(265, -328, 35, 25);
+            case 3:
+                return new Sprite(186, 52, 35, 25);
+            default:
+                throw new Error("Invalid map number: " + mapNumber);
+        }
+    }
+
+    // initialises a pursuer sprite at desired location
+    static getPursuer(mapNumber) {
+        switch(mapNumber) {
+            case 0:
+                return new Sprite(100, 70, 25, 15);
+            case 1:
+                return new Sprite(40, 100, 25, 15);
+            case 2:
+                return new Sprite(-442, -327, 25, 15);
+            case 3:
+                return new Sprite(37, 39, 25, 15);
+            default:
+                throw new Error("Invalid map number: " + mapNumber);
+        }
+    }
+
     static getMap0(player) {
         let c1 = new canal(1000, 3, 150, player); //TODO update this with new canal structure
         let c2 = new canal(500, 2, 150, player);

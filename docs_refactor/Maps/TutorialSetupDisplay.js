@@ -56,7 +56,7 @@ class TutorialSetupDisplay {
         this.timer = new Timer();
         this.timer.startTimer();
 
-        this.player = new Sprite(100, 70, 50, 25);
+        this.player = MapController.getPlayer(0);
         this.map = MapController.getMap0(this.player);
   
         this.player.addAnimation("boat", this.playerAnimation);
@@ -287,7 +287,7 @@ class TutorialSetupDisplay {
                 this.player.x - 5, this.player.y - 10,
                 this.textboxLookUp()
             );
-            this.pursuer = new Sprite(100, 70, 50, 25);
+            this.pursuer = MapController.getPursuer(0);
             this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.pursuer.animation.frameDelay = 18;
