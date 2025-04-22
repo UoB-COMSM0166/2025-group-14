@@ -161,7 +161,7 @@ We have split our evaluation into four sections. Sections 1 (Constructive critic
 - Changes to the shape of the canal network were suggested: more small bends would be good, not just straight lines.
 - Participants questioned how does the player win the game? The objective of the game at the present time is unclear.
 
-###### 2. Positive Feeback
+###### 2. Positive Feedback
 
 - The canal map shape was interesting because of the sharp corners.
 - The game idea was interesting and original; one participant mentioned that they had never played a game like it before.
@@ -222,6 +222,8 @@ The questions used in the SUS can be seen on [the Nielson Norman Group website](
 |10. I needed to learn a lot of things before I could get going with this system| 87.5 | 80 |
 | **Average** | **72.25** | **66** |
 
+![SUS score by participant)](./Diagrams/SUS_average_score_by_participant.png)
+
 Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
 
 A more granular analysis of the raw data showed that particularly large contributions to the useability score came from Questions 4, 7, and 10 for both levels. These questions are:
@@ -248,6 +250,8 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 | Effort | 2.5 | 10 | significant |
 | Performance | 5 | 9 | significant |
 | Frustration | 8 | 10 | significant |
+
+![Average NASA TLX scores by Question](/./Diagrams/NASA_TLX_graph_average_score_by_category.png)
 
 - **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We conclude from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
 - **Physical demand**: The difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
