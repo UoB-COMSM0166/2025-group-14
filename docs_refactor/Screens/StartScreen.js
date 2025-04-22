@@ -1,20 +1,26 @@
 class StartScreen {
-
     constructor() {
-      this.startButton = new Button("Start game", windowWidth/2, windowHeight/2 + 150, 'seagreen', 30, this.buttonClick.bind(this));
+      this.startButton = new Button("Start Game", windowWidth/2, windowHeight/2 + 150, 'seagreen', 30, this.buttonClick.bind(this));
+      this.bg = loadImage("assets/StartScreenBg/bg.png");
+      this.font = null;
+      loadFont("assets/fonts/Kaph-Regular.ttf", (font) => {
+        this.font = font;
+      });
     }
 
     display() {
         new Canvas(windowWidth, windowHeight);
+        image(this.bg, 0, 0, windowWidth, windowHeight);
         this.startButton.show(); 
-        //background("lightblue");
         let centerX = windowWidth/2;
         let centerY = windowHeight/2;
-        background(183, 233, 193);
-        fill(0);
+        fill(255, 255, 255);
         textSize(20);
         stroke(2);
         textAlign(CENTER);
+        if(this.font) {
+          textFont(this.font);
+        }
         text("Welcome to", centerX, centerY-100);
         textSize(50);
         stroke(4);
