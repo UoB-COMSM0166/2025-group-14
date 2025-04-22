@@ -206,7 +206,7 @@ Ten participants took part in our quantitative evaluation. Each participant play
 
 ##### System Useability Survey (SUS)
 
-The questions used in the SUS can be seen on [the Nielson Norman Group website](https://www.nngroup.com/articles/measuring-perceived-usability/). The responses are scores on a sclae between 1 to 5, where 1 means 'Strongly disagree' and 5 means 'Strongly agree'. 
+The questions used in the SUS can be seen on [the Nielson Norman Group website](https://www.nngroup.com/articles/measuring-perceived-usability/). The responses are scores on a sclae between 1 to 5, where 1 means 'Strongly disagree' and 5 means 'Strongly agree'. Please see Appendix 1 for raw data.
 
 | SUS Question | Average SUS Score (Easy) | Average SUS Level (Difficult) |
 |---|---|---|
@@ -240,7 +240,7 @@ Based on this, we can conclude that there is a satisfactorily significant differ
 
 ##### NASA Task Load Index (TLX)
 
-The NASA TLX asks a user to rate the perceived workload of a system (i.e. how effortful it is to use the system) in 6 categories. The results of our evaluation are shown below.
+The NASA TLX asks a user to rate the perceived workload of a system (i.e. how effortful it is to use the system) in 6 categories. The results of our evaluation are shown below (raw data is given in Appendix 1).
 
 | TLX Question | W value | Sample size | Result significance (at p<0.5) |
 |---|---|---| ---|
@@ -335,6 +335,22 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 ### Contribution Statement
 
 - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
+
+
+# Appendix 1
+
+## Raw SUS data - Easy Level
+
+![Raw SUS data - easy level](./Diagrams/Raw_SUS_data_EasyLevel.png)
+
+## Raw SUS data - Difficult Level
+
+![Raw SUS data - difficult level](./Diagrams/Raw_SUS_data_DifficultLevel.png)
+
+## Raw NASA TLX data
+
+![Raw NASA TLX data](./Diagrams/Raw_NASA_TLX_data.png)
+
 
 ### Additional Marks
 
