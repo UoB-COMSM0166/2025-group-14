@@ -66,12 +66,12 @@ class AllMapsSetupDisplay {
   initPlayerPursuerMap(){
     switch (selectedMap){
       case 1:
-        this.player = new Sprite(100, 100, 35, 25);
+        this.player = new Sprite(152, 62, 35, 25);
         this.map = MapController.getMap(1, this.player);
-        this.pursuer = new Sprite(40, 100, 25, 15);
+        this.pursuer = new Sprite(40 , 100, 25, 15);
         break;
       case 2:
-        this.player = new Sprite(265, -328, 35, 25);
+        this.player = new Sprite(65, 62, 35, 25);
         this.map = MapController.getMap(2, this.player);
         this.pursuer = new Sprite(-442, -327, 25, 15);
         break;

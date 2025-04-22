@@ -29,7 +29,7 @@ class MapSelectionScreen{
         this.tutorialButton.hide();
         this.mapOneButton.hide();
         this.mapTwoButton.hide();
-        if (this.selectedMapId === 2) {
+        if (this.selectedMapId !== 0) {
             state = GameState.DIFFICULTY_SCREEN;
         } else {
             state = GameState.INFO_SCREEN;
