@@ -8,6 +8,8 @@ class MapController {
                 return MapController.getMap1(player);
             case 2:
                 return MapController.getMap2(player);
+            case 3:
+                return MapController.getMap3(player);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -28,17 +30,52 @@ class MapController {
     }
     
     static getMap1(player) {
-        /*
-        Starts with a test of reactions - you need to immediately grab the lock. if so you get quite an advantage.
-        But you need it because after that the canal quickly narrows and starts to zigzag. Don't blow your lead!
-        You can choose one route that has longer zigzags and one that has shorter. Longer zigzags means it's harder
-        to maintain direction and avoid walls, but shorter means that you have to take corners more. 
-        Also the longer-zigging route starts wide and gets progressively narrower, while the shorter zig route stays
-        narrow, keeping the muscle memory fresh
-        The shorter one also slows down the pursuer less
-        And you'd better have kept a good lead, because the lock at the end takes a while!
-        */
+        let c1 = new canal(300, 2, 100, player); //right, up
+        let c2 = new canal(770, 4.5, 150, player); //right, down
+        let c3 = new lock(470, 7, 130, player, 5, 3); //left, down (lock, 5, 3)
+        let c4 = new canal(600, 10, 220, player); //left up
+        let c5 = new canal(400, 9, 60, player); 
 
+        let c6 = new canal(600, 4, 60, player); //originally 600, 4
+        let c7 = new canal(500, 5, 60, player); //originally 500, 5
+
+        let c8 = new canal(600, 4, 60, player); //originally 600, 4
+        let c9 = new canal(500, 3, 60, player); //originally 500, 3
+        let c10 = new canal(300, 5, 80, player);
+        let c11 = new canal(800, 7, 80, player);
+
+        let n1 = new canalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6], [c2, c8]]); 
+
+        //leah adding a new network to check multinetwork capability
+
+        let n2 = new canalNetwork(-500, 250, [c6, c7], []) //originally -500, 250
+        let n3 = new canalNetwork(700, -400, [c8, c9, c10, c11], [])
+
+        return new canalMap(player, true, [n1, n2, n3]); 
+       
+    }
+
+    static getMap2(player) {
+        let c1 = new canal(1000, 3, 200, player); 
+        let c2 = new canal(300, 7, 100, player);
+        let c3 = new canal(500, 4, 200, player);
+        let c4 = new canal(400, 2, 200, player);
+        let c5 = new canal(400, 11, 200, player);
+        let c6 = new canal(1200, 3, 150, player);
+        let c7 = new canal(700, 7, 150, player);
+        let c8 = new canal(500, 3, 150, player);
+        let c9 = new canal(700, 7, 150, player);
+        let c10 = new canal(500, 10, 150, player);
+        let c11 = new canal(600, 7, 150, player);
+        let c12 = new canal(600, 9, 150, player, true, true); // means garbage = true and last canal segemnt = true
+
+        let network = new canalNetwork(-500, -350, [c1, c2, c3, c4, c5, 
+                                                        c6, c7, c8, c9, c10,
+                                                        c11, c12], []);
+        return new canalMap(player, true, [network]);
+    }
+
+    static getMap3(player){
         let stdwidth = 100;
 
         let intro = new canal(200, 3, 100, player);
@@ -116,28 +153,5 @@ class MapController {
              longZigs, upAfter, fatLocks, homeStretch, end], [], false);
 
         return new canalMap(player, true, [threshold, loop, arc]);
-
-
-        
-    }
-
-    static getMap2(player) {
-        let c1 = new canal(1000, 3, 200, player); 
-        let c2 = new canal(300, 7, 100, player);
-        let c3 = new canal(500, 4, 200, player);
-        let c4 = new canal(400, 2, 200, player);
-        let c5 = new canal(400, 11, 200, player);
-        let c6 = new canal(1200, 3, 150, player);
-        let c7 = new canal(700, 7, 150, player);
-        let c8 = new canal(500, 3, 150, player);
-        let c9 = new canal(700, 7, 150, player);
-        let c10 = new canal(500, 10, 150, player);
-        let c11 = new canal(600, 7, 150, player);
-        let c12 = new canal(600, 9, 150, player, true, true); // means garbage = true and last canal segemnt = true
-
-        let network = new canalNetwork(-500, -350, [c1, c2, c3, c4, c5, 
-                                                        c6, c7, c8, c9, c10,
-                                                        c11, c12], []);
-        return new canalMap(player, true, [network]);
     }
 }
