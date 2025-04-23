@@ -43,6 +43,7 @@ class PlayerConfig {
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
     // this.pursuerDamageCooldown = 0;
+    this.inLock = -1
   }
 
   camera() {

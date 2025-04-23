@@ -27,7 +27,6 @@ class doors{
 
         this.redDoor = this.blackDoor = null;
         this.redAngle = this.blackAngle = 0;
-        this.sensor = null;
 
 
         //red equals left, black equals right
@@ -80,6 +79,12 @@ class doors{
             this.blackAngle = this.closedBlack; 
         }
 
+        /*this.sensor = new Sprite(this.midway[0], this.midway[1], this.doorLength * 2, this.doorThick);
+        this.sensor.rotation = this.closedRed;
+        this.sensor.collider = "static";
+        this.sensor.colour = 'seagreen';
+        this.sprites.push(this.sensor)*/
+
         this.redDoor  = new Sprite(this.anchorRed[0], this.anchorRed[1], this.doorLength, this.doorThick);
         this.redDoor.rotation = this.redAngle;
         this.redDoor.collider = "static";
@@ -92,10 +97,6 @@ class doors{
         this.blackDoor.color    = "green";
         this.sprites.push(this.blackDoor);
 
-        this.sensor = new Sprite(this.anchorRed[0], this.anchorBlack[1], this.doorLength * 2, this.doorThick);
-        this.sensor.rotation = this.redAngle;
-        this.sensor.visible = false;
-        this.sprites.push(this.sensor)
         this.doorAnimate();
     }
 
@@ -109,8 +110,30 @@ class doors{
         this.redDoor.y  = this.redSect[1] + hl * Math.sin(degreesToRadians(this.redAngle));
         this.blackDoor.x = this.blackSect[0] + hl * Math.cos(degreesToRadians(this.blackAngle));
         this.blackDoor.y = this.blackSect[1] + hl * Math.sin(degreesToRadians(this.blackAngle));
-        this.passageCheck();
     }
+
+    getAnchor(bank){
+        switch(bank){
+            case "red":
+                return this.anchorRed;
+            case "black":
+                return this.anchorBlack;
+            default:
+                throw new Error("improper use of lock doors getAnchor function");
+        }
+    }
+
+    getClosedRed(){
+        return this.closedRed;
+    }
+
+    getDoorLength(){
+        return this.doorLength;
+    }
+
+    getDoorThick(){ return this.doorThick }
+
+    getMidway(){return this.midway}
 
     getPlayerPass(){
         if(this.playerPass < 0){
@@ -119,6 +142,8 @@ class doors{
             return true;
         }
     }
+
+    getSensor(){return this.sensor}
 
     doorState() {
         if (this.state === "opening") {
@@ -153,21 +178,6 @@ class doors{
         this.blackAngle = Math.min(this.openBlack, this.blackAngle + this.speed);
         this.doorAnimate();
   
-
-    }
-
-    passageCheck(){
-        let player = this.lock.getPlayer();
-        let o = player.overlaps(this.sensor);
-        if(o && this.awaiting){
-            this.playerPass *= -1;            
-        }
-        if(o){
-            this.awaiting = false;
-        }else{
-            this.awaiting = true;
-        }
-
 
     }
 

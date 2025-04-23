@@ -137,7 +137,8 @@ class MapController {
             duo[1] = new canal(upZig);
         }
 
-        let straight = new lockSegment(400, 9, stdwidth, player, 3, 2, 0.5);
+        //let straight = new lockSegment(400, 9, stdwidth, player, 3, 2, 0.5);
+        let straight = new lock(400, 9, stdwidth, player, 3, 2);
         let up = new canal(400, 12, stdwidth, player)
 
         harsh = stdwidth;

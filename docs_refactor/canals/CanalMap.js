@@ -6,6 +6,8 @@ class canalMap {
         this.networks = [];
         this.player = player;
         this.garbageOn = garbageOn;
+
+        this.inLock = null; //is the player in a lock?
         //FOR NOW - make any changes to the testmap below
 
         if (customNetwork == null) {
@@ -64,6 +66,19 @@ class canalMap {
         for(const link of this.linkages){
             link.positionLink();
         }
+    }
+
+    checkInLock(linearConnect){
+        let test = false;
+        linearConnect.forAllCanals(canal => {
+            if(canal instanceof lock){
+                if(canal.getContainsBoat()){
+                    test = true;
+                }
+
+            }
+        })
+        this.inLock = test;
     }
 
     clearRoute(start, end){
@@ -129,6 +144,7 @@ class canalMap {
     animate(){
         this.forAllNetworks(network => network.animate());
         this.forAllLinkages(linkage => linkage.animate());
+
     }
 
     removeSprites(){
