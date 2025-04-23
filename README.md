@@ -125,10 +125,10 @@ Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams.
 
-Note if you want to contribute to this section:
-1) If you can, please add a paragraph that in 100-200 words describes either a map classes/mechanics (locks etc), or repairing mechanics, or tutorial classes/mechanics. Don't worry about the word limit, editing is easier than writing.
-2) The UML class diagram is complete, but if you have suggestions, please feel free to post them in the chat
-3) The UML flow diagram is under development. At the moment splitting the whole thing to separate the gamepley from non-gameplay parts
+Note: if you want to contribute to this section:
+-  If you can, please add a paragraph that in 100-200 words describes either a map classes/mechanics (locks etc), or repairing mechanics, or tutorial classes/mechanics. Don't worry about the word limit, editing is easier than writing.
+-   The UML class diagram is complete, but if you have suggestions, please feel free to post them in the chat
+-   The UML flow diagram is under development. At the moment splitting the whole thing to separate the gamepley from non-gameplay parts
 
 Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js library. P5.js provided us with an accessible and interactive API which was used to create the majority of game objects and visualise them in the browser. Additionally, we included the p5play library, which is an extension to the p5.js and which contains game oriented API (see implementation challenges for details of choice).  
 
@@ -171,7 +171,7 @@ The transition between the screens that requires setting any parameter (e.g. map
 #### UML Class Diagram
 
 ![UML Class Diagram of Narrowboat Game core features](./Diagrams/DGRM_updated.jpg)
-![UML Flow Diagram of Narrowboat Game](./Diagrams/Flow.jpg)
+![UML Flow Diagram of Narrowboat Game](./Diagrams/High_level_sequence.jpeg)
 
 ### Implementation
 
