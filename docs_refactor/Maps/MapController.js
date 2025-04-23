@@ -111,7 +111,7 @@ class MapController {
         let stdwidth = 100;
 
         let intro = new canal(200, 3, 100, player);
-        let firstGates = new lockSegment(200, 4, stdwidth, player, 3, 3, 0.3);
+        let firstGates = new canal(200, 4, stdwidth, player);
         let after = new canal(200, 7, stdwidth, player);
 
         let inLoop = [];
