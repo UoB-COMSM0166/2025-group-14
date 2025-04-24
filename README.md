@@ -22,7 +22,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-![group photo](./Images/Group_photo.jpeg)
+![group photo](/./Images/Group_photo.jpeg)
 
 | Name | Email | Role |
 |----|-----|------|
@@ -392,7 +392,7 @@ Outside of our stand-up meetings, we often arranged separate individual meetings
 #### Jira
 We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
 
-[TODO - Add screenshot of Jira]
+![Screenshot of our Kanban](\.\Images\jira_screenshot.png)
 
 #### VS Code 
 Many of our team used VS code as their preferred IDE for this project as there are several useful plugins such as p5Play and Live server. These both allowed us to test game features quickly and view real-time changes directly in the browser.
