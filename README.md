@@ -172,7 +172,7 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 ![UML Class Diagram of Narrowboat Game core features](./Images/DGRM_updated.jpg)
 ![UML Flow Diagram of Narrowboat Game](./Images/High_level_sequence.jpeg)
-![UML Flow Diagram of Narrowboat Game](./Images/GamePlay_flow.png)
+![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
 ### Implementation
 
