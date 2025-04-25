@@ -142,9 +142,9 @@ class MapController {
         let mazeMidLen = 650
         let topStart = 10
         let rightStart = 12
-        add = [0, 450, 100]
+        add = [0, 450, 100, 250, 200]
         let index = 0;
-        for (let i = 0; i > -3; i--){
+        for (let i = 0; i > -5; i--){
             topMidArc.push(new canal(mazeMidLen, ((topStart + i) % 12), 100, player));
             rightMidArc.push(new canal(mazeMidLen + add[index++], ((rightStart + i) % 12), 100, player));
         
@@ -212,7 +212,7 @@ class MapController {
         /*let arc = new canalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
              longZigs, upAfter, end], [], false);*/
         let arc = new canalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
-        let midLayerOne = new canalNetwork(1627, -646, [topMidArc], [])
+        let midLayerOne = new canalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1, 0]])
         let midLayerTwo = new canalNetwork(2395, 720, [rightMidArc], []);
 
         return new canalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo]);
