@@ -22,7 +22,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-![group photo](IMG_0747.jpeg)
+![group photo](Group_photo.jpeg)
 
 | Name | Email | Role |
 |----|-----|------|
