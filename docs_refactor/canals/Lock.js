@@ -113,7 +113,6 @@ class lock extends canal {
 
     lockAnimate(){
         //this.openDoors(this.aftDoors, this.next);
-        text(this.getContainsBoat(), this.redStart[0], this.redStart[1])
         this.status = this.getFullStatus();
         this.checkForPlayer();
         // Depth bar position

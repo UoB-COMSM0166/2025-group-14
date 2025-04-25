@@ -125,9 +125,28 @@ class MapController {
         }
 
 
-        let tangent = new canal(400, 9, stdwidth, player);
+        let tangent = new canal(100, 9, stdwidth, player);
+        let mazeIn = []
+        let Out = []
 
-        let harsh = 60;
+        let start = 10;
+        let mazeInLen = 500
+        let add = [0, 0, 0, 0, 0, 100, 50, 100, 150, 50, 50, 50]
+        for (let i = 0; i < 12; i++){
+                mazeIn.push(new canal(mazeInLen + add[i], ((start + i) % 12), 100, player));
+            
+        }
+
+        let trueMidArc = []
+        let mazeMidLen = 650
+        start = 10
+        for (let i = 0; i > -3; i--){
+            trueMidArc.push(new canal(mazeMidLen, ((start + i) % 12), 100, player));
+        
+    }
+
+
+        /*let harsh = 60;
         let downZig = [100, 11, harsh, player];
         let upZig = [100, 7, harsh, player];
 
@@ -159,12 +178,13 @@ class MapController {
         let fatwidth = 300
         let fatlength = 500
         let upAfter = new canal(fatwidth*1.5, 12, stdwidth, player)
-        for(let i = 0; i < 5; i++){
-            fatLocks.push(new lockSegment(fatlength, 3, fatwidth, player, 2, 5, 1))
+       /* for(let i = 0; i < 5; i++){
+            fatLocks.push(new canal(fatlength, 3, fatwidth, player))
+            fatLocks.push(new lock(fatlength, 3, fatwidth, player, 2, 5)) //2, 5, 1 when it was a lockSegment
         }
 
-        let homeStretch = new canal(1000, 5, stdwidth - 20, player);
-        let end = new canal(300, 3, stdwidth, player, false, true)
+        let homeStretch = new canal(1000, 5, stdwidth - 20, player);*/
+        //let end = new canal(300, 3, stdwidth, player, false, true)
 
 
         let lS = 5;
@@ -182,9 +202,12 @@ class MapController {
             [inLoop[7], outLoop[6], o, c += inc, lS],
             [inLoop[8], outLoop[7], o, c += inc, lS],
             ], true);
-        let arc = new canalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
-             longZigs, upAfter, fatLocks, homeStretch, end], [], false);
+        /*let arc = new canalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
+             longZigs, upAfter, end], [], false);*/
+        let arc = new canalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], trueMidArc[2]]], false);
 
-        return new canalMap(player, true, [threshold, loop, arc]);
+        let midLayer = new canalNetwork(1627, -646, [trueMidArc], [])
+
+        return new canalMap(player, true, [threshold, loop, arc, midLayer]);
     }
 }
