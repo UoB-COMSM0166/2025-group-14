@@ -20,8 +20,8 @@ finally, add canalNetwork.animate(); to your draw function.
 - put something in to handle if we have a canal swallow another (currently this fucks the blackbanks)
 */
 
-class canalNetwork extends linearConnect{
-    constructor(x, y, course, links, loop = false){
+class CanalNetwork extends linearConnect{
+    constructor(x, y, course, links = [], loop = false){
         super()
         this.x = x;
         this.y = y;
@@ -76,7 +76,7 @@ class canalNetwork extends linearConnect{
             if(!this.course.includes(origin)){
                 throw new Error("Attempting to link via a canal outside this network");
             }
-            if(link.length != 2 && link.length != 5){
+            if(link.length != 2 && link.length != 4){
                 throw new Error("Links must specify exactly two canals");
             }
             if((!link[0] instanceof canal) || (!link[1] instanceof canal)){

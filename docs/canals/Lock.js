@@ -1,5 +1,5 @@
 class lock extends canal {
-    constructor(length, oClock, width, player, fillTime, openTime, prev = null, next = null){
+    constructor(length, oClock, width, player, fillTime, openTime){
         super(length, oClock, width, player);
         this.fillTime = fillTime;
         this.openTime = openTime;
@@ -26,10 +26,10 @@ class lock extends canal {
         // depth bar
         this.depthBar = new DepthBar(true);
 
-        if(prev != null){
+        /*if(prev != null){
             this.prev = prev;
             this.next = next;
-        }
+        }*/
 
 
     }

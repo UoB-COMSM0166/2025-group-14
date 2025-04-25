@@ -31,22 +31,21 @@ me (Leah) with any questions.
 
 CONTENTS
 (1) Developing Maps
-    (a) canals
-    (b) networks
-    (c) maps
+    (1.1) canals
+    (1.2) networks
+    (1.3) maps
 (2) Advanced Features
-    (a) Locks
-    (b) Links
-    (c) Ends
+    (2.1) Locks
+    (2.2) Links
+    (2.3) Ends
 (3) Debugging and Best Practices
-    (a) general
-    (b) facingBanks switch statement error
-    (c) six oclock error
+    (3.1) General
+    (3.2) facingBanks switch statement error
 (4) Changing how the canals are set up and drawn
-    (a) Where to make changes
-    (b) Creating new sprites
-    (c) Redbank and Blackbank
-    (d) Lock doors
+    (4.1) Where to make changes
+    (4.2) Creating new sprites
+    (4.3) Redbank and Blackbank
+    (4.4) Lock doors
 
 
 
@@ -55,164 +54,216 @@ A map contains several networks, and a network contains several canals. In the M
 file, you can see some pre-built levels and hopefully get a feel from them as to how you'll lay 
 out these objects. 
 
-(a) canals
-For map design, the key attributes canals have are width, length and angle (angle is sometimes
-called "oclock", because you set it by putting in a number as though it were a clock face - so
-a canal with an angle of 3 goes horizontally to your right, and 9 horizontally to your left).
-Canals do not have a starting position, that's determined by the network. "Lock" is a subclass
-of canal, and I'll get onto that later.
+    (1.1) canals
+    For map design, the key attributes canals have are width, length and angle (angle is sometimes
+    called "oclock", because you set it by putting in a number as though it were a clock face - so
+    a canal with an angle of 3 goes horizontally to your right, and 9 horizontally to your left).
+    Canals do not have a starting position, that's determined by the network. "Lock" is a subclass
+    of canal, and I'll get onto that later.
 
-Canals have two banks, "redbank" and "blackbank." These were largely terms for my benefit in making
-them, and hopefully won't look red and black forever. Note that whenever I or any of my code says
-"redbank", what it means is the first and default bank that is drawn. If I say a canal "starts from"
-or "ends at" coordinates, then those are the coordinates of the redbank. 
+    Canals have two banks, "redbank" and "blackbank." These were largely terms for my benefit in making
+    them, and hopefully won't look red and black forever. Note that whenever I or any of my code says
+    "redbank", what it means is the first and default bank that is drawn. If I say a canal "starts from"
+    or "ends at" coordinates, then those are the coordinates of the redbank. 
+    
+    A canal is constructed with the following arguments:
 
-(b) networks
-To create a network, give it an x and y coordinate, and then feed it a bunch of canals as an array.
-It'll start drawng the first canal from your starting coordinates, and then start drawing the second
-canal after that point, and so forth. this means that you can be pretty confident that all the canals
-connect with one another, you don't need to move them all if you want to extend or re-angle one. 
-Just change the angle or length of the canal object in the MapController, and you're fine.
+    new canal(length, oClock, width, player, garbageOn = true, finish = false);
 
-Networks also take a second argument which is another array. You can leave that empty if you want.
-However, the limitation on networks is that they're linear. If you want to fork your route and
-force the player to pick one, you can use that array to connect two networks together - that's
-covered in the "maps" segment below.
+    where:
+    
+        length - the length of the first bank drawn (the "redBank"). 
+        oClock - the angle of the canal expressed as position on a clock face. It will be drawn protruding at
+                this angle from the end of the canal preceding it in the network.
+        width - the width of the canal.
+        player - the player
+        garbageOn - defaults to true; if set to false, the canal will not display garbage
+        finish - defaults to false; if set to true, reaching this canal will complete the game. 
 
-Each canal belongs in exactly ONE network and go in there ONCE. If you happen two need two canals 
-of the same length, width, and angle, define them as seperate objects and feed them in seperately.
+    (1.2) networks
+    A network is a linear set of canals. It is passed an array of canals and a pair of starting coordinates, and then
+    draw the canals out from there, connecting each to the other. This means that you can be pretty confident that all the canals
+    connect with one another, you don't need to move them all if you want to extend or re-angle one. 
+    Just change the angle or length of the canal object in the MapController, and you're fine.
 
-(c) maps
+    It is advised that you should include each canal in exactly one network and include it there exactly once; multiple
+    identical canals, if needed at different points in the network, are best defined as seperate objects. There may be
+    exceptions to this, but this is how I intended the code to be use and will be playing it safe.
 
-Maps contain several networks, fed into them via an array. Maps have no coordinates, and you 
-can have one per level. However in theory you can have as many networks into them as you want.
+    Networks are constructed with the following arguments:
 
-To connect two networks, you use the second array arguments that Networks take - "linkages". 
-this is a 2D array of paired canals, ie, [[c1, c5], [c3, c7] ... ]. Importantly, both of these
-canals have to be fed into seperate networks. 
+    new CanalNetwork (x, y, course, links = [], loop = false)
 
-Networks also take a second array, called "linkages". These are a 2D array of paired canals. The
-first canal in each pair is inside the network, and the second is in a canal that is in a 
-different network that is in the same map. If you do add that, then a new canal will be
-drawn between the two canals, connecting one network to the other. 
+    where:
+    
+        x and y - the coordinates of the start of the first bank to be drawn of the first canal in the network. 
+                  The second blank will be drawn a short distance away from this point depending on the canal's width
+                  and angle.
+        cousre -  an array of canals, which will be drawn starting from the x and y coordinates in the order in which they
+                  appear in the array.
+        links -   optional; assumed to be an empty array unless specified otherwise. This is a second array of canals, whicb is 
+                  used to specify if two non-consecutive canals should be linked togetherby a branch emerging from halfway along#
+                  each. See "(2.2) Links" for how to use these. 
+        loop -    optional; assumed to be false unless specified otherwise. If set to true, the network will draw a new canal
+                  connecting the first and last canals in the network.
+
+
+    (1.3) maps
+
+    Maps contain several networks, fed into them via an array. Maps have no coordinates, and you 
+    can have one per level. However in theory you can have as many networks in them as you want.
+
+    the reason why we use Maps rather than just Networks is because Networks are linear and cannot fork. Connecting multiple
+    networks via a fork is discussed in (2.2) Links. 
+
+    Maps take the following arguments:
+
+    new CanalMap(player, garbageOn = true, customNetwork = null);
+
+    where:
+
+        player - the player
+        garbageOn - whether canals display garbage
+        customNetwork - the key one, the array of canals
 
 (2) Advanced Features - Locks and Links
 
-(a) Locks
-Locks are a subclass of canal. To make a canal into a lock, simply change your constructor in
-mapController from new Canal(args) to newLock(args). 
+    (2.1) Locks
+    Locks are a subclass of canal. To make a canal into a lock, simply change your constructor in
+    mapController from new Canal(args) to newLock(args). 
 
-Locks are a level hazard that reward strategic thinking. They have two doors and a timer: one 
-door opens, holds for a certain time, closes, then both are closed for a certain time, 
-then the other door opens, holds for a certain time, closes, and then both are closed again. 
+    Locks are a level hazard that reward strategic thinking. They have two doors and a timer: one 
+    door opens, holds for a certain time, closes, then both are closed for a certain time, 
+    then the other door opens, holds for a certain time, closes, and then both are closed again. 
 
-More locks do not necessarily make level easier or harder. A careless player can be trapped
-on the same side of a lock as the pursuer, but a smart player can use locks to keep ahead
-of the pursuer - once the door shuts behind the player, they're safe until the pursuer can 
-get in!
+    Locks do take two additional args: fillTime and openTime. These are given in seconds. 
+    both gates will stay open for openTime, and the periods where both doors are shut last for fillTime.
 
-Locks do, however, take two additional args: fillTime and openTime. These are given in seconds. 
-both gates will stay open for openTime, and the periods where both doors are shut last for fillTime.
+    Args are as follows:
 
-At the moment, lock gates simply disappear when they open and reappear when closed. Hopefully something
-more elegant is forthcoming!
+    new Lock(length, oClock, width, player, fillTime, openTime)
 
-(b) Links
-Linkages are a type of network created by the map to link two other networks. You should not use
-them; the code handles them automatically and you can't place them manually.
+    where:
+        Length, oClock, Width, Player - are identical to the canal superclass
+        fillTime - the amount of time in seconds for which each set of gates will stay open.
+        openTime - the amount of time in seconds for which the canal will keep both its gates shut.
 
-Linkages are new and complicated and probably more prone to bugs than other things. Ultimately, 
-while you can message me about bugs if you want, some are probably more easily fixed just by
-slightly changing the position of one of the networks, or the angle of one of the linking canals.
 
-The important thing to remember, if you do need to debug that way, is that links by default go
-from the midpoint of the two connecting canals. You want to position those canals so that the
-halfway point of each one can be reached from the other without obstruction.
 
-Also worth noting is that the new canal created by the linkage has the same width as the THINNEST
-of the two connecting canals. 
+    (2.2) Links
+    Links are an additional argument that networks can take. A network without specified linkages will
+    be instantiated like this:
 
-(c) ends
-Networks automaticall draw an black bank at the start and end of their course. To turn this off,
-comment-out the "createEndSprites();" method in the constructor method in canalNetwork.js
+        let midLayerTwo = new CanalNetwork(2395, 720, [canalOne, canalTwo, canalThree]);
+
+    Whereas one that does have specified linkages will be instantiated like this:
+
+        let midLayerTwo = new CanalNetwork(2395, 720, [canalOne, canalTwo, canalThree], [[CanalTwo, CanalFive]]);
+    
+    What this means is that when this network is passed to a Map, a new canal will be drawn extending from
+    halfway along canalTwo, and attaching to halfway along canalFive (assuming that canalFive exists in another networks
+    in the same map.)
+
+    If you have more canals, like a canalSix, you can make as many connections as you like. If you want your network to have
+    multiple connections, instantiate as follows:
+    
+        let midLayerTwo = new CanalNetwork(2395, 720, [canalOne, canalTwo, canalThree], [[CanalTwo, CanalFive], [canalThree, canalSix]]);
+
+
+    Finally, you can also make your linkages into locks! To do that, you just need to specify the fillt
+
+
+
+a
+    Linkages are new and complicated and probably more prone to bugs than other things. Ultimately, 
+    while you can message me about bugs if you want, some are probably more easily fixed just by
+    slightly changing the position of one of the networks, or the angle of one of the linking canals.
+
+    The important thing to remember, if you do need to debug that way, is that links by default go
+    from the midpoint of the two connecting canals. You want to position those canals so that the
+    halfway point of each one can be reached from the other without obstruction.
+
+    Also worth noting is that the new canal created by the linkage has the same width as the THINNEST
+    of the two connecting canals. 
+
+    (2.3) Ends
+    Networks automaticall draw an black bank at the start and end of their course. To turn this off,
+    comment-out the "createEndSprites();" method in the constructor method in canalNetwork.js
 
 
 (3) Debugging and Best Practices
-(a) - general
-This code is not (no pun intended) waterproof. there are angles and positions of canals that
-will not link together, or will make the sprites go all out of whack. I'm happy to look at bugs, 
-but there's also a degree of "thinking for you" that I can't get the code to do in the timeframe
-(as much as I'd prefer that to revising. Don't tempt me frodo etc). 
+    (3.1) general
+    This code is not (no pun intended) waterproof. there are angles and positions of canals that
+    will not link together, or will make the sprites go all out of whack. I'm happy to look at bugs, 
+    but there's also a degree of "thinking for you" that I can't get the code to do in the timeframe
+    (as much as I'd prefer that to revising. Don't tempt me frodo etc). 
 
-Because of that, the following things are likely to cause bugs. You can do them if you want, 
-just be prepared to change your maps around them:
+    Because of that, the following things are likely to cause bugs. You can do them if you want, 
+    just be prepared to change your maps around them:
 
-FAT CANALS - canals are not designed to be wider than they are long, and canals that are wider
-than other canals are long run the risk of swallowing them up.
+    FAT CANALS - canals are not designed to be wider than they are long, and canals that are wider
+    than other canals are long run the risk of swallowing them up.
 
-LINKING TWO NETWORKS FROM A LOCK - I haven't tested what this would mean because no canal would
-be built this way. I don't imagine it would work very well. 
+    LINKING TWO NETWORKS FROM A LOCK - I haven't tested what this would mean because no canal would
+    be built this way. I don't imagine it would work very well. 
 
-HAIRPIN BENDS - a canal at 10'oclock connecting to a canal at 5 o'clock may make a nice joint, 
-but also might not. 
+    HAIRPIN BENDS - a canal at 10'oclock connecting to a canal at 5 o'clock may make a nice joint, 
+    but also might not. 
 
-The tl;dr is that generally, thinner canals that curve at softer angles are safer!
+    The tl;dr is that generally, thinner canals that curve at softer angles are safer!
 
-This, I should mention, is all "debugging" in the sense of, "help, my canalnetwork is now a mess
-of disconnected sprites", not "help, I've gotten an error message." If you get an error message,
-feel free to message right away.
+    This, I should mention, is all "debugging" in the sense of, "help, my canalnetwork is now a mess
+    of disconnected sprites", not "help, I've gotten an error message." If you get an error message,
+    feel free to message right away.
 
-(b) - facingBanks switch statement error
-This is the most fragile code I've written. You can probably solve it by arbitrarily futzing some
-canals around your linked networks, but I'm still not fully sure of this one, so hit me up if 
-you run into it. 
-
-(c) - six Oclock errors
-Canals currently don't work if you try and set them straight down. this is a high priority to fix. 
+    (3.2) facingBanks switch statement error
+    This is the most fragile code I've written. You can probably solve it by arbitrarily futzing some
+    canals around your linked networks, but I'm still not fully sure of this one, so hit me up if 
+    you run into it. 
 
 (4) Changing how the canals are setup and drawn
 
-(a) - where to make changes 
+    (4.1) - where to make changes 
 
-These canals are curently very ugly. If you're going to change that, I would advise (request) 
-you to make your changes within the following functions (within reason):
+    These canals are curently very ugly. If you're going to change that, I would advise (request) 
+    you to make your changes within the following functions (within reason):
 
-within the canal.js class:
-canalSetup() - this is called once when the map is set up and is where sprites are created.
-canalAnimate() - this is called every time the canal is drawn.
-createSprites() - identical to canalSetup BUT it does not affect locks. 
-animate() - identical to animate but also does not affect locks.
+    within the canal.js class:
+    canalSetup() - this is called once when the map is set up and is where sprites are created.
+    canalAnimate() - this is called every time the canal is drawn.
+    createSprites() - identical to canalSetup BUT it does not affect locks. 
+    animate() - identical to animate but also does not affect locks.
 
-within the lock.js class:
-lockSetup - called once when the map is set up for locks, and does not affect canals.
-lockAnimate - called every time the lock is drawn, does not affect canals.
+    within the lock.js class:
+    lockSetup - called once when the map is set up for locks, and does not affect canals.
+    lockAnimate - called every time the lock is drawn, does not affect canals.
 
-GENERALLY, you should make your changes in canalSetup and canalAnimate, as we want locks
-to have the same colour water and the same animations as canals. However, you might (say)
-want to not have garbage in water.
+    GENERALLY, you should make your changes in canalSetup and canalAnimate, as we want locks
+    to have the same colour water and the same animations as canals. However, you might (say)
+    want to not have garbage in water.
 
-(b) - Creating sprites
-Canals have two array attributes, allSprites and bankSprites. 
+    (4.2) - Creating sprites
+    Canals have two array attributes, allSprites and bankSprites. 
 
-Any new sprite you create needs to be pushed into allSprites once you make it. Otherwise 
-it won't be cleared when the map closes.
+    Any new sprite you create needs to be pushed into allSprites once you make it. Otherwise 
+    it won't be cleared when the map closes.
 
-If you are making a sprite that will hurt the player to collide with, it needs to be pushed
-into banksprites, otherwise the collision will not affect player health. 
+    If you are making a sprite that will hurt the player to collide with, it needs to be pushed
+    into banksprites, otherwise the collision will not affect player health. 
 
-(c) Redbank and blackbank
-we do not want to hand in a game where you navigate between black and red lines. currently all
-banks are made at the same function, createBank, which in addition to pushing them to the 
-allSprites and bankSprites arrays, also gives them a colour. However, if no colour is specified
-as an argument for the function, the line will not have a set colour.
+    (4.3) Redbank and blackbank
+    we do not want to hand in a game where you navigate between black and red lines. currently all
+    banks are made at the same function, createBank, which in addition to pushing them to the 
+    allSprites and bankSprites arrays, also gives them a colour. However, if no colour is specified
+    as an argument for the function, the line will not have a set colour.
 
-Ideally, both banks should look the same, and should either be invisible or have some nice
-pattern (cobbled rocks or whatever). If you edit the createBank function, that will make these
-changes. It'd probably be nice to have a seperate bank design for locks; the locks currentlyuse the
-inherited createBank function but if you make them a new one, you can make it  different.
+    Ideally, both banks should look the same, and should either be invisible or have some nice
+    pattern (cobbled rocks or whatever). If you edit the createBank function, that will make these
+    changes. It'd probably be nice to have a seperate bank design for locks; the locks currentlyuse the
+    inherited createBank function but if you make them a new one, you can make it  different.
 
-(d) Lock doors
-In the makeDoors function in doors.js you canchange how the door sprites look. 
+    (4.4) Lock doors
+    In the makeDoors function in doors.js you canchange how the door sprites look. 
 
 
 

@@ -57,8 +57,8 @@ class MapController {
         let c7 = new canal(500, 12.5, 150, player);
         let c8 = new canal(500, 11, 150, player, true, true);
 
-        let network = new canalNetwork(0, 0, [c1, c2, c3, c4 , c5, c6, c7, c8], []); 
-        return new canalMap(player, true, [network]); 
+        let network = new CanalNetwork(0, 0, [c1, c2, c3, c4 , c5, c6, c7, c8], []); 
+        return new CanalMap(player, true, [network]); 
     }
     
     static getMap1(player) {
@@ -76,14 +76,14 @@ class MapController {
         let c10 = new canal(300, 5, 80, player);
         let c11 = new canal(800, 7, 80, player);
 
-        let n1 = new canalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6], [c2, c8]]); 
+        let n1 = new CanalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6], [c2, c8]]); 
 
         //leah adding a new network to check multinetwork capability
 
-        let n2 = new canalNetwork(-500, 250, [c6, c7], []) //originally -500, 250
-        let n3 = new canalNetwork(700, -400, [c8, c9, c10, c11], [])
+        let n2 = new CanalNetwork(-500, 250, [c6, c7], []) //originally -500, 250
+        let n3 = new CanalNetwork(700, -400, [c8, c9, c10, c11], [])
 
-        return new canalMap(player, true, [n1, n2, n3]); 
+        return new CanalMap(player, true, [n1, n2, n3]); 
        
     }
 
@@ -101,10 +101,10 @@ class MapController {
         let c11 = new canal(600, 7, 150, player);
         let c12 = new canal(600, 9, 150, player, true, true); // means garbage = true and last canal segemnt = true
 
-        let network = new canalNetwork(-500, -350, [c1, c2, c3, c4, c5, 
+        let network = new CanalNetwork(-500, -350, [c1, c2, c3, c4, c5, 
                                                         c6, c7, c8, c9, c10,
                                                         c11, c12], []);
-        return new canalMap(player, true, [network]);
+        return new CanalMap(player, true, [network]);
     }
 
     static getMap3(player){
@@ -199,22 +199,22 @@ class MapController {
         let c = 3
         let inc = 0.1
 
-        let threshold = new canalNetwork(0, 0, [intro, firstGates, after], [[after, inLoop[0]]], false);
-        let loop = new canalNetwork(300, 300, [inLoop], [[inLoop[1], outLoop[0], o, c += inc, lS],
-            [inLoop[2], outLoop[1], o, c += inc, lS],
-            [inLoop[3], outLoop[2], o, c += inc, lS],
-            [inLoop[4], outLoop[3], o, c += inc, lS],
-            [inLoop[5], outLoop[4], o, c += inc, lS],
-            [inLoop[6], outLoop[5], o, c += inc, lS],
-            [inLoop[7], outLoop[6], o, c += inc, lS],
-            [inLoop[8], outLoop[7], o, c += inc, lS],
+        let threshold = new CanalNetwork(0, 0, [intro, firstGates, after], [[after, inLoop[0]]], false);
+        let loop = new CanalNetwork(300, 300, [inLoop], [[inLoop[1], outLoop[0], o, c += inc],
+            [inLoop[2], outLoop[1], o, c += inc],
+            [inLoop[3], outLoop[2], o, c += inc],
+            [inLoop[4], outLoop[3], o, c += inc],
+            [inLoop[5], outLoop[4], o, c += inc],
+            [inLoop[6], outLoop[5], o, c += inc],
+            [inLoop[7], outLoop[6], o, c += inc],
+            [inLoop[8], outLoop[7], o, c += inc],
             ], true);
-        /*let arc = new canalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
+        /*let arc = new CanalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
              longZigs, upAfter, end], [], false);*/
-        let arc = new canalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
-        let midLayerOne = new canalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1, 0]])
-        let midLayerTwo = new canalNetwork(2395, 720, [rightMidArc], []);
+        let arc = new CanalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
+        let midLayerOne = new CanalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1]])
+        let midLayerTwo = new CanalNetwork(2395, 720, [rightMidArc]);
 
-        return new canalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo]);
+        return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo]);
     }
 }

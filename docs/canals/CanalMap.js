@@ -1,7 +1,7 @@
 // Changelog for Leah: 
 // 1) Line 5: Added the optional customNetwork parameter to the constructor to allow for different networks to be passed in.
 // 2) Lines 11 - 21: Added if/else: if no custom network is provided then create the default one, else use the custom one provided
-class canalMap {
+class CanalMap {
     constructor(player, garbageOn = true, customNetwork = null){
         this.networks = [];
         this.player = player;
@@ -43,9 +43,9 @@ class canalMap {
                 let inbound = link[1];
                 let lock = false;
                 let lockDetails = [];
-                if(link.length === 5){
+                if(link.length === 4){
                     lock = true;
-                    lockDetails = [link[2], link[3], link[4]]
+                    lockDetails = [link[2], link[3]]
                 }
                 let origin = network;
                 let destination = this.getNetworkByCanal(inbound);
