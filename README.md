@@ -350,7 +350,48 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 - 15% ~750 words
 
-- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together. 
+- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together.
+
+[TODO - Add image of team working/on a teams call]
+
+For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
+
+We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, members of our team did develop specialisms and tended to work on similar aspects of the game. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
+
+As we went into the active development stage we formalised meetings into twice weekly scrum-style stand ups. Each session would involve a general discussion on what we were working on for that sprint, any challenges that had come up, and what support we might need. 
+
+Below is a rough timeline and description of our sprints with each taking 1-3 weeks.
+
+| Sprint No     |  Description  |
+| ------------- |-------------|
+|1 - Calm before the storm     | Implemented core stage 1 features such as the map, player, and pursuer.     |
+| 2 - The Storm      | Attempted to implement stage 2 features like locks. Technical issues in this sprint led to a major refactor.   |
+| 3 - New Beginnings      | Rebuilt the game from the ground up in a week, using the p5Play library to avoid collision issues.     |
+|4 - Additional features   | Introduced more complex features, including locks and advanced maps.    |
+| 5 - Operation Beautification   | Focused on improving the visual and audio aspects of our game.     |
+| 6 - Crossing the line    | Final testing and debugging up to the hand-in date.    |
+
+#### Pair programming
+
+Outside of our stand-up meetings, we often arranged separate individual meetings to sort out issues using pair programming. We found pair programming was excellent for working through complex merges in our git repository.  By working on a single screen with both contributors present we were able to quickly merge branches together while also being able to explain any nuances in our code to one another.
+
+#### Jira
+We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
+
+![Screenshot of our Kanban](/./Images/jira_screenshot.png)
+
+#### VS Code 
+Many of our team used VS code as their preferred IDE for this project as there are several useful plugins such as p5Play and Live server. These both allowed us to test game features quickly and view real-time changes directly in the browser.
+
+#### Git
+Git (and GitHub) was central to our development process. Our general approach was to create feature branches off the main branch and merge them back in once ready. This model allowed us to work asynchronously without the risk of conflicts on the main branch. For some features we also used pull requests to review changes before they were pushed and git’s commit history let us track the timeline of when and how features were added. 
+
+#### Communication tools
+The main forms of communication we used in the project were teams and WhatsApp. As mentioned, we would meet on teams regularly and make use of the share screen feature to talk through new features. For smaller updates we relied on a WhatsApp group chat which we made extensive use of over the term.
+
+#### Reflection
+We found that our flexible approach to team roles and regular scrum-style meetings worked well, as it gave everyone broad knowledge of the codebase and kept communication regular. This proved particularly valuable during unforeseen issues - such as the major refactor in sprint 3 - as no role changes were needed and everyone was able to contribute across different parts of the game without the workload falling too heavily on any one individual.
+
 
 ### Conclusion
 
