@@ -416,7 +416,17 @@ Brought up use case diagrams and with the requirements section. Is asking for fe
 
 Wants to create an onion diagram for stakeholders.
 
+**** Polly
+(from teams chat)
+
+I was working on the evaluation section. The workshop slides said that we only needed to include 1 qualitative evaluation and 1 quantiative evaluation, so I have chosen the Think Aloud and the NASA TLX, because I think that those were the ones that yielded the most meaningful results. I have edited both of those and written about the changes that we made to the game in response to the evaluation feedback. I am way over the word limit but I'm not really sure what I could take out?
+
+Also, I used the NASA TLX raw data to make  a graph showing the NASA TLX scores by category, and I also included the raw data in an Appendix, on Daniel's suggestion.
+
+I haven't written anything about testing, partly because I'm not sure what there is to say and partly because I am already way over the word limit anyway
+
 *** game deadline
+This is sooner than we thought.
 *** next steps
 - Report done by the end of this week
 - level design
@@ -429,8 +439,8 @@ Report done by the end of this week
 ****** 2. level design: Leah and Casey and Polly
 ***** coursework
 ****** video:
-Daniil will start work on this. Perhaps a script?
-Editing will have to happen too
+- Daniil will start work on this. Perhaps a script?
+- Editing will have to happen too
 
 **** filming for video on the 4th
 **** points for discussion
