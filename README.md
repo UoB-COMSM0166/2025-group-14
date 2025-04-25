@@ -22,7 +22,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-![group photo](/./Images/Group_photo.jpeg)
+![group photo](IMG_0747.jpeg)
 
 | Name | Email | Role |
 |----|-----|------|
@@ -39,6 +39,15 @@ Add a group photo here!
 
 - 5% ~250 words 
 - Describe your game, what is based on, what makes it novel?
+
+Our game draws from the vehicle pursuit sections of titles like GTA but shifts the settings to the pastoral English canal network. Your boat must reach the end of a long, narrow waterway while avoiding by the pursuing vessel. As any boater will confirm, vessels need regular maintenance, so our unique mechanic is our health system: your boat, in addition to taking damage from collisions with the bank, will gradually incur damage over time. The player can, at any time, do “maintenance” to restore the boat to full health, at the cost of a 3 second stop. Repairing too frequently can thus make the player easy prey, while leaving it too late risks losing all health and failing. 
+
+This is heightened by the presence of another classic feature of English waterways – locks! Locks open and close on a timer, and impede the progress of both player and pursuer. The game thus rewards strategic thinking: players are encouraged to pick routes and schedule maintenance breaks around lock opening times. 
+
+Our game will have multiple maps and difficulty levels. Because the rate at which damage is incurred over time is partially randomized, we believe that even traversal of familiar maps will offer organic player-pursuer interactions, and the process of mastering a given map will not be linear. 
+
+Pollution and garbage are known problems on the canal *exact nature of garbage mechanic tbd - could contribute to a score or to vehicle damage calculations*
+
 
 #### Game ideas
 
@@ -125,10 +134,10 @@ Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams.
 
-Note: if you want to contribute to this section:
--  If you can, please add a paragraph that in 100-200 words describes either a map classes/mechanics (locks etc), or repairing mechanics, or tutorial classes/mechanics. Don't worry about the word limit, editing is easier than writing.
--   The UML class diagram is complete, but if you have suggestions, please feel free to post them in the chat
--   The UML flow diagram is under development. At the moment splitting the whole thing to separate the gamepley from non-gameplay parts
+Note if you want to contribute to this section:
+1) If you can, please add a paragraph that in 100-200 words describes either a map classes/mechanics (locks etc), or repairing mechanics, or tutorial classes/mechanics. Don't worry about the word limit, editing is easier than writing.
+2) The UML class diagram is complete, but if you have suggestions, please feel free to post them in the chat
+3) The UML flow diagram is under development. At the moment splitting the whole thing to separate the gamepley from non-gameplay parts
 
 Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js library. P5.js provided us with an accessible and interactive API which was used to create the majority of game objects and visualise them in the browser. Additionally, we included the p5play library, which is an extension to the p5.js and which contains game oriented API (see implementation challenges for details of choice).  
 
@@ -146,7 +155,13 @@ The pursuer object is the same p5play sprite as the player, but it’s behaviour
 
 #### CanalMap class and the locks mechanics  
 
-(????????????????????????????????????????????????????????????????????????????)  
+Maps were built at three aggregated levels:
+•	Canals, straight line pairs of banks. 
+•	CanalNetworks, linear connections of canals.
+•	CanalMaps, aggregations of several networks into forking maps with a start and end point. 
+Canal objects are instantiated with a width, a length and an angle, but not position. CanalNetworks are given starting x and y coordinates and a set of ordered canals, and then draw these canals in order starting from those coordinates. Canal networks are also passed a set of canal pairs, with the first canal necessarily being within the network but the second potentially being outside it. The map object takes these pairs and uses them to create linkage objects, a co-descendent (along with networks) of the linnearConnect abstract class, that contain a single canal which is positioned by the map to link the canals specified by the networks. 
+Locks, a subclass of canals, are given timing parameters and are positioned like any other canal via polymorphism. Lock doors open and close on an animation, allowing moments of tension as the player just makes it through a narrow gap ahead of the pursuer. A bar positioned beside the lock shows its full or empty status, which translates to when the doors will open. 
+
 
 #### Health mechanic: the interaction between canalMap, player and pursuer objects  
 
@@ -170,15 +185,21 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 #### UML Class Diagram
 
-![UML Class Diagram of Narrowboat Game core features](./Images/DGRM_updated.jpg)
-![UML Flow Diagram of Narrowboat Game](./Images/High_level_sequence.jpeg)
-![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
+![UML Class Diagram of Narrowboat Game core features](./Diagrams/DGRM_updated.jpg)
+![UML Flow Diagram of Narrowboat Game](./Diagrams/Flow.jpg)
 
 ### Implementation
 
 - 15% ~750 words
 
 - Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
+
+We considered it prudent, as level traversal was a core player challenge in our game, to design levels based on canal objects, rather than “custom-build” objects for pre-planned levels. This mean that canals – which are essentially two parallel line sprites – had to be able to connect to each other without crossing their banks or changing width (as canal width was a key variable in determining level challenge). This required complex trigonometric and cartesian functions, with the eventual model being based around a “redBank” and “blackBank” shorthand: networks would draw a series of red banks as simple line sprites, and then calculate the appropriate coordinates for parallel black banks based on the angle and with of these connections. Debugging these calculations, while complex and time-consuming, paid dividends in late-development flexibility, as canals could be easily resized/reangled during iterated playtests to create structured player challenges.  
+
+Prior to the adoption of the p5play sprite class, canals fed the player’s x and y coordinates into cartesian functions to determine a limit past which players could not move. While this functioned very broadly, it proved extremely buggy, as the player object had to be informed continuously of which canal it was in, and passage from one canal to another often led to the player being briefly and ruinously subject to the bank limitations of both. A sprite-based refactor trivialized this.
+
+Forking canals into different networks proved highly challenging, as forks would need to bisect canals solely on their redBank or blackBank. Although initial models featured a fork subclass to the canal, this was scrapped in accordance with the guiding principle that more complex canal/network classes would be worthwhile to simplify level design; it was decided that any two canals can be forked by the map if the connection is specified by a network. In hindsight, this may have been a suboptimal allocation of effort, but it did ultimately prove viable through the creation of the linkage class, a one-canal network that uses polymorphic methods it inherits from the linearConnect superclass to instantiate a new canal based on entry and exit points in the linked canals. While it was initially hoped that linkages would be able to detect and elbow around obstacles, or connect from any point on specified canals, it was eventually decided that they would simply connect two canals in a straight line from their halfway point, and map designers would be responsible for only connecting sensibly positioned canals. To allow canals to be joined end-to-end, the loop Boolean was created in the canalNetwork, which would draw a similar canal connecting the first and last pre-specified ones in the network. 
+
 
 ### Evaluation
 
@@ -264,7 +285,7 @@ The questions used in the SUS can be seen on [the Nielson Norman Group website](
 |10. I needed to learn a lot of things before I could get going with this system| 87.5 | 80 |
 | **Average** | **72.25** | **66** |
 
-![SUS score by participant)](./Images/SUS_average_score_by_participant.png)
+![SUS score by participant)](./Diagrams/SUS_average_score_by_participant.png)
 
 Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
 
@@ -293,7 +314,7 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 | Performance | 5 | 9 | significant |
 | Frustration | 8 | 10 | significant |
 
-![Average NASA TLX scores by Question](/./Images/NASA_TLX_graph_average_score_by_category.png)
+![Average NASA TLX scores by Question](/./Diagrams/NASA_TLX_graph_average_score_by_category.png)
 
 - **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We conclude from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
 - **Physical demand**: The difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
@@ -367,45 +388,7 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 - 15% ~750 words
 
-[TODO - Add image of team working/on a teams call]
-
-For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
-
-We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, members of our team did develop specialisms and tended to work on similar aspects of the game. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
-
-As we went into the active development stage we formalised meetings into twice weekly scrum-style stand ups. Each session would involve a general discussion on what we were working on for that sprint, any challenges that had come up, and what support we might need. 
-
-Below is a rough timeline and description of our sprints with each taking 1-3 weeks.
-
-| Sprint No     |  Description  |
-| ------------- |-------------|
-|1 - Calm before the storm     | Implemented core stage 1 features such as the map, player, and pursuer.     |
-| 2 - The Storm      | Attempted to implement stage 2 features like locks. Technical issues in this sprint led to a major refactor.   |
-| 3 - New Beginnings      | Rebuilt the game from the ground up in a week, using the p5Play library to avoid collision issues.     |
-|4 - Additional features   | Introduced more complex features, including locks and advanced maps.    |
-| 5 - Operation Beautification   | Focused on improving the visual and audio aspects of our game.     |
-| 6 - Crossing the line    | Final testing and debugging up to the hand-in date.    |
-
-#### Pair programming
-
-Outside of our stand-up meetings, we often arranged separate individual meetings to sort out issues using pair programming. We found pair programming was excellent for working through complex merges in our git repository.  By working on a single screen with both contributors present we were able to quickly merge branches together while also being able to explain any nuances in our code to one another.
-
-#### Jira
-We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
-
-![Screenshot of our Kanban](/./Images/jira_screenshot.png)
-
-#### VS Code 
-Many of our team used VS code as their preferred IDE for this project as there are several useful plugins such as p5Play and Live server. These both allowed us to test game features quickly and view real-time changes directly in the browser.
-
-#### Git
-Git (and GitHub) was central to our development process. Our general approach was to create feature branches off the main branch and merge them back in once ready. This model allowed us to work asynchronously without the risk of conflicts on the main branch. For some features we also used pull requests to review changes before they were pushed and git’s commit history let us track the timeline of when and how features were added. 
-
-#### Communication tools
-The main forms of communication we used in the project were teams and WhatsApp. As mentioned, we would meet on teams regularly and make use of the share screen feature to talk through new features. For smaller updates we relied on a WhatsApp group chat which we made extensive use of over the term.
-
-#### Reflection
-We found that our flexible approach to team roles and regular scrum-style meetings worked well, as it gave everyone broad knowledge of the codebase and kept communication regular. This proved particularly valuable during unforeseen issues - such as the major refactor in sprint 3 - as no role changes were needed and everyone was able to contribute across different parts of the game without the workload falling too heavily on any one individual.
+- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together. 
 
 ### Conclusion
 
@@ -422,15 +405,15 @@ We found that our flexible approach to team roles and regular scrum-style meetin
 
 ## Raw SUS data - Easy Level
 
-![Raw SUS data - easy level](./Images/Raw_SUS_data_EasyLevel.png)
+![Raw SUS data - easy level](./Diagrams/Raw_SUS_data_EasyLevel.png)
 
 ## Raw SUS data - Difficult Level
 
-![Raw SUS data - difficult level](./Images/Raw_SUS_data_DifficultLevel.png)
+![Raw SUS data - difficult level](./Diagrams/Raw_SUS_data_DifficultLevel.png)
 
 ## Raw NASA TLX data
 
-![Raw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
+![Raw NASA TLX data](./Diagrams/Raw_NASA_TLX_data.png)
 
 
 ### Additional Marks
