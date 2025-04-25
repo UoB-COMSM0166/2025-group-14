@@ -1,8 +1,9 @@
 class HealthBar {
   //constructor(x, y, maxHealth, player) {
   constructor( maxHealth, player) {
-    this.x = 15;
-    this.y = 30;
+    textAlign(LEFT);
+    this.x = player.playerSprite.x - (windowWidth/2)+20;
+    this.y = player.playerSprite.y - (windowHeight/2)+20;
     this.width = 300;
     this.height = 20;
     this.health = maxHealth;
@@ -19,7 +20,7 @@ class HealthBar {
     textSize(15);
     textAlign(LEFT)
     //text("Healthbar: " + this.health, this.x, this.y - 10);
-    text("Healthbar: " + this.health, 15, 20);
+    text("Healthbar: " + this.health, camera.x-(windowWidth/2)+20, camera.y - (windowHeight/2)+15);
 
     // Draw empty health bar box
     stroke(0);
@@ -41,5 +42,8 @@ class HealthBar {
   // Update health based on player
   update() {
     this.health = this.playerBoat.health;
+    // Move with playerBoat
+    this.x = camera.x - (windowWidth/2)+20;
+    this.y = camera.y - (windowHeight/2)+25;
   }
 }

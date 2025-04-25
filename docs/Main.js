@@ -5,65 +5,44 @@
 // canal object once the canal feature is merged). This Main file is just for testing compatability between the Player
 // and Pursuer features.
 
-let oldWindowWidth;
-let oldWindowHeight;
-let c1, c2, c3, c4, c5, c6;
-// let b;
-const canalWidth = 80;
-
 // Game control flow variable
 class GameState {
   static LOAD_SCREEN = "loading screen";
   static START_SCREEN = "start screen";
+  static MAP_SELECTION_SCREEN = "level screen"; //MAP_SELECTION_SCREEN map_selection_screen
   static INFO_SCREEN = "information screen";
   static PLAY_GAME = "playing game";
   static WIN = "win screen";
   static LOSE = "lose screen";
+  static DIFFICULTY_SCREEN = "difficulty screen";
 
   static isValid(state) {
-      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.INFO_SCREEN, GameState.PLAY_GAME,
-        GameState.WIN, GameState.LOSE].includes(state);
+      return [GameState.LOAD_SCREEN, GameState.START_SCREEN, GameState.MAP_SELECTION_SCREEN, GameState.INFO_SCREEN, 
+        GameState.PLAY_GAME, GameState.WIN, GameState.LOSE, GameState.DIFFICULTY_SCREEN].includes(state);
   }
 }
 let state = GameState.START_SCREEN; // Starts on loading screen
 
-// Create variables to store sprites
-let boatSpritesheet;
-let boatJson;
-let boatFrames = [];
-let pursuerBoatFrames = [];
-let waterSpritesheet;
-let waterTileFrame;
-// Preload sprite images before the program starts
-function preload() {
-  boatJson = loadJSON("boat.json");
-  boatSpritesheet = loadImage("Boat-redbrown.png");
-  pursuerBoatSpritesheet = loadImage("Boat-grey.png");
-  waterSpritesheet = loadImage("water.png");
-  font = loadFont("./Inconsolata.otf");
-}
-
-// Player health, collion damage and amount of damage taken over time -
-// can be reset at different levels?
-let playerMaxHealth = 100;
-let playerCollisionDamage = 5;
-let playerDamageOverTime = 1;
+//about the difficulty levels: 
+// 0 = easy, 1 = medium, 2 = hard
+// if a level does not have a difficulty selection option, the default is set automatically
+let selectedMap = null;
+let difficultyLevel = null; 
+let pursuerFreezeFrames = 0;
 
 function setup() {
-  //set the canvas size the first time when the program starts
-  createCanvas(windowWidth, windowHeight, WEBGL);
-  textFont(font);
-  oldWindowWidth = windowWidth;
-  oldWindowHeight = windowHeight;
-  
+  new Canvas();
   
   // Instantiate the different screens
   start_screen = new StartScreen();
+  map_selection_screen = new MapSelectionScreen();
   info_screen = new InfoScreen();
-  game_screen = new GamePlay();
+  game_screen = null;
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
+  difficulty_screen = new DifficultyScreen();
 }
+
 
 function draw() {
 
@@ -71,8 +50,29 @@ function draw() {
     start_screen.display();
   }
 
+  if (state == GameState.MAP_SELECTION_SCREEN) {
+    map_selection_screen.display();
+  }
+
+  if (state == GameState.DIFFICULTY_SCREEN) {
+    difficulty_screen.display();
+  }
+
   if (state == GameState.INFO_SCREEN) {
+    selectedMap = map_selection_screen.getSelectedMapId();
+    selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
+    if (kb.pressed(' ')) {
+      // print("was here " + selectedDifficulty);
+      if (!(selectedDifficulty === -1)) {
+        difficultyLevel = difficulty_screen.getSelectedDifficulty();
+      } else {
+        difficultyLevel = 0; //i.e. the default seleciton
+      }
+      game_screen = LevelController.getLevel(selectedMap);
+      difficulty_screen.resetSelectedDifficulty();
+      map_selection_screen.resetSelectedMapId();
+    }
   }
 
   if (state == GameState.PLAY_GAME) {
@@ -86,76 +86,4 @@ function draw() {
   if (state == GameState.LOSE) {
     lose_screen.display();
   }
-  
-}
-
-// create a dinamically resizable canvas
-function ResizeCanvas() {
-  if (oldWindowWidth != windowWidth || oldWindowHeight != windowHeight) {
-    createCanvas(windowWidth, windowHeight);
-    oldWindowWidth = windowWidth;
-    oldWindowHeight = windowHeight;
-  }
-}
-
-// Reset the values of the (gameplay) global variables to their initial values
-// (so that the game can restart again after it ends)
-function resetVariables() {
-  waterTileFrame = waterSpritesheet.get(0, 0, 16, 16);
-  c1 = new canal(canalWidth, "Starter", 200, 300, 400, 450, waterTileFrame);
-  c2 = new canal(canalWidth, "Steep", 250, 350, 330, 600, waterTileFrame);
-  c3 = new canal(
-    canalWidth,
-    "ThirdElement",
-    200,
-    500,
-    550,
-    620,
-    waterTileFrame
-  );
-  c4 = new canal(canalWidth, "Uphill", 550, 400, 600, 100, waterTileFrame);
-  c5 = new canal(canalWidth, "Crossbar", 600, 150, 100, 150, waterTileFrame);
-  c6 = new canal(canalWidth, "victory", 100, 150, 200, 300, waterTileFrame);
-  c1.setConnections(c6, c2);
-  c2.setConnections(c1, c3);
-  c3.setConnections(c2, c4);
-  c4.setConnections(c3, c5);
-  c5.setConnections(c4, c6);
-  c6.setConnections(c5, c1);
-  // b = new boat(2, c1, 250, 200, 10, 20);
-
-  //TODO: Create helper function or class in a separate file
-  //TODO: called "loadSpriteSheet" that takes in the spritesheet and JSON file
-  for (let frame of boatJson.frames) {
-    let pos = frame.position;
-    let img = boatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
-    boatFrames.push(img);
-    let pursuerImg = pursuerBoatSpritesheet.get(pos.x, pos.y, pos.w, pos.h);
-    pursuerBoatFrames.push(pursuerImg);
-  }
-
-  // Instantiate Timer (to time events that occur over time)
-  timer = new Timer();
-  timer.startTimer();
-
-  //to create a player object you need x coordinate, y coordinate, mass of the boat, the boat speed limit, and the start canal
-  player = new Player(
-    160,
-    320,
-    5,
-    3,
-    c6,
-    boatFrames,
-    timer,
-    playerMaxHealth,
-    playerCollisionDamage,
-    playerDamageOverTime
-  );
-
-  // Instantiate healthbar
-  healthbar = new HealthBar(playerMaxHealth, player);
-
-  // canal = new oldCanal(300, 100);
-  pursuer = new Pursuer(100, 200, canal, 3, 0.3, pursuerBoatFrames);
-
 }

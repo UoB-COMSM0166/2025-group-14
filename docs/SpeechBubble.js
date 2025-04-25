@@ -30,7 +30,15 @@ class SpeechBubble{
       textSize(12);
       noStroke();
       fill(0, 0, 0);
-      text(this.txt, this.x + this.w * 0.08, this.y + this.h*0.35, this.w*0.9);
+      text(this.txt, this.x + this.w * 0.08, this.y + this.h*0.5, this.w*0.9);
+    }
+
+    //updates position of an existing textbox (useful for tutorial level)
+    updatePosition(newX, newY, newOriginX, newOriginY){
+      this.x = newX;
+      this.y = newY;
+      this.originX = newOriginX;
+      this.originY = newOriginY;
     }
   }
   
