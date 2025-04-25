@@ -100,19 +100,19 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 
 
 ### Requirements Reflection
-Initially, for certain cases, we had difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity -- a level which may vary between different teams due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
+Initially we had some difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity - and this specificity may vary between different teams due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
 
-(1) **Initiative** = largest overview/goal; it is made up of several Epics.
+(1) **Initiative** = largest overview/goal; one Initiative is made up of several Epics.
 
-(2) **Epic** = more narrow scope than an Initiative but large enough that it takes several sprints to complete; it is made up of several user stories.
+(2) **Epic** = more narrow scope than an Initiative but large enough that it takes several sprints to complete; one Epic is made up of several User Stories.
 
 (3) **User Story** = even more specific than an Epic and must be achievable within a single sprint.
 
 (4) **Acceptance Criteria** = a pre-determined set of expectations/outcomes which is retrospectively measured against a specific user story, to ensure that what was promised has been fulfilled.
 
-Another helpful lesson which Ruzanna mentioned to us is that if a particular Acceptance Criteria depends on something else that is not in the corresponding story, it could mean that it should be broken down into multiple stories. This way, each story can be developed independently, and the epic can be delivered incrementally. This modularity is important because development could otherwise become inefficient.
+Through the process of writing User Stories, we learned that if a particular Acceptance Criteria depends on something else that is not in the corresponding story, it should probably be broken down into multiple stories. This way, each story can be developed independently and more efficiently.
 
-When establishing the requirements in the specific context of our game, we quickly realised the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important aspects of the game. For example, developing fluid and intuitive movement for the boat which the user controls, and not worrying yet about less pressing nice-to-have features like sound effects. As a team, we find the prioritisation matrix below to be a useful tool and reminder of what to work on next.
+We also quickly realised the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important and obvious requirements, and whenever we realised that we had to change certain features or add new features, we added it to our Kanban board and evaluated its priority. As a team, we found the prioritisation matrix below to be a useful tool and reminder of what to work on next.
 
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
