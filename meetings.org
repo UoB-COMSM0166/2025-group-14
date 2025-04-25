@@ -371,4 +371,80 @@ Has developed a tutorial but did not demo this.
 
 ** next steps
 - Leah talked about doing a 'report sprint' for Thursday, which was agreed upon.
-- Feature demo's from Casey and Adam
+
+* 25/04/2025
+** agenda
+*** sprint recap
+**** Daniil
+Add more text coherence to the images.
+
+**** Casey
+Reviewed the state of the diagrams and found them to be high quality and accurate
+
+**** Leah
+Added introduction and wrote about canal implementation among other work also
+
+Leah suggested that we'll continue to work on the introduction as we go and it'll be somewhat of a work in progress.
+
+New name for game: narrowboat chase game
+
+***** demo
+Two main dimensions to the game
+1. dexterity
+2. strategy
+
+New lock design. Leahs previous lock design added with gate animation. Locks are now aware if players are inside of them.
+
+The biggest current design level problem is the pursuer getting stuck.
+
+Suggests getting a game designer in to provide feedback after we have a couple levels.
+
+We need prettification
+
+Suggested having an ideas board for levels
+
+Pursuer bugs
+
+**** Adam
+Reflection on our working process throughout the process, has been talking about scrum style meetings. Talked about pair programming, merges.
+Talked on tools.
+
+**** Leon
+Refined epics and user stories, also requirements. Managed to reduce word limit.
+
+Brought up use case diagrams and with the requirements section. Is asking for feedback.
+
+Wants to create an onion diagram for stakeholders.
+
+**** Polly
+(from teams chat)
+
+I was working on the evaluation section. The workshop slides said that we only needed to include 1 qualitative evaluation and 1 quantiative evaluation, so I have chosen the Think Aloud and the NASA TLX, because I think that those were the ones that yielded the most meaningful results. I have edited both of those and written about the changes that we made to the game in response to the evaluation feedback. I am way over the word limit but I'm not really sure what I could take out?
+
+Also, I used the NASA TLX raw data to make  a graph showing the NASA TLX scores by category, and I also included the raw data in an Appendix, on Daniel's suggestion.
+
+I haven't written anything about testing, partly because I'm not sure what there is to say and partly because I am already way over the word limit anyway
+
+*** game deadline
+This is sooner than we thought.
+*** next steps
+- Report done by the end of this week
+- level design
+- pursuer bugs
+
+**** planning for next 2 weeks
+Report done by the end of this week
+***** Game design:
+****** 1. prettification: Leon and Adam
+****** 2. level design: Leah and Casey and Polly
+***** coursework
+****** video:
+- Daniil will start work on this. Perhaps a script?
+- Editing will have to happen too
+
+**** filming for video on the 4th
+**** points for discussion
+- what the video will contain
+- new name for game
+- tester for the game
+- ideas board for level designers

@@ -22,7 +22,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-![group photo](Group_photo.jpeg)
+![group photo](/Images/Group_photo.jpeg)
 
 | Name | Email | Role |
 |----|-----|------|
@@ -183,8 +183,9 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 #### UML Class Diagram
 
-![UML Class Diagram of Narrowboat Game core features](./Diagrams/DGRM_updated.jpg)
-![UML Flow Diagram of Narrowboat Game](./Diagrams/Flow.jpg)
+![UML Class Diagram of Narrowboat Game core features](./Images/DGRM_updated.jpg)
+![UML Flow Diagram of Narrowboat Game](./Images/High_level_sequence.jpeg)
+![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
 ### Implementation
 
@@ -205,58 +206,72 @@ Forking canals into different networks proved highly challenging, as forks would
 
 #### Qualitative Evaluation
 
-##### 'Thinking Aloud' Evaluation
+In the quantitative evaluation, we used the Thinking Aloud empirical evaluation method to get feedback about the user experience of playing our game, and identify and issues. We asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without being caught by the pursuing boat. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results and categoried them into meaningful groupings.
 
-For our Thinking Aloud evaluation, we asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without being caught by the pursuing boat. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results.
-
-We have split our evaluation into four sections. Sections 1 (Constructive criticism) and 2 (Positive Feedback) detail the feedback we recived from our participants, and Section 3 (Analysis) describes our team’s analysis of the feedback.
-
-###### 1. Constructive Criticism
-
-- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occur on corner collision
-- The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
-- Users thought that there was too much bounce when colliding with the walls of the canals.
-- The pursuer was too fast and/or starts too close to the Player. It was almost impossible to win against the pursuer in its current state.
-- The repair functionality was not very intuitive, and repairs took too much time.
-- The health bar was too small. One participant didn't actually notice that there was a health bar until partway through playing, and was surprised to find that health was being tracked. They suggested that a bigger bar would be easier to notice immediately.
-- Changes to the shape of the canal network were suggested: more small bends would be good, not just straight lines.
-- Participants questioned how does the player win the game? The objective of the game at the present time is unclear.
-
-###### 2. Positive Feedback
-
+We received the following positive feedback regarding the game:
 - The canal map shape was interesting because of the sharp corners.
 - The game idea was interesting and original; one participant mentioned that they had never played a game like it before.
 - Participants liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
 - The aesthetics (boats and water texture) received compliments. 
 
-###### 3. Analysis
+The following describe the categories of contructive criticism we received from our participants, and the changes that we made to the game in response.
 
-- We decided that we need to improve collision detection between the player and canal walls. Collisions occur when they should not; being close to the corner as you go around it, but not actually touching the wall, may register as a collision and bounce the player back. This has a big impact on the user’s experience and is therefore high priority.
-- We decided to consider reducing the amount which the player bounces away from the wall when they collide.
-- A simple tutorial on the controls and objective(s) of the game would make the experience more enjoyable and reduce the learning curve.
-- We posited adding sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. The tutorial would also help with this.
-- We considered adding multiple levels with varying skill levels for the AI pursuer, so that the player has a chance to get used to the game with a slower pursuer and once they get a feel for the movement of the boat they can progress and have a faster pursuer chasing them. Scaling the difficulty can help us cater to inexperienced and seasoned gamers alike.
-- To produce a more difficult level, we can change the camera to scroll the map into view instead of showing the entire map on the screen; not seeing upcoming corners will make it more difficult.
+##### Issues with movement mechanics
 
+This included various glitches/bug, trouble navigating corners, and too much bounce in collision with canal walls.
 
+Specifically, users reported that:
+- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occur on corner collision
+- The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
+- Users thought that there was too much bounce when colliding with the walls of the canals.
 
-##### Heuristic Evaluation
+In response, We did a complete refactor of the game, overhauling how movement mechanics and collision mechanics were implemented by replacing our more error-prone implementations with classes and methods from the [p5 play library](https://p5play.org/learn/index.html). This considerably reduced the errors and bugs in our game, and enabled more fine-tuning of the movement and collision features.
 
-In the heuristic evaluation, two participants played the game for a short period of time (10 minutes) to familiarise themselves with the controls and gameplay. They then completed a heuristic evaluation of the game's useability, using Nielson's ten useabibility principles. The results are shown in the table below.
+##### Issues with the pursuer boat
 
-| Interface     | Issue         | Heuristics    |Frequency (0-4)| Impact (0-4)  |Persistence (0-4)| Severity (0-4)|
-| ------------- |-------------  | ------------- |:-------------:|:-------------:| :-------------: |:-------------:|
-| Repairs & visuals | The mechanic of the boat freezing after a repair requires you to start moving again but this is not visually indicated | Visibility of system status | 3 | 2 | 1 | 2 |
-| Canal | Enemy boat goes through walls instead of colliding | Error prevention | 1 | 1 | 1 | 1 | 
-| Controls | It is hard to turn on sharp corners, especially when boat is at speed | User control and freedom | 2 | 2 | 1 | 2 |
-| Canal | Invisible walls mean turning is not always possible but this is not evident to the player | Error prevention | 2 | 3 | 1 | 2 |
-| Instructions | It is not immediately obvious how to turn or use the repair. Need clear instructions before the game starts | Help and documentation | 0 | 3 | 1 | 2 |
+The users reported that the pursuer boat was too fast, started too close to the player, was almost impossible to escape, and occasionally experienced bugs such as passing through canal u-turns to reach player.
 
-The feedback from our heuristic evaluation highlighted several usability issues across different components of our game. Broadly, we found that some players struggled with unclear instructions, particularly for turning and repairs, which we plan to address with clearer on-screen prompts and tutorials. We also noted issues with invisible walls affecting turning, alongside difficulty navigating sharp corners at high speeds. Both issues fall under error prevention and user control, suggesting the need for improved visual cues and better control mechanics. To tackle these we will refine the control system and attempt to debug issues with collisions.
+In response, The p5 play library was also used to refactor the Pursuer class, reducing bugs. We also re-tuned the pursuer's parameters to make it less fast/maneuverable, and changed its path-finding mechanism to ensure that it follows the player's trail rather than finding the shortest path to reach the player, ensuring that it never 'cuts the corner', passing through walls.
+
+##### Lack of tutorials/information about how to use controls
+
+One of the most frequent comments we received from users throughout the Evaluations was that figuring out how to play the game (i.e. use the controls and understand the rules/environment) was difficult, and negatively affected useability. Even with facilitators from our team explaining the controls before the participants started playing, they still reported that there was a steep learning curve before they felt confident playing the game. However, users also reported that once they had overcome the steep learning curve of learning the controls, they found them easy and enjoyable to use thereafter. 
+
+We made three main changes to the game in response to this:
+- First, we implemented game control flow logic that meant that the player moves through a an introduction screen before proceeding on to the gameplay. This introduction screen details the narrative background to the game, as well as giving a brief overview of the controls and rules of the game before the player starts playing.
+- Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a 'Level 0' Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.
+- Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Hard, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/ameuverability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
+
+##### Winning/losing conditions are unclear
+
+Users reported that the winning and losing conditions of the game were unclear: they frequently asked "how do you win the game?"
+
+The lack of win/lose conditions was due to the prototype nature of our game during the evaluations. Since then, we have implemented winning and losing conditions. The player wins the game by reaching the end of the canal network without having their health reduced to zero, whereupon they are re-directed to the win screen, from where they can choose to play the game again, or play a different level/difficulty. The player loses the game by having their health fall to zero, whereupon they are redirected to the lose screen, from where they can choose to play the again.
+
+##### Issues with health bar 
+
+Users commented that the health bar was too small and unnoticeable, to the point that some didn't notice there was a health bar until long into gameplay, and were surprised to find that their health was being tracked.
+
+In response to this, the size of the healthbar was increased. The presence of health tracking, and the damage taken over time and during collisions was highlighted to the player in the introduction menu and tutorial, before gameplay starts.
+
+ We also posited adding sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. However, this has not yet been implemented, and may be considered as a possible future extension.
+
+##### Issues with repair functionality 
+
+Users stated that the repair functionality was unintuitive, lacking in explanation, and too slow. 
+
+In response, we made alterations to the game. Use of the repair functionality is now described on the Introduction page of the game, and taught in the Level 0 tutorial. Repair functionality was re-tuned to take less time, reducing player frustration.
+
+##### Other useability considerations
+
+Although it was not explicitly mentioned during the evaluations, we decided to improve the useability and accessibility of the game by implementing a pause button, which allows the player to pause and resume the game by clicking the button. They can do this at any time during gameplay, and as many times as they like. 
+
+It is also possible to escape from gameplay and go back to the start screen (from where the player can start a new game) at any time using the Escape key on the keyboard. This gives the user control over the game, and enables them to go back to change settings or start again.
+
 
 #### Quantitative Evaluation
 
-In the quantitative evaluation, we used two methodologies (the System Useability Survey and the NASA Task Load Index) to measure and compare the system useability of two levels of our game. 
+In the quantitative evaluation, we used the NASA Task Load Index (NASA TLX) to measure and compare the system useability of two levels of our game. 
 
 The differences between the Easy level and the Difficult level were as follows:
 - In the Easy level, the player did not take damage over time. In the Difficult level, the player took 1 point of damage per second
@@ -264,42 +279,6 @@ The differences between the Easy level and the Difficult level were as follows:
 - In the Easy level, there was no pursuer chasing the player. In the Difficult level, an AI pursuer chased the player boat, adding challenge and tension to gameplay.
 
 Ten participants took part in our quantitative evaluation. Each participant played the game at each of the two levels (we asked them to complete two loops around our prototype canal circuit). To control for bias that could arise from participants always playing levels in the same order (thus causing their learning in the first level to affect the useability results of the second level), we alternated the order in which participants played each level. I.e. the first participant played Easy-then-Difficult, the second played Difficult-then-Easy, etc. After completing each level, the participant completed the SUS and the NASA TLX. The results are shown below. 
-
-##### System Useability Survey (SUS)
-
-The questions used in the SUS can be seen on [the Nielson Norman Group website](https://www.nngroup.com/articles/measuring-perceived-usability/). The responses are scores on a sclae between 1 to 5, where 1 means 'Strongly disagree' and 5 means 'Strongly agree'. Please see Appendix 1 for raw data.
-
-| SUS Question | Average SUS Score (Easy) | Average SUS Level (Difficult) |
-|---|---|---|
-|1. I think that I would like to use this system frequently| 65 | 47.5 |
-|2. I found the system unnecessarily complex|	55 | 65 |
-|3. I thought the system was easy to use| 80 | 72.5 |
-|4. I think that I would need the support of a technical person to be able to use this system| 85 | 72.5 |
-|5.	I found the various functions in this system were well integrated| 65 | 62.5 |
-|6.	I thought there was too much inconsistency in this system| 82.5 | 77.5 |
-|7.	I would imagine that most people would learn to use this system very quickly| 55 | 35 |
-|8.	I found the system very cumbersome to use| 90 | 82.5 |
-|9.	I felt very confident using the system| 57.5 | 65 |
-|10. I needed to learn a lot of things before I could get going with this system| 87.5 | 80 |
-| **Average** | **72.25** | **66** |
-
-![SUS score by participant)](./Diagrams/SUS_average_score_by_participant.png)
-
-Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
-
-A more granular analysis of the raw data showed that particularly large contributions to the useability score came from Questions 4, 7, and 10 for both levels. These questions are:
-- I think that I would need the support of a technical person to be able to use this system. (4)
-- I would imagine that most people would learn to use this system very quickly. (7)
-- I needed to learn a lot of things before I could get going with this system. (10)
-
-Question 2 also made a fairly large contribution to the SUS for the easy level:
-- I found the system unnecessarily complex. (2)
-
-These large contributions indicate that currently the useability (or lack thereof) of the system may be dominated by the lack of instruction and information provided to the player when they start the game. We (the developers) needed to tell them quite a lot of information before they could start, and most of the testers took a few moments to get to grips with the controls. However, the large contribution from Question 7 ("I would imagine that most people would learn to use this system very quickly") suggests that once they have absorbed and understood how to use the system, they find it easy to use. 
-
-Based on this, we can conclude that there is a satisfactorily significant difference between the different levels of the game. However, considerable gains in useability for both levels could be achieved by implementing methods to provide more information to the user about how to play the game and use the controls at the outset, for example, text explanations and/or tutorials. 
-
-##### NASA Task Load Index (TLX)
 
 The NASA TLX asks a user to rate the perceived workload of a system (i.e. how effortful it is to use the system) in 6 categories. The results of our evaluation are shown below (raw data is given in Appendix 1).
 
@@ -312,28 +291,13 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 | Performance | 5 | 9 | significant |
 | Frustration | 8 | 10 | significant |
 
-![Average NASA TLX scores by Question](/./Diagrams/NASA_TLX_graph_average_score_by_category.png)
+![Average NASA TLX scores by Question](/./Images/NASA_TLX_graph_average_score_by_category.png)
 
 - **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We conclude from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
 - **Physical demand**: The difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
 - **Temporal demand**: The difference between the groups was not statistically significant, because there was no time limit in completing the task in each case. 
 - **Performance**: We expected the difference not to be statistically significant because of the way the nature of the task (make *n* number of laps around a canal circuit). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was alternated.
 - **Frustration**: At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
-
-
-#### Response to the Evaluation
-
-In response to the feedback we received during the qualitative and quantitative evaluations, we critically reflected on how, based on this feedback, we could make changes to our game to improve its useability. The changes that we implemented in response to each category of constructive criticism are shown in the table below.
-
-| User Feedback | Our Response |
-| -----|-----|
-| Issues with movement mechanics: glitches/bug, trouble navigating corners, too much bounce in collision with canal walls|We did a complete refactor of the game, overhauling how movement mechanics and collision mechanics were implemented by replacing our more error-prone implementations with classes and methods from the [p5 play library](https://p5play.org/learn/index.html). This considerably reduced the errors and bugs in our game, and enabled more fine-tuning of the movement and collision features.|
-| The pursuer boat was too fast, started too close to the player, was almost impossible to escape, and occasionally experienced bugs such as passing through canal u-turns to reach player| The p5 play library was also used to refactor the Pursuer class, reducing bugs. We also re-tuned the pursuer's parameters to make it less fast/maneuverable, and changed its path-finding mechanism to ensure that it follows the player's trail rather than finding the shortest path to reach the player, ensuring that it never 'cuts the corner', passing through walls.|
-| One of the most frequent constructive criticisms we received, as well as the main conclusion of the SUS quantitative evaluation, was that figuring out how to play the game (i.e. use the controls and understand the rules/environment) was difficult, and negatively affected useability. Even with facilitators from our team explaining the controls before the participants started playing, they still reported that there was a steep learning curve before they felt confident playing the game.| We made three main changes to the game in response to this:<ul><li>First, we implemented game control flow logic that meant that the player moves through a an introduction screen before proceeding on to the gameplay. This introduction screen details the narrative background to the game, as well as giving a brief overview of the controls and rules of the game before the player starts playing.</li><li>Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a 'Level 0' Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.</li><li>Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Hard, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/ameuverability of the pursuer, and the length of time that collecting garbage freezes the pursuer.</li></ul>|
-| Winning and losing conditions were unclear: how do you win the game?| The lack of win/lose conditions was due to the prototype nature of our game during the evaluations. Since then, we have implemented winning and losing conditions. The player wins the game by reaching the end of the canal network without having their health reduced to zero, whereupon they are re-directed to the win screen, from where they can choose to play the game again, or play a different level/difficulty. The player loses the game by having their health fall to zero, whereupon they are redirected to the lose screen, from where they can choose to play the again.|
-| Health bar was too small and unnoticeable | The size of the healthbar was increased. The presence of health tracking, and the damage taken over time and during collisions was highlighted to the player in the introduction menu and tutorial, before gameplay starts.|
-| Repair functionality is unintuitive and too slow | Use of the repair functionality was described on the Introduction page of the game, and taught in the Level 0 tutorial. Repair functionality was re-tuned to take less time, reducing player frustration. |
-| Other useability and accessibility considerations | Although it was not explicitly mentioned during the evaluations, we decided to improve the useability and accessibility of the game by implementing a pause button, which allows the player to pause and resume the game by clicking the button. They can do this at any time during gameplay, and as many times as they like. It is also possible to escape from gameplay and go back to the start screen (from where the player can start a new game) at any time using the Escape key on the keyboard. This gives the user control over the game, and enables them to go back to change settings or start again.|  
 
 
 
@@ -386,7 +350,48 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 - 15% ~750 words
 
-- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together. 
+- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together.
+
+[TODO - Add image of team working/on a teams call]
+
+For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
+
+We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, members of our team did develop specialisms and tended to work on similar aspects of the game. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
+
+As we went into the active development stage we formalised meetings into twice weekly scrum-style stand ups. Each session would involve a general discussion on what we were working on for that sprint, any challenges that had come up, and what support we might need. 
+
+Below is a rough timeline and description of our sprints with each taking 1-3 weeks.
+
+| Sprint No     |  Description  |
+| ------------- |-------------|
+|1 - Calm before the storm     | Implemented core stage 1 features such as the map, player, and pursuer.     |
+| 2 - The Storm      | Attempted to implement stage 2 features like locks. Technical issues in this sprint led to a major refactor.   |
+| 3 - New Beginnings      | Rebuilt the game from the ground up in a week, using the p5Play library to avoid collision issues.     |
+|4 - Additional features   | Introduced more complex features, including locks and advanced maps.    |
+| 5 - Operation Beautification   | Focused on improving the visual and audio aspects of our game.     |
+| 6 - Crossing the line    | Final testing and debugging up to the hand-in date.    |
+
+#### Pair programming
+
+Outside of our stand-up meetings, we often arranged separate individual meetings to sort out issues using pair programming. We found pair programming was excellent for working through complex merges in our git repository.  By working on a single screen with both contributors present we were able to quickly merge branches together while also being able to explain any nuances in our code to one another.
+
+#### Jira
+We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
+
+![Screenshot of our Kanban](/./Images/jira_screenshot.png)
+
+#### VS Code 
+Many of our team used VS code as their preferred IDE for this project as there are several useful plugins such as p5Play and Live server. These both allowed us to test game features quickly and view real-time changes directly in the browser.
+
+#### Git
+Git (and GitHub) was central to our development process. Our general approach was to create feature branches off the main branch and merge them back in once ready. This model allowed us to work asynchronously without the risk of conflicts on the main branch. For some features we also used pull requests to review changes before they were pushed and git’s commit history let us track the timeline of when and how features were added. 
+
+#### Communication tools
+The main forms of communication we used in the project were teams and WhatsApp. As mentioned, we would meet on teams regularly and make use of the share screen feature to talk through new features. For smaller updates we relied on a WhatsApp group chat which we made extensive use of over the term.
+
+#### Reflection
+We found that our flexible approach to team roles and regular scrum-style meetings worked well, as it gave everyone broad knowledge of the codebase and kept communication regular. This proved particularly valuable during unforeseen issues - such as the major refactor in sprint 3 - as no role changes were needed and everyone was able to contribute across different parts of the game without the workload falling too heavily on any one individual.
+
 
 ### Conclusion
 
@@ -403,15 +408,15 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 ## Raw SUS data - Easy Level
 
-![Raw SUS data - easy level](./Diagrams/Raw_SUS_data_EasyLevel.png)
+![Raw SUS data - easy level](./Images/Raw_SUS_data_EasyLevel.png)
 
 ## Raw SUS data - Difficult Level
 
-![Raw SUS data - difficult level](./Diagrams/Raw_SUS_data_DifficultLevel.png)
+![Raw SUS data - difficult level](./Images/Raw_SUS_data_DifficultLevel.png)
 
 ## Raw NASA TLX data
 
-![Raw NASA TLX data](./Diagrams/Raw_NASA_TLX_data.png)
+![Raw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
 
 
 ### Additional Marks
