@@ -22,7 +22,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 Add a group photo here!
 
-![group photo](IMG_0747.jpeg)
+![group photo](/Images/Group_photo.jpeg)
 
 | Name | Email | Role |
 |----|-----|------|
@@ -183,8 +183,9 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 #### UML Class Diagram
 
-![UML Class Diagram of Narrowboat Game core features](./Diagrams/DGRM_updated.jpg)
-![UML Flow Diagram of Narrowboat Game](./Diagrams/Flow.jpg)
+![UML Class Diagram of Narrowboat Game core features](./Images/DGRM_updated.jpg)
+![UML Flow Diagram of Narrowboat Game](./Images/High_level_sequence.jpeg)
+![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
 ### Implementation
 
@@ -283,7 +284,7 @@ The questions used in the SUS can be seen on [the Nielson Norman Group website](
 |10. I needed to learn a lot of things before I could get going with this system| 87.5 | 80 |
 | **Average** | **72.25** | **66** |
 
-![SUS score by participant)](./Diagrams/SUS_average_score_by_participant.png)
+![SUS score by participant)](./Images/SUS_average_score_by_participant.png)
 
 Upon applying the Wilcoxon Signed Rank Test on the data, a W-statistic of 11.5 was obtained. For n = 10 and at a significance level of 0.05, this  value is greater than the critical value of 8, indicating a statistically significant difference in the useability scores between the two levels.
 
@@ -312,7 +313,7 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 | Performance | 5 | 9 | significant |
 | Frustration | 8 | 10 | significant |
 
-![Average NASA TLX scores by Question](/./Diagrams/NASA_TLX_graph_average_score_by_category.png)
+![Average NASA TLX scores by Question](/./Images/NASA_TLX_graph_average_score_by_category.png)
 
 - **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We conclude from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
 - **Physical demand**: The difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
@@ -403,15 +404,15 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 ## Raw SUS data - Easy Level
 
-![Raw SUS data - easy level](./Diagrams/Raw_SUS_data_EasyLevel.png)
+![Raw SUS data - easy level](./Images/Raw_SUS_data_EasyLevel.png)
 
 ## Raw SUS data - Difficult Level
 
-![Raw SUS data - difficult level](./Diagrams/Raw_SUS_data_DifficultLevel.png)
+![Raw SUS data - difficult level](./Images/Raw_SUS_data_DifficultLevel.png)
 
 ## Raw NASA TLX data
 
-![Raw NASA TLX data](./Diagrams/Raw_NASA_TLX_data.png)
+![Raw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
 
 
 ### Additional Marks
