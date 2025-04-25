@@ -25,7 +25,7 @@ class MapController {
             case 2:
                 return new Sprite(265, -328, 35, 25);
             case 3:
-                return new Sprite(186, 52, 35, 25);
+                return new Sprite(1774, 468, 35, 25);//originallyl 186, 52, 35, 25
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -137,13 +137,20 @@ class MapController {
             
         }
 
-        let trueMidArc = []
+        let topMidArc = []
+        let rightMidArc = []
         let mazeMidLen = 650
-        start = 10
+        let topStart = 10
+        let rightStart = 12
+        add = [0, 450, 100]
+        let index = 0;
         for (let i = 0; i > -3; i--){
-            trueMidArc.push(new canal(mazeMidLen, ((start + i) % 12), 100, player));
+            topMidArc.push(new canal(mazeMidLen, ((topStart + i) % 12), 100, player));
+            rightMidArc.push(new canal(mazeMidLen + add[index++], ((rightStart + i) % 12), 100, player));
         
-    }
+        }
+
+             
 
 
         /*let harsh = 60;
@@ -204,10 +211,10 @@ class MapController {
             ], true);
         /*let arc = new canalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
              longZigs, upAfter, end], [], false);*/
-        let arc = new canalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], trueMidArc[2]]], false);
+        let arc = new canalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
+        let midLayerOne = new canalNetwork(1627, -646, [topMidArc], [])
+        let midLayerTwo = new canalNetwork(2395, 720, [rightMidArc], []);
 
-        let midLayer = new canalNetwork(1627, -646, [trueMidArc], [])
-
-        return new canalMap(player, true, [threshold, loop, arc, midLayer]);
+        return new canalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo]);
     }
 }
