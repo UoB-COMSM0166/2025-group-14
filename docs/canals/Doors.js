@@ -55,9 +55,6 @@ class doors{
         // this.doorLength = Math.hypot(this.anchorBlack[0] - this.anchorRed[0], this.anchorBlack[1] - this.anchorRed[1]) * 0.5;
         this.doorLength = getHypotenuse(this.redSect, this.midway)
 
-
-
-
         this.createSprites()
 
 
@@ -78,12 +75,6 @@ class doors{
             this.redAngle = this.closedRed;
             this.blackAngle = this.closedBlack; 
         }
-
-        /*this.sensor = new Sprite(this.midway[0], this.midway[1], this.doorLength * 2, this.doorThick);
-        this.sensor.rotation = this.closedRed;
-        this.sensor.collider = "static";
-        this.sensor.colour = 'seagreen';
-        this.sprites.push(this.sensor)*/
 
         this.redDoor  = new Sprite(this.anchorRed[0], this.anchorRed[1], this.doorLength, this.doorThick);
         this.redDoor.rotation = this.redAngle;
@@ -140,8 +131,6 @@ class doors{
             return true;
         }
     }
-
-    getSensor(){return this.sensor}
 
     doorState() {
         if (this.state === "opening") {

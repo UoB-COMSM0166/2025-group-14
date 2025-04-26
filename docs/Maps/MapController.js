@@ -25,7 +25,7 @@ class MapController {
             case 2:
                 return new Sprite(265, -328, 35, 25);
             case 3:
-                return new Sprite(-523, 272, 35, 25);//originallyl 186, 52, 35, 25
+                return new Sprite(186, 52, 35, 25);//originallyl 186, 52, 35, 25
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -131,7 +131,7 @@ class MapController {
 
         let start = 10;
         let mazeInLen = 500
-        let add = [0, 0, 0, 0, 0, 100, 50, 100, 150, 50, 50, 50]
+        let add = [0, 0, 0, 0, 0, 100, 50, 100, 150, 50, 50, 217]
         for (let i = 0; i < 12; i++){
                 mazeIn.push(new canal(mazeInLen + add[i], ((start + i) % 12), stdwidth, player));
             
@@ -152,7 +152,9 @@ class MapController {
             lowMidArc.push(new canal(mazeMidLen + lowAdd[i], ((lowStart + i) % 12), stdwidth, player));
         }
 
-        let lowTangent = new canal(mazeMidLen, 12, stdwidth, player);
+        let lowTangent = new canal(mazeMidLen + 100, 12, stdwidth, player);
+
+        let finishLine = new canal(300, 9, stdwidth, player, true, true)
 
         let o = 1
         let c = 3
@@ -171,9 +173,9 @@ class MapController {
         /*let arc = new CanalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
              longZigs, upAfter, end], [], false);*/
         let arc = new CanalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
-        let midLayerOne = new CanalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1]])
+        let midLayerOne = new CanalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1], [topMidArc[4], lowTangent, 10, 1]])
         let midLayerTwo = new CanalNetwork(2395, 720, [rightMidArc]);
-        let midLayerThree = new CanalNetwork(2100, 810, [lowMidArc, lowTangent]);
+        let midLayerThree = new CanalNetwork(2100, 810, [lowMidArc, lowTangent, finishLine], [[lowMidArc[2], mazeIn[11]]]);
 
         return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo, midLayerThree]);
     }

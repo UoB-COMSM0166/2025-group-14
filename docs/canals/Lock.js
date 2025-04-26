@@ -76,7 +76,7 @@ class lock extends canal {
         let output = new Sprite(mid[0], mid[1], len, thick);
         output.rotation = angle;
         output.visible = false;
-        output.collider = 'static';
+        output.collider = 'none';
         output.layer = -1;
         this.allSprites.push(output);
         return output;
@@ -115,6 +115,7 @@ class lock extends canal {
         //this.openDoors(this.aftDoors, this.next);
         this.status = this.getFullStatus();
         this.checkForPlayer();
+        //text(this.getContainsBoat(), this.redStart[0], this.redStart[1])
         // Depth bar position
         let depthBarX = Math.abs(this.redStart[0] - this.width);  
         let depthBarY = Math.abs(this.redStart[1] - (this.length/2));
