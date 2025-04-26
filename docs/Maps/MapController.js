@@ -110,6 +110,17 @@ class MapController {
     static getMap3(player){
         let stdwidth = 100;
 
+        /*Game starts off with a loop of locks, which are the connections between the canals in inLoop and outLoop.
+        (o, c and inc are settings for the locks, see connections in network Loop). the locks are briefly open and
+        closed for a while, so the player has to circle until they see an open one and get in there quickly, while
+        avoiding the opponent*/
+
+        
+        let o = 1.5
+        let c = 7
+        let inc = 0.1
+
+
         let intro = new canal(200, 3, stdwidth, player);
         let firstGates = new canal(200, 4, stdwidth, player);
         let after = new canal(200, 7, stdwidth, player);
@@ -123,12 +134,25 @@ class MapController {
         for (let i = 2; i <= 9; i++){
             outLoop.push(new canal(400, i, stdwidth, player));
         }
-
-
+        
         let tangent = new canal(100, 9, stdwidth, player);
-        let mazeIn = []
-        let Out = []
 
+        let threshold = new CanalNetwork(0, 0, [intro, firstGates, after], [[after, inLoop[0]]], false);
+        let loop = new CanalNetwork(300, 300, [inLoop], [[inLoop[1], outLoop[0], c, o += inc],
+            [inLoop[2], outLoop[1], c, o += inc],
+            [inLoop[3], outLoop[2], c, o += inc],
+            [inLoop[4], outLoop[3], c, o += inc],
+            [inLoop[5], outLoop[4], c, o += inc],
+            [inLoop[6], outLoop[5], c, o += inc],
+            [inLoop[7], outLoop[6], c, o += inc],
+            [inLoop[8], outLoop[7], c, o += inc],
+            ], true);
+
+        
+
+        /*The route then spirals up into the inner loop of a maze. There are three ways out, and some will get you
+        to the finish line a lot quicker than others. */
+        let mazeIn = []
         let start = 10;
         let mazeInLen = 500
         let add = [0, 0, 0, 0, 0, 100, 50, 100, 150, 50, 50, 217]
@@ -136,6 +160,10 @@ class MapController {
                 mazeIn.push(new canal(mazeInLen + add[i], ((start + i) % 12), stdwidth, player));
             
         }
+
+        /*topMidArc, rightmidArc and lowMidArc are the three routes out of the maze. lowMidArc gets you there fastest,
+        but it's the last one, so a player might not head for there right away - especially as you CAN get out
+        via the other ways if you wait for some very unforgiving locks!*/
 
         let topMidArc = []
         let rightMidArc = []
@@ -154,29 +182,32 @@ class MapController {
 
         let lowTangent = new canal(mazeMidLen + 100, 12, stdwidth, player);
 
-        let finishLine = new canal(300, 9, stdwidth, player, true, true)
-
-        let o = 1
-        let c = 3
-        let inc = 0.1
-
-        let threshold = new CanalNetwork(0, 0, [intro, firstGates, after], [[after, inLoop[0]]], false);
-        let loop = new CanalNetwork(300, 300, [inLoop], [[inLoop[1], outLoop[0], o, c += inc],
-            [inLoop[2], outLoop[1], o, c += inc],
-            [inLoop[3], outLoop[2], o, c += inc],
-            [inLoop[4], outLoop[3], o, c += inc],
-            [inLoop[5], outLoop[4], o, c += inc],
-            [inLoop[6], outLoop[5], o, c += inc],
-            [inLoop[7], outLoop[6], o, c += inc],
-            [inLoop[8], outLoop[7], o, c += inc],
-            ], true);
-        /*let arc = new CanalNetwork(200, -150, [outLoop, tangent, shortZigs, straight, up,
-             longZigs, upAfter, end], [], false);*/
         let arc = new CanalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
         let midLayerOne = new CanalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1], [topMidArc[4], lowTangent, 10, 1]])
         let midLayerTwo = new CanalNetwork(2395, 720, [rightMidArc]);
-        let midLayerThree = new CanalNetwork(2100, 810, [lowMidArc, lowTangent, finishLine], [[lowMidArc[2], mazeIn[11]]]);
+        let midLayerThree = new CanalNetwork(2100, 810, [lowMidArc, lowTangent], [[lowMidArc[2], mazeIn[11]]]);
 
-        return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo, midLayerThree]);
+
+        /*You end up in the outer ring, which circles the whole map in order to make it harder for players to calculate
+        the right route to it. but from there, you can get to the finish line no problem. */
+
+        let outerRing = []
+        let outLength = 1000;
+        start = 6;
+        add = [0, 0, 300, 0, 0, 0, 0, 100, 0, 0]
+
+        for (let i = 0; i < 10; i++){
+            outerRing.push(new canal(outLength + add[i], ((start - i) % 12), stdwidth, player));
+        }
+
+        let finishLine = new canal(300, 8, stdwidth, player, true, true)
+
+        let ring = new CanalNetwork(-1375, -228, [outerRing, finishLine], [[outerRing[2], lowMidArc[3]]]);
+
+
+
+        //-1571, 223
+
+        return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo, midLayerThree, ring]);
     }
 }
