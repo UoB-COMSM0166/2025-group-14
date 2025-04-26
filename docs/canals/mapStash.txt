@@ -118,3 +118,46 @@ My first attempt at a Map
         }
         let network = new canalNetwork(0, 0, canals, [], true);
         return new canalMap(player, false, [network]);
+
+
+        The zigs idea I had for map 3
+
+              /*let harsh = 60;
+        let downZig = [100, 11, harsh, player];
+        let upZig = [100, 7, harsh, player];
+
+        let shortZigs = [[], [], [], [], []];
+        for(let duo of shortZigs){
+            duo[0] = new canal(downZig);
+            duo[1] = new canal(upZig);
+        }
+
+        //let straight = new lockSegment(400, 9, stdwidth, player, 3, 2, 0.5);
+        let straight = new lock(400, 9, stdwidth, player, 3, 2);
+        let up = new canal(400, 12, stdwidth, player)
+
+        harsh = stdwidth;
+        let dec = 10
+        let zigLen = 300;
+        let right = 2;
+        let left = 10;
+
+        let longZigs = [[], [], [], [], []];
+        for(let trio of longZigs){
+            trio[0] = new canal(zigLen, right, harsh, player);
+            harsh -= 5;
+            trio[1] = new canal(zigLen, left, harsh, player);
+            harsh -= 5;
+        }
+
+        let fatLocks = []
+        let fatwidth = 300
+        let fatlength = 500
+        let upAfter = new canal(fatwidth*1.5, 12, stdwidth, player)
+       /* for(let i = 0; i < 5; i++){
+            fatLocks.push(new canal(fatlength, 3, fatwidth, player))
+            fatLocks.push(new lock(fatlength, 3, fatwidth, player, 2, 5)) //2, 5, 1 when it was a lockSegment
+        }
+
+        let homeStretch = new canal(1000, 5, stdwidth - 20, player);*/
+        //let end = new canal(300, 3, stdwidth, player, false, true)

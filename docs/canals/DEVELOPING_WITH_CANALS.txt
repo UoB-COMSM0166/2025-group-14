@@ -1,26 +1,4 @@
 IMPORTANT - please read this document on Leah's branch as it gets updated regularly.
-Latest updates: 
-    21/04
-    - you can create a lockSegment as a linkage by making a link that has five entries - the two canals to link and the 
-    three arguments a lockSegment constructor take. For example:
-    let long = new canalNetwork(0, 0, [c1, l1, c2, c3, c4, c5, c6, c7, c8, c23], [[c2, c9], [c23, c30, 2, 2, 0.3]]);
-    ... links c2 and c9 normally, but links c23 and c30 using a locksegment with openSecs of 2, closedSecs of 3 and 
-    speed of 0.3
-
-    20/04
-    - six oclock error now resolved
-    - canals can now link to other canals in the same network
-    - length, oClock, width and player can now be input into a canal as a single array of length 4.
-    - the network course array now can take individaul canals or canals collected into a sub-array
-    - new boolean "loop" value for network adds a new canal connecting the first canal to the end. The below code will make
-    a circular canal loop:
-
-                 let canals = [];
-        for (let i = 1; i < 12; i++){
-            canals.push(new canal(200, i, 100, player));
-        }
-        let network = new canalNetwork(0, 0, canals, [], true); //that true at the end is the key variable
-        return new canalMap(player, false, [network]);
 
 Hello!
 
@@ -37,10 +15,9 @@ CONTENTS
 (2) Advanced Features
     (2.1) Locks
     (2.2) Links
-    (2.3) Ends
+    (2.3) Instantiation Shortcuts
 (3) Debugging and Best Practices
     (3.1) General
-    (3.2) facingBanks switch statement error
 (4) Changing how the canals are set up and drawn
     (4.1) Where to make changes
     (4.2) Creating new sprites
@@ -170,36 +147,90 @@ out these objects.
         let midLayerTwo = new CanalNetwork(2395, 720, [canalOne, canalTwo, canalThree], [[CanalTwo, CanalFive], [canalThree, canalSix]]);
 
 
-    Finally, you can also make your linkages into locks! To do that, you just need to specify the fillt
+    Finally, you can also make your linkages into locks! To do that, you need to specify your fillTime and openTime in the array
+    that sets the link. So for example, to say "connect canalTwo to canalFive via a lock with a fillTime of 4 and an openTime of 2",
+    you'd write:
+
+        let midLayerTwo = new CanalNetwork(2395, 720, [canalOne, canalTwo, canalThree], [[CanalTwo, CanalFive, 4, 2]]);
+
+    
+    The new canal that links the specified canals will have the same width as whichever of the two is thinner. 
+
+    The first canal in each linked pair MUST be inside your network. The second one should be outside it, but can be inside it.
+    however, the ability to link two canals in the same network was unintended behaviour and is unlikely to work as well.
+
+    (2.3) Canal Instantiation Shortcuts
+    If you want to create a bunch of identical canals, you can substitute the first four parameters of that canal with and
+    array of length 4. so for example:
+
+        let array = [100, 6, 60, player]
+        let canal = new canal(array)
+
+    will create a canal of length 100, pointing downwards (so oClock of 6) with a width of 60 and player as player.
+
+    (2.4) Network Instantiation Shortcuts
+    Since starting to design maps I've found it VERY useful to be able to batch-create a bunch of canals using a for loop,
+    usually making an edit to the angle as I go to make an arc or a zig zag.
+
+    Let's say I design two canals, an empty array called arc, and an empty 2d array called zigZag. I instantiate the canals like so:
+
+        let canalOne = new Canal(100, 6, 60, player);
+        let canalTwo = new Canal(400, 7, 80, player);
+        let zigZag = [[], [], []]
+        let arc = []
+
+    I can then fill up arc with a bunch of canals with a starting angle of 2, then going 3, 4... etc like so:
+
+        for (let i = 2; i <= 5; i++){
+            arc.push(new canal(400, i, 100, player));
+        }
+    
+    and I can fill up zigZag with a bunch of pairs of canals swapping angles, like so:
+
+
+        let downZig = [100, 11, 60, player];
+        let upZig = [100, 7, 60, player];
+
+        for(let duo of zigZag){
+            duo[0] = new canal(downZig);
+            duo[1] = new canal(upZig);
+        }
+    
+    and then if you create the network like this... 
+
+    let network = new CanalNetwork(300, 400, [canalOne, arc, canalTwo, zigZag])
+
+    ...you'll get the following canals in order coming out from the start:
+        - canalOne
+        - arc[0]
+        - arc[1]
+        - arc[2]
+        - arc[3]
+        - canalTwo
+        - zigZag[0][0]
+        - zigZag[0][1]
+        - zigZag[1][0]
+        - zigZag[1][1]
+        - zigZag[2][0]
+        - zigZag[2][1]
+
+    this works recursively, so in theory, you can nest the arrays as deep as you want.
+
+    If you want to connect them, you'll need to link them by their location in the array, ie:
+
+        let network = new CanalNetwork(300, 400, [canalOne, arc, canalTwo, zigZag], [[zigZag[1][0], canalThree]])
 
 
 
-a
-    Linkages are new and complicated and probably more prone to bugs than other things. Ultimately, 
-    while you can message me about bugs if you want, some are probably more easily fixed just by
-    slightly changing the position of one of the networks, or the angle of one of the linking canals.
-
-    The important thing to remember, if you do need to debug that way, is that links by default go
-    from the midpoint of the two connecting canals. You want to position those canals so that the
-    halfway point of each one can be reached from the other without obstruction.
-
-    Also worth noting is that the new canal created by the linkage has the same width as the THINNEST
-    of the two connecting canals. 
-
-    (2.3) Ends
-    Networks automaticall draw an black bank at the start and end of their course. To turn this off,
-    comment-out the "createEndSprites();" method in the constructor method in canalNetwork.js
 
 
 (3) Debugging and Best Practices
     (3.1) general
-    This code is not (no pun intended) waterproof. there are angles and positions of canals that
-    will not link together, or will make the sprites go all out of whack. I'm happy to look at bugs, 
-    but there's also a degree of "thinking for you" that I can't get the code to do in the timeframe
-    (as much as I'd prefer that to revising. Don't tempt me frodo etc). 
 
-    Because of that, the following things are likely to cause bugs. You can do them if you want, 
-    just be prepared to change your maps around them:
+    I've added some custom error messages, and if you get one, feel free to message me. however, some glitches will just
+    make your sprites go all crazy, and if so, that probably just means the code doesn't know how to implement the angle
+    or connection you're implementing. Trying to code the following is high risk. If you do get crazy visual glitches,
+    I'd recommend just adjusting some numbers.
 
     FAT CANALS - canals are not designed to be wider than they are long, and canals that are wider
     than other canals are long run the risk of swallowing them up.
@@ -207,19 +238,10 @@ a
     LINKING TWO NETWORKS FROM A LOCK - I haven't tested what this would mean because no canal would
     be built this way. I don't imagine it would work very well. 
 
-    HAIRPIN BENDS - a canal at 10'oclock connecting to a canal at 5 o'clock may make a nice joint, 
-    but also might not. 
+    HAIRPIN BENDS - a canal at 10'oclock connecting to a canal at 5 o'clock will not make a nice join.
 
     The tl;dr is that generally, thinner canals that curve at softer angles are safer!
 
-    This, I should mention, is all "debugging" in the sense of, "help, my canalnetwork is now a mess
-    of disconnected sprites", not "help, I've gotten an error message." If you get an error message,
-    feel free to message right away.
-
-    (3.2) facingBanks switch statement error
-    This is the most fragile code I've written. You can probably solve it by arbitrarily futzing some
-    canals around your linked networks, but I'm still not fully sure of this one, so hit me up if 
-    you run into it. 
 
 (4) Changing how the canals are setup and drawn
 

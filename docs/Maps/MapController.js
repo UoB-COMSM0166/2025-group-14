@@ -25,7 +25,7 @@ class MapController {
             case 2:
                 return new Sprite(265, -328, 35, 25);
             case 3:
-                return new Sprite(1774, 468, 35, 25);//originallyl 186, 52, 35, 25
+                return new Sprite(-523, 272, 35, 25);//originallyl 186, 52, 35, 25
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -62,7 +62,7 @@ class MapController {
     }
     
     static getMap1(player) {
-        let c1 = new canal(300, 2, 100, player); //right, up
+        let c1 = new canal(300, 2, stdwidth, player); //right, up
         let c2 = new canal(770, 4.5, 150, player); //right, down
         let c3 = new lock(470, 7, 130, player, 5, 3); //left, down (lock, 5, 3)
         let c4 = new canal(600, 10, 220, player); //left up
@@ -89,7 +89,7 @@ class MapController {
 
     static getMap2(player) {
         let c1 = new canal(1000, 3, 200, player); 
-        let c2 = new canal(300, 7, 100, player);
+        let c2 = new canal(300, 7, stdwidth, player);
         let c3 = new canal(500, 4, 200, player);
         let c4 = new canal(400, 2, 200, player);
         let c5 = new canal(400, 11, 200, player);
@@ -110,18 +110,18 @@ class MapController {
     static getMap3(player){
         let stdwidth = 100;
 
-        let intro = new canal(200, 3, 100, player);
+        let intro = new canal(200, 3, stdwidth, player);
         let firstGates = new canal(200, 4, stdwidth, player);
         let after = new canal(200, 7, stdwidth, player);
 
         let inLoop = [];
         for (let i = 1; i < 12; i++){
-            inLoop.push(new canal(200, i, 100, player));
+            inLoop.push(new canal(200, i, stdwidth, player));
         }
 
         let outLoop = [];
         for (let i = 2; i <= 9; i++){
-            outLoop.push(new canal(400, i, 100, player));
+            outLoop.push(new canal(400, i, stdwidth, player));
         }
 
 
@@ -133,68 +133,27 @@ class MapController {
         let mazeInLen = 500
         let add = [0, 0, 0, 0, 0, 100, 50, 100, 150, 50, 50, 50]
         for (let i = 0; i < 12; i++){
-                mazeIn.push(new canal(mazeInLen + add[i], ((start + i) % 12), 100, player));
+                mazeIn.push(new canal(mazeInLen + add[i], ((start + i) % 12), stdwidth, player));
             
         }
 
         let topMidArc = []
         let rightMidArc = []
+        let lowMidArc = []
         let mazeMidLen = 650
         let topStart = 10
         let rightStart = 12
-        add = [0, 450, 100, 250, 200]
-        let index = 0;
-        for (let i = 0; i > -5; i--){
-            topMidArc.push(new canal(mazeMidLen, ((topStart + i) % 12), 100, player));
-            rightMidArc.push(new canal(mazeMidLen + add[index++], ((rightStart + i) % 12), 100, player));
-        
+        let lowStart = 7
+        let rightAdd = [0, 450, 100, 250, 200]
+        let lowAdd = [100, 0, 250, 300, 150]
+        for (let i = 0; i < 5; i++){
+            topMidArc.push(new canal(mazeMidLen, ((topStart - i) % 12), stdwidth, player));
+            rightMidArc.push(new canal(mazeMidLen + rightAdd[i], ((rightStart - i) % 12), stdwidth, player));
+            lowMidArc.push(new canal(mazeMidLen + lowAdd[i], ((lowStart + i) % 12), stdwidth, player));
         }
 
-             
+        let lowTangent = new canal(mazeMidLen, 12, stdwidth, player);
 
-
-        /*let harsh = 60;
-        let downZig = [100, 11, harsh, player];
-        let upZig = [100, 7, harsh, player];
-
-        let shortZigs = [[], [], [], [], []];
-        for(let duo of shortZigs){
-            duo[0] = new canal(downZig);
-            duo[1] = new canal(upZig);
-        }
-
-        //let straight = new lockSegment(400, 9, stdwidth, player, 3, 2, 0.5);
-        let straight = new lock(400, 9, stdwidth, player, 3, 2);
-        let up = new canal(400, 12, stdwidth, player)
-
-        harsh = stdwidth;
-        let dec = 10
-        let zigLen = 300;
-        let right = 2;
-        let left = 10;
-
-        let longZigs = [[], [], [], [], []];
-        for(let trio of longZigs){
-            trio[0] = new canal(zigLen, right, harsh, player);
-            harsh -= 5;
-            trio[1] = new canal(zigLen, left, harsh, player);
-            harsh -= 5;
-        }
-
-        let fatLocks = []
-        let fatwidth = 300
-        let fatlength = 500
-        let upAfter = new canal(fatwidth*1.5, 12, stdwidth, player)
-       /* for(let i = 0; i < 5; i++){
-            fatLocks.push(new canal(fatlength, 3, fatwidth, player))
-            fatLocks.push(new lock(fatlength, 3, fatwidth, player, 2, 5)) //2, 5, 1 when it was a lockSegment
-        }
-
-        let homeStretch = new canal(1000, 5, stdwidth - 20, player);*/
-        //let end = new canal(300, 3, stdwidth, player, false, true)
-
-
-        let lS = 5;
         let o = 1
         let c = 3
         let inc = 0.1
@@ -214,7 +173,8 @@ class MapController {
         let arc = new CanalNetwork(200, -150, [outLoop, tangent, mazeIn], [[mazeIn[4], topMidArc[2]], [mazeIn[8], rightMidArc[0]]], false);
         let midLayerOne = new CanalNetwork(1627, -646, [topMidArc], [[topMidArc[0], rightMidArc[2], 10, 1]])
         let midLayerTwo = new CanalNetwork(2395, 720, [rightMidArc]);
+        let midLayerThree = new CanalNetwork(2100, 810, [lowMidArc, lowTangent]);
 
-        return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo]);
+        return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo, midLayerThree]);
     }
 }

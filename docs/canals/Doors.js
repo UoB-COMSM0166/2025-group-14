@@ -101,8 +101,6 @@ class doors{
     }
 
     doorAnimate() {
-        let highlight = this.tmp;
-        circle(highlight[0], highlight[1], 20)
         this.redDoor.rotation  = this.normDeg(this.redAngle);
         this.blackDoor.rotation = this.normDeg(this.blackAngle);
         const hl = this.doorLength * 0.5;
@@ -227,29 +225,16 @@ class doors{
         let angle = this.lock.getAngle(false);
         let xChange = Math.sin(angle) * dist;
         let yChange = -Math.cos(angle) * dist;
-        console.log("bool: " + this.aft)
 
         
         if(this.aft === false){
-            console.log("reversing")
             xChange *= -1;
             yChange *= -1;
-        }else{
-            console.log("Not reversing")
         }
 
         let red = [rc[0] + xChange, rc[1] + yChange]
         let black = [red[0] + this.lock.getWidthChanges()[0], red[1] + this.lock.getWidthChanges()[1]]
         let mid = halfwayPoint(red, black)
-
-        this.tmp = black;
-
-    
-        /*circle(red[0], red[1], 50);
-        circle(black[0], black[1], 50);
-        circle(mid[0], mid[1], 20)*/
-
-        console.log("Red: " + red);
 
         this.redSect = red;
         this.blackSect = black;
