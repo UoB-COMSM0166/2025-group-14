@@ -169,7 +169,20 @@ class AllMapsSetupDisplay {
 
   displayBackground(){
     camera.on();
-    image(this.grassBackground, 0, 0);
+    //hard coding the size of image seems to help with performance issues
+    let tileWidth = 778;
+    let tileHeight = 545;
+    //chose a proximity thats the size of a large screen (should work on lab machine with no pop in)
+    let proximity = 2560;
+    imageMode(CENTER);
+    // for a box of size 10000 by 10000 fill it with copies of the image ONLY if the player is close
+    for(let x = -5000; x < 5000; x += tileWidth) {
+      for(let y = -5000; y < 5000; y += tileHeight){
+        let visualRadius = dist(this.player.x, this.player.y, x, y);
+        if(visualRadius < proximity)
+          image(this.grassBackground, x, y, tileWidth, tileHeight);
+      }
+    }
     camera.off();
   }
 
