@@ -13,6 +13,7 @@ class AllMapsSetupDisplay {
     // below is to make sure that animations are only loaded in once
     this.playerAnimation = LevelController.playerAnimation;
     this.pursuerAnimation = LevelController.pursuerAnimation;
+    this.grassBackground;
 
     this.timer;
     this.healthbar;
@@ -28,7 +29,7 @@ class AllMapsSetupDisplay {
   }
 
   setup() {
-
+    this.grassBackground = loadImage("assets/grass-texture.png");
     // Instantiate Timer (to time events that occur over time)
     this.timer = new Timer();
     this.timer.startTimer();
@@ -120,6 +121,8 @@ class AllMapsSetupDisplay {
     // clean the previous frame
     clear();
 
+    this.displayBackground();
+
     //add the mouse coordinates on the screen
     textSize(20);
     fill(0);
@@ -162,6 +165,12 @@ class AllMapsSetupDisplay {
       this.pauseButton.remove();
       state = GameState.START_SCREEN;
     }
+  }
+
+  displayBackground(){
+    camera.on();
+    image(this.grassBackground, 0, 0);
+    camera.off();
   }
 
   moveCamera() {
