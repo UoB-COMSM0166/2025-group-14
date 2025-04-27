@@ -131,8 +131,7 @@ class AllMapsSetupDisplay {
     text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY);
 
     camera.on();
-    this.healthbar.draw();
-
+  
     this.map.animate();
 
     this.playerCfg.camera();
@@ -140,6 +139,8 @@ class AllMapsSetupDisplay {
     this.playerCfg.debug();
 
     this.pursuerCfg.update();
+
+    this.healthbar.draw();
 
     // Show pause button
     this.pauseButton.show();
@@ -175,9 +176,10 @@ class AllMapsSetupDisplay {
     //chose a proximity thats the size of a large screen (should work on lab machine with no pop in)
     let proximity = 2560;
     imageMode(CENTER);
-    // for a box of size 10000 by 10000 fill it with copies of the image ONLY if the player is close
+    // for a box of size 10000 by 10000 pixels fill it with copies of the image ONLY if the player is close
     for(let x = -5000; x < 5000; x += tileWidth) {
       for(let y = -5000; y < 5000; y += tileHeight){
+        //is distance of player to nearest image tile less than proximity pixels?
         let visualRadius = dist(this.player.x, this.player.y, x, y);
         if(visualRadius < proximity)
           image(this.grassBackground, x, y, tileWidth, tileHeight);

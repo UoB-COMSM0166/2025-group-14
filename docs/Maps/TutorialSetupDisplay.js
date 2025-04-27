@@ -13,6 +13,7 @@ class TutorialSetupDisplay {
         // below is to make sure that animations are only loaded in once
         this.playerAnimation = LevelController.playerAnimation;
         this.pursuerAnimation = LevelController.pursuerAnimation; 
+        this.grassBackground
 
         this.healthbar;
         this.playerMaxHealth = 100;
@@ -60,6 +61,7 @@ class TutorialSetupDisplay {
         this.map = MapController.getMap0(this.player);
   
         this.player.addAnimation("boat", this.playerAnimation);
+        this.grassBackground = loadImage("assets/grass-texture.png");
         this.player.animation.frameDelay = 18;
         this.playerMaxHealth = 100;
         this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
@@ -124,7 +126,7 @@ class TutorialSetupDisplay {
     display() {
         // clean the previous frame
         clear();
-
+        this.displayBackground();
         //press esc to go to start
         if (keyCode == 27) {
           this.clearSprites();
@@ -135,26 +137,45 @@ class TutorialSetupDisplay {
         // movement tutorial function run with zoomed in camera
         if (!this.passedMovementTutorial) {
             this.setCamera(1.5, this.player.x, this.player.y);
-            this.runMovementTutorial();
             this.map.animate();
+            this.runMovementTutorial();
             return;
         }
         // damage tutorial function run with normal camera
         if (!this.passedDamageTutorial) {
             this.setCamera(1, this.player.x, this.player.y);
-            this.runDamageTutorial();
             this.map.animate();
+            this.runDamageTutorial();
             return;
         }
 
         // pursuer tutorial and normal game logic in the runPursuerTutorial function (has win lose conditions)
         if (!this.passedPursuerTutorial) {
             this.runPursuerTutorial();
-            this.map.animate();
             return;
         }
   
     }   
+
+    displayBackground(){
+        camera.on();
+        //hard coding the size of image seems to help with performance issues
+        let tileWidth = 778;
+        let tileHeight = 545;
+        //chose a proximity thats the size of a large screen (should work on lab machine with no pop in)
+        let proximity = 2560;
+        imageMode(CENTER);
+        // for a box of size 10000 by 10000 pixels fill it with copies of the image ONLY if the player is close
+        for(let x = -5000; x < 5000; x += tileWidth) {
+          for(let y = -5000; y < 5000; y += tileHeight){
+            //is distance of player to nearest image tile less than proximity pixels?
+            let visualRadius = dist(this.player.x, this.player.y, x, y);
+            if(visualRadius < proximity)
+              image(this.grassBackground, x, y, tileWidth, tileHeight);
+          }
+        }
+        camera.off();
+      }
 
     //camera function that zooms to a particular 'zoom' level and a target x/y
     setCamera(zoom, x, y) {
@@ -323,6 +344,7 @@ class TutorialSetupDisplay {
         if (this.kbPressCount == 7) {
             this.runCutScene(this.player.x, this.player.y, 
                 this.pursuer.x, this.pursuer.y);
+            this.map.animate();
             this.textBox.show();
             return;
         }
@@ -339,6 +361,7 @@ class TutorialSetupDisplay {
 
 
         this.setCamera(1, this.player.x, this.player.y);
+        this.map.animate();
         camera.off();
         this.textBox.updatePosition(
             this.player.x - 150,
