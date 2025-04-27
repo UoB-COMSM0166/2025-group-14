@@ -129,62 +129,56 @@ Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
 ### Design
 
-- 15% ~750 words 
-- System architecture. Class diagrams, behavioural diagrams.
+Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js and p5play libraries. One of the advantages of utilising JavaScript in an Agile software development team is building the application using Object Oriented Programming. Specifically, our team has extensively utilised aggregation (e.g. the button class) and composition (e.g. the playerConfig class) to create modular code, which allowed us to maintain, change or build upon existing modules easily without it affecting the general structure.   
 
-Note if you want to contribute to this section:
-1) If you can, please add a paragraph that in 100-200 words describes either a map classes/mechanics (locks etc), or repairing mechanics, or tutorial classes/mechanics. Don't worry about the word limit, editing is easier than writing.
-2) The UML class diagram is complete, but if you have suggestions, please feel free to post them in the chat
-3) The UML flow diagram is under development. At the moment splitting the whole thing to separate the gamepley from non-gameplay parts
-
-Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js library. P5.js provided us with an accessible and interactive API which was used to create the majority of game objects and visualise them in the browser. Additionally, we included the p5play library, which is an extension to the p5.js and which contains game oriented API (see implementation challenges for details of choice).  
-
-One of the advantages of utilising JavaScript in an Agile software development team is building the application using Object Oriented Programming. Specifically, our team has extensively utilised aggregation (e.g. the button class) and composition (e.g. the playerConfig class) to create modular code, which allowed us to maintain, change or build upon existing modules easily without it affecting the general structure.   
-
-Ever since the paper prototypes, the player, the pursuer and the map (consisting of the canal objects) were foundational objects that the entire game were build around. With the constant experimentations in interactions between these 3 classes, we developed a range of game mechanics and helper classes that execute these mechanics, all of which we will explain in the next few paragraphs.  
-
-#### Player sprite and playerConfig class and player mechanics  
-
-The player p5play sprite is the central object in the game player. The gamer directly controls the movement of sprite with the WASD keys input. The behaviour of the object in response of the keypresses is implemented in a way to resemble a real life physical object, that has such attributes as mass and inertia.  
-
-#### Pursuer, pursuerConfig class and pursue mechanics  
-
-The pursuer object is the same p5play sprite as the player, but it’s behaviour is radically different due to pursuerConfig class. The config gives the sprite the artificial intelligence to to trace the position of the player on the map and move towards it’s last recorded location.  
-
-#### CanalMap class and the locks mechanics  
-
+Ever since the paper prototypes, the player, the pursuer and the map (consisting of the canal objects) were the foundational objects that the entire game were build around. With the constant experimentations in interactions between these 3 classes, we developed a range of game mechanics and helper classes that execute these mechanics, all of which we will explain in the next few paragraphs.  
+ 
+- #### Player sprite, playerConfig class and player mechanics  
+ 
+The player p5play sprite is the central object in the game player. The gamer directly controls the movement of sprite with the WASD keys input. The behaviour of the object in response of the keypresses is implemented in a way to resemble a real life physical object, that has such attributes as mass and inertia.  
+ 
+- #### Pursuer, pursuerConfig class and pursue mechanics  
+ 
+The pursuer object is the same p5play sprite as the player, but it’s behaviour is radically different due to pursuerConfig class. The config gives the sprite the artificial intelligence to to trace the position of the player on the map and move towards it’s last recorded location.  
+ 
+- #### CanalMap class and the locks mechanics  
+ 
 Maps were built at three aggregated levels:
-•	Canals, straight line pairs of banks. 
-•	CanalNetworks, linear connections of canals.
-•	CanalMaps, aggregations of several networks into forking maps with a start and end point. 
-Canal objects are instantiated with a width, a length and an angle, but not position. CanalNetworks are given starting x and y coordinates and a set of ordered canals, and then draw these canals in order starting from those coordinates. Canal networks are also passed a set of canal pairs, with the first canal necessarily being within the network but the second potentially being outside it. The map object takes these pairs and uses them to create linkage objects, a co-descendent (along with networks) of the linnearConnect abstract class, that contain a single canal which is positioned by the map to link the canals specified by the networks. 
+1.	Canals, straight line pairs of banks. 
+2.	CanalNetworks, linear connections of canals.
+3.	CanalMaps, aggregations of several networks into forking maps with a start and end point.
+   
+Canal objects are instantiated with a width, a length and an angle, but not position. CanalNetworks are given starting x and y coordinates and a set of ordered canals, and then draw these canals in the order starting from those coordinates. Canal networks are also passed a set of canal pairs, with the first canal necessarily being within the network but the second potentially being outside it. The map object takes these pairs and uses them to create linkage objects, a co-descendent (along with networks) of the linnearConnect abstract class, that contains a single canal which is positioned by the map to link the canals specified by the networks. 
+ 
 Locks, a subclass of canals, are given timing parameters and are positioned like any other canal via polymorphism. Lock doors open and close on an animation, allowing moments of tension as the player just makes it through a narrow gap ahead of the pursuer. A bar positioned beside the lock shows its full or empty status, which translates to when the doors will open. 
+ 
+ 
+- #### Health mechanic: the interaction between canalMap, player and pursuer objects  
+ 
+The main objective of the game is to navigate through the canals and reach the end of the track. To make the gameplay more involving, we have introduced the health mechanics where health could be deducted as punishment for a gamer’s undesired behaviour. There are several scenarios where health is decreased, each with its own purpose:
+1.	The player hitting the bank of the canal forces the gamer to be more accurate when navigating through the map, especially at tight corners and turns. 
+2.	At the same time, when the pursuer catches up with the player and gets close enough, additional damage to encourage the player to balance between the speed and the movement precision. 
+3.	Additionally, a constant small amount of health is being constantly deducted to simulate real-world wear and tear of the boat.  
+ 
+- #### Game difficulty mechanic:   
+ 
+To allow the game to be suited for a wide range of players with different gaming experiences, we have introduced the difficulty levels to the game. The combination of the selected map and the difficulty level sets the following parameters for the upcoming game: player’s start health amount, amount of health deducted for bank collision & pursuer catching up, and the pursuer freeze cool-down following garbage collecting.    
+ 
+- #### User Interface classes:  
+ 
+The main non-gameplay features of the game are implemented as game screens and either serve the purpose of game configuration (e.g. Map selection and difficulty level screens) or as an information & game control flow (e.g. Info screen or win/lose screens).
+The transition between the screens that requires setting any parameter (e.g. map selection) is done via button class. Additionally, following the heuristic analysis report, a game pause & resume capability can be initiated via the buttons UI.    
 
-
-#### Health mechanic: the interaction between canalMap, player and pursuer objects  
-
-The main objective of the game is to navigate through the canals and reach the end of the track. To make the gameplay more involving, we have introduced the health mechanics where health could be deducted as punishment for game’s undesired behaviour. There are several scenarios where health is decreased, each with its own purpose. Firstly, player hitting the bank of the canal forces the gamer to be more accurate when navigating though the map, especially at tight corners and turns. At the same time, when the pursuer catches up with the player and gets close enough, additional damage to encourage the player to balance between the speed and the movement precision. Additionally, a constant small amount of health is being constantly deducted to simulate a real world long boat having something constantly breaks lol.  
-
-#### Game difficulty mechanic:   
-
-To allow the game to be suited for a wide range of players with different gaming experience, we have introduced the difficulty levels to the game. Having selected a map in the map selection screen, the gamer then selects the game difficulty: easy, medium or hard. The combination of the selected map and the difficulty level sets the following parameters for the upcoming game: player’s start health amount, amount of health deducted for bank collision & pursuer catching up, and the pursuer freeze cool-down following garbage collecting.    
-
-#### User Interface classes:  
-
-As mentioned in the the paragraph above, in addition to the game configuration screens, we included several more screens:   
-
-- start screen welcomes the player directly after booting the game.  
-
-- info screen provides the player with the game setting and tips&tricks.  
-
-- win&lose screens provide are a convenient way to finish the current game and prepare the gamer for the next one  
-
-The transition between the screens that requires setting any parameter (e.g. map selection) is done via button class. Additionally, following heuristic analysis report, a game pause&resume capability could be initiated via the buttons UI.  
-
-#### UML Class Diagram
+#### UML Class Diagram of the entire game
 
 ![UML Class Diagram of Narrowboat Game core features](./Images/DGRM_updated.jpg)
+
+#### UML sequence diagrams of non-gameplay classes
+
 ![UML Flow Diagram of Narrowboat Game](./Images/High_level_sequence.jpeg)
+
+#### UML sequence diagrams of gameplay classes
+
 ![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
 ### Implementation
