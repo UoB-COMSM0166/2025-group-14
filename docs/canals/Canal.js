@@ -348,7 +348,7 @@ class canal{
         // triangle #1
         push();
         noStroke();
-        fill(0, 0, 96, 100); // semi-transparent blue for water
+        fill(100, 140, 190, 255); // blue for water, was semi-transparent but updated for background
         beginShape();
         vertex(this.blackStart[0], this.blackStart[1]);
         vertex(this.blackEnd[0], this.blackEnd[1]);
@@ -359,7 +359,7 @@ class canal{
         // triangle #2
         push();
         noStroke();
-        fill(0, 0, 96, 100); // semi-transparent blue for water
+        fill(100, 140, 190, 255); // blue for water, was semi-transparent but updated for background
         beginShape();
         vertex(this.redEnd[0], this.redEnd[1]);
         vertex(this.redStart[0], this.redStart[1]);

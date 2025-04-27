@@ -37,6 +37,16 @@ class HealthBar {
       map(this.health, 0, this.maxHealth, 0, this.width),
       this.height
     );
+
+    //add white part to health bar so background doesn't show
+    noStroke();
+    fill(255, 255, 255); // white
+    rect(
+      this.x + map(this.health, 0, this.maxHealth, 0, this.width),
+      this.y,
+      this.width - map(this.health, 0, this.maxHealth, 0, this.width),
+      this.height
+    );
   }
 
   // Update health based on player
