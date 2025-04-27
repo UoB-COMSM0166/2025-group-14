@@ -68,7 +68,7 @@ class MapController {
     }
     
     static getMap1(player) {
-        let c1 = new canal(300, 2, stdwidth, player); //right, up
+        let c1 = new canal(300, 2, 150, player); //right, up
         let c2 = new canal(770, 4.5, 150, player); //right, down
         let c3 = new lock(470, 7, 130, player, 5, 3); //left, down (lock, 5, 3)
         let c4 = new canal(600, 10, 220, player); //left up
@@ -95,7 +95,7 @@ class MapController {
 
     static getMap2(player) {
         let c1 = new canal(1000, 3, 200, player); 
-        let c2 = new canal(300, 7, stdwidth, player);
+        let c2 = new canal(300, 7, 200, player);
         let c3 = new canal(500, 4, 200, player);
         let c4 = new canal(400, 2, 200, player);
         let c5 = new canal(400, 11, 200, player);
