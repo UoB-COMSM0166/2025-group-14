@@ -29,7 +29,7 @@ class MapController {
             case 3:
                 return new Sprite(186, 52, 35, 25);
             case 4:
-                return new Sprite(0, 0, 35, 25);
+                return new Sprite(225, 407, 35, 25);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -47,7 +47,7 @@ class MapController {
             case 3:
                 return new Sprite(37, 39, 25, 15);
             case 4:
-                return new Sprite(50, 0, 25, 15);
+                return new Sprite(5, 82, 25, 15);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -219,13 +219,55 @@ class MapController {
     }
 
     static getMap4(player){
-        console.log("Getting map four...")
-
         let stdlen = 300
         let stdwidth = 100;
+        
+        //creating the end first - this is a linear map so it's playable at any state of completion
+        let finishLine = new canal(300, 12, stdwidth, player, true, true)
 
-        let test = new canal(stdlen, 3, stdwidth, player);
-        let network = new CanalNetwork(0, 0, [test]);
+        /*This opens with a test of reflexes and boat control - get around that sharp angle
+        into the lock pronto, or face a very short game!*/       
+
+        let start = new canal(stdlen * 2, 5, stdwidth, player);
+        let jumpScare = new lock(stdlen, 2, stdwidth, player, 3, 2)
+        let phew = new canal(stdlen, 1, stdwidth, player);
+
+        /*...you made it! And you've now got a lead on the pursuer, which is good, cause the canal's
+        getting narrow and twisty. repair often and go slowly and carefully*/
+
+        let harshwidth = stdwidth * 0.8
+        let narrowing = new canal(stdlen, 3, harshwidth, player);
+        let firstCurves = [];
+        for (let i = 0; i < 3; i++){
+            let curve = [];
+            curve.push(new canal(stdlen, 5, harshwidth, player));
+            curve.push(new canal(harshwidth, 3, harshwidth, player));
+            curve.push(new canal(stdlen, 1, harshwidth, player));
+            curve.push(new canal(harshwidth + 30, 3, harshwidth, player));
+            firstCurves.push(curve);
+        }
+        //and a lock to give you a chance to regain that distance
+        let equalizer = new lock(stdlen, 2, stdwidth, player, 3, 4)
+        let phewToo = new canal(700, 3, stdwidth, player);
+
+        /*under construction: this next bit has gentler curves, but also narrows, so
+        don't get too comfy*/
+
+
+
+
+        let network = new CanalNetwork(0, 0, [
+            start, 
+            jumpScare, 
+            phew, 
+            narrowing, 
+            firstCurves,
+            equalizer,
+            phewToo,
+            finishLine
+        ]);
+
+        //240 50
 
         return new CanalMap(player, true, [network]);
     }
