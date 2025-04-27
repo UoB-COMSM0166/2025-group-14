@@ -442,7 +442,9 @@ class TutorialSetupDisplay {
 
     clearSprites() {
       this.player.remove();
-      this.pursuer.remove();
+      if(this.pursuer){
+        this.pursuer.remove();
+      }
       this.map.removeSprites();
     }
 }
