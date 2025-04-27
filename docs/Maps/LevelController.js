@@ -14,6 +14,7 @@ class LevelController {
             case 1:
             case 2:
             case 3:
+            case 4:
                 levelInstance = new AllMapsSetupDisplay();
                 break;
             default:

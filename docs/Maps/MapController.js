@@ -10,6 +10,8 @@ class MapController {
                 return MapController.getMap2(player);
             case 3:
                 return MapController.getMap3(player);
+            case 4:
+                return MapController.getMap4(player);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -25,7 +27,9 @@ class MapController {
             case 2:
                 return new Sprite(265, -328, 35, 25);
             case 3:
-                return new Sprite(186, 52, 35, 25);//originallyl 186, 52, 35, 25
+                return new Sprite(186, 52, 35, 25);
+            case 4:
+                return new Sprite(0, 0, 35, 25);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -42,6 +46,8 @@ class MapController {
                 return new Sprite(-442, -327, 25, 15);
             case 3:
                 return new Sprite(37, 39, 25, 15);
+            case 4:
+                return new Sprite(50, 0, 25, 15);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -189,7 +195,8 @@ class MapController {
 
 
         /*You end up in the outer ring, which circles the whole map in order to make it harder for players to calculate
-        the right route to it. but from there, you can get to the finish line no problem. */
+        the right route to it. but from there, you can get to the finish line no problem. There's a lock that 
+        you have to pass to get into the outer ring, but it's generous */
 
         let outerRing = []
         let outLength = 1000;
@@ -202,12 +209,24 @@ class MapController {
 
         let finishLine = new canal(300, 8, stdwidth, player, true, true)
 
-        let ring = new CanalNetwork(-1375, -228, [outerRing, finishLine], [[outerRing[2], lowMidArc[3]]]);
+        let ring = new CanalNetwork(-1375, -228, [outerRing, finishLine], [[outerRing[2], lowMidArc[3], 4, 3]]);
 
 
 
         //-1571, 223
 
         return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo, midLayerThree, ring]);
+    }
+
+    static getMap4(player){
+        console.log("Getting map four...")
+
+        let stdlen = 300
+        let stdwidth = 100;
+
+        let test = new canal(stdlen, 3, stdwidth, player);
+        let network = new CanalNetwork(0, 0, [test]);
+
+        return new CanalMap(player, true, [network]);
     }
 }

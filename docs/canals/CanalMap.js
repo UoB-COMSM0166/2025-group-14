@@ -102,7 +102,6 @@ class CanalMap {
     }
 
     getNetworkByCanal(c){
-        console.log("canal: " + c);
         let found = false;
         let i = 0;
         let network;

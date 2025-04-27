@@ -11,6 +11,8 @@ class MapSelectionScreen{
         this.mapTwoButton.hide();
         this.mapThreeButton = new Button("Map 3", windowWidth*4/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(3));
         this.mapThreeButton.hide();
+        this.mapFourButton = new Button("Map 4", windowWidth*5/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(4));
+        this.mapFourButton.hide();
     }
 
     display() {
@@ -21,10 +23,12 @@ class MapSelectionScreen{
         this.mapOneButton.show();
         this.mapTwoButton.show();
         this.mapThreeButton.show();
+        this.mapFourButton.show();
         this.tutorialButton.setPosition(windowWidth/6, windowHeight/6);
         this.mapOneButton.setPosition(windowWidth *2/6, windowHeight/6);
         this.mapTwoButton.setPosition(windowWidth *3/6, windowHeight/6);
-        this.mapThreeButton.setPosition(windowWidth *4/6, windowHeight/6 );
+        this.mapThreeButton.setPosition(windowWidth *4/6, windowHeight/6);
+        this.mapFourButton.setPosition(windowWidth *5/6, windowHeight/6);
     
     }
 
@@ -34,6 +38,7 @@ class MapSelectionScreen{
         this.mapOneButton.hide();
         this.mapTwoButton.hide();
         this.mapThreeButton.hide();
+        this.mapFourButton.hide();
         if (this.selectedMapId !== 0) {
             state = GameState.DIFFICULTY_SCREEN;
         } else {
