@@ -43,9 +43,10 @@ class CanalMap {
                 let inbound = link[1];
                 let lock = false;
                 let lockDetails = [];
-                if(link.length === 4){
+                if(link.length === 5){
                     lock = true;
-                    lockDetails = [link[2], link[3]]
+                    lockDetails = [link[2], link[3], link[4]]
+                    console.log("link 4! " + link[4])
                 }
                 let origin = network;
                 let destination = this.getNetworkByCanal(inbound);

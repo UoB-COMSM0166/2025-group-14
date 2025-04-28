@@ -1,5 +1,5 @@
 class lock extends canal {
-    constructor(length, oClock, width, player, fillTime, openTime){
+    constructor(length, oClock, width, player, fillTime, openTime, waitTime = 0){
         super(length, oClock, width, player);
         this.fillTime = fillTime;
         this.openTime = openTime;
@@ -10,6 +10,7 @@ class lock extends canal {
         this.endFull = this.openTime + this.fillTime + this.openTime;
         this.status = null;
         this.relativeFrames = 0;
+        this.waitFrames = waitTime * 60
         
         //set after connections as part of the createSprites function
         this.foreDoors;
@@ -106,7 +107,9 @@ class lock extends canal {
 
 
     animate(){
-        this.relativeFrames++;
+        if(frameCount > this.waitFrames){
+            this.relativeFrames++;
+        }
         this.canalAnimate();
         this.lockAnimate();
     }
@@ -154,6 +157,9 @@ class lock extends canal {
 
     getFullStatus(){
         let mod = (this.relativeFrames/60) % this.cycle;
+        if(frameCount < this.waitTime){
+            return "emptying";
+        }
         if(mod < this.openTime){
             return "empty";
         }else if(mod >= this.openTime && mod < this.startFull){

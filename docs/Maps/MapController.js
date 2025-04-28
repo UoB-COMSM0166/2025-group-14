@@ -29,7 +29,7 @@ class MapController {
             case 3:
                 return new Sprite(186, 52, 35, 25);
             case 4:
-                return new Sprite(225, 407, 35, 25);
+                return new Sprite(225, 407, 35, 25);//originally 225 407; 3122 3070 for surveying the current end
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -143,15 +143,17 @@ class MapController {
         
         let tangent = new canal(100, 9, stdwidth, player);
 
+        //o
+
         let threshold = new CanalNetwork(0, 0, [intro, firstGates, after], [[after, inLoop[0]]], false);
-        let loop = new CanalNetwork(300, 300, [inLoop], [[inLoop[1], outLoop[0], c, o += inc],
-            [inLoop[2], outLoop[1], c, o += inc],
-            [inLoop[3], outLoop[2], c, o += inc],
-            [inLoop[4], outLoop[3], c, o += inc],
-            [inLoop[5], outLoop[4], c, o += inc],
-            [inLoop[6], outLoop[5], c, o += inc],
-            [inLoop[7], outLoop[6], c, o += inc],
-            [inLoop[8], outLoop[7], c, o += inc],
+        let loop = new CanalNetwork(300, 300, [inLoop], [[inLoop[1], outLoop[0], c, o, 2],
+            [inLoop[2], outLoop[1], c, o, 10],
+            [inLoop[3], outLoop[2], c, o, 4],
+            [inLoop[4], outLoop[3], c, o, 12],
+            [inLoop[5], outLoop[4], c, o, 6],
+            [inLoop[6], outLoop[5], c, o, 14],
+            [inLoop[7], outLoop[6], c, o, 8],
+            [inLoop[8], outLoop[7], c, o, 16],
             ], true);
 
         
@@ -223,7 +225,7 @@ class MapController {
         let stdwidth = 100;
         
         //creating the end first - this is a linear map so it's playable at any state of completion
-        let finishLine = new canal(300, 12, stdwidth, player, true, true)
+        let finishLine = new canal(300, 9, stdwidth, player, true, true)
 
         /*This opens with a test of reflexes and boat control - get around that sharp angle
         into the lock pronto, or face a very short game!*/       
@@ -247,7 +249,7 @@ class MapController {
             firstCurves.push(curve);
         }
         //and a lock to give you a chance to regain that distance
-        let equalizer = new lock(stdlen, 2, stdwidth, player, 3, 4)
+        let equalizer = new lock(stdlen, 2, stdwidth, player, 3, 2)
         let phewToo = new canal(900, 3, stdwidth, player);
 
         /*
@@ -256,18 +258,40 @@ class MapController {
         */
 
         let theCorkScrew = [];
-        let generous = 700;
-        let corkScrewLength = 1000;
-        for(let i; i < 6; i++){
-            let curve; 
-            
+        let generous = 180;
+        let corkScrewLength = 100;
+        let holdover;
+        for(let i = 0; i < 5; i++){
+            let curve = [];
+            curve.push(new canal(corkScrewLength, 5, generous, player));
+            curve.push(new canal(corkScrewLength, 4, generous, player));
+            curve.push(new canal(corkScrewLength, 5, generous, player));
+            curve.push(new canal(corkScrewLength, 6, generous, player));
+
+            curve.push(new canal(corkScrewLength, 7, generous, player));
+            curve.push(new canal(corkScrewLength, 8, generous, player));
+            curve.push(new canal(corkScrewLength, 7, generous, player));
+            curve.push(new canal(corkScrewLength, 6, generous, player));
+
+            holdover = generous;            
+            generous *= 0.75;
+            theCorkScrew.push(curve);
         }
-    
 
-        
+        for(let i = 7; i <= 12; i++){
+            theCorkScrew.push(new canal(corkScrewLength, i, holdover, player));
+        }
 
+        /*
+        Finishing there for now as there's been some talk of overhauling the control system
+        and I want to see what that looks like before coming up with another way to test it.
+        */
 
+        let stairlen = 500;
+        let stairwidth = 150;
 
+        let connector = new canal(500, 9, stdwidth, player);
+        let placeholder1 = new canal(stairlen, 12, stairwidth, player, 0.8, 1)
 
         let network = new CanalNetwork(0, 0, [
             start, 
@@ -277,6 +301,9 @@ class MapController {
             firstCurves,
             equalizer,
             phewToo,
+            theCorkScrew,
+            connector,
+            placeholder1,
             finishLine
         ]);
 
