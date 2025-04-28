@@ -248,10 +248,23 @@ class MapController {
         }
         //and a lock to give you a chance to regain that distance
         let equalizer = new lock(stdlen, 2, stdwidth, player, 3, 4)
-        let phewToo = new canal(700, 3, stdwidth, player);
+        let phewToo = new canal(900, 3, stdwidth, player);
 
-        /*under construction: this next bit has gentler curves, but also narrows, so
-        don't get too comfy*/
+        /*
+        under construction: this next bit has gentler curves, but it gets 
+        narrower, so be sure not to fall into too much of a groove
+        */
+
+        let theCorkScrew = [];
+        let generous = 700;
+        let corkScrewLength = 1000;
+        for(let i; i < 6; i++){
+            let curve; 
+            
+        }
+    
+
+        
 
 
 
