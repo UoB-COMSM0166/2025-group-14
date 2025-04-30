@@ -24,6 +24,7 @@ class TutorialSetupDisplay {
         
         this.canalCollisionDamage = 3;
         this.damageOverTime = 1;
+        this.pursuerDamage = 0.25;
 
         //flags for seeing if player has successfully moved
         this.movementTutorial = {
@@ -64,7 +65,8 @@ class TutorialSetupDisplay {
         this.grassBackground = loadImage("assets/grass-texture.png");
         this.player.animation.frameDelay = 18;
         this.playerMaxHealth = 100;
-        this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.timer, this.map, this.playerSpeed);
+        this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.pursuerDamage, 
+            this.timer, this.map, this.playerSpeed);
     
     }
 
@@ -309,7 +311,7 @@ class TutorialSetupDisplay {
                 this.textboxLookUp()
             );
             this.pursuer = MapController.getPursuer(0);
-            this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
+            this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 1.5);
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.pursuer.animation.frameDelay = 18;
             pursuerFreezeFrames = 15;
@@ -317,7 +319,7 @@ class TutorialSetupDisplay {
         }
         
         this.healthbar.draw();
-
+        
         //health = zero you lose 
         if (this.playerCfg.isHealthZero()){
             this.clearSprites(); 
