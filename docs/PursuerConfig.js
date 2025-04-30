@@ -1,6 +1,5 @@
 let pursuerCatched = false;
 let pursuerMoveCooldown = 0;
-let pursuerDamageCooldown = 0;
 
 class PursuerConfig {
     // Constructor takes a pursuer, player and speed as arguments
@@ -13,6 +12,8 @@ class PursuerConfig {
         // This array stores a chain of "snapshots" of the last known player coordinates before the player moves out of sight
         this.lastSeenArray = [];
         this.debugMode = false;
+        this.haveJustCollided = true;
+        this.collisionTimer = 0;
     }
 
     // Updates the pursuer's target based on player position and line of sight
@@ -41,14 +42,24 @@ class PursuerConfig {
 
     // Moves the pursuer towards the target
     move() {
-        // If the pursuer is within 60 pixels of the target, stop moving and set to "sleep" to stop weird jiggling 
-        if (this.arrived(this.pursuer, this.player, 60) || pursuerMoveCooldown !== 0) {
+        if (this.pursuer.collides(this.player) && !this.haveJustCollided) {
+            this.haveJustCollided = true;
+            this.collisionTimer = millis();
+            //console.log("Hit player");
+            pursuerCatched = true;
+        }
+        if ((millis() - this.collisionTimer) > 800) {
+            this.haveJustCollided = false;
+        } else {
             this.pursuer.speed = 0;
             this.pursuer.sleeping = true;
-            if (this.arrived(this.pursuer, this.player, 60) && pursuerDamageCooldown === 0) {
-                pursuerCatched = true;
-                // print("pursuer catched");
-            }
+            //console.log("Cooling off");
+            return
+        }
+        // If the pursuer is within 60 pixels of the target, stop moving and set to "sleep" to stop weird jiggling 
+        if (this.arrived(this.pursuer, this.player, 20) || pursuerMoveCooldown !== 0) {
+            this.pursuer.speed = 0;
+            this.pursuer.sleeping = true;
             return;
         // If the pursuer has reached a target other than player remove it by shifting array down
         } else if (this.lastSeenArray[0]) {
