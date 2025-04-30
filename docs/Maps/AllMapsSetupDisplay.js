@@ -22,6 +22,7 @@ class AllMapsSetupDisplay {
     this.playerMaxHealth;
     this.canalCollisionDamage;
     this.damageOverTime;
+    this.pursuerDamage;
     this.playerSpeed;
     this.pursuerSpeed;
     this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
@@ -49,7 +50,7 @@ class AllMapsSetupDisplay {
     this.player.addAnimation("boat", this.playerAnimation);
     this.player.animation.frameDelay = 18;
     this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
-      this.timer, this.map, this.playerSpeed);
+      this.pursuerDamage, this.timer, this.map, this.playerSpeed);
 
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
@@ -92,6 +93,7 @@ class AllMapsSetupDisplay {
             this.damageOverTime = 1;
             this.playerSpeed = 4.5;
             this.pursuerSpeed = 3;
+            this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
             pursuerFreezeFrames = 15;
             break;
           case 1:
@@ -100,6 +102,7 @@ class AllMapsSetupDisplay {
             this.damageOverTime = 1.2;
             this.playerSpeed = 4.5
             this.pursuerSpeed = 3;
+            this.pursuerDamage = 0.5; // colliding with pursuer causes player to lose 1/2 of their health
             pursuerFreezeFrames = 10;
             break;
           case 2:
@@ -108,6 +111,7 @@ class AllMapsSetupDisplay {
             this.damageOverTime = 1.5;
             this.playerSpeed = 4.5
             this.pursuerSpeed = 3;
+            this.pursuerDamage = 1; // colliding with pursuer causes player to lose all of their health and die
             pursuerFreezeFrames = 5;
             break;
         }
