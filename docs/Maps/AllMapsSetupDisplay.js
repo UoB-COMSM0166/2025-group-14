@@ -26,6 +26,8 @@ class AllMapsSetupDisplay {
     this.playerSpeed;
     this.pursuerSpeed;
     this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
+    this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
+    this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
     this.isPaused = false;
   }
 
@@ -51,9 +53,6 @@ class AllMapsSetupDisplay {
     this.player.animation.frameDelay = 18;
     this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
       this.pursuerDamage, this.timer, this.map, this.playerSpeed);
-
-    this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, this.playerCfg.setStandardControls());
-    this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, this.playerCfg.setAlternativeControls());
 
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
