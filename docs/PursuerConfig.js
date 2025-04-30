@@ -48,7 +48,7 @@ class PursuerConfig {
             //console.log("Hit player");
             pursuerCatched = true;
         }
-        if ((millis() - this.collisionTimer) > 800) {
+        if ((millis() - this.collisionTimer) > 1000) {
             this.haveJustCollided = false;
         } else {
             this.pursuer.speed = 0;
