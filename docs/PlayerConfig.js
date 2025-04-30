@@ -71,6 +71,7 @@ class PlayerConfig {
       else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 1;
       else this.playerSprite.rotationSpeed = 0;
       if (kb.pressing('up')) acc = 1;
+      else if (kb.pressing('down')) acc = -0.3; 
   
       let rad = radians(this.playerSprite.rotation);
       let vector = p5.Vector.fromAngle(rad, (53 * acc));
