@@ -3,16 +3,18 @@
 class MapSelectionScreen{
     constructor() {
         this.selectedMapId = -1; // Default map is -1 (no map selected)
-        this.tutorialButton = new Button("Tutorial", windowWidth/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(0));
+        this.tutorialButton = new Button("Tutorial", windowWidth/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(0));
         this.tutorialButton.hide();
-        this.mapOneButton = new Button("Map 1", windowWidth*2/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(1));
+        this.mapOneButton = new Button("Map 1", windowWidth*2/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(1));
         this.mapOneButton.hide();
-        this.mapTwoButton = new Button("Map 2", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(2));
+        this.mapTwoButton = new Button("Map 2", windowWidth*3/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(2));
         this.mapTwoButton.hide();
-        this.mapThreeButton = new Button("Map 3", windowWidth*4/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(3));
+        this.mapThreeButton = new Button("Map 3", windowWidth*4/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(3));
         this.mapThreeButton.hide();
-        this.mapFourButton = new Button("Map 4", windowWidth*5/6, windowHeight/6, 'seagreen', 30, () => this.selectMap(4));
+        this.mapFourButton = new Button("Map 4", windowWidth*5/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(4));
         this.mapFourButton.hide();
+        this.mapFiveButton = new Button("Map 5", windowWidth*6/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(5));
+        this.mapFiveButton.hide();
     }
 
     display() {
@@ -24,11 +26,13 @@ class MapSelectionScreen{
         this.mapTwoButton.show();
         this.mapThreeButton.show();
         this.mapFourButton.show();
-        this.tutorialButton.setPosition(windowWidth/6, windowHeight/6);
-        this.mapOneButton.setPosition(windowWidth *2/6, windowHeight/6);
-        this.mapTwoButton.setPosition(windowWidth *3/6, windowHeight/6);
-        this.mapThreeButton.setPosition(windowWidth *4/6, windowHeight/6);
-        this.mapFourButton.setPosition(windowWidth *5/6, windowHeight/6);
+        this.mapFiveButton.show();
+        this.tutorialButton.setPosition(windowWidth/7, windowHeight/6);
+        this.mapOneButton.setPosition(windowWidth *2/7, windowHeight/6);
+        this.mapTwoButton.setPosition(windowWidth *3/7, windowHeight/6);
+        this.mapThreeButton.setPosition(windowWidth *4/7, windowHeight/6);
+        this.mapFourButton.setPosition(windowWidth *5/7, windowHeight/6);
+        this.mapFiveButton.setPosition(windowWidth*6/7, windowHeight/6);
     
     }
 
@@ -39,6 +43,7 @@ class MapSelectionScreen{
         this.mapTwoButton.hide();
         this.mapThreeButton.hide();
         this.mapFourButton.hide();
+        this.mapFiveButton.hide();
         if (this.selectedMapId !== 0) {
             state = GameState.DIFFICULTY_SCREEN;
         } else {
