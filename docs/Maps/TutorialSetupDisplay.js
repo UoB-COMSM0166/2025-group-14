@@ -319,7 +319,7 @@ class TutorialSetupDisplay {
         }
         
         this.healthbar.draw();
-
+        
         //health = zero you lose 
         if (this.playerCfg.isHealthZero()){
             this.clearSprites(); 

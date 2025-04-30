@@ -44,7 +44,7 @@ class InfoScreen {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
         }
 
-        textSize(20)
+        textSize(17)
         textAlign(LEFT);
         text(this.textLine1, instructionX, instructionY, instructionBoxWidth);
         text(this.textLine2, instructionX, instructionY + instructionSpacing, instructionBoxWidth);
