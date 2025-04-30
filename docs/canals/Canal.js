@@ -309,10 +309,12 @@ class canal{
     createBank(start, end, colour = null){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
+        //Make banks invisible
+        outp.visible = false;
         if(colour != null){
             outp.color = colour;
         }
-        this.allSprites.push(outp);
+        this.allSprites.push(outp);  
         this.bankSprites.push(outp);
         return outp;
     }
