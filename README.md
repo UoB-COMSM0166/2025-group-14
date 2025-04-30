@@ -214,13 +214,7 @@ Instead, we implemented a vision-based system where the pursuer follows the play
 
 #### Qualitative Evaluation
 
-In the quantitative evaluation, we used the Thinking Aloud empirical evaluation method to get feedback about the user experience of playing our game, and identify and issues. We asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without being caught by the pursuing boat. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results and categoried them into meaningful groupings.
-
-We received the following positive feedback regarding the game:
-- The canal map shape was interesting because of the sharp corners.
-- The game idea was interesting and original; one participant mentioned that they had never played a game like it before.
-- Participants liked the top-down birds eye view as they could see the entire map on the screen and therefore see upcoming corners.
-- The aesthetics (boats and water texture) received compliments. 
+In the quantitative evaluation, we used the Think Aloud empirical evaluation method to get feedback about the user experience of playing our game, and identify and issues. We asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without being caught by the pursuing boat. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results and categoried them into meaningful groupings.
 
 The following describe the categories of contructive criticism we received from our participants, and the changes that we made to the game in response.
 
@@ -229,7 +223,7 @@ The following describe the categories of contructive criticism we received from 
 This included various glitches/bug, trouble navigating corners, and too much bounce in collision with canal walls.
 
 Specifically, users reported that:
-- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occur on corner collision
+- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occur on corner collision.
 - The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
 - Users thought that there was too much bounce when colliding with the walls of the canals.
 
@@ -243,12 +237,12 @@ In response, The p5 play library was also used to refactor the Pursuer class, re
 
 ##### Lack of tutorials/information about how to use controls
 
-One of the most frequent comments we received from users throughout the Evaluations was that figuring out how to play the game (i.e. use the controls and understand the rules/environment) was difficult, and negatively affected useability. Even with facilitators from our team explaining the controls before the participants started playing, they still reported that there was a steep learning curve before they felt confident playing the game. However, users also reported that once they had overcome the steep learning curve of learning the controls, they found them easy and enjoyable to use thereafter. 
+One of the most frequent comments we received from users throughout the evaluations was that figuring out how to play the game (i.e. use the controls and understand the rules/environment) was difficult, and negatively affected useability. Even with facilitators from our team explaining the controls before the participants started playing, they still reported that there was a steep learning curve before they felt confident playing the game. However, users also reported that once they had overcome the steep learning curve of learning the controls, they found them easy and enjoyable to use thereafter. 
 
 We made three main changes to the game in response to this:
 - First, we implemented game control flow logic that meant that the player moves through a an introduction screen before proceeding on to the gameplay. This introduction screen details the narrative background to the game, as well as giving a brief overview of the controls and rules of the game before the player starts playing.
 - Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a 'Level 0' Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.
-- Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Hard, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/ameuverability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
+- Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Difficult, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/ameuverability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
 
 ##### Winning/losing conditions are unclear
 
@@ -286,7 +280,7 @@ The differences between the Easy level and the Difficult level were as follows:
 - In the Easy level, the player took 3 points of damage when they collided with the canal; in the Difficult level, the player took 5 points of damage when colliding with the canal
 - In the Easy level, there was no pursuer chasing the player. In the Difficult level, an AI pursuer chased the player boat, adding challenge and tension to gameplay.
 
-Ten participants took part in our quantitative evaluation. Each participant played the game at each of the two levels (we asked them to complete two loops around our prototype canal circuit). To control for bias that could arise from participants always playing levels in the same order (thus causing their learning in the first level to affect the useability results of the second level), we alternated the order in which participants played each level. I.e. the first participant played Easy-then-Difficult, the second played Difficult-then-Easy, etc. After completing each level, the participant completed the SUS and the NASA TLX. The results are shown below. 
+Ten participants took part in our quantitative evaluation. Each participant played the game at each of the two levels (we asked them to complete two loops around our prototype canal circuit). To control for bias that could arise from participants always playing levels in the same order (thus causing their learning in the first level they played to affect the useability results of the second level), we alternated the order in which participants played each level. I.e. the first participant played Easy-then-Difficult, the second played Difficult-then-Easy, etc. After completing each level, the participant completed the NASA TLX questionnaire. 
 
 The NASA TLX asks a user to rate the perceived workload of a system (i.e. how effortful it is to use the system) in 6 categories. The results of our evaluation are shown below (raw data is given in Appendix 1).
 
