@@ -1,5 +1,8 @@
 IMPORTANT - please read this document on Leah's branch as it gets updated regularly.
 
+UPDATE 28/04 - added an optional "waitTime" variable to locks. A lock will stay with both gates closed until this timer runs out.
+Assumed to be zero if not specified. 
+
 Hello!
 
 The canals are now at a point where we can start developing levels with them, and also
