@@ -21,6 +21,8 @@ class PlayerConfig {
     this.playerSprite.friction = 10;
     this.playerSprite.drag = 5;
     this.playerSprite.bounciness = 0.9;
+    this.playerSprite.mass = 5;
+
     // player.collider = 'kinematic';
 
     this.maxSpeed = speed;
@@ -59,12 +61,16 @@ class PlayerConfig {
 
   // added boolean damageOn and healthOn argument so that these can turned off in the tutorial
   movement(damageOn = true, healthOn = true) {
-    // player sprite movement logic
-    // applying force to the player's sprite in response to wasd or the arrow keys
-    if (kb.pressing('left')) this.playerSprite.applyForce(-30, 0);
-    else if (kb.pressing('right')) this.playerSprite.applyForce(30, 0);
-    if (kb.pressing('up')) this.playerSprite.applyForce(0, -30);
-    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 30);
+
+    let dirX = 0;
+    let dirY = 0;
+
+    if (kb.pressing('left')) dirX -= 1;
+    else if (kb.pressing('right')) dirX += 1;
+    if (kb.pressing('up')) dirY -= 1;
+    else if (kb.pressing('down')) dirY += 1;
+
+    this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(53));
 
     // the following code 1) prevents exceeding the maxSpeed  
     this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
