@@ -63,10 +63,15 @@ class doors{
     //functions to complete
 
     createSprites(){
-        //this.redDoor = this.makeDoor(this.redSect, "red");
-       // this.blackDoor = this.makeDoor(this.blackSect, "black");
-
-        // left side
+        // Creates image for the doors of the lock
+        let whiteLength = (this.doorLength + 15) / 4;
+        let blackLength = (3 * (this.doorLength + 15)) / 4;
+        let lockImg = createGraphics(this.doorLength + 15, this.doorThick);
+        lockImg.noStroke();
+        lockImg.fill("white"); // first quarter white
+        lockImg.rect(0, 0, whiteLength, this.doorThick); 
+        lockImg.fill("black"); // last three quarters black
+        lockImg.rect(whiteLength, 0, blackLength, this.doorThick); 
 
         if(this.startPos === "open"){
             this.redAngle = this.openRed;
@@ -76,16 +81,16 @@ class doors{
             this.blackAngle = this.closedBlack; 
         }
 
-        this.redDoor  = new Sprite(this.anchorRed[0], this.anchorRed[1], this.doorLength, this.doorThick);
+        this.redDoor  = new Sprite(this.anchorRed[0], this.anchorRed[1], this.doorLength + 15, this.doorThick);
         this.redDoor.rotation = this.redAngle;
         this.redDoor.collider = "static";
-        this.redDoor.color    = "blue";
+        this.redDoor.image = lockImg;
         this.sprites.push(this.redDoor);
     
-        this.blackDoor  = new Sprite(this.anchorBlack[0], this.anchorBlack[1], (this.doorLength), this.doorThick);
+        this.blackDoor  = new Sprite(this.anchorBlack[0], this.anchorBlack[1], this.doorLength + 15, this.doorThick);
          this.blackDoor.rotation = this.normDeg(this.blackAngle);
         this.blackDoor.collider = "static";
-        this.blackDoor.color    = "green";
+        this.blackDoor.image = lockImg;
         this.sprites.push(this.blackDoor);
 
         this.doorAnimate();
