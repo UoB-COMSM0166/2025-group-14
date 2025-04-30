@@ -60,9 +60,6 @@ class PursuerConfig {
         if (this.arrived(this.pursuer, this.player, 20) || pursuerMoveCooldown !== 0) {
             this.pursuer.speed = 0;
             this.pursuer.sleeping = true;
-            if (this.arrived(this.pursuer, this.player, 60)) {
-
-            }
             return;
         // If the pursuer has reached a target other than player remove it by shifting array down
         } else if (this.lastSeenArray[0]) {
