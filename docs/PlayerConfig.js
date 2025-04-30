@@ -12,7 +12,7 @@ class PlayerStatus {
 
 
 class PlayerConfig {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map, speed) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, pursuerDamage, timer, map, speed) {
     this.playerSprite = player;
   
 
@@ -42,6 +42,7 @@ class PlayerConfig {
     this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
+    this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
     // this.pursuerDamageCooldown = 0;
   }
 
@@ -90,7 +91,7 @@ class PlayerConfig {
       if (pursuerCatched && pursuerDamageCooldown === 0){
         pursuerCatched = false;
         pursuerDamageCooldown = 60;
-        this.takeDamage(this.collisionDamage);
+        this.takeDamage(this.pursuerDamage);
         // print("Pursuer catched");
       } 
       if (pursuerDamageCooldown !== 0) {
