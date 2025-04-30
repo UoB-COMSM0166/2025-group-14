@@ -1,3 +1,6 @@
+//To add text just replace each line with what you like. Leave blank lines as lineX = "";
+//Try not to go over the max line length of the default text as lines might overlap on smaller displays otherwise
+
 class InfoTextController{
     static getInfoText(mapId) {
         switch (mapId) {

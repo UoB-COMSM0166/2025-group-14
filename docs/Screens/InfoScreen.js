@@ -65,6 +65,7 @@ class InfoScreen {
         }
     }
 
+    //update text with values from InfoTextController
     updateText(mapId) {
         let textArray = InfoTextController.getInfoText(mapId);
 
