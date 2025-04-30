@@ -45,7 +45,7 @@ class PursuerConfig {
         if (this.pursuer.collides(this.player) && !this.haveJustCollided) {
             this.haveJustCollided = true;
             this.collisionTimer = millis();
-            console.log("Hit player");
+            //console.log("Hit player");
             pursuerCatched = true;
         }
         if ((millis() - this.collisionTimer) > 800) {

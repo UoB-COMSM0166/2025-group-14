@@ -89,7 +89,7 @@ class PlayerConfig {
       if (pursuerCatched){
         pursuerCatched = false;
         this.takeDamage(this.collisionDamage);
-        print("Player take pursuer damage");
+        //print("Player take pursuer damage");
       } 
     }
 
