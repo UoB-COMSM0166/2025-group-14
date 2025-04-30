@@ -30,6 +30,8 @@ class MapController {
                 return new Sprite(186, 52, 35, 25);
             case 4:
                 return new Sprite(225, 407, 35, 25);//originally 225 407; 3122 3070 for surveying the current end
+            case 5:
+                return new Sprite(225, 407, 35, 25);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -310,5 +312,32 @@ class MapController {
         //240 50
 
         return new CanalMap(player, true, [network]);
+    }
+
+    static getMap5(player) {
+        let c1 = new canal(200, 3, 100, player); 
+        let c2 = new canal(300, 5, 100, player);
+        let c3 = new canal(400, 8, 100, player);
+        let c4 = new canal(500, 10, 100, player);
+        let c5 = new canal(600, 1, 100, player);
+        let c6 = new canal(400, 3, 100, player);
+        let c6pt5 = new canal(300, 4, 100, player);
+        let c7 = new canal(700, 6, 100, player);
+        let c8 = new canal(600, 8, 100, player);
+        let c9 = new canal(800, 10, 100, player);
+        let c10 = new lock(300, 11, 100, player, 5, 3);
+        let c11 = new canal(900, 1, 100, player);
+        let c12 = new canal(1000, 3, 100, player);
+        let c13 = new lock(300, 4, 100, player, 5, 3);
+        let c14 = new canal(500, 6, 100, player);
+        let c15 = new canal(100, 7, 100, player, true, true);
+
+        //let c15 = new canal(300, 7, 100, player);
+        //let c16 = new canal(200, 3, 100, player);
+        //let c17 = new canal(200, 12, 100, player);
+        //let c18 = new canal(200, 10, 100, player);
+       
+        let mainNetwork = new canalNetwork(0, 0, [c1, c2, c3, c4, c5, c6, c6pt5, c7, c8, c9, c10, c11, c12, c13, c14, c15], []);
+        return new canalMap(player, true, [mainNetwork]);
     }
 }
