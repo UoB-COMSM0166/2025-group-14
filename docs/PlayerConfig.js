@@ -160,7 +160,12 @@ class PlayerConfig {
   // Decrements health by [damagePoints] points every [timeInterval] seconds.
   takeDamageOverTime(timeInterval = 2.0) {
     // Get current time from Main timer (started during setup)
-    let timeElapsed = this.timer.getTime();
+    let timeElapsed = 0;
+    if (this.timer) {
+      timeElapsed = this.timer.getTime();
+    } else {
+      console.log("timer undefined")
+    }
     // Set the comparison value - depends on frame rate. Ensures that condition for taking damage is
     // only true ONCE per timeInterval (rather than multiple times, which is what you get if you use
     // integer seconds).

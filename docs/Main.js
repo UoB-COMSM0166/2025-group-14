@@ -60,6 +60,7 @@ function draw() {
 
   if (state == GameState.INFO_SCREEN) {
     selectedMap = map_selection_screen.getSelectedMapId();
+    info_screen.updateText(selectedMap);
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
     if (kb.pressed(' ')) {

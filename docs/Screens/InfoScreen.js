@@ -16,7 +16,12 @@ class InfoScreen {
         
         this.duck.frameDelay = 30;
         this.duck.scale = 3;
-        
+        this.textLine1 = "";
+        this.textLine2 = "";
+        this.textLine3 = "";
+        this.textLine4 = "";
+        this.textLine5 = "";
+        this.textLine6 = "";
     }
     
 
@@ -41,12 +46,12 @@ class InfoScreen {
 
         textSize(20)
         textAlign(LEFT);
-        text("OH NO! One moment you were enjoying the peaceful idyll of life on the canal - just you, your narrowboat, and the occasional duck - and the next, you are being chased by [....]!", instructionX, instructionY, instructionBoxWidth);
-        text("You must reach [...] without being caught! Use the arrow keys to navigate your boat along the canal.", instructionX, instructionY + instructionSpacing, instructionBoxWidth);
-        text("But be careful: banging into the canal walls with cause your boat to take damage. Your boat may also take some damage over time.", instructionX, instructionY + (instructionSpacing*2), instructionBoxWidth);
-        text("You can choose to stop and make repairs at any time by pressing the 'r' key...but watch out for the pursuer on your tail!", instructionX, instructionY + (instructionSpacing*3), instructionBoxWidth);
-        text("Be warned: if your health reaches zero, you will be forced to stop until the repairs are complete. More substantial damage means a longer wait for repairs!", instructionX, instructionY + (instructionSpacing*4), instructionBoxWidth);
-        text("One last thing: you can press [Esc] key at any time to go back to the Start Menu.", instructionX, instructionY + (instructionSpacing*5), instructionBoxWidth);
+        text(this.textLine1, instructionX, instructionY, instructionBoxWidth);
+        text(this.textLine2, instructionX, instructionY + instructionSpacing, instructionBoxWidth);
+        text(this.textLine3, instructionX, instructionY + (instructionSpacing*2), instructionBoxWidth);
+        text(this.textLine4, instructionX, instructionY + (instructionSpacing*3), instructionBoxWidth);
+        text(this.textLine5, instructionX, instructionY + (instructionSpacing*4), instructionBoxWidth);
+        text(this.textLine6, instructionX, instructionY + (instructionSpacing*5), instructionBoxWidth);
         
         textAlign(CENTER);
         textSize(30);
@@ -59,4 +64,16 @@ class InfoScreen {
           state = GameState.PLAY_GAME;
         }
     }
+
+    updateText(mapId) {
+        let textArray = InfoTextController.getInfoText(mapId);
+
+        this.textLine1 = textArray[1];
+        this.textLine2 = textArray[2];
+        this.textLine3 = textArray[3];
+        this.textLine4 = textArray[4];
+        this.textLine5 = textArray[5];
+        this.textLine6 = textArray[6];
+    }
+
 }
