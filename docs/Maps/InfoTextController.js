@@ -1,0 +1,151 @@
+//To add text just replace each line with what you like. Leave blank lines as lineX = "";
+//Try not to go over the max line length of the default text as lines might overlap on smaller displays otherwise
+
+class InfoTextController{
+    static getInfoText(mapId) {
+        switch (mapId) {
+            case 0:
+                return this.getInfoTextDefault(); 
+            case 1:
+                return this.getInfoText1(); 
+            case 2:
+                return this.getInfoText2(); 
+            case 3:
+                return this.getInfoText3(); 
+            case 4:
+                return this.getInfoText4(); 
+            case 5:
+                return this.getInfoText5(); 
+            case 6:
+                return this.getInfoText6(); 
+            default:
+                return this.getInfoTextDefault(); 
+        }
+    }
+
+    static getInfoTextDefault(){
+        let line1 = "OH NO! One moment you were enjoying the peaceful idyll of life on the canal - just you, your narrowboat, and the occasional duck - and the next, you are being chased by [....]!";
+        let line2 = "You must reach [...] without being caught! Use the arrow keys to navigate your boat along the canal.";
+        let line3 ="But be careful: banging into the canal walls with cause your boat to take damage. Your boat may also take some damage over time.";
+        let line4 ="You can choose to stop and make repairs at any time by pressing the 'r' key...but watch out for the pursuer on your tail!";
+        let line5 ="Be warned: if your health reaches zero, you will be forced to stop until the repairs are complete. More substantial damage means a longer wait for repairs!";
+        let line6 ="One last thing: you can press [Esc] key at any time to go back to the Start Menu.";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+
+    static getInfoText1(){
+        let line1 = "This is line 1!";
+        let line2 = "This is line 2!";
+        let line3 ="This is line 3!";
+        let line4 ="This is line 4!";
+        let line5 ="This is line 5!";
+        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+
+    static getInfoText2(){
+        let line1 = "This is line 1!";
+        let line2 = "This is line 2!";
+        let line3 ="This is line 3!";
+        let line4 ="This is line 4!";
+        let line5 ="This is line 5!";
+        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+
+    static getInfoText3(){
+        let line1 = "This is line 1!";
+        let line2 = "This is line 2!";
+        let line3 ="This is line 3!";
+        let line4 ="This is line 4!";
+        let line5 ="This is line 5!";
+        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+
+    static getInfoText4(){
+        let line1 = "This is line 1!";
+        let line2 = "This is line 2!";
+        let line3 ="This is line 3!";
+        let line4 ="This is line 4!";
+        let line5 ="This is line 5!";
+        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+
+    static getInfoText5(){
+        let line1 = "This is line 1!";
+        let line2 = "This is line 2!";
+        let line3 ="This is line 3!";
+        let line4 ="This is line 4!";
+        let line5 ="This is line 5!";
+        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+
+    static getInfoText6(){
+        let line1 = "This is line 1!";
+        let line2 = "This is line 2!";
+        let line3 ="This is line 3!";
+        let line4 ="This is line 4!";
+        let line5 ="This is line 5!";
+        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+
+        return {
+            1: line1,
+            2: line2,
+            3: line3,
+            4: line4,
+            5: line5,
+            6: line6
+        }
+    }
+}

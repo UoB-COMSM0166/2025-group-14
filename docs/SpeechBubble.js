@@ -27,7 +27,7 @@ class SpeechBubble{
       line(this.originX, this.originY, this.x + offset1, this.y + this.h);
       line(this.originX, this.originY, this.x + offset2, this.y + this.h);
       textAlign(LEFT, CENTER);
-      textSize(12);
+      textSize(9);
       noStroke();
       fill(0, 0, 0);
       text(this.txt, this.x + this.w * 0.08, this.y + this.h*0.5, this.w*0.9);

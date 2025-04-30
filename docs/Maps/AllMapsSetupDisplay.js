@@ -22,9 +22,12 @@ class AllMapsSetupDisplay {
     this.playerMaxHealth;
     this.canalCollisionDamage;
     this.damageOverTime;
+    this.pursuerDamage;
     this.playerSpeed;
     this.pursuerSpeed;
     this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
+    this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
+    this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
     this.isPaused = false;
   }
 
@@ -49,7 +52,7 @@ class AllMapsSetupDisplay {
     this.player.addAnimation("boat", this.playerAnimation);
     this.player.animation.frameDelay = 18;
     this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
-      this.timer, this.map, this.playerSpeed);
+      this.pursuerDamage, this.timer, this.map, this.playerSpeed);
 
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
@@ -87,27 +90,38 @@ class AllMapsSetupDisplay {
       default:
         switch (difficultyLevel) { 
           case 0:
-            this.playerMaxHealth = 100; // need to separate out the health if I am to implement in-game change of difficulty
+            this.playerMaxHealth = 100; 
             this.canalCollisionDamage = 3;
             this.damageOverTime = 1;
-            this.playerSpeed = 4.5;
-            this.pursuerSpeed = 3;
+            this.playerSpeed = 4;
+            this.pursuerSpeed = 1.5;
+            this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
             pursuerFreezeFrames = 15;
             break;
+            // this.playerMaxHealth = 10000; 
+            // this.canalCollisionDamage = 3;
+            // this.damageOverTime = 1;
+            // this.playerSpeed = 4;
+            // this.pursuerSpeed = 0.00001;
+            // this.pursuerDamage = 0.00001; // colliding with pursuer causes player to lose 1/4 of their health
+            // pursuerFreezeFrames = 15;
+            // break;
           case 1:
             this.playerMaxHealth = 70;
             this.canalCollisionDamage = 5;
             this.damageOverTime = 1.2;
-            this.playerSpeed = 4.5
-            this.pursuerSpeed = 3;
+            this.playerSpeed = 4;
+            this.pursuerSpeed = 2;
+            this.pursuerDamage = 0.5; // colliding with pursuer causes player to lose 1/2 of their health
             pursuerFreezeFrames = 10;
             break;
           case 2:
             this.playerMaxHealth = 50;
             this.canalCollisionDamage = 10;
             this.damageOverTime = 1.5;
-            this.playerSpeed = 4.5
-            this.pursuerSpeed = 3;
+            this.playerSpeed = 4;
+            this.pursuerSpeed = 2.5;
+            this.pursuerDamage = 1; // colliding with pursuer causes player to lose all of their health and die
             pursuerFreezeFrames = 5;
             break;
         }
@@ -144,19 +158,27 @@ class AllMapsSetupDisplay {
 
     // Show pause button
     this.pauseButton.show();
+    this.defaultControlButton.show();
+    this.alternativeControlButton.show();
     //update position of button to follow camera
     this.pauseButton.setPosition(windowWidth/2.5, windowHeight/18);
+    this.defaultControlButton.setPosition(windowWidth*2/3, windowHeight/18);
+    this.alternativeControlButton.setPosition(windowWidth*2/3, windowHeight*3/18);
 
     this.moveCamera();
 
     if (this.playerCfg.isHealthZero()){
       this.clearSprites();
       this.pauseButton.remove();
+      this.defaultControlButton.remove();
+      this.alternativeControlButton.remove();
       state = GameState.LOSE;
     }
     if (kb.pressed('q') || finishLineCrossed){ 
       this.clearSprites();
       this.pauseButton.remove();
+      this.defaultControlButton.remove();
+      this.alternativeControlButton.remove();
       state = GameState.WIN;
       finishLineCrossed = false;
     }
@@ -164,6 +186,8 @@ class AllMapsSetupDisplay {
     if (kb.pressed('escape')) {
       this.clearSprites();
       this.pauseButton.remove();
+      this.defaultControlButton.remove();
+      this.alternativeControlButton.remove();
       state = GameState.START_SCREEN;
     }
   }

@@ -12,7 +12,7 @@ class PlayerStatus {
 
 
 class PlayerConfig {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map, speed) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, pursuerDamage, timer, map, speed) {
     this.playerSprite = player;
   
 
@@ -21,6 +21,8 @@ class PlayerConfig {
     this.playerSprite.friction = 10;
     this.playerSprite.drag = 5;
     this.playerSprite.bounciness = 0.9;
+    this.playerSprite.mass = 5;
+
     // player.collider = 'kinematic';
 
     this.maxSpeed = speed;
@@ -42,7 +44,9 @@ class PlayerConfig {
     this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
-    // this.pursuerDamageCooldown = 0;
+    this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
+
+    this.alternativeControls = false;
   }
 
   camera() {
@@ -58,44 +62,69 @@ class PlayerConfig {
 
   // added boolean damageOn and healthOn argument so that these can turned off in the tutorial
   movement(damageOn = true, healthOn = true) {
-    // player sprite movement logic
-    // applying force to the player's sprite in response to wasd or the arrow keys
-    if (kb.pressing('left')) this.playerSprite.applyForce(-30, 0);
-    else if (kb.pressing('right')) this.playerSprite.applyForce(30, 0);
-    if (kb.pressing('up')) this.playerSprite.applyForce(0, -30);
-    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 30);
 
-    // the following code 1) prevents exceeding the maxSpeed  
-    this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
-    if (this.currentVel.mag() > this.maxSpeed) {
-      this.currentVel.setMag(this.maxSpeed);
-      this.playerSprite.vel.x = this.currentVel.x;
-      this.playerSprite.vel.y = this.currentVel.y;
-    } 
 
-    // 2)preserves the direction when the sprite stops
-    if (this.currentVel.mag() > 0.2) this.direcitonSave = this.currentVel.heading();
-    
-    if (this.currentVel.mag() < 0.2) this.stationary = true; 
-    else this.stationary = false;
+    if (this.alternativeControls) {
+      let acc = 0;
 
-    if (this.stationary === false) this.playerSprite.rotation = this.currentVel.heading();
-    else this.playerSprite.rotation = this.direcitonSave;
+      if (kb.pressing('left')) this.playerSprite.rotationSpeed = -1;
+      else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 1;
+      else this.playerSprite.rotationSpeed = 0;
+      if (kb.pressing('up')) acc = 1;
+      else if (kb.pressing('down')) acc = -0.3; 
+  
+      let rad = radians(this.playerSprite.rotation);
+      let vector = p5.Vector.fromAngle(rad, (53 * acc));
+      this.playerSprite.applyForce(vector);
+  
+      acc = 0;
+
+      // the following code 1) prevents exceeding the maxSpeed  
+      this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
+      if (this.currentVel.mag() > this.maxSpeed) {
+        this.currentVel.setMag(this.maxSpeed);
+        this.playerSprite.vel.x = this.currentVel.x;
+        this.playerSprite.vel.y = this.currentVel.y;
+      } 
+    } else {
+      let dirX = 0;
+      let dirY = 0;
+  
+      if (kb.pressing('left')) dirX -= 1;
+      else if (kb.pressing('right')) dirX += 1;
+      if (kb.pressing('up')) dirY -= 1;
+      else if (kb.pressing('down')) dirY += 1;
+  
+      this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(53));
+  
+      // the following code 1) prevents exceeding the maxSpeed  
+      this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
+      if (this.currentVel.mag() > this.maxSpeed) {
+        this.currentVel.setMag(this.maxSpeed);
+        this.playerSprite.vel.x = this.currentVel.x;
+        this.playerSprite.vel.y = this.currentVel.y;
+      } 
+  
+      // 2)preserves the direction when the sprite stops
+      if (this.currentVel.mag() > 0.2) this.direcitonSave = this.currentVel.heading();
+      
+      if (this.currentVel.mag() < 0.2) this.stationary = true; 
+      else this.stationary = false;
+  
+      if (this.stationary === false) this.playerSprite.rotation = this.currentVel.heading();
+      else this.playerSprite.rotation = this.direcitonSave;
+    }
 
     // Update damage over time and collision damage
 
     if(damageOn) {
       this.takeDamageOverTime();
       this.takeCollisionDamage();
-      if (pursuerCatched && pursuerDamageCooldown === 0){
+      if (pursuerCatched){
         pursuerCatched = false;
-        pursuerDamageCooldown = 60;
-        this.takeDamage(this.collisionDamage);
-        // print("Pursuer catched");
+        this.takeDamage(this.pursuerDamage);
+        //print("Player take pursuer damage");
       } 
-      if (pursuerDamageCooldown !== 0) {
-        pursuerDamageCooldown -= 1;
-      }
     }
 
     if(healthOn) {
@@ -118,6 +147,16 @@ class PlayerConfig {
       this.repair();
     }
  
+  }
+
+  setStandardControls(){
+    // this.standardControls = true;
+    this.alternativeControls = false;
+  }
+  
+  setAlternativeControls(){
+    // this.standardControls = false;
+    this.alternativeControls = true;
   }
 
   debug() {
@@ -164,7 +203,12 @@ class PlayerConfig {
   // Decrements health by [damagePoints] points every [timeInterval] seconds.
   takeDamageOverTime(timeInterval = 2.0) {
     // Get current time from Main timer (started during setup)
-    let timeElapsed = this.timer.getTime();
+    let timeElapsed = 0;
+    if (this.timer) {
+      timeElapsed = this.timer.getTime();
+    } else {
+      console.log("timer undefined")
+    }
     // Set the comparison value - depends on frame rate. Ensures that condition for taking damage is
     // only true ONCE per timeInterval (rather than multiple times, which is what you get if you use
     // integer seconds).

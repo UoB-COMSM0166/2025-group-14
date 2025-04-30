@@ -1,3 +1,5 @@
+//You can now edit info screen text on InfoTextController
+
 class MapController {   
 
     static getMap(mapNumber, player) {

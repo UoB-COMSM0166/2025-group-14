@@ -309,9 +309,8 @@ class canal{
     createBank(start, end, colour = null){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
-        if(colour != null){
-            outp.color = colour;
-        }
+        // outp.color = "red";
+        outp.visible = false;
         this.allSprites.push(outp);
         this.bankSprites.push(outp);
         return outp;
@@ -385,7 +384,7 @@ class canal{
         let finishLine = new Sprite([this.redStart, this.blackStart]);
         // finishLine.overlaps(allSprites);
         this.player.overlaps(finishLine, finish);
-        finishLine.visible = false;
+        finishLine.visible = true;
         endMapBank.collider = STA;
         // finishLine.collider = "none";
         this.allSprites.push(endMapBank);
