@@ -88,11 +88,11 @@ class AllMapsSetupDisplay {
       default:
         switch (difficultyLevel) { 
           case 0:
-            this.playerMaxHealth = 100; // need to separate out the health if I am to implement in-game change of difficulty
+            this.playerMaxHealth = 100; 
             this.canalCollisionDamage = 3;
             this.damageOverTime = 1;
-            this.playerSpeed = 4.5;
-            this.pursuerSpeed = 3;
+            this.playerSpeed = 2;
+            this.pursuerSpeed = 1.5;
             this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
             pursuerFreezeFrames = 15;
             break;
@@ -100,8 +100,8 @@ class AllMapsSetupDisplay {
             this.playerMaxHealth = 70;
             this.canalCollisionDamage = 5;
             this.damageOverTime = 1.2;
-            this.playerSpeed = 4.5
-            this.pursuerSpeed = 3;
+            this.playerSpeed = 2;
+            this.pursuerSpeed = 2;
             this.pursuerDamage = 0.5; // colliding with pursuer causes player to lose 1/2 of their health
             pursuerFreezeFrames = 10;
             break;
@@ -109,8 +109,8 @@ class AllMapsSetupDisplay {
             this.playerMaxHealth = 50;
             this.canalCollisionDamage = 10;
             this.damageOverTime = 1.5;
-            this.playerSpeed = 4.5
-            this.pursuerSpeed = 3;
+            this.playerSpeed = 2;
+            this.pursuerSpeed = 2.5;
             this.pursuerDamage = 1; // colliding with pursuer causes player to lose all of their health and die
             pursuerFreezeFrames = 5;
             break;
