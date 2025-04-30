@@ -46,7 +46,7 @@ class PlayerConfig {
     this.status = PlayerStatus.NONE;
     this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
 
-    this.alternativeControls = true;
+    this.alternativeControls = false;
   }
 
   camera() {
