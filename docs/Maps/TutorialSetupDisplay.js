@@ -311,7 +311,7 @@ class TutorialSetupDisplay {
                 this.textboxLookUp()
             );
             this.pursuer = MapController.getPursuer(0);
-            this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 3);
+            this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 1.5);
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.pursuer.animation.frameDelay = 18;
             pursuerFreezeFrames = 15;
