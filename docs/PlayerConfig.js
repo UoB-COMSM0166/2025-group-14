@@ -45,7 +45,6 @@ class PlayerConfig {
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
     this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
-    // this.pursuerDamageCooldown = 0;
   }
 
   camera() {
@@ -94,15 +93,11 @@ class PlayerConfig {
     if(damageOn) {
       this.takeDamageOverTime();
       this.takeCollisionDamage();
-      if (pursuerCatched && pursuerDamageCooldown === 0){
+      if (pursuerCatched){
         pursuerCatched = false;
-        pursuerDamageCooldown = 60;
         this.takeDamage(this.pursuerDamage);
-        // print("Pursuer catched");
+        //print("Player take pursuer damage");
       } 
-      if (pursuerDamageCooldown !== 0) {
-        pursuerDamageCooldown -= 1;
-      }
     }
 
     if(healthOn) {
