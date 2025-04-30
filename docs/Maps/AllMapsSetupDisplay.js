@@ -158,19 +158,27 @@ class AllMapsSetupDisplay {
 
     // Show pause button
     this.pauseButton.show();
+    this.defaultControlButton.show();
+    this.alternativeControlButton.show();
     //update position of button to follow camera
     this.pauseButton.setPosition(windowWidth/2.5, windowHeight/18);
+    this.defaultControlButton.setPosition(windowWidth*2/3, windowHeight/18);
+    this.alternativeControlButton.setPosition(windowWidth*2/3, windowHeight*3/18);
 
     this.moveCamera();
 
     if (this.playerCfg.isHealthZero()){
       this.clearSprites();
       this.pauseButton.remove();
+      this.defaultControlButton.remove();
+      this.alternativeControlButton.remove();
       state = GameState.LOSE;
     }
     if (kb.pressed('q') || finishLineCrossed){ 
       this.clearSprites();
       this.pauseButton.remove();
+      this.defaultControlButton.remove();
+      this.alternativeControlButton.remove();
       state = GameState.WIN;
       finishLineCrossed = false;
     }
@@ -178,6 +186,8 @@ class AllMapsSetupDisplay {
     if (kb.pressed('escape')) {
       this.clearSprites();
       this.pauseButton.remove();
+      this.defaultControlButton.remove();
+      this.alternativeControlButton.remove();
       state = GameState.START_SCREEN;
     }
   }
