@@ -71,7 +71,7 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 
 [Testing Session feedback on game requirements - positive feedback, confusing aspects and potential improvements to concept](https://github.com/UoB-COMSM0166/2025-group-14/blob/main/Requirements/TestingSessionFeedback.md)
 
-#### Stakeholders
+#### Identifying Stakeholders
 
 - Markers
 - Developers (us)
@@ -79,6 +79,9 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 - Competitive Gamers
 - Boat Owners/Enthusiasts
 - Canal Preservation Organisations
+
+![Stakeholder Diagram](https://github.com/user-attachments/assets/7b6193a0-34b3-48de-b859-2cfbdd3cdf21)
+
 
 #### Epics
 
