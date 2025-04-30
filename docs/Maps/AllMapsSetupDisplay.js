@@ -52,6 +52,9 @@ class AllMapsSetupDisplay {
     this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
       this.pursuerDamage, this.timer, this.map, this.playerSpeed);
 
+    this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, this.playerCfg.setStandardControls());
+    this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, this.playerCfg.setAlternativeControls());
+
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
     this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, this.pursuerSpeed);
@@ -88,22 +91,22 @@ class AllMapsSetupDisplay {
       default:
         switch (difficultyLevel) { 
           case 0:
-            this.playerMaxHealth = 100; 
-            this.canalCollisionDamage = 3;
-            this.damageOverTime = 1;
-            this.playerSpeed = 4;
-            this.pursuerSpeed = 1.5;
-            this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
-            pursuerFreezeFrames = 15;
-            break;
-            // this.playerMaxHealth = 10000; 
+            // this.playerMaxHealth = 100; 
             // this.canalCollisionDamage = 3;
             // this.damageOverTime = 1;
             // this.playerSpeed = 4;
             // this.pursuerSpeed = 1.5;
-            // this.pursuerDamage = 0.00001; // colliding with pursuer causes player to lose 1/4 of their health
+            // this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
             // pursuerFreezeFrames = 15;
             // break;
+            this.playerMaxHealth = 10000; 
+            this.canalCollisionDamage = 3;
+            this.damageOverTime = 1;
+            this.playerSpeed = 4;
+            this.pursuerSpeed = 0.00001;
+            this.pursuerDamage = 0.00001; // colliding with pursuer causes player to lose 1/4 of their health
+            pursuerFreezeFrames = 15;
+            break;
           case 1:
             this.playerMaxHealth = 70;
             this.canalCollisionDamage = 5;
