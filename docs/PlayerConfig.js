@@ -249,6 +249,12 @@ class PlayerConfig {
       "Repairing...repairs will take " + timeTaken + " seconds...");
     repairMessage.show();
 
+    if (soundOn && !repairHammer.isPlaying()) {
+      repairDrill.play();
+      repairSaw.play();
+      repairHammer.play();
+    }
+
     if (this.status === PlayerStatus.REPAIRS_FINISHED) {
       // Update health to maxHealth
       this.health = this.maxHealth;

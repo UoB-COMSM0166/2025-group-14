@@ -53,6 +53,9 @@ function setup() {
   canalWaterSound = loadSound("assets/Sounds/canal_ambience.mp3", () => soundLoadSuccess(canalWaterSound, "canal", 0.15));
   lockSound = loadSound("assets/Sounds/lock_open_close.mp3", () => soundLoadSuccess(lockSound, "lock", 0.2));
   engineSound = loadSound("assets/Sounds/engine_noise.mp3", () => soundLoadSuccess(engineSound, "engine", 0.2));
+  repairDrill = loadSound("assets/Sounds/repair_drill.mp3", () => soundLoadSuccess(repairDrill, "repair drill", 1.4));
+  repairSaw = loadSound("assets/Sounds/repair_saw.mp3", () => soundLoadSuccess(repairSaw, "repair saw", 0.2));
+  repairHammer = loadSound("assets/Sounds/repair_hammer.mp3", () => soundLoadSuccess(repairHammer, "repair hammer", 0.1));
 }
 
 //callback function to check when sounds have loaded - sound must be loaded before attempting to play or things break

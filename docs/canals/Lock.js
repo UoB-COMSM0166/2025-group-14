@@ -84,7 +84,15 @@ class lock extends canal {
     }
 
     playLockSound() {
-        
+        let distFore = dist(this.player.x, this.player.y, this.foreDoors.blackSect.x, this.foreDoors.blackSect.y);
+        let distAft = dist(this.player.x, this.player.y, this.aftDoors.x, this.aftDoors.y);
+        console.log(distAft, distFore);
+        if (distFore < 100) {
+            lockSound.play();
+        }
+        if (distAft < 100) {
+            lockSound.play();
+        }
     }
 
     createSprites(){
@@ -116,6 +124,7 @@ class lock extends canal {
         }
         this.canalAnimate();
         this.lockAnimate();
+        this.playLockSound();
     }
 
     lockAnimate(){
