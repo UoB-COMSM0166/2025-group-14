@@ -49,6 +49,10 @@ function setup() {
   // Make sounds
   startScreenMusic = loadSound("assets/Sounds/morning-mood-edvard-grieg-juliush.mp3", () => soundLoadSuccess(startScreenMusic, "classical music", 0.4));
   clickSound = loadSound("assets/Sounds/duck_quack_shorter.mp3", () => soundLoadSuccess(clickSound, "duck", 0.1));
+  boatCrashSound = loadSound("assets/Sounds/boat_crash.mp3", () => soundLoadSuccess(boatCrashSound, "boat crash", 0.3));
+  canalWaterSound = loadSound("assets/Sounds/canal_ambience.mp3", () => soundLoadSuccess(canalWaterSound, "canal", 0.1));
+  lockSound = loadSound("assets/Sounds/lock_open_close.mp3", () => soundLoadSuccess(lockSound, "lock", 0.2));
+  engineSound = loadSound("assets/Sounds/engine_noise.mp3", () => soundLoadSuccess(engineSound, "engine", 0.2));
 }
 
 //callback function to check when sounds have loaded - sound must be loaded before attempting to play or things break
@@ -66,6 +70,9 @@ function draw() {
     } 
     if(!soundOn && startScreenMusic.isPlaying()) {
       startScreenMusic.pause();
+    }
+    if(canalWaterSound.isPlaying()) {
+      canalWaterSound.pause();
     }
   }
 
@@ -93,6 +100,9 @@ function draw() {
     if(startScreenMusic.isPlaying()) {
       startScreenMusic.pause();
     } 
+    if(soundOn && !canalWaterSound.isPlaying()) {
+      canalWaterSound.loop();
+    } 
     selectedMap = map_selection_screen.getSelectedMapId();
     info_screen.updateText(selectedMap);
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();
@@ -111,6 +121,16 @@ function draw() {
   }
 
   if (state == GameState.PLAY_GAME) {
+    if(soundOn && !canalWaterSound.isPlaying() && !game_screen.isPaused) {
+      canalWaterSound.loop();
+    } else if (game_screen.isPaused) {
+      canalWaterSound.pause();
+    } 
+    if(soundOn && !engineSound.isPlaying() && !game_screen.isPaused) {
+      engineSound.loop();
+    } else if (game_screen.isPaused) {
+      engineSound.pause();
+    } 
     game_screen.display();
   }
 

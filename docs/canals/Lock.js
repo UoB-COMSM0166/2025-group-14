@@ -83,6 +83,10 @@ class lock extends canal {
         return output;
     }
 
+    playLockSound() {
+        
+    }
+
     createSprites(){
         this.canalSetup();
         this.lockSetup();

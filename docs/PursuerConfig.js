@@ -46,6 +46,7 @@ class PursuerConfig {
             this.haveJustCollided = true;
             this.collisionTimer = millis();
             //console.log("Hit player");
+            boatCrashSound.play();
             pursuerCatched = true;
         }
         if ((millis() - this.collisionTimer) > 1000) {

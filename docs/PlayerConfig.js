@@ -72,7 +72,12 @@ class PlayerConfig {
       else this.playerSprite.rotationSpeed = 0;
       if (kb.pressing('up')) acc = 1;
       else if (kb.pressing('down')) acc = -0.3; 
-  
+      
+      if (kb.pressing('up') || kb.pressing('down')) {
+        engineSound.setVolume(0.4)
+      } else {
+        engineSound.setVolume(0.2)
+      }
       let rad = radians(this.playerSprite.rotation);
       let vector = p5.Vector.fromAngle(rad, (53 * acc));
       this.playerSprite.applyForce(vector);
@@ -94,6 +99,12 @@ class PlayerConfig {
       else if (kb.pressing('right')) dirX += 1;
       if (kb.pressing('up')) dirY -= 1;
       else if (kb.pressing('down')) dirY += 1;
+
+      if (kb.pressing('up') || kb.pressing('down') || kb.pressing('left') || kb.pressing('right')) {
+        engineSound.setVolume(0.4)
+      } else {
+        engineSound.setVolume(0.2)
+      }
   
       this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(53));
   
