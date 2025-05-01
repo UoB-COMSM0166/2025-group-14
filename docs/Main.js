@@ -1,5 +1,7 @@
 // Linked below is where we got the boat sprites from.
 // https://samifd3f122.itch.io/free-pixel-art-boats?download
+// duck sound credit to freesound_community on pixabay
+// morning mood classical music rendition by JuliusH on pixabay (composed by Edvard Grieg)
 
 // Adapted from Daniel's main.js file. Added the pursuer object and a test canal (feel free to replace with your own
 // canal object once the canal feature is merged). This Main file is just for testing compatability between the Player
@@ -30,6 +32,8 @@ let selectedMap = null;
 let difficultyLevel = null; 
 let pursuerFreezeFrames = 0;
 
+let soundOn = false;
+
 function setup() {
   new Canvas();
   
@@ -41,24 +45,54 @@ function setup() {
   win_screen = new WinScreen();
   lose_screen = new LoseScreen();
   difficulty_screen = new DifficultyScreen();
+
+  // Make sounds
+  startScreenMusic = loadSound("assets/Sounds/morning-mood-edvard-grieg-juliush.mp3", () => soundLoadSuccess(startScreenMusic, "classical music", 0.4));
+  clickSound = loadSound("assets/Sounds/duck_quack_shorter.mp3", () => soundLoadSuccess(clickSound, "duck", 0.1));
 }
 
+//callback function to check when sounds have loaded - sound must be loaded before attempting to play or things break
+function soundLoadSuccess(sound, soundName, volumeLevel) {
+  console.log(soundName + " sound loaded");
+  sound.setVolume(volumeLevel);
+}
 
 function draw() {
 
   if (state == GameState.START_SCREEN) {
     start_screen.display();
+    if(soundOn && !startScreenMusic.isPlaying()) {
+      startScreenMusic.loop();
+    } 
+    if(!soundOn && startScreenMusic.isPlaying()) {
+      startScreenMusic.pause();
+    }
   }
 
   if (state == GameState.MAP_SELECTION_SCREEN) {
+    if(soundOn && !startScreenMusic.isPlaying()) {
+      startScreenMusic.loop();
+    } 
+    if(!soundOn && startScreenMusic.isPlaying()) {
+      startScreenMusic.pause();
+    }
     map_selection_screen.display();
   }
 
   if (state == GameState.DIFFICULTY_SCREEN) {
+    if(soundOn && !startScreenMusic.isPlaying()) {
+      startScreenMusic.loop();
+    } 
+    if(!soundOn && startScreenMusic.isPlaying()) {
+      startScreenMusic.pause();
+    }
     difficulty_screen.display();
   }
 
   if (state == GameState.INFO_SCREEN) {
+    if(startScreenMusic.isPlaying()) {
+      startScreenMusic.pause();
+    } 
     selectedMap = map_selection_screen.getSelectedMapId();
     info_screen.updateText(selectedMap);
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();

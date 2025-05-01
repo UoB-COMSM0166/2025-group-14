@@ -34,7 +34,7 @@ class Button {
         // event handling
         this.button.mousePressed(() => this.click(callback)); //callback when button is clicked
         this.button.mouseOver(() => this.hoverOver());     
-        this.button.mouseOut(() => this.hoverOff());        
+        this.button.mouseOut(() => this.hoverOff());     
     }
 
     // sets (and resets) the position of the button
@@ -62,6 +62,9 @@ class Button {
     // also calls the callback function if one is provided
     click() {
         this.button.style('background-color', this.clickColour);
+        if (soundOn) {
+            clickSound.play();
+        }
         if (this.callback) {
             this.callback(); 
         }
