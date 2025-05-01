@@ -50,7 +50,7 @@ function setup() {
   startScreenMusic = loadSound("assets/Sounds/morning-mood-edvard-grieg-juliush.mp3", () => soundLoadSuccess(startScreenMusic, "classical music", 0.4));
   clickSound = loadSound("assets/Sounds/duck_quack_shorter.mp3", () => soundLoadSuccess(clickSound, "duck", 0.1));
   boatCrashSound = loadSound("assets/Sounds/boat_crash.mp3", () => soundLoadSuccess(boatCrashSound, "boat crash", 0.3));
-  canalWaterSound = loadSound("assets/Sounds/canal_ambience.mp3", () => soundLoadSuccess(canalWaterSound, "canal", 0.1));
+  canalWaterSound = loadSound("assets/Sounds/canal_ambience.mp3", () => soundLoadSuccess(canalWaterSound, "canal", 0.15));
   lockSound = loadSound("assets/Sounds/lock_open_close.mp3", () => soundLoadSuccess(lockSound, "lock", 0.2));
   engineSound = loadSound("assets/Sounds/engine_noise.mp3", () => soundLoadSuccess(engineSound, "engine", 0.2));
 }
