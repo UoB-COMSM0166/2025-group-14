@@ -71,9 +71,9 @@ function draw() {
     if(!soundOn && startScreenMusic.isPlaying()) {
       startScreenMusic.pause();
     }
-    if(canalWaterSound.isPlaying()) {
-      canalWaterSound.pause();
-    }
+    canalWaterSound.pause();
+    engineSound.pause();
+  
   }
 
   if (state == GameState.MAP_SELECTION_SCREEN) {
@@ -139,6 +139,7 @@ function draw() {
   }
 
   if (state == GameState.LOSE) {
+    engineSound.pause();
     lose_screen.display();
   }
 }
