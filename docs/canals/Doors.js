@@ -64,14 +64,21 @@ class doors{
 
     createSprites(){
         // Creates image for the doors of the lock
-        let whiteLength = (this.doorLength + 15) / 4;
-        let blackLength = (3 * (this.doorLength + 15)) / 4;
-        let lockImg = createGraphics(this.doorLength + 15, this.doorThick);
+        let totalLength = this.doorLength + 15;
+        let whiteStartLength = totalLength / 4;
+        let whiteEndLength = whiteStartLength / 2;
+        let blackLength = totalLength - whiteStartLength - whiteEndLength;
+        let lockImg = createGraphics(totalLength, this.doorThick);
         lockImg.noStroke();
-        lockImg.fill("white"); // first quarter white
-        lockImg.rect(0, 0, whiteLength, this.doorThick); 
-        lockImg.fill("black"); // last three quarters black
-        lockImg.rect(whiteLength, 0, blackLength, this.doorThick); 
+        // white tip at the beginning of the door
+        lockImg.fill("white");
+        lockImg.rect(0, 0, whiteStartLength, this.doorThick); 
+        // middle of the door in black
+        lockImg.fill("black");
+        lockImg.rect(whiteStartLength, 0, blackLength, this.doorThick); 
+        // white tip at the end of the door
+        lockImg.fill("white");
+        lockImg.rect(whiteStartLength + blackLength, 0, whiteEndLength, this.doorThick);
 
         if(this.startPos === "open"){
             this.redAngle = this.openRed;
