@@ -432,7 +432,7 @@ This is sooner than we thought.
 - level design
 - pursuer bugs
 
-**** planning for next 2 weeks
+**** planning for next 2 weeks. Role assigning
 Report done by the end of this week
 ***** Game design:
 ****** 1. prettification: Leon and Adam
@@ -448,3 +448,36 @@ Report done by the end of this week
 - new name for game
 - tester for the game
 - ideas board for level designers
+
+* 30/04/2025
+** agenda
+*** planning for video
+Daniil has been doing some work on the planning for the video.
+- skit
+- no skit, presentation
+
+Throw humour in throughout the video.
+
+Filming on the boat. Leah is going to help with the script
+
+
+*** planning for finishing the game
+Leah has largely finished on 3 and 4.
+Polly and I are both going to do a map.
+*** tweaks
+- Changing the movement of a boat
+- Maybe make the boat slightly slower. Might make the maps feel a bit bigger.
+- The stakes need to be higher in the game. When the pursuer catches up something should happen.
+- Perhaps a far larger health penalty for the pursuer catching up. Also pursuer crashing into you.
+- The repair functionality should potentially be less powerful.
+- Leah proposed a level description per level, and having the names of the maps be more descriptive.
+- adam might have a go at map info screens
+- Leon is going to do the conclusion.
+
+*** plan
+1. Daniil will have a look a movement and look over script
+2. Leah is going to take over the script
+3. Adam tackling pursuer crashing into you. Info screens too. Aesthetics too.
+4. Leon will do Appearance
+5. Polly and casey on a new level.
+6. Polly will change the damage taken on pursuer collision
