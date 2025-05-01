@@ -38,6 +38,7 @@ class PursuerConfig {
         if (pursuerMoveCooldown !== 0) {
             pursuerMoveCooldown -= 1;
         }
+        this.playSound();
     }
 
     // Moves the pursuer towards the target
@@ -82,6 +83,13 @@ class PursuerConfig {
         let distance = dist(vectorA.x, vectorA.y, vectorB.x, vectorB.y);
         return distance < gap;
     }
+
+    playSound(){
+        let distanceToPlayer = dist(this.player.x, this.player.y, this.pursuer.x, this.pursuer.y);
+        let closeness = lerp(0.6, 0, constrain(distanceToPlayer/300, 0, 1));
+        pursuerEngineSound.setVolume(closeness);
+    }
+    
 
     // Uses a raycast to detect the first sprite in between two points
     // If the first sprite detected is the target, then the target is visible

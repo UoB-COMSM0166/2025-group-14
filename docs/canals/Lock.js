@@ -100,7 +100,7 @@ class lock extends canal {
             if (soundOn) {
                 lockSoundFore.play();
             }
-            console.log("play lock sound fore");
+            //console.log("play lock sound fore");
         }
 
         //if noise is playing and has played for roughly its opening time then stop playing the sound
@@ -113,7 +113,7 @@ class lock extends canal {
             this.aftLockSoundPlaying = true;
             this.aftLockSoundTimer = millis();
             lockSoundAft.play();
-            console.log("play lock sound aft");
+            //console.log("play lock sound aft");
         }
         //ditto
         if (this.aftLockSoundPlaying && (millis() - this.aftLockSoundTimer) >= this.openTime * 900) {
