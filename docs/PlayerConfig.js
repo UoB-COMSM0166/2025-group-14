@@ -250,7 +250,7 @@ class PlayerConfig {
       "Repairing...repairs will take " + timeTaken + " seconds...");
     repairMessage.show();
 
-    if (soundOn && !repairHammer.isPlaying()) {
+    if (soundOn && (!repairHammer.isPlaying() || !repairDrill.isPlaying() || !repairSaw.isPlaying())  ) {
       repairDrill.play();
       repairSaw.play();
       repairHammer.play();
@@ -258,6 +258,9 @@ class PlayerConfig {
 
     if (this.status === PlayerStatus.REPAIRS_FINISHED) {
       // Update health to maxHealth
+      repairDrill.pause();
+      repairSaw.pause();
+      repairHammer.pause();
       this.health = this.maxHealth;
       this.zeroHealth = false;
     }
