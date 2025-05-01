@@ -74,9 +74,9 @@ class PlayerConfig {
       else if (kb.pressing('down')) acc = -0.3; 
       
       if (kb.pressing('up') || kb.pressing('down')) {
-        engineSound.setVolume(0.3)
+        engineSound.setVolume(0.2)
       } else {
-        engineSound.setVolume(0.15)
+        engineSound.setVolume(0.1)
       }
       let rad = radians(this.playerSprite.rotation);
       let vector = p5.Vector.fromAngle(rad, (53 * acc));
@@ -204,6 +204,7 @@ class PlayerConfig {
     for (let i = 0; i < bankSprites.length; i++) {
       if (this.playerSprite.collides(bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
+        wallCollisionSound.play();
       }
     }
     if (this.health <= 0) {

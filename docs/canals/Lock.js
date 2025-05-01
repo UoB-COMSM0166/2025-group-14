@@ -83,8 +83,9 @@ class lock extends canal {
         return output;
     }
 
+    //WIP: need to calculate distance from player to a lock
     playLockSound() {
-        let distFore = dist(this.player.x, this.player.y, this.foreDoors.blackSect.x, this.foreDoors.blackSect.y);
+        /* let distFore = dist(this.player.x, this.player.y, this.foreDoors.blackSect.x, this.foreDoors.blackSect.y);
         let distAft = dist(this.player.x, this.player.y, this.aftDoors.x, this.aftDoors.y);
         console.log(distAft, distFore);
         if (distFore < 100) {
@@ -92,7 +93,7 @@ class lock extends canal {
         }
         if (distAft < 100) {
             lockSound.play();
-        }
+        } */
     }
 
     createSprites(){
