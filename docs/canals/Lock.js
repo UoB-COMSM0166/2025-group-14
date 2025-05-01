@@ -97,7 +97,9 @@ class lock extends canal {
         if (distFore < 200 && !this.foreLockSoundPlaying && this.status == "empty") {
             this.foreLockSoundPlaying = true;
             this.foreLockSoundTimer = millis();
-            lockSoundFore.play();
+            if (soundOn) {
+                lockSoundFore.play();
+            }
             console.log("play lock sound fore");
         }
 
