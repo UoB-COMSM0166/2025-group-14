@@ -481,3 +481,21 @@ Polly and I are both going to do a map.
 4. Leon will do Appearance
 5. Polly and casey on a new level.
 6. Polly will change the damage taken on pursuer collision
+
+* 02/05/2025
+** topics
+*** leah
+- not enough space on one of the menu items
+- feels the movement is too slow
+*** recap
+- adam added pursuer ramming and info screen. Added sounds in
+- Polly adjusted health loss from pursuer contact
+- Daniel added the old movement back in as an option
+- Leah suggested a group coding session
+- Leon has been working on the finish line, but has been running into some issues with this. Noticed some differences in how the finish line behaves
+*** video planning
+1. filming: in person recording and screen recording. Will do this sunday
+2. gameplay: finish up on this for sunday as much as possible.
+3. editing: Leah is happy to do this
+
+Aim for 11am Sunday. Bring snacks/ drinks
