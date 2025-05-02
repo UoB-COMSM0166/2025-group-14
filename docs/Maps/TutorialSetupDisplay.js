@@ -138,6 +138,7 @@ class TutorialSetupDisplay {
 
         // movement tutorial function run with zoomed in camera
         if (!this.passedMovementTutorial) {
+            pursuerEngineSound.setVolume(0);
             this.setCamera(1.5, this.player.x, this.player.y);
             this.map.animate();
             this.runMovementTutorial();
@@ -145,6 +146,7 @@ class TutorialSetupDisplay {
         }
         // damage tutorial function run with normal camera
         if (!this.passedDamageTutorial) {
+            pursuerEngineSound.setVolume(0);
             this.setCamera(1, this.player.x, this.player.y);
             this.map.animate();
             this.runDamageTutorial();

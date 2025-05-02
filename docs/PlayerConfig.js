@@ -74,9 +74,9 @@ class PlayerConfig {
       else if (kb.pressing('down')) acc = -0.3; 
       
       if (kb.pressing('up') || kb.pressing('down')) {
-        engineSound.setVolume(0.2)
-      } else {
         engineSound.setVolume(0.1)
+      } else {
+        engineSound.setVolume(0.05)
       }
       let rad = radians(this.playerSprite.rotation);
       let vector = p5.Vector.fromAngle(rad, (53 * acc));
