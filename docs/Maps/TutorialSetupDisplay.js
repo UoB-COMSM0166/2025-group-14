@@ -324,6 +324,7 @@ class TutorialSetupDisplay {
         
         //health = zero you lose 
         if (this.playerCfg.isHealthZero()){
+            shipBreakSound.play();
             this.clearSprites(); 
             state = GameState.LOSE;
           }
@@ -380,6 +381,7 @@ class TutorialSetupDisplay {
         //win condition passe
         if (finishLineCrossed){ 
             this.clearSprites();
+            winSound.play();
             state = GameState.WIN;
             finishLineCrossed = false;
         }
