@@ -130,9 +130,6 @@ class lock extends canal {
 
     lockAnimate(){
         //this.openDoors(this.aftDoors, this.next);
-        fill("red")
-        let anchor = this.foreDoors.getAnchor("red");
-        circle(anchor[0], anchor[1], 30);
         this.status = this.getFullStatus();
         this.checkForPlayer();
         //text(this.getContainsBoat(), this.redStart[0], this.redStart[1])
