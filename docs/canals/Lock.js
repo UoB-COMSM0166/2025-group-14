@@ -32,7 +32,10 @@ class lock extends canal {
             this.next = next;
         }*/
 
-
+        this.foreLockSoundPlaying = false;
+        let foreLockSoundTimer;
+        this.aftLockSoundPlaying = false;
+        let aftLockSoundTimer;
     }
 
     checkForPlayer(){
@@ -83,17 +86,46 @@ class lock extends canal {
         return output;
     }
 
-    //WIP: need to calculate distance from player to a lock
+    //plays a lock sound effect for each set of lock doors with volume adjusted for distance from player
     playLockSound() {
-        /* let distFore = dist(this.player.x, this.player.y, this.foreDoors.blackSect.x, this.foreDoors.blackSect.y);
-        let distAft = dist(this.player.x, this.player.y, this.aftDoors.x, this.aftDoors.y);
-        console.log(distAft, distFore);
-        if (distFore < 100) {
-            lockSound.play();
+        //find distance from player to lock mid points
+        let distFore = dist(this.player.x, this.player.y, this.foreDoors.midway[0], this.foreDoors.midway[1]);
+        let distAft = dist(this.player.x, this.player.y, this.aftDoors.midway[0], this.aftDoors.midway[1]);
+
+        //if distance to fore lock is below 200, the sound isnt already playing and the lock has hit empty status
+        //then play the noise
+        if (distFore < 200 && !this.foreLockSoundPlaying && this.status == "empty") {
+            this.foreLockSoundPlaying = true;
+            this.foreLockSoundTimer = millis();
+            if (soundOn) {
+                lockSoundFore.play();
+            }
+            //console.log("play lock sound fore");
         }
-        if (distAft < 100) {
-            lockSound.play();
-        } */
+
+        //if noise is playing and has played for roughly its opening time then stop playing the sound
+        if (this.foreLockSoundPlaying && (millis() - this.foreLockSoundTimer) >= this.openTime * 900) {
+            lockSoundFore.pause();
+            this.foreLockSoundPlaying = false;
+        }
+        //repeat of above for aft
+        if (distAft < 200 && !this.aftLockSoundPlaying && this.status == "full") {
+            this.aftLockSoundPlaying = true;
+            this.aftLockSoundTimer = millis();
+            lockSoundAft.play();
+            //console.log("play lock sound aft");
+        }
+        //ditto
+        if (this.aftLockSoundPlaying && (millis() - this.aftLockSoundTimer) >= this.openTime * 900) {
+            lockSoundAft.pause();
+            this.aftLockSoundPlaying = false;
+        }
+
+        // handle change in volume
+        let foreCloseness = lerp(1, 0, constrain(distFore/200, 0, 1));
+        if(this.foreLockSoundPlaying) lockSoundFore.setVolume(foreCloseness);
+        let aftCloseness = lerp(1, 0, constrain(distAft/200, 0, 1));
+        if(this.aftLockSoundPlaying) lockSoundAft.setVolume(aftCloseness);
     }
 
     createSprites(){

@@ -520,7 +520,9 @@ function collect(player, gem) {
     // print(difficultyLevel);
     // console.log(pursuerMoveCooldown);
     pursuerMoveCooldown += pursuerFreezeFrames;
-    collectGarbageSound.play();
+    if (soundOn) {
+        collectGarbageSound.play();
+    }
     // print(difficultyLevel);
     // console.log(pursuerMoveCooldown);
 }

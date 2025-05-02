@@ -204,7 +204,9 @@ class PlayerConfig {
     for (let i = 0; i < bankSprites.length; i++) {
       if (this.playerSprite.collides(bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
-        wallCollisionSound.play();
+        if (soundOn) {
+          wallCollisionSound.play();
+        }
       }
     }
     if (this.health <= 0) {
