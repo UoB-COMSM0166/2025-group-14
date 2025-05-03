@@ -239,7 +239,7 @@ class MapController {
         into the lock pronto, or face a very short game!*/       
 
         let start = new canal(stdlen * 2, 5, stdwidth, player);
-        let jumpScare = new lock(stdlen, 2, stdwidth, player, 3, 2)
+        let jumpScare = new lock(stdlen, 2, stdwidth, player, 3, 3)
         let phew = new canal(stdlen, 1, stdwidth, player);
 
         /*...you made it! And you've now got a lead on the pursuer, which is good, cause the canal's

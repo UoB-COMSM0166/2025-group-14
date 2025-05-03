@@ -78,12 +78,12 @@ class InfoTextController{
     }
 
     static getInfoText3(){
-        let line1 = "This is line 1!";
-        let line2 = "This is line 2!";
-        let line3 ="This is line 3!";
-        let line4 ="This is line 4!";
-        let line5 ="This is line 5!";
-        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+        let line1 = "A hedge maze over water! Somewhere north of you is the finish line - but where?";
+        let line2 = "Make your way to the edge of these rings, and be careful of the dead ends";
+        let line3 = "Locks in the hedge maze open briefly and fill slowly, so don't commit until you see those doors move!";
+        let line4 = "";
+        let line5 = "";
+        let line6 = "";
 
         return {
             1: line1,
@@ -96,12 +96,12 @@ class InfoTextController{
     }
 
     static getInfoText4(){
-        let line1 = "This is line 1!";
-        let line2 = "This is line 2!";
-        let line3 ="This is line 3!";
-        let line4 ="This is line 4!";
-        let line5 ="This is line 5!";
-        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+        let line1 = "Quick! Dodge into that lock as soon as you see it!";
+        let line2 = "In HairpinHampton, the pursuer isn't your biggest threat - the banks are."
+        let line3 = "Be prepared for tight turns and narrow channels";
+        let line4 = "Do you repair often and risk the pursuer catching you?";
+        let line5 = "Or save it for the next lock wait and risk catching the next corner and sinking?";
+        let line6 = "";
 
         return {
             1: line1,
