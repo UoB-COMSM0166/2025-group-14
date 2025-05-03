@@ -124,7 +124,8 @@ class canal{
         this.garbage;
         this.ripples;
         // this.garbagePiece;
-        this.finish = finish; 
+        this.finish = finish;
+        this.finishLine = null;
     }
 
     getDirection(){
@@ -380,15 +381,45 @@ class canal{
     }
 
     closeMapEnd() {
+        // calculate dimensions/properties of finish line
+        let length = dist(this.redStart[0], this.redStart[1], this.blackStart[0], this.blackStart[1]);
+        let squareSize = 10;
+        // number of b/w squares
+        let numSquares = Math.floor(length / squareSize);
+        // number of rows of squares
+        let numRows = 3;
+        let thickness = numRows * squareSize;
+
+        // create graphics object and fill wth chequered pattern
+        let finishImg = createGraphics(length, thickness);
+        finishImg.noStroke();
+        for (let row = 0; row < numRows; row++) {
+            for (let i = 0; i < numSquares; i++) {
+                let isBlack = (i + row) % 2 === 0;
+                finishImg.fill(isBlack ? 'black' : 'white');
+                finishImg.rect(i * squareSize, row * squareSize, squareSize, squareSize);
+            }
+        }
+
+        // calculate angle of finish line
+        let angle = (atan2(this.redStart[1] - this.blackStart[1], this.redStart[0] - this.blackStart[0]));
+        
         let endMapBank = new Sprite([this.redEnd, this.blackEnd]);
-        let finishLine = new Sprite([this.redStart, this.blackStart]);
-        // finishLine.overlaps(allSprites);
-        this.player.overlaps(finishLine, finish);
-        finishLine.visible = true;
+        // calculate mid-point between the two banks
+        const midX = (this.redStart[0] + this.blackStart[0]) / 2;
+        const midY = (this.redStart[1] + this.blackStart[1]) / 2;
+        this.finishLine = new Sprite(midX, midY, length, thickness);
+
+        // apply finish line image to the sprite
+        this.finishLine.image = finishImg;
+        this.finishLine.rotation = angle;
+        this.finishLine.collider = "none";
+        this.finishLine.visible = true;
+        this.player.overlaps(this.finishLine, finish);
+
         endMapBank.collider = STA;
-        // finishLine.collider = "none";
         this.allSprites.push(endMapBank);
-        this.allSprites.push(finishLine);
+        this.allSprites.push(this.finishLine);
     }
 
     createGarbage() {

@@ -86,7 +86,7 @@ class PursuerConfig {
 
     playSound(){
         let distanceToPlayer = dist(this.player.x, this.player.y, this.pursuer.x, this.pursuer.y);
-        let closeness = lerp(0.6, 0, constrain(distanceToPlayer/300, 0, 1));
+        let closeness = lerp(0.25, 0, constrain(distanceToPlayer/300, 0, 1));
         pursuerEngineSound.setVolume(closeness);
     }
     

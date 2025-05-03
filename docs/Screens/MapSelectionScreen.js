@@ -3,17 +3,17 @@
 class MapSelectionScreen{
     constructor() {
         this.selectedMapId = -1; // Default map is -1 (no map selected)
-        this.tutorialButton = new Button("Tutorial", windowWidth/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(0));
+        this.tutorialButton = new Button("Tutorial", windowWidth/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(0));
         this.tutorialButton.hide();
-        this.mapOneButton = new Button("Map 1", windowWidth*2/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(1));
+        this.mapOneButton = new Button("Map 1", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1));
         this.mapOneButton.hide();
-        this.mapTwoButton = new Button("Map 2", windowWidth*3/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(2));
+        this.mapTwoButton = new Button("Map 2", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2));
         this.mapTwoButton.hide();
-        this.mapThreeButton = new Button("The Hedge Maze", windowWidth*4/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(3));
+        this.mapThreeButton = new Button("The Hedge Maze", windowWidth/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(3));
         this.mapThreeButton.hide();
-        this.mapFourButton = new Button("HairpinHampton", windowWidth*5/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(4));
+        this.mapFourButton = new Button("Hairpin Hampton", windowWidth*2/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(4));
         this.mapFourButton.hide();
-        this.mapFiveButton = new Button("Map 5", windowWidth*6/7, windowHeight/6, 'seagreen', 30, () => this.selectMap(5));
+        this.mapFiveButton = new Button("Map 5", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5));
         this.mapFiveButton.hide();
     }
 
@@ -27,12 +27,12 @@ class MapSelectionScreen{
         this.mapThreeButton.show();
         this.mapFourButton.show();
         this.mapFiveButton.show();
-        this.tutorialButton.setPosition(windowWidth/7, windowHeight/6);
-        this.mapOneButton.setPosition(windowWidth *2/7, windowHeight/6);
-        this.mapTwoButton.setPosition(windowWidth *3/7, windowHeight/6);
-        this.mapThreeButton.setPosition(windowWidth *4/7, windowHeight/6);
-        this.mapFourButton.setPosition(windowWidth *5/7, windowHeight/6);
-        this.mapFiveButton.setPosition(windowWidth*6/7, windowHeight/6);
+        this.tutorialButton.setPosition(windowWidth/4, windowHeight/5);
+        this.mapOneButton.setPosition(windowWidth*2/4, windowHeight/5);
+        this.mapTwoButton.setPosition(windowWidth*3/4, windowHeight/5);
+        this.mapThreeButton.setPosition(windowWidth/4, windowHeight*3/5);
+        this.mapFourButton.setPosition(windowWidth*2/4, windowHeight*3/5);
+        this.mapFiveButton.setPosition(windowWidth*3/4, windowHeight*3/5);
     
     }
 
