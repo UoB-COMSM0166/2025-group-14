@@ -27,7 +27,7 @@ class MapController {
             case 0:
                 return new Sprite(100, 70, 35, 25);
             case 1:
-                return new Sprite(100, 100, 35, 25);
+                return new Sprite(1000, -50, 35, 25);
             case 2:
                 return new Sprite(265, -328, 35, 25);
             case 3:
@@ -47,7 +47,7 @@ class MapController {
             case 0:
                 return new Sprite(100, 70, 25, 15);
             case 1:
-                return new Sprite(40, 100, 25, 15);
+                return new Sprite(0, 0, 25, 15);
             case 2:
                 return new Sprite(-442, -327, 25, 15);
             case 3:
@@ -76,30 +76,120 @@ class MapController {
     }
     
     static getMap1(player) {
-        let c1 = new canal(300, 2, 150, player); //right, up
-        let c2 = new canal(770, 4.5, 150, player); //right, down
-        let c3 = new lock(470, 7, 130, player, 5, 3); //left, down (lock, 5, 3)
-        let c4 = new canal(600, 10, 220, player); //left up
-        let c5 = new canal(400, 9, 60, player); 
+        let stdWidth = 150
+        let stdLength = 300
 
-        let c6 = new canal(600, 4, 60, player); //originally 600, 4
-        let c7 = new canal(500, 5, 60, player); //originally 500, 5
+        let mid = 3
+        let gradient = 0.1
+        let trough = 4
+        let peak = 2
+        let length = 15
 
-        let c8 = new canal(600, 4, 60, player); //originally 600, 4
-        let c9 = new canal(500, 3, 60, player); //originally 500, 3
-        let c10 = new canal(300, 5, 80, player);
-        let c11 = new canal(800, 7, 80, player);
+        let snakeSegment = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
+        peak -= 1
+        trough += 1
+        let snakeSegment2 = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
+        peak += 1
+        trough -= 1
 
-        let n1 = new CanalNetwork(50, -350, [c1, c2, c3, c4 , c5], [[c4, c6], [c2, c8]]); 
 
-        //leah adding a new network to check multinetwork capability
+        // fork
 
-        let n2 = new CanalNetwork(-500, 250, [c6, c7], []) //originally -500, 250
-        let n3 = new CanalNetwork(700, -400, [c8, c9, c10, c11], [])
+        let c1 = new canal(stdLength+1800, 2.8, stdWidth, player)
+        let c155 = new lock(100, 2.8, stdWidth, player, 2, 4)
+        let c1575 = new canal(100, 2.9, stdWidth, player, false)
+        let c2 = new canal(stdLength, 2.5, stdWidth, player)
+        let c25 = new canal(stdLength/2, 2, stdWidth, player)
+        let c3 = new lock(stdLength/4, 2, stdWidth, player, 2, 4)
+        let c35 = new canal(stdLength/2, 2, stdWidth, player)
+        let c4 = new canal(stdLength, 2.5, stdWidth, player)
+        let c7s = this.snake(mid, gradient, trough, peak+1, length-10, stdWidth, player)
 
-        return new CanalMap(player, true, [n1, n2, n3]); 
-       
+        let c5 = new canal(stdLength-100, 4, stdWidth, player)
+        let c55 = new canal(stdLength-100, 4, stdWidth, player)
+        let c6 = new canal(stdLength+200, 3.5, stdWidth, player)
+        let c6l = new lock(stdLength-100, 3.5, stdWidth, player, 3, 3)
+        let c65 = new canal(stdLength, 3.5, stdWidth, player)
+        let c8s = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
+        let c9s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
+        let c10s = this.snake(mid, gradient, trough+2, peak, length-5, stdWidth, player)
+        let c11 = new canal(stdLength, 3.5, stdWidth, player)
+        let c12 = new canal(stdLength+300, 3.5, stdWidth, player)
+        let c12b = new lock(stdLength, 3.4, stdWidth, player, 2, 3)
+        let c12a = new lock(stdLength, 3.4, stdWidth, player, 1, 3)
+        let c11s = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
+        let c13 = new canal(stdLength+100, 4, stdWidth, player)
+        let c14 = new canal(stdLength+100, 4, stdWidth, player)
+
+
+        // curve
+        let curve = []
+        for (let i = 3; i < 5; i+=0.2) {
+            curve.push(new canal(50, i, stdWidth, player, false))
+        }
+
+        let loop = []
+        for (let i = 6; i > 0; i-=0.5) {
+            loop.push(new canal(100, i-2%12, stdWidth, player, false))
+        }
+        let c15 = new lock(stdLength+200, 10, stdWidth, player, 3, 5)
+
+        let loop2 = []
+        for (let i = 9; i > 5; i-=0.5) {
+            loop2.push(new canal(110, i%12, stdWidth, player, false))
+        }
+
+
+        let c12s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
+        let c13s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
+        peak -= 1
+        trough += 1
+        let c14s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
+        peak -= 1
+        trough += 1
+        let c15s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
+        // curve
+        let curve2 = []
+        for (let i = 3; i < 6; i+=0.2) {
+            curve2.push(new canal(50, i, stdWidth, player, false))
+        }
+
+        let c162 = new canal(stdLength, 6.3, stdWidth, player)
+        let c16 = new lock(stdLength, 6.3, stdWidth, player, 2, 3)
+        let c165 = new canal(stdLength, 6.3, stdWidth, player)
+        let c17 = new lock(stdLength, 6.5, stdWidth, player, 1, 1.5)
+        let c175 = new canal(stdLength, 6.5, stdWidth, player)
+        let c18 = new lock(stdLength, 6.2, stdWidth, player, 1, 1)
+        let c185 = new canal(stdLength, 6.2, stdWidth, player)
+        let c19 = new canal(stdLength, 6, stdWidth, player)
+        let c20 = new canal(stdLength, 6, stdWidth, player, true, true)
+
+
+        let mainNetwork = new CanalNetwork(0, 0, [c1, c155, c1575, snakeSegment, snakeSegment2, c2, c25, c3, c35, c4, c7s, c11s, curve, c14], [[c2, c5], [c4, c6], [c14, c13]])
+        let secondNetwork = new CanalNetwork(3900, 250, [c5, c55, c6l, c65, c9s, c10s, c11], [[c11, c12]])
+        let thirdNetwork = new CanalNetwork(4500, 0, [c6, c8s, c12b, c12, c12a, c12s, c13s, c14s, c15s, curve2, c162, c16, c165, c17, c175, c18, c185, c19, c20], [])
+        let loopEnd = new CanalNetwork(6000, -650, [c13, loop, c15, loop2], [], true)
+
+        return new CanalMap(player, false, [mainNetwork, secondNetwork, thirdNetwork, loopEnd])
     }
+
+    static snake(mid, gradient, trough, peak, length, stdwidth, player) {
+        let curve1 = []
+        for (let i = mid; i > peak; i -= gradient) {
+            curve1.push(new canal(length, i, stdwidth, player, false));
+        }
+        let curve2 = []
+        for (let i = peak; i < trough; i += gradient) {
+            curve2.push(new canal(length, i, stdwidth, player, false));
+        }
+        let curve3 = []
+        for (let i = trough; i > mid; i -= gradient) {
+            curve2.push(new canal(length, i, stdwidth, player, false));
+        }
+        return [curve1, curve2, curve3]
+    }
+
+
 
     static getMap2(player) {
         let c1 = new canal(1000, 3, 200, player); 

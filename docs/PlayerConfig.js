@@ -67,8 +67,8 @@ class PlayerConfig {
     if (this.alternativeControls) {
       let acc = 0;
 
-      if (kb.pressing('left')) this.playerSprite.rotationSpeed = -1;
-      else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 1;
+      if (kb.pressing('left')) this.playerSprite.rotationSpeed = -2;
+      else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 2;
       else this.playerSprite.rotationSpeed = 0;
       if (kb.pressing('up')) acc = 1;
       else if (kb.pressing('down')) acc = -0.3; 
@@ -79,7 +79,7 @@ class PlayerConfig {
         engineSound.setVolume(0.05)
       }
       let rad = radians(this.playerSprite.rotation);
-      let vector = p5.Vector.fromAngle(rad, (53 * acc));
+      let vector = p5.Vector.fromAngle(rad, (80 * acc));
       this.playerSprite.applyForce(vector);
   
       acc = 0;
@@ -106,7 +106,7 @@ class PlayerConfig {
         engineSound.setVolume(0.2)
       }
   
-      this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(53));
+      this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(80));
   
       // the following code 1) prevents exceeding the maxSpeed  
       this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
