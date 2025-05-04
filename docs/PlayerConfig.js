@@ -67,8 +67,8 @@ class PlayerConfig {
     if (this.alternativeControls) {
       let acc = 0;
 
-      if (kb.pressing('left')) this.playerSprite.rotationSpeed = -1;
-      else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 1;
+      if (kb.pressing('left')) this.playerSprite.rotationSpeed = -2;
+      else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 2;
       else this.playerSprite.rotationSpeed = 0;
       if (kb.pressing('up')) acc = 1;
       else if (kb.pressing('down')) acc = -0.3; 
