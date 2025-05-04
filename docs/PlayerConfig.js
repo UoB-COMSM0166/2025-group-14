@@ -79,7 +79,7 @@ class PlayerConfig {
         engineSound.setVolume(0.05)
       }
       let rad = radians(this.playerSprite.rotation);
-      let vector = p5.Vector.fromAngle(rad, (53 * acc));
+      let vector = p5.Vector.fromAngle(rad, (80 * acc));
       this.playerSprite.applyForce(vector);
   
       acc = 0;
@@ -106,7 +106,7 @@ class PlayerConfig {
         engineSound.setVolume(0.2)
       }
   
-      this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(53));
+      this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(80));
   
       // the following code 1) prevents exceeding the maxSpeed  
       this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
