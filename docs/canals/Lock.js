@@ -15,6 +15,7 @@ class lock extends canal {
         //set after connections as part of the createSprites function
         this.foreDoors;
         this.aftDoors;
+        this.centre
 
 
         //checks if the lock contains the player
@@ -148,6 +149,9 @@ class lock extends canal {
             this.bankSprites.push(sprite);
             this.allSprites.push(sprite);
         }
+
+        this.centre = halfwayPoint(this.foreDoors.getMidway(), this.aftDoors.getMidway());
+
     }
 
 
@@ -166,8 +170,10 @@ class lock extends canal {
         this.checkForPlayer();
         //text(this.getContainsBoat(), this.redStart[0], this.redStart[1])
         // Depth bar position
-        let depthBarX = Math.abs(this.redStart[0] - this.width);  
-        let depthBarY = Math.abs(this.redStart[1] - (this.length/2));
+        //let depthBarX = Math.abs(this.redStart[0] - this.width);  
+        //let depthBarY = Math.abs(this.redStart[1] - (this.length/2));
+        let depthBarX = this.centre[0];
+        let depthBarY = this.centre[1];
         // Update depth bar based on percent depth
         let depth = this.getPercentDepth();
         this.depthBar.draw(depth, depthBarX, depthBarY);
