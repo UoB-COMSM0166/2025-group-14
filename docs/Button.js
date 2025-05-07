@@ -5,7 +5,7 @@
 
 // Look at startScreen for how a function for button clicks can be passed in as a parameter (callback).
 class Button {
-    constructor(label, x, y, colour, fontSize, callback) {
+    constructor(label, x, y, colour, fontSize, callback, hasImage=false, imagePath) {
         this.label = label;
         this.x = x;
         this.y = y;
@@ -23,6 +23,19 @@ class Button {
         this.button.style('color', 'white');
         this.button.style('border-radius', '8px');
         this.button.style('padding', '10px 20px');
+
+        if(hasImage) {
+            this.button.style('background-image', 'url(' + imagePath + ')');
+            this.button.style('background-size', 'cover');
+            this.button.style('background-position', 'center center');
+            this.button.style('background-repeat', 'no-repeat');
+            this.button.style('opacity', '0.8'); 
+            this.button.style('width', '300px'); 
+            this.button.style('height', '300px'); 
+            this.button.style('font-weight', 'bold');
+            this.button.style('border', 'black solid 2px');
+             
+        }
 
         // need the below so that the button is actually centered on the x and y coordinates
         let buttonWidth = this.button.elt.offsetWidth;
@@ -81,11 +94,15 @@ class Button {
     // changes color when mouse is over the button
     hoverOver() {
         this.button.style('background-color', this.hoverColour);
+        this.button.style('opacity', '1.0');
+        this.button.style('cursor', 'pointer');
     }
 
     // resets color when mouse leaves
     hoverOff() {
         this.button.style('background-color', this.colour);
+        this.button.style('opacity', '0.8');
+        this.button.style('cursor', 'default');
     }
 
     // adjusts the brightness of the color when hovering/clicking
