@@ -191,7 +191,7 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 - Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
 
-Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, and (ii) the movement and collision mechanics of the game (including the pursuer AI), which necessitated a major refactor partway through our development process. These challenges are described below.
+Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, and (2) the movement and collision mechanics of the game (including the pursuer AI), which necessitated a major refactor partway through our development process. These challenges are described below.
 
 #### Challenge 1: Building the canal maps
 
