@@ -43,6 +43,9 @@ class InfoScreen {
         let duckSpacing = windowWidth*0.1;
         let numberOfDucks = 9;
 
+        this.returnToMapSelection.show();
+        this.returnToMapSelection.setPosition(windowWidth/6, instructionY+(instructionSpacing*6.5) - 10);
+
         for (let i = 0; i < numberOfDucks; i++) {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
         }
@@ -63,7 +66,7 @@ class InfoScreen {
         
         textSize(10);
 
-        this.returnToMapSelection.show();
+        
         // Transition to gameplay screen when player presses the SPACE key
         if (state === GameState.INFO_SCREEN && kb.pressed(' ')) {
             this.returnToMapSelection.hide();
