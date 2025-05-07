@@ -119,7 +119,7 @@ class InfoTextController{
         let line3 ="Watch out for the locks...and keep an eye on their depth!";
         let line4 ="Remember: timing is everything...";
         let line5 ="";
-        let line6 =";
+        let line6 ="";
 
         return {
             1: line1,
