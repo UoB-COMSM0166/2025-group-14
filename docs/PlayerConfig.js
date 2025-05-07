@@ -7,6 +7,10 @@ class PlayerStatus {
   static isValid(status) {
       return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
   }
+
+  // this.alternativeControls = false;
+
+  static alternativeControls = false;
 }
 
 
@@ -45,8 +49,6 @@ class PlayerConfig {
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
     this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
-
-    this.alternativeControls = false;
   }
 
   camera() {
@@ -64,7 +66,7 @@ class PlayerConfig {
   movement(damageOn = true, healthOn = true) {
 
 
-    if (this.alternativeControls) {
+    if (PlayerStatus.alternativeControls) {
       let acc = 0;
 
       if (kb.pressing('left')) this.playerSprite.rotationSpeed = -2;
@@ -162,18 +164,18 @@ class PlayerConfig {
 
   setStandardControls(){
     // this.standardControls = true;
-    this.alternativeControls = false;
+    PlayerStatus.alternativeControls = false;
   }
   
   setAlternativeControls(){
     // this.standardControls = false;
-    this.alternativeControls = true;
+    PlayerStatus.alternativeControls = true;
   }
 
   debug() {
     //debug info with coordinates ont pot of mivng player
-    text(`player.x: ${round(this.playerSprite.x)} player.y: ${round(this.playerSprite.y)}`, this.playerSprite.x, this.playerSprite.y - 30);
-    text(`player vel: ${this.currentVel.mag()}`, this.playerSprite.x, this.playerSprite.y - 50);
+    /* text(`player.x: ${round(this.playerSprite.x)} player.y: ${round(this.playerSprite.y)}`, this.playerSprite.x, this.playerSprite.y - 30);
+    text(`player vel: ${this.currentVel.mag()}`, this.playerSprite.x, this.playerSprite.y - 50); */
     // text(`p.canv.x: ${round(player.canvasPos.x)} p.canv.y: ${round(player.canvasPos.y)}`, player.x, player.y - 50);
     // text(`windowWidth/4: ${round(windowWidth/4)} windowWidth*3/4: ${round(windowWidth*3/4)}`, player.x, player.y - 70);
     // text(`windowHeight/4: ${round(windowHeight/4)} windowHeight*3/4: ${round(windowHeight*3/4)}`, player.x, player.y - 90); 

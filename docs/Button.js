@@ -37,6 +37,14 @@ class Button {
         this.button.mouseOut(() => this.hoverOff());     
     }
 
+    hideButton() {
+        this.button.hide();
+    }
+
+    showButton() {
+        this.button.show();
+    }
+
     // sets (and resets) the position of the button
     setPosition(x, y) {
         this.x = x;

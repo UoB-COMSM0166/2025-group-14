@@ -114,12 +114,12 @@ class InfoTextController{
     }
 
     static getInfoText5(){
-        let line1 = "This is line 1!";
-        let line2 = "This is line 2!";
-        let line3 ="This is line 3!";
-        let line4 ="This is line 4!";
-        let line5 ="This is line 5!";
-        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+        let line1 = "Around and around you go...";
+        let line2 = "Can you escape the Snailshell Spiral...before the pursuer catches up?";
+        let line3 ="Watch out for the locks...and keep an eye on their depth!";
+        let line4 ="Remember: timing is everything...";
+        let line5 ="";
+        let line6 ="";
 
         return {
             1: line1,

@@ -71,8 +71,10 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 
 [Testing Session feedback on game requirements - positive feedback, confusing aspects and potential improvements to concept](https://github.com/UoB-COMSM0166/2025-group-14/blob/main/Requirements/TestingSessionFeedback.md)
 
+
 #### Identifying Stakeholders
 
+We identified the stakeholders of our game as:
 - Markers
 - Developers (us)
 - Casual Gamers
@@ -102,13 +104,30 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 | Markers |As markers, we want a functional and enjoyable game so that the students learn how to develop software in a team.|Given that the students show up to the demo day, when we play their game, we should find that the game is reasonably playable and enjoyable without any major issues.|
 | Developers |As developers, we want modular game design, following Object-Oriented principles, so that we can divide tasks efficiently among our team members.|Given that we are assigned separate objects and mechanics to work on, when we merge branches, the game should function with minimal refactoring.|
 | Developers | As developers, we want to implement locks in the game, so that the game accurately represents canal systems. |Given I am moving through the map, when I encounter lock gates, then I should recognise it as a lock and know what its purpose is.|
-| Casual gamer |As a casual player, I want simple instructions on how to play the game so that I’m not confused.|Given that I have started up the game and seen the introductory screen, when I start playing the game I should not be confused about the controls or objective of the game.|
-| Casual gamer |As a player, I want the game to have a backstory, so that the game feels more real and immersive.|Given that I have seen the game's introduction, when I see the enemy avatar approach, I should be able to say why they are chasing me and what the stakes are for my in-game character.|
-| Competitive gamer |As a skilled gamer, I want to explore maps with challenges that reward strategic gameplay, so that I feel satisfaction from mastering the game mechanics.|Given that I progress through the levels, when I encounter increasingly difficult maps, I should be able to complete them with some practice.|
+| Casual gamer |As a casual player, I want simple instructions on how to play the game so that I’m not confused.|Given that I have started up the game, seen the introductory screen and been given the option to play through the tutorial, when I start playing the game I should not be confused about the controls or objective of the game.|
+| Casual gamer |As a player, I want the game to have a backstory, so that the game feels more real and immersive.|Given that I have seen the game's introduction screen, when I see the enemy avatar approach, I should be able to say why they are chasing me and what the stakes are for my in-game character.|
+| Competitive gamer |As a skilled gamer, I want to explore maps with challenges that reward strategic gameplay, so that I feel satisfaction from mastering the game mechanics.|Given that I have selected a difficulty level that matches my ability, when I encounter increasingly difficult maps, I should be able to complete them with some practice without being either bored or overexerted.|
 | Boat owner/enthusiast |As a boating enthusiast, I want a map that represents real-life canals so that I feel a sense of familiarity and exploration.|Given some familiarity with the English countryside, while playing the game, I should be able to recognise locks, winding holes and fields.|
 | Boat owners/enthusiasts |As a boating enthusiast, I want the mechanics to feel similar to the reality of boat life so that the game feels immersive.|Given that the player is controlling the boat, when the player moves it should make the motions of a vessel that turns and advances rather than strafing.|
 | Canal Preservation Organisation |As an organisation concerned with the long-term preservation of canals, we want the game to have a mechanic which rewards picking up rubbish from the canal waters, so that players learn the importance of keeping canals clean.|Given that there is rubbish floating throughout the map, when players pick up the rubbish, then they should receive positive feedback that encourages them to continue picking up rubbish.|
 
+#### Paper Prototyping and Early Stage Design
+
+As a team, we made paper prototypes for both game ideas in order to quickly test our initial design ideas and provide us with an outline of our game ideation moving forward. Making the paper prototypes involved making some preliminary design decisions about user interface and gameplay mechanics, such as the movement controls, health/repair mechanics and the locks (the paper prototype also included some features that we did not end up implementing, such as a fuel guage and ability to refuel at chandleries). 
+
+We later discussed during early team meetings what features to implement at each stage of development. We made a list of features broken down by category and assigned a value/effort estimation:
+- First stage (core) features (essential to a working version of the game) - this included:
+  - up/down/left/right movement controls (low effort)
+  - canals with sides the player cannot cross (mid effort)
+  - a pursuer (high effort)
+  - movement mechanics (high effort)
+- Second stage (extension) features included:
+  - aesthetics of game - assets/images over boats, canal and background (medium effort)
+  - damage/healthbar/repair mechanic (high effort)
+  - canal locks (high effort)
+  - refueling (this was not implemented due to prioritising other features)
+
+These features constituted the first version of our product backlog (as represented by the To Do list of our Jira Kanban board), and roughly define work completed over the first and second sprints (first stage features were implemented in sprint 1 and second phase features were implemented in sprint 2, though this is overly simplistic as development of some features did overlap both sprints, and it does not allow for the extensive refactor undertaken between the two sprints).
 
 
 ### Requirements Reflection
@@ -128,7 +147,6 @@ We also quickly realised the utility of Agile development, as it can be difficul
 
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
-
 
 ### Design
 
@@ -191,11 +209,21 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 - Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
 
+Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, and (2) the movement and collision mechanics of the game (including the pursuer AI), which necessitated a major refactor partway through our development process. These challenges are described below.
+
+#### Challenge 1: Building the canal maps
+
 We considered it prudent, as level traversal was a core player challenge in our game, to design levels based on canal objects, rather than “custom-build” objects for pre-planned levels. This means that canals – which are essentially two parallel line sprites – had to be able to connect to each other without crossing their banks or changing width (as canal width was a key variable in determining level challenge). This required complex trigonometric and cartesian functions, with the eventual model being based around a “redBank” and “blackBank” shorthand: networks would draw a series of red banks as simple line sprites, and then calculate the appropriate coordinates for parallel black banks based on the angle and width of these connections. Debugging these calculations, while complex and time-consuming, paid dividends in late-development flexibility, as canals could be easily resized/re-angled during iterated playtests to create structured player challenges.   
 
-Forking canals into different networks proved highly challenging, as forks would need to bisect canals solely on their redBank or blackBank. Although initial models featured a fork subclass to the canal, this was scrapped in accordance with the guiding principle that more complex canal/network classes would be worthwhile to simplify level design; it was decided that any two canals can be forked by the map if the connection is specified by a network. In hindsight, this may have been a suboptimal allocation of effort, but it did ultimately prove viable through the creation of the linkage class, a one-canal network that uses polymorphic methods it inherits from the linearConnect superclass to instantiate a new canal based on entry and exit points in the linked canals. While it was initially hoped that linkages would be able to detect and elbow around obstacles, or connect from any point on specified canals, it was eventually decided that they would simply connect two canals in a straight line from their halfway point, and map designers would be responsible for only connecting sensibly positioned canals. To allow canals to be joined end-to-end, the loop Boolean was created in the canalNetwork, which would draw a similar canal connecting the first and last pre-specified ones in the network.  
+Each map in the game is represented by a CanalMap object. Each CanalMap is composed of one or more CanalNetwork objects, each of which is composed by one or more canal and/or lock objects. Forks are included in the canal network by including 'links' between the network and another canal. The implementation of these links presented a significant challenge during development.
 
-In the initial iteration of our game mechanics, we have implemented every feature of the game using only the tools provided by the p5.js library. In particular, the following features of the Player class were initially hard coded:  
+The reason that forking canals into different networks proved highly challenging was ecause forks would need to bisect canals solely on their redBank or blackBank. Although initial models featured a fork subclass to the canal, this was scrapped in accordance with the guiding principle that more complex canal/network classes would be worthwhile to simplify level design. 
+
+It was decided that any two canals can be forked by the map if the connection is specified by a canal network. In hindsight, this may have been a suboptimal allocation of effort, but it did ultimately prove viable through the creation of the linkage class, a one-canal network that uses polymorphic methods it inherits from the linearConnect superclass to instantiate a new canal based on entry and exit points in the linked canals. While it was initially hoped that linkages would be able to detect and elbow around obstacles, or connect from any point on specified canals, it was eventually decided that they would simply connect two canals in a straight line from their halfway point, and map designers would be responsible for only connecting sensibly positioned canals. To allow canals to be joined end-to-end, the loop Boolean was created in the canalNetwork, which would draw a similar canal connecting the first and last pre-specified ones in the network.  
+
+#### Challenge 2: Movement and collision mechanics
+
+In the initial iteration of our game mechanics, we implemented every feature of the game using only the tools provided by the p5.js library. In particular, the following features of the Player class were initially hard coded:  
 - The placement and the behaviour of the collision hitboxes on the Player 
 - Detection of the collision of the player with the map, pursuer and other objects 
 - The behaviour of the player post-collision ('bounce') 
@@ -203,13 +231,14 @@ In the initial iteration of our game mechanics, we have implemented every featur
 
 The first disadvantage of hardcoding every feature was loss of elegance. Instead of the features being written clearly, simply and efficiently, the focus shifted to the features just working. The second issue, that resulted from the first one, is the code progressively becoming unmaintainable and filled with bugs. As the player and canal classes grew exponentially in size and complexity, the poor interplay between the two resulted in an unfixable program that halted the development of every other mechanic of the game. 
 
-The decision we made to resolve the deadlock was to sacrifice a good portion of our code in a major refactor to incorporate the p5play library. Generally, rewriting the dysfunctional code brought back the modularity and maintainability of the program.  Specifically, the introduction of the p5play sprites negates the issue of physics simulation altogether, since every p5play sprite intrinsically calculates every force applyed to itself and to other p5play sprites, as well as the collision detection and collision behaviour of every single sprite. The refactor enabled us to continue developing planned features/mechanics and to complete the game in time. 
+The decision we made to resolve the deadlock was to sacrifice a good portion of our code in a major refactor to incorporate the p5play library. Generally, rewriting the dysfunctional code brought back the modularity and maintainability of the program.  Specifically, the introduction of the p5play sprites negated the issues of physics simulation altogether, since every p5play sprite intrinsically calculates every force applyed to itself and to other p5play sprites, as well as the collision detection and collision behaviour of every single sprite. The refactor enabled us to continue developing planned features/mechanics and to complete the game in time. 
 
 A challenge we had both before and after the refactor was the technical point of *how* the pursuer should chase the player. Initially, we used a system where the pursuer would simply "charge" the player without considering canal boundaries. The issue was that the pursuer could easily become stuck on the canal sides, meaning they were not a threat to the player.
 
 One interesting solution we experimented with was an implementation of the [A* search algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm), a highly efficient path finding algorithm that allows for traversal of mazes. However, it became clear that it would not work with the limitations of p5 play and the structure of canals. The algorithm works best in a system that has clearly defined "tiles" such as in games like Pacman. Since our canals are much more fluid and variable in size/shape it would be very difficult to systematically search all areas of the canal in a performant way. 
 
 Instead, we implemented a vision-based system where the pursuer follows the player while in sight. If the player is lost, the pursuer heads to the last seen point and either chases the player (if visible) or pursues the next “last seen point” from the previous “last seen point”. This approach ensures efficient performance while maintaining intelligent pathfinding to keep the gameplay engaging.
+
 
 ### Evaluation
 
@@ -400,9 +429,22 @@ We found that our flexible approach to team roles and regular scrum-style meetin
 
 ### Conclusion
 
-- 10% ~500 words
+This project proved to be challenging but very rewarding; we gained invaluable experience and picked up many new skills. We learnt about the entire Software Development Lifecycle, put Agile development into practice, successfully developed a complex game, and documented the entire process.
 
-- Reflect on project as a whole. Lessons learned. Reflect on challenges. Future work. 
+From the outset, we strove to maintain a positive and supportive team environment, where everyone felt comfortable communicating and contributing. Our flexible approach to roles made our team resilient to challenges and changes in requirements throughout the project, as we were all able to move around and take on different tasks depending on what needed to be done at any given time. 
+
+The main challenge arose when we ultimately decided to undertake a major refactor of our codebase more than halfway through the project. This massively impacted our priority list of tasks/features to complete, but due to not having fixed roles, we were all able to jump in and complete the refactor with relative ease. This decision really paid off. The development of our game skyrocketed (see Figure 10) after improving our system design and utilising the “p5Play” library, as it solved the challenges we were facing regarding physics/collisions and map creation.
+
+Figure 10:
+![commits-per-week](https://github.com/user-attachments/assets/24935125-eed8-4a2a-b22f-12a33d596d33)
+
+In retrospect, it would have been great if we began by using the p5Play library from the very start. Specifically, because we allocated time into attempting to debug the original game, discussing how the development should proceed and searching for libraries and other solutions online, we started lagging behind the supposed timeline of the development of the game, which was additionally exacerbated by a sudden and sharp increase in workload from other modules. This resulted in some missed opportunities for presenting a more complete game to users, particularly when it came round to the HCI and sustainability evaluations.
+
+However, we learnt that the reality of software projects is that things go wrong and you have to be willing and able to adapt to changing circumstances. It is unrealistic to expect everything to go smoothly. We believe that because we were able to adopt this mindset, we were therefore able to successfully carry out the refactor and ultimately deliver on our aim to create a unique, fun, and challenging game. 
+
+Looking to the future of “Canal Chase”, there are many things that we would want to add and improve. In the short-to-medium term: (1) we would conduct further testing of our two control modes – Standard and Alternative – to see which one users prefer, and then fine-tune the movement variables, like turning speed and maximum velocity; (2) we would create a more coherent storyline that ties all the levels together; possibly with the addition of NPCs and interactable objects; and (3) we would improve the aesthetics of the game by adding trees and other objects to the background and making the banks of the canals look more realistic. If we had a higher budget and more time, we would aim to add multiplayer and different game modes – for example a “Time Trial”, with global leaderboards showing the players across the world who completed each level in the shortest amount of time. 
+
+Ultimately, we learnt a lot about software engineering, project management, and working in a team (and as a team), which will prove invaluable when we begin our professional careers.
 
 ### Contribution Statement
 

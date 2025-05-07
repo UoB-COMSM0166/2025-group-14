@@ -13,7 +13,7 @@ class MapSelectionScreen{
         this.mapThreeButton.hide();
         this.mapFourButton = new Button("Hairpin Hampton", windowWidth*2/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(4));
         this.mapFourButton.hide();
-        this.mapFiveButton = new Button("Map 5", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5));
+        this.mapFiveButton = new Button("Snailshell Spiral", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5));
         this.mapFiveButton.hide();
     }
 

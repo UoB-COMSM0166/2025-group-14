@@ -8,6 +8,8 @@ class DifficultyScreen {
       this.mediumButton.hide();
       this.hardButton = new Button("Hard", windowWidth*3/6, windowHeight/6, 'seagreen', 30, () => this.selectDifficulty(2));
       this.hardButton.hide();
+      this.returnButton = new Button("Return to map selection", windowWidth*5/6, windowHeight/6, 'seagreen', 30, () => this.returnToMapSelection());
+      this.returnButton.hide();
   }
 
   display() {
@@ -18,9 +20,11 @@ class DifficultyScreen {
       this.easyButton.show(); 
       this.mediumButton.show();
       this.hardButton.show();
-      this.easyButton.setPosition(windowWidth/6, windowHeight/6);
-      this.mediumButton.setPosition(windowWidth *2/6, windowHeight/6);
-      this.hardButton.setPosition(windowWidth *3/6, windowHeight/6);
+      this.returnButton.show();
+      this.easyButton.setPosition(windowWidth*3/6, windowHeight/6);
+      this.mediumButton.setPosition(windowWidth*3/6, windowHeight*2/6);
+      this.hardButton.setPosition(windowWidth *3/6, windowHeight*3/6);
+      this.returnButton.setPosition(windowWidth*3/6, windowHeight*4/6);
   
   }
 
@@ -29,6 +33,7 @@ class DifficultyScreen {
       this.easyButton.hide();
       this.mediumButton.hide();
       this.hardButton.hide();
+      this.returnButton.hide();
       state = GameState.INFO_SCREEN;
   }
 
@@ -38,6 +43,14 @@ class DifficultyScreen {
 
   resetSelectedDifficulty() {
     this.selectedDifficulty = -1;
+  }
+
+  returnToMapSelection() {
+    this.easyButton.hide();
+    this.mediumButton.hide();
+    this.hardButton.hide();
+    this.returnButton.hide();
+    state = GameState.MAP_SELECTION_SCREEN;
   }
 }
 

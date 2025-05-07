@@ -25,9 +25,10 @@ class AllMapsSetupDisplay {
     this.pursuerDamage;
     this.playerSpeed;
     this.pursuerSpeed;
-    this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
-    this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
-    this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
+    this.pauseButton = new Button("Pause", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
+    this.defaultControlButton = new Button("Standard Controls", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
+    this.alternativeControlButton = new Button("Alternative Controls", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
+    this.exitButton = new Button("Exit", windowWidth*5/6, windowHeight/18, 'seagreen', 20, this.buttonExit.bind(this));
     this.isPaused = false;
   }
 
@@ -65,6 +66,8 @@ class AllMapsSetupDisplay {
     camera.x = this.player.x;
     camera.y = this.player.y;
     camera.zoom = 1;
+
+    this.repairButton = new Button("Repair boat", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.repair());
 
     // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
   }
@@ -138,11 +141,11 @@ class AllMapsSetupDisplay {
     this.displayBackground();
 
     //add the mouse coordinates on the screen
-    textSize(20);
+    /* textSize(20);
     fill(0);
     stroke(256);
     strokeWeight(4);
-    text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY);
+    text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY); */
 
     camera.on();
   
@@ -164,23 +167,48 @@ class AllMapsSetupDisplay {
     this.pauseButton.setPosition(windowWidth/2.5, windowHeight/18);
     this.defaultControlButton.setPosition(windowWidth*2/3, windowHeight/18);
     this.alternativeControlButton.setPosition(windowWidth*2/3, windowHeight*3/18);
+    this.exitButton.setPosition(windowWidth*4/5, windowHeight/18);
+    this.repairButton.setPosition(windowWidth*2/3, windowHeight/18);
+
+
+    if (!(this.isPaused)) {
+      this.defaultControlButton.hideButton();
+      this.alternativeControlButton.hideButton();
+      this.exitButton.showButton();
+      this.repairButton.showButton();
+    } else {
+      this.exitButton.hideButton();
+      this.defaultControlButton.showButton();
+      this.alternativeControlButton.showButton();
+      this.repairButton.hideButton();
+    }
+
+
 
     this.moveCamera();
 
     if (this.playerCfg.isHealthZero()){
-      shipBreakSound.play();
+      if (soundOn) {
+        shipBreakSound.play();
+      }
       this.clearSprites();
       this.pauseButton.remove();
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
+      this.exitButton.remove();
+      this.repairButton.remove();
       state = GameState.LOSE;
     }
     if (kb.pressed('q') || finishLineCrossed){ 
-      winSound.play();
+      if (soundOn) {
+        winSound.play();
+      }
       this.clearSprites();
       this.pauseButton.remove();
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
+      this.exitButton.remove();
+      this.repairButton.remove();
       state = GameState.WIN;
       finishLineCrossed = false;
     }
@@ -190,8 +218,20 @@ class AllMapsSetupDisplay {
       this.pauseButton.remove();
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
+      this.exitButton.remove();
+      this.repairButton.remove();
       state = GameState.START_SCREEN;
     }
+  }
+
+  buttonExit() {
+    this.clearSprites();
+    this.pauseButton.remove();
+    this.defaultControlButton.remove();
+    this.alternativeControlButton.remove();
+    this.exitButton.remove();
+    this.repairButton.remove();
+    state = GameState.START_SCREEN;
   }
 
   displayBackground(){
@@ -203,7 +243,7 @@ class AllMapsSetupDisplay {
     let proximity = 2560;
     imageMode(CENTER);
     // for a box of size 10000 by 10000 pixels fill it with copies of the image ONLY if the player is close
-    for(let x = -5000; x < 5000; x += tileWidth) {
+    for(let x = -5000; x < 11000; x += tileWidth) {
       for(let y = -5000; y < 5000; y += tileHeight){
         //is distance of player to nearest image tile less than proximity pixels?
         let visualRadius = dist(this.player.x, this.player.y, x, y);
@@ -253,7 +293,7 @@ class AllMapsSetupDisplay {
     }
     else {
       //this.pauseButton.setColour("skyblue");
-      this.pauseButton.setLabel("PLAY");
+      this.pauseButton.setLabel("Play");
       this.pauseButton.show();
       this.pauseGame();
       this.isPaused = true;

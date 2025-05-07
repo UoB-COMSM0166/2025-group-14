@@ -131,7 +131,7 @@ function draw() {
         difficultyLevel = 0; //i.e. the default seleciton
       }
       game_screen = LevelController.getLevel(selectedMap);
-      difficulty_screen.resetSelectedDifficulty();
+      //difficulty_screen.resetSelectedDifficulty();
       map_selection_screen.resetSelectedMapId();
     }
   }
