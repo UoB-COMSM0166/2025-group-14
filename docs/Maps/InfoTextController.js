@@ -60,9 +60,9 @@ class InfoTextController{
     }
 
     static getInfoText2(){
-        let line1 = "Sweep around corners in this wide canal section.";
-        let line2 = "Watch out - there's a fast moving lock ahead!";
-        let line3 ="";
+        let line1 = "Lets start it out nice and easy";
+        let line2 = "Sweep around corners in this wide canal section.";
+        let line3 = "Watch out - there's a fast moving lock ahead!";
         let line4 ="";
         let line5 ="";
         let line6 ="";
