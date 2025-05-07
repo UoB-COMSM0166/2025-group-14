@@ -31,18 +31,38 @@
 
 ### Contents
 
-[1 – Introduction](#1---introduction)
-- [Game Ideas](#game-ideas)
-[2 – Requirements](#2---requirements)
-- [Identifying stakeholders](#1---introduction)
-- [Epics](#epics)
-- [User stories](#user-stories)
-[3 – Design](#3---design)
-[4 – Implementation](#4---implementation)
-[5 – Evaluation](#5---evaluation)
-[6 – Process](#6---process)
-[7 – Sustainability, ethics and accessibility](#7---sustainability-ethics-and-accessibility)
-[8 – Conclusion](#8---conclusion)
+## Contents
+
+- [1 – Introduction](#1-introduction)
+  - [Game Ideas](#game-ideas)
+- [2 – Requirements](#2-requirements)
+  - [Identifying stakeholders](#identifying-stakeholders)
+  - [Epics](#epics)
+  - [User stories](#user-stories)
+  - [Paper prototype](#paper-prototyping-and-early-stage-design)
+  - [Requirements reflection](#requirements-reflection)
+- [3 – Design](#3-design)
+  - [Player](#player-sprite-playerconfig-class-and-player-mechanics)
+  - [Pursuer](#pursuer-pursuerconfig-class-and-pursue-mechanics)
+  - [Canals and locks](#canalmap-class-and-the-locks-mechanics)
+  - [Health](#health-mechanic-the-interaction-between-canalmap-player-and-pursuer-objects)
+  - [Difficulty setting](#game-difficulty-mechanic)
+  - [User interface](#user-interface-classes)
+  - [UML class diagram](#uml-class-diagram-of-the-entire-game)
+  - [UML sequence diagrams](#uml-sequence-diagrams-of-non-gameplay-classes)
+- [4 – Implementation](#4-implementation)
+  - [Challenge 1](#challenge-1-building-the-canal-maps)
+  - [Challenge 2](#challenge-2-movement-and-collision-mechanics)
+- [5 – Evaluation](#5-evaluation)
+  - [Qualitative (Think aloud)](#qualitative-evaluation)
+  - [Quantitative (NASA TLX)](#quantitative-evaluation)
+- [6 – Process](#6-process)
+ - [Pair programming](#pair-programming)
+ - [Tools (Jira, VS code, Git)](#jira)
+- [7 – Sustainability, ethics & accessibility](#7-sustainability-ethics--accessibility)
+ -[Green software patterns](#green-software-patterns)
+- [8 – Conclusion](#8-conclusion)
+
 
 ### 1 - Introduction
 
