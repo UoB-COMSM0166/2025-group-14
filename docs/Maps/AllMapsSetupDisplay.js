@@ -28,6 +28,7 @@ class AllMapsSetupDisplay {
     this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
     this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
     this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
+    this.exitButton = new Button("Exit", windowWidth*5/6, windowHeight/18, 'seagreen', 20, this.buttonExit.bind(this));
     this.isPaused = false;
   }
 
@@ -164,6 +165,20 @@ class AllMapsSetupDisplay {
     this.pauseButton.setPosition(windowWidth/2.5, windowHeight/18);
     this.defaultControlButton.setPosition(windowWidth*2/3, windowHeight/18);
     this.alternativeControlButton.setPosition(windowWidth*2/3, windowHeight*3/18);
+    this.exitButton.setPosition(windowWidth*4/5, windowHeight/18);
+
+
+    if (!(this.isPaused)) {
+      this.defaultControlButton.hideButton();
+      this.alternativeControlButton.hideButton();
+      this.exitButton.showButton();
+    } else {
+      this.exitButton.hideButton();
+      this.defaultControlButton.showButton();
+      this.alternativeControlButton.showButton();
+    }
+
+
 
     this.moveCamera();
 
@@ -173,6 +188,7 @@ class AllMapsSetupDisplay {
       this.pauseButton.remove();
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
+      this.exitButton.remove();
       state = GameState.LOSE;
     }
     if (kb.pressed('q') || finishLineCrossed){ 
@@ -181,6 +197,7 @@ class AllMapsSetupDisplay {
       this.pauseButton.remove();
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
+      this.exitButton.remove();
       state = GameState.WIN;
       finishLineCrossed = false;
     }
@@ -190,8 +207,18 @@ class AllMapsSetupDisplay {
       this.pauseButton.remove();
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
+      this.exitButton.remove();
       state = GameState.START_SCREEN;
     }
+  }
+
+  buttonExit() {
+    this.clearSprites();
+    this.pauseButton.remove();
+    this.defaultControlButton.remove();
+    this.alternativeControlButton.remove();
+    this.exitButton.remove();
+    state = GameState.START_SCREEN;
   }
 
   displayBackground(){
