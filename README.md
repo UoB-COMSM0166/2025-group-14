@@ -60,7 +60,7 @@
    - [Pair programming](#pair-programming)
    - [Tools (Jira, VS code, Git)](#jira)
 - [7 – Sustainability, ethics & accessibility](#7-sustainability-ethics--accessibility)
-    -[Green software patterns](#green-software-patterns)
+    - [Green software patterns](#green-software-patterns)
 - [8 – Conclusion](#8-conclusion)
 
 
