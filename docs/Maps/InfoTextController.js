@@ -116,10 +116,10 @@ class InfoTextController{
     static getInfoText5(){
         let line1 = "Around and around you go...";
         let line2 = "Can you escape the Snailshell Spiral...before the pursuer catches up?";
-        let line3 ="Watch out for the locks...and keep an eye on their depth!";
-        let line4 ="Remember: timing is everything...";
-        let line5 ="";
-        let line6 =";
+        let line3 = "Watch out for the locks...and keep an eye on their depth!";
+        let line4 = "Remember: timing is everything...";
+        let line5 = "";
+        let line6 = ";
 
         return {
             1: line1,
