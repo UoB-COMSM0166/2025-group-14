@@ -42,12 +42,12 @@ class InfoTextController{
     }
 
     static getInfoText1(){
-        let line1 = "This is line 1!";
-        let line2 = "This is line 2!";
-        let line3 ="This is line 3!";
-        let line4 ="This is line 4!";
-        let line5 ="This is line 5!";
-        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+        let line1 = "A long and winding canal with a couple 'forks' ahead.";
+        let line2 = "Choose your path wisely, as you are being pursued from afar, slowly but surely.";
+        let line3 = "All is not as serene as it may at first appear.";
+        let line4 ="";
+        let line5 ="";
+        let line6 ="";
 
         return {
             1: line1,
