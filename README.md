@@ -35,10 +35,18 @@ Add a group photo here!
 
 ## Project Report
 
-### Introduction
+### Contents
 
-- 5% ~250 words 
-- Describe your game, what is based on, what makes it novel?
+- [1 – Introduction](#1---introduction)
+- [2 – Requirements](#2---requirements)
+- [3 – Design](#3---design)
+- [4 – Implementation](#4---implementation)
+- [5 – Evaluation](#5---evaluation)
+- [6 – Process](#6---process)
+- [7 – Sustainability, ethics and accessibility](#7---sustainability-ethics-and-accessibility)
+- [8 – Conclusion](#8---conclusion)
+
+### 1 - Introduction
 
 Our game draws from the vehicle pursuit sections of titles like GTA but shifts the settings to the pastoral English canal network. Your boat must reach the end of a long, narrow waterway while avoiding by the pursuing vessel. As any boater will confirm, vessels need regular maintenance, so our unique mechanic is our health system: your boat, in addition to taking damage from collisions with the bank, will gradually incur damage over time. The player can, at any time, do “maintenance” to restore the boat to full health, at the cost of a 3 second stop. Repairing too frequently can thus make the player easy prey, while leaving it too late risks losing all health and failing. 
 
@@ -62,10 +70,7 @@ Top down lightly humorous chase game where you, on a canalboat, must flee a purs
 Platformer style game where you are an Android in the year 2442. An evil conglomerate has stolen parts from you and your mission is to get these back before it's too late and you become obsolete. Along the way you have to go through levels and solve small puzzles and problems to progress. Problems to deal with include lasers, trap doors, and traps. The tools at your disposal include jet packs, teleportation and hacking. These are upgrades that you get as you find the parts and progress through the levels.
 
 
-### Requirements 
-
-- 15% ~750 words
-- Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop?
+### 2 - Requirements 
 
 [Game Requirements - stakeholders, epics, user stories and acceptance criteria](https://github.com/UoB-COMSM0166/2025-group-14/blob/main/Requirements/GameRequirements.txt)
 
@@ -130,7 +135,7 @@ We later discussed during early team meetings what features to implement at each
 These features constituted the first version of our product backlog (as represented by the To Do list of our Jira Kanban board), and roughly define work completed over the first and second sprints (first stage features were implemented in sprint 1 and second phase features were implemented in sprint 2, though this is overly simplistic as development of some features did overlap both sprints, and it does not allow for the extensive refactor undertaken between the two sprints).
 
 
-### Requirements Reflection
+#### Requirements Reflection
 Initially we had some difficulty distinguishing between the Initiative, Epic, and User Story, as each one requires a different level of specificity - and this specificity may vary between different teams due to factors such as the length of their sprints. However, we quickly established that our sprints will be short (not more than one week), and that the categories should be thought of as follows:
 
 (1) **Initiative** = largest overview/goal; one Initiative is made up of several Epics.
@@ -148,7 +153,7 @@ We also quickly realised the utility of Agile development, as it can be difficul
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
-### Design
+### 3 - Design
 
 Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js and p5play libraries. One of the advantages of utilising JavaScript in an Agile software development team is building the application using Object Oriented Programming. Specifically, our team has extensively utilised aggregation (e.g. the button class) and composition (e.g. the playerConfig class) to create modular code, which allowed us to maintain, change or build upon existing modules easily without it affecting the general structure.   
 
@@ -203,11 +208,7 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 ![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
-### Implementation
-
-- 15% ~750 words
-
-- Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
+### 4 - Implementation
 
 Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, and (2) the movement and collision mechanics of the game (including the pursuer AI), which necessitated a major refactor partway through our development process. These challenges are described below.
 
@@ -240,9 +241,7 @@ One interesting solution we experimented with was an implementation of the [A* s
 Instead, we implemented a vision-based system where the pursuer follows the player while in sight. If the player is lost, the pursuer heads to the last seen point and either chases the player (if visible) or pursues the next “last seen point” from the previous “last seen point”. This approach ensures efficient performance while maintaining intelligent pathfinding to keep the gameplay engaging.
 
 
-### Evaluation
-
-- 15% ~750 words
+### 5 - Evaluation
 
 #### Qualitative Evaluation
 
@@ -333,9 +332,49 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 - **Performance**: We expected the difference not to be statistically significant because of the way the nature of the task (make *n* number of laps around a canal circuit). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was alternated.
 - **Frustration**: At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
 
+### 6 - Process
 
+![Example of us on a teams call](/./Images/teams_call.jpeg)
 
-### Sustainability Analysis
+For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
+
+We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, members of our team did develop specialisms and tended to work on similar aspects of the game. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
+
+As we went into the active development stage we formalised meetings into twice weekly scrum-style stand ups. Each session would involve a general discussion on what we were working on for that sprint, any challenges that had come up, and what support we might need. 
+
+Below is a rough timeline and description of our sprints with each taking 1-3 weeks.
+
+| Sprint No     |  Description  |
+| ------------- |-------------|
+|1 - Calm before the storm     | Implemented core stage 1 features such as the map, player, and pursuer.     |
+| 2 - The Storm      | Attempted to implement stage 2 features like locks. Technical issues in this sprint led to a major refactor.   |
+| 3 - New Beginnings      | Rebuilt the game from the ground up in a week, using the p5Play library to avoid collision issues.     |
+|4 - Additional features   | Introduced more complex features, including locks and advanced maps.    |
+| 5 - Operation Beautification   | Focused on improving the visual and audio aspects of our game.     |
+| 6 - Crossing the line    | Final testing and debugging up to the hand-in date.    |
+
+#### Pair programming
+
+Outside of our stand-up meetings, we often arranged separate individual meetings to sort out issues using pair programming. We found pair programming was excellent for working through complex merges in our git repository.  By working on a single screen with both contributors present we were able to quickly merge branches together while also being able to explain any nuances in our code to one another.
+
+#### Jira
+We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
+
+![Screenshot of our Kanban](/./Images/jira_screenshot.png)
+
+#### VS Code 
+Many of our team used VS code as their preferred IDE for this project as there are several useful plugins such as p5Play and Live server. These both allowed us to test game features quickly and view real-time changes directly in the browser.
+
+#### Git
+Git (and GitHub) was central to our development process. Our general approach was to create feature branches off the main branch and merge them back in once ready. This model allowed us to work asynchronously without the risk of conflicts on the main branch. For some features we also used pull requests to review changes before they were pushed and git’s commit history let us track the timeline of when and how features were added. 
+
+#### Communication tools
+The main forms of communication we used in the project were teams and WhatsApp. As mentioned, we would meet on teams regularly and make use of the share screen feature to talk through new features. For smaller updates we relied on a WhatsApp group chat which we made extensive use of over the term.
+
+#### Process Reflection
+We found that our flexible approach to team roles and regular scrum-style meetings worked well, as it gave everyone broad knowledge of the codebase and kept communication regular. This proved particularly valuable during unforeseen issues - such as the major refactor in sprint 3 - as no role changes were needed and everyone was able to contribute across different parts of the game without the workload falling too heavily on any one individual.
+
+### 7 - Sustainability, ethics and accessibility
 
 We conducted an analysis of the sustainability impacts of our game, based on the Sustainability Awareness Framework (https://www.suso.academy/en/sustainability-awareness-framework-susaf/).
 
@@ -380,55 +419,7 @@ We maintain a single CSS file to reduce the amount of requests and amount of tim
 **(3) Remove unused assets**
 We regularly (after each sprint and integration) scan the assets we are storing and remove any unused assets.
 
-### Process 
-
-- 15% ~750 words
-
-- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together.
-
-![Example of us on a teams call](/./Images/teams_call.jpeg)
-
-
-For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
-
-We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, members of our team did develop specialisms and tended to work on similar aspects of the game. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
-
-As we went into the active development stage we formalised meetings into twice weekly scrum-style stand ups. Each session would involve a general discussion on what we were working on for that sprint, any challenges that had come up, and what support we might need. 
-
-Below is a rough timeline and description of our sprints with each taking 1-3 weeks.
-
-| Sprint No     |  Description  |
-| ------------- |-------------|
-|1 - Calm before the storm     | Implemented core stage 1 features such as the map, player, and pursuer.     |
-| 2 - The Storm      | Attempted to implement stage 2 features like locks. Technical issues in this sprint led to a major refactor.   |
-| 3 - New Beginnings      | Rebuilt the game from the ground up in a week, using the p5Play library to avoid collision issues.     |
-|4 - Additional features   | Introduced more complex features, including locks and advanced maps.    |
-| 5 - Operation Beautification   | Focused on improving the visual and audio aspects of our game.     |
-| 6 - Crossing the line    | Final testing and debugging up to the hand-in date.    |
-
-#### Pair programming
-
-Outside of our stand-up meetings, we often arranged separate individual meetings to sort out issues using pair programming. We found pair programming was excellent for working through complex merges in our git repository.  By working on a single screen with both contributors present we were able to quickly merge branches together while also being able to explain any nuances in our code to one another.
-
-#### Jira
-We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
-
-![Screenshot of our Kanban](/./Images/jira_screenshot.png)
-
-#### VS Code 
-Many of our team used VS code as their preferred IDE for this project as there are several useful plugins such as p5Play and Live server. These both allowed us to test game features quickly and view real-time changes directly in the browser.
-
-#### Git
-Git (and GitHub) was central to our development process. Our general approach was to create feature branches off the main branch and merge them back in once ready. This model allowed us to work asynchronously without the risk of conflicts on the main branch. For some features we also used pull requests to review changes before they were pushed and git’s commit history let us track the timeline of when and how features were added. 
-
-#### Communication tools
-The main forms of communication we used in the project were teams and WhatsApp. As mentioned, we would meet on teams regularly and make use of the share screen feature to talk through new features. For smaller updates we relied on a WhatsApp group chat which we made extensive use of over the term.
-
-#### Process Reflection
-We found that our flexible approach to team roles and regular scrum-style meetings worked well, as it gave everyone broad knowledge of the codebase and kept communication regular. This proved particularly valuable during unforeseen issues - such as the major refactor in sprint 3 - as no role changes were needed and everyone was able to contribute across different parts of the game without the workload falling too heavily on any one individual.
-
-
-### Conclusion
+### 8 - Conclusion
 
 This project proved to be challenging but very rewarding; we gained invaluable experience and picked up many new skills. We learnt about the entire Software Development Lifecycle, put Agile development into practice, successfully developed a complex game, and documented the entire process.
 
@@ -466,15 +457,3 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 
 ![Raw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
 
-
-### Additional Marks
-
-You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
-
-- **Quality** of report writing, presentation, use of figures and visual material (5%) 
-  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available.
-
-- **Documentation** of code (5%)
-
-  - Is your repo clearly organised? 
-  - Is code well commented throughout?
