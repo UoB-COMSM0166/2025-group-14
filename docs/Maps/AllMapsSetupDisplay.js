@@ -141,11 +141,11 @@ class AllMapsSetupDisplay {
     this.displayBackground();
 
     //add the mouse coordinates on the screen
-    textSize(20);
+    /* textSize(20);
     fill(0);
     stroke(256);
     strokeWeight(4);
-    text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY);
+    text(`x: ${mouse.x} y: ${mouse.y}`, mouseX, mouseY); */
 
     camera.on();
   
