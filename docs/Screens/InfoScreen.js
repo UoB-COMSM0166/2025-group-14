@@ -22,6 +22,9 @@ class InfoScreen {
         this.textLine4 = "";
         this.textLine5 = "";
         this.textLine6 = "";
+
+        this.returnToMapSelection = new Button("Return to map selection", windowWidth/6, windowHeight*5/6, 'seagreen', 30, this.returnToMapSelectionScreen.bind(this));
+        this.returnToMapSelection.hide();
     }
     
 
@@ -39,6 +42,9 @@ class InfoScreen {
         let duckY = windowHeight*0.1;
         let duckSpacing = windowWidth*0.1;
         let numberOfDucks = 9;
+
+        this.returnToMapSelection.show();
+        this.returnToMapSelection.setPosition(windowWidth/6, instructionY+(instructionSpacing*6.5) - 10);
 
         for (let i = 0; i < numberOfDucks; i++) {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
@@ -59,10 +65,15 @@ class InfoScreen {
         text("Press [SPACE] to continue", windowWidth/2, instructionY+(instructionSpacing*6.5));
         
         textSize(10);
+
+        
         // Transition to gameplay screen when player presses the SPACE key
         if (state === GameState.INFO_SCREEN && kb.pressed(' ')) {
-          state = GameState.PLAY_GAME;
+            this.returnToMapSelection.hide();
+            state = GameState.PLAY_GAME;
         }
+
+        
     }
 
     //update text with values from InfoTextController
@@ -77,4 +88,9 @@ class InfoScreen {
         this.textLine6 = textArray[6];
     }
 
+
+    returnToMapSelectionScreen() {
+        this.returnToMapSelection.hide();
+        state = GameState.MAP_SELECTION_SCREEN;
+    }
 }
