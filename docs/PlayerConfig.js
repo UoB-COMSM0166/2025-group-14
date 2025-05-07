@@ -7,6 +7,10 @@ class PlayerStatus {
   static isValid(status) {
       return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
   }
+
+  // this.alternativeControls = false;
+
+  static alternativeControls = false;
 }
 
 
@@ -45,8 +49,6 @@ class PlayerConfig {
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
     this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
-
-    this.alternativeControls = false;
   }
 
   camera() {
@@ -64,7 +66,7 @@ class PlayerConfig {
   movement(damageOn = true, healthOn = true) {
 
 
-    if (this.alternativeControls) {
+    if (PlayerStatus.alternativeControls) {
       let acc = 0;
 
       if (kb.pressing('left')) this.playerSprite.rotationSpeed = -2;
@@ -162,12 +164,12 @@ class PlayerConfig {
 
   setStandardControls(){
     // this.standardControls = true;
-    this.alternativeControls = false;
+    PlayerStatus.alternativeControls = false;
   }
   
   setAlternativeControls(){
     // this.standardControls = false;
-    this.alternativeControls = true;
+    PlayerStatus.alternativeControls = true;
   }
 
   debug() {
