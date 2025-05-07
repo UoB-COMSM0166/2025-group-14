@@ -167,7 +167,7 @@ class TutorialSetupDisplay {
         let tileWidth = 778;
         let tileHeight = 545;
         //chose a proximity thats the size of a large screen (should work on lab machine with no pop in)
-        let proximity = 2560;
+        let proximity = 5000;
         imageMode(CENTER);
         // for a box of size 10000 by 10000 pixels fill it with copies of the image ONLY if the player is close
         for(let x = -5000; x < 5000; x += tileWidth) {

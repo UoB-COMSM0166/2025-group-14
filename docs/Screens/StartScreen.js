@@ -31,7 +31,7 @@ class StartScreen {
         text("Welcome to", centerX, centerY-100);
         textSize(50);
         stroke(4);
-        text("NARROWBOAT CHASE!", centerX, centerY);
+        text("CANAL CHASE!", centerX, centerY);
         textSize(20);
         stroke(2);
         //update position of button in case of resizing

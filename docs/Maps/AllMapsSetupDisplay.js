@@ -243,7 +243,7 @@ class AllMapsSetupDisplay {
     let proximity = 2560;
     imageMode(CENTER);
     // for a box of size 10000 by 10000 pixels fill it with copies of the image ONLY if the player is close
-    for(let x = -5000; x < 10000; x += tileWidth) {
+    for(let x = -5000; x < 11000; x += tileWidth) {
       for(let y = -5000; y < 5000; y += tileHeight){
         //is distance of player to nearest image tile less than proximity pixels?
         let visualRadius = dist(this.player.x, this.player.y, x, y);
