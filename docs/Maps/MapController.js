@@ -197,7 +197,7 @@ class MapController {
         let c3 = new canal(500, 4, 200, player);
         let c4 = new canal(400, 2, 200, player);
         let c5 = new canal(400, 11, 200, player);
-        let c6 = new canal(1200, 3, 150, player);
+        let c6 = new lock(1200, 3, 150, player, 1, 1.5);
         let c7 = new canal(700, 7, 150, player);
         let c8 = new canal(500, 3, 150, player);
         let c9 = new canal(700, 7, 150, player);

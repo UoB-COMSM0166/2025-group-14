@@ -25,11 +25,11 @@ class InfoTextController{
 
     static getInfoTextDefault(){
         let line1 = "OH NO! One moment you were enjoying the peaceful idyll of life on the canal - just you, your narrowboat, and the occasional duck - and the next, you are being chased by [....]!";
-        let line2 = "You must reach [...] without being caught! Use the arrow keys to navigate your boat along the canal.";
-        let line3 ="But be careful: banging into the canal walls with cause your boat to take damage. Your boat may also take some damage over time.";
-        let line4 ="You can choose to stop and make repairs at any time by pressing the 'r' key...but watch out for the pursuer on your tail!";
-        let line5 ="Be warned: if your health reaches zero, you will be forced to stop until the repairs are complete. More substantial damage means a longer wait for repairs!";
-        let line6 ="One last thing: you can press [Esc] key at any time to go back to the Start Menu.";
+        let line2 = "This tutorial will teach you the basics of how to play";
+        let line3 = "You can press [Esc] key at any time to go back to the Start Menu";
+        let line4 = ""
+        let line5 = "";
+        let line6 = ""
 
         return {
             1: line1,
@@ -42,12 +42,12 @@ class InfoTextController{
     }
 
     static getInfoText1(){
-        let line1 = "This is line 1!";
-        let line2 = "This is line 2!";
-        let line3 ="This is line 3!";
-        let line4 ="This is line 4!";
-        let line5 ="This is line 5!";
-        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+        let line1 = "A long and winding canal with a couple 'forks' ahead.";
+        let line2 = "Choose your path wisely, as you are being pursued from afar, slowly but surely.";
+        let line3 = "All is not as serene as it may at first appear.";
+        let line4 ="";
+        let line5 ="";
+        let line6 ="";
 
         return {
             1: line1,
@@ -60,12 +60,12 @@ class InfoTextController{
     }
 
     static getInfoText2(){
-        let line1 = "This is line 1!";
-        let line2 = "This is line 2!";
-        let line3 ="This is line 3!";
-        let line4 ="This is line 4!";
-        let line5 ="This is line 5!";
-        let line6 ="Wooo line 6! How about you fill me in using the InfoTextController class in maps :)";
+        let line1 = "Lets start it out nice and easy";
+        let line2 = "Sweep around corners in this wide canal section.";
+        let line3 = "Watch out - there's a fast moving lock ahead!";
+        let line4 ="";
+        let line5 ="";
+        let line6 ="";
 
         return {
             1: line1,
