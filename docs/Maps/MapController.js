@@ -76,104 +76,117 @@ class MapController {
     }
     
     static getMap1(player) {
-        let stdWidth = 150
-        let stdLength = 300
+        // Map creation variables. Values for straight segments
+        let stdWidth = 150;
+        let stdLength = 300;
+        let midPoint = 3;
+        // Values for snaking segments
+        let gradient = 0.1;
+        let sineLength = 15;
+        let trough = 4;
+        let peak = 2;
 
-        let mid = 3
-        let gradient = 0.1
-        let trough = 4
-        let peak = 2
-        let length = 15
+        // Map segments.
+        // Network one. Initial stretch of map. pursuer is placed far behind the player to begin with, out of sight.
+        let seg1 = new canal(stdLength+1800, 2.8, stdWidth, player);
+        let lockSeg1 = new lock(100, 2.8, stdWidth, player, 2, 4);
+        let seg2 = new canal(100, 2.9, stdWidth, player, false);
 
-        let snakeSegment = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
-        peak -= 1
-        trough += 1
-        let snakeSegment2 = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
-        peak += 1
-        trough -= 1
+        // Looping section that serves as an entry point to the forks
+        // Peak and trough change the contour of the snaking segments
+        let sineChain1 = this.getSineChain(midPoint, gradient, trough, peak, sineLength, stdWidth, player);
+        peak -= 1;
+        trough += 1;
+        let sineChain2 = this.getSineChain(midPoint, gradient, trough, peak, sineLength, stdWidth, player);
 
-
-        // fork
-
-        let c1 = new canal(stdLength+1800, 2.8, stdWidth, player)
-        let c155 = new lock(100, 2.8, stdWidth, player, 2, 4)
-        let c1575 = new canal(100, 2.9, stdWidth, player, false)
-        let c2 = new canal(stdLength, 2.5, stdWidth, player)
-        let c25 = new canal(stdLength/2, 2, stdWidth, player)
-        let c3 = new lock(stdLength/4, 2, stdWidth, player, 2, 4)
-        let c35 = new canal(stdLength/2, 2, stdWidth, player)
-        let c4 = new canal(stdLength, 2.5, stdWidth, player)
-        let c7s = this.snake(mid, gradient, trough, peak+1, length-10, stdWidth, player)
-
-        let c5 = new canal(stdLength-100, 4, stdWidth, player)
-        let c55 = new canal(stdLength-100, 4, stdWidth, player)
-        let c6 = new canal(stdLength+200, 3.5, stdWidth, player)
-        let c6l = new lock(stdLength-100, 3.5, stdWidth, player, 3, 3)
-        let c65 = new canal(stdLength, 3.5, stdWidth, player)
-        let c8s = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
-        let c9s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
-        let c10s = this.snake(mid, gradient, trough+2, peak, length-5, stdWidth, player)
-        let c11 = new canal(stdLength, 3.5, stdWidth, player)
-        let c12 = new canal(stdLength+300, 3.5, stdWidth, player)
-        let c12b = new lock(stdLength, 3.4, stdWidth, player, 2, 3)
-        let c12a = new lock(stdLength, 3.4, stdWidth, player, 1, 3)
-        let c11s = this.snake(mid, gradient, trough, peak, length, stdWidth, player)
-        let c13 = new canal(stdLength+100, 4, stdWidth, player)
-        let c14 = new canal(stdLength+100, 4, stdWidth, player)
-
-
-        // curve
-        let curve = []
-        for (let i = 3; i < 5; i+=0.2) {
-            curve.push(new canal(50, i, stdWidth, player, false))
+        let seg3 = new canal(stdLength, 2.5, stdWidth, player);
+        let seg4 = new canal(stdLength/2, 2, stdWidth, player);
+        // lock between two forks
+        let lockSeg2 = new lock(stdLength/4, 2, stdWidth, player, 2, 4);
+        let seg5 = new canal(stdLength/2, 2, stdWidth, player);
+        let seg6 = new canal(stdLength, 2.5, stdWidth, player);
+        // Curving section approaching the loop in top right
+        peak += 1;
+        trough -= 1;
+        let sineChain3 = this.getSineChain(midPoint, gradient, trough, peak+1, sineLength-10, stdWidth, player);
+        let sineChain4 = this.getSineChain(midPoint, gradient, trough, peak, sineLength, stdWidth, player);
+        let curveChain1 = [];
+        for (let i = 3; i < 5; i+=0.2) {;
+            curveChain1.push(new canal(50, i, stdWidth, player, false));
         }
+        let seg7 = new canal(stdLength+100, 4, stdWidth, player);
 
-        let loop = []
-        for (let i = 6; i > 0; i-=0.5) {
-            loop.push(new canal(100, i-2%12, stdWidth, player, false))
-        }
-        let c15 = new lock(stdLength+200, 10, stdWidth, player, 3, 5)
+        // Network two
+        let seg8 = new canal(stdLength-100, 4, stdWidth, player);
+        let seg9 = new canal(stdLength-100, 4, stdWidth, player);
+        let lockSeg3 = new lock(stdLength-100, 3.5, stdWidth, player, 3, 3);
+        let seg10 = new canal(stdLength, 3.5, stdWidth, player);
+        // 'snaking' section followed by a connection back to network three
+        let sineChain5 = this.getSineChain(midPoint, gradient, trough, peak, sineLength-5, stdWidth, player);
+        let sineChain6 = this.getSineChain(midPoint, gradient, trough+2, peak, sineLength-5, stdWidth, player);
+        let seg11 = new canal(stdLength, 3.5, stdWidth, player);
 
-        let loop2 = []
-        for (let i = 9; i > 5; i-=0.5) {
-            loop2.push(new canal(110, i%12, stdWidth, player, false))
-        }
-
-
-        let c12s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
-        let c13s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
-        peak -= 1
-        trough += 1
-        let c14s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
-        peak -= 1
-        trough += 1
-        let c15s = this.snake(mid, gradient, trough, peak, length-5, stdWidth, player)
-        // curve
-        let curve2 = []
+        // Network three
+        let seg12 = new canal(stdLength+200, 3.5, stdWidth, player);
+        let sineChain7 = this.getSineChain(midPoint, gradient, trough, peak, sineLength, stdWidth, player);
+        let lockSeg4 = new lock(stdLength, 3.4, stdWidth, player, 2, 3);
+        let seg13 = new canal(stdLength+300, 3.5, stdWidth, player);
+        let lockSeg5 = new lock(stdLength, 3.4, stdWidth, player, 1, 3);
+        // Long snaking section leading to the end of the map
+        let sineChain8 = this.getSineChain(midPoint, gradient, trough, peak, sineLength-5, stdWidth, player);
+        let sineChain9 = this.getSineChain(midPoint, gradient, trough, peak, sineLength-5, stdWidth, player);
+        peak -= 1;
+        trough += 1;
+        let sineChain10 = this.getSineChain(midPoint, gradient, trough, peak, sineLength-5, stdWidth, player);
+        peak -= 1;
+        trough += 1;
+        let sineChain11 = this.getSineChain(midPoint, gradient, trough, peak, sineLength-5, stdWidth, player);
+        // curve;
+        let curveChain2 = [];
         for (let i = 3; i < 6; i+=0.2) {
-            curve2.push(new canal(50, i, stdWidth, player, false))
+            curveChain2.push(new canal(50, i, stdWidth, player, false));
+        }
+        // Final lock obstacle course to finish. Locks increase in speed and difficulty
+        let seg14 = new canal(stdLength, 6.3, stdWidth, player);
+        let lockSeg6 = new lock(stdLength, 6.3, stdWidth, player, 2, 3);
+        let seg15 = new canal(stdLength, 6.3, stdWidth, player);
+        let lockSeg7 = new lock(stdLength, 6.5, stdWidth, player, 1, 1.5);
+        let seg16 = new canal(stdLength, 6.5, stdWidth, player);
+        let lockSeg8 = new lock(stdLength, 6.2, stdWidth, player, 1, 1);
+        let seg17 = new canal(stdLength, 6.2, stdWidth, player);
+        let seg18 = new canal(stdLength, 6, stdWidth, player);
+        // finish line
+        let seg19 = new canal(stdLength, 6, stdWidth, player, true, true);
+
+        // Dead end loop
+        let seg23 = new canal(stdLength+100, 4, stdWidth, player);
+        let curveChainTwo = [];
+        for (let i = 6; i > 0; i-=0.5) {
+            curveChainTwo.push(new canal(100, i-2%12, stdWidth, player, false));
+        }
+        let lockSeg9 = new lock(stdLength+200, 10, stdWidth, player, 3, 5);
+        let curveChainThree = [];
+        for (let i = 9; i > 5; i-=0.5) {
+            curveChainThree.push(new canal(110, i%12, stdWidth, player, false));
         }
 
-        let c162 = new canal(stdLength, 6.3, stdWidth, player)
-        let c16 = new lock(stdLength, 6.3, stdWidth, player, 2, 3)
-        let c165 = new canal(stdLength, 6.3, stdWidth, player)
-        let c17 = new lock(stdLength, 6.5, stdWidth, player, 1, 1.5)
-        let c175 = new canal(stdLength, 6.5, stdWidth, player)
-        let c18 = new lock(stdLength, 6.2, stdWidth, player, 1, 1)
-        let c185 = new canal(stdLength, 6.2, stdWidth, player)
-        let c19 = new canal(stdLength, 6, stdWidth, player)
-        let c20 = new canal(stdLength, 6, stdWidth, player, true, true)
+        // Canal networks
+        let networkOne = new CanalNetwork(
+            0, 0, [seg1, lockSeg1, seg2, sineChain1, sineChain2, seg3, seg4, lockSeg2, seg5, seg6, sineChain3, sineChain4, curveChain1, seg7],
+            [[seg3, seg8], [seg6, seg12], [seg7, seg23]]);
+        let networkTwo = new CanalNetwork(3900, 250, [seg8, seg9, lockSeg3, seg10, sineChain5, sineChain6, seg11], [[seg11, seg13]]);
+        let networkThree = new CanalNetwork(
+            4500, 0, [seg12, sineChain7, lockSeg4, seg13, lockSeg5, sineChain8, sineChain9, sineChain10, sineChain11, curveChain2, seg14, lockSeg6,
+                      seg15, lockSeg7, seg16, lockSeg8, seg17, seg18, seg19], []);
+        let deadEndLoop = new CanalNetwork(6000, -650, [seg23, curveChainTwo, lockSeg9, curveChainThree], [], true);
 
-
-        let mainNetwork = new CanalNetwork(0, 0, [c1, c155, c1575, snakeSegment, snakeSegment2, c2, c25, c3, c35, c4, c7s, c11s, curve, c14], [[c2, c5], [c4, c6], [c14, c13]])
-        let secondNetwork = new CanalNetwork(3900, 250, [c5, c55, c6l, c65, c9s, c10s, c11], [[c11, c12]])
-        let thirdNetwork = new CanalNetwork(4500, 0, [c6, c8s, c12b, c12, c12a, c12s, c13s, c14s, c15s, curve2, c162, c16, c165, c17, c175, c18, c185, c19, c20], [])
-        let loopEnd = new CanalNetwork(6000, -650, [c13, loop, c15, loop2], [], true)
-
-        return new CanalMap(player, false, [mainNetwork, secondNetwork, thirdNetwork, loopEnd])
+        // Networks collected together and returned to caller
+        return new CanalMap(player, false, [networkOne, networkTwo, networkThree, deadEndLoop]);
     }
 
-    static snake(mid, gradient, trough, peak, length, stdwidth, player) {
+    // This helper function provides a smooth 'sine wave' path array based on the parameters. Curves up, then down, then back to starting position
+    // Peak is the top of the sine, trough is the bottom, mid is the midpoint. Gradient is the rate of change, and length the length of segments
+    static getSineChain(mid, gradient, trough, peak, length, stdwidth, player) {
         let curve1 = []
         for (let i = mid; i > peak; i -= gradient) {
             curve1.push(new canal(length, i, stdwidth, player, false));

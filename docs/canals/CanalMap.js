@@ -43,7 +43,7 @@ class CanalMap {
                 let inbound = link[1];
                 let lock = false;
                 let lockDetails = [];
-                if(link.length === 5){
+                if(link.length === 5 || link.length === 4){
                     lock = true;
                     lockDetails = [link[2], link[3], link[4]]
                 }
