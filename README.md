@@ -31,8 +31,6 @@
 
 ### Contents
 
-## Contents
-
 - [1 – Introduction](#1---introduction)
   - [Game Ideas](#game-ideas)
 - [2 – Requirements](#2---requirements)
