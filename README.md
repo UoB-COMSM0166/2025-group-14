@@ -59,7 +59,7 @@
 - [6 – Process](#6---process)
    - [Pair programming](#pair-programming)
    - [Tools (Jira, VS code, Git)](#jira)
-- [7 – Sustainability, ethics & accessibility](#7---sustainability-ethics--accessibility)
+- [7 – Sustainability, ethics and accessibility](#7---sustainability-ethics-and-accessibility)
     - [Green software patterns](#green-software-patterns)
 - [8 – Conclusion](#8---conclusion)
 
