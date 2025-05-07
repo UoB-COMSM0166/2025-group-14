@@ -112,7 +112,9 @@ class lock extends canal {
         if (distAft < 200 && !this.aftLockSoundPlaying && this.status == "full") {
             this.aftLockSoundPlaying = true;
             this.aftLockSoundTimer = millis();
-            lockSoundAft.play();
+            if (soundOn) {
+                lockSoundAft.play();
+            }
             //console.log("play lock sound aft");
         }
         //ditto

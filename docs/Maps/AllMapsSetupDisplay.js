@@ -188,7 +188,9 @@ class AllMapsSetupDisplay {
     this.moveCamera();
 
     if (this.playerCfg.isHealthZero()){
-      shipBreakSound.play();
+      if (soundOn) {
+        shipBreakSound.play();
+      }
       this.clearSprites();
       this.pauseButton.remove();
       this.defaultControlButton.remove();
@@ -198,7 +200,9 @@ class AllMapsSetupDisplay {
       state = GameState.LOSE;
     }
     if (kb.pressed('q') || finishLineCrossed){ 
-      winSound.play();
+      if (soundOn) {
+        winSound.play();
+      }
       this.clearSprites();
       this.pauseButton.remove();
       this.defaultControlButton.remove();
