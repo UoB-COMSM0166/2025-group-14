@@ -1,7 +1,7 @@
 # 2025-group-14
 2025 COMSM0166 group 14
 
-## Link to game prototype
+## Link to game
 
 [Narrowboat game demo](https://uob-comsm0166.github.io/2025-group-14/)
 
@@ -10,17 +10,11 @@
 [Kanban board](https://bristol-team-bmscl43v.atlassian.net/jira/software/projects/SO/boards/1?cloudId=1256e9a6-2479-47c4-9fb8-bf1054da7034&atlOrigin=eyJpIjoiNGM4NmY3MWQwYTMwNGJjMjg0YjFlOTNhMDM5NzJmNDkiLCJwIjoiaiJ9)
 
 
-## Your Game
+## Canal Chase
 
-Link to your game [PLAY HERE](https://uob-comsm0166.github.io/2025-group-14/)
+[TODO - ADD VIDEO OF GAME, ADD BANNER WITH GAME NAME, ADD GIFS]
 
-Your game lives in the [/docs](/docs) folder, and is published using Github pages to the link above.
-
-Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
-
-## Your Group
-
-Add a group photo here!
+## Group 14 - Team Snack Overflow 
 
 ![group photo](/Images/Group_photo.jpeg)
 
@@ -37,14 +31,18 @@ Add a group photo here!
 
 ### Contents
 
-- [1 – Introduction](#1---introduction)
-- [2 – Requirements](#2---requirements)
-- [3 – Design](#3---design)
-- [4 – Implementation](#4---implementation)
-- [5 – Evaluation](#5---evaluation)
-- [6 – Process](#6---process)
-- [7 – Sustainability, ethics and accessibility](#7---sustainability-ethics-and-accessibility)
-- [8 – Conclusion](#8---conclusion)
+[1 – Introduction](#1---introduction)
+- [Game Ideas](#game-ideas)
+[2 – Requirements](#2---requirements)
+- [Identifying stakeholders](#1---introduction)
+- [Epics](#epics)
+- [User stories](#user-stories)
+[3 – Design](#3---design)
+[4 – Implementation](#4---implementation)
+[5 – Evaluation](#5---evaluation)
+[6 – Process](#6---process)
+[7 – Sustainability, ethics and accessibility](#7---sustainability-ethics-and-accessibility)
+[8 – Conclusion](#8---conclusion)
 
 ### 1 - Introduction
 
