@@ -67,7 +67,7 @@ class AllMapsSetupDisplay {
     camera.y = this.player.y;
     camera.zoom = 1;
 
-    this.repairButton = new Button("repair boat", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.repair());
+    this.repairButton = new Button("Repair boat", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.repair());
 
     // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
   }
