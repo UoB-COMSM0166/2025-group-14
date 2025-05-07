@@ -25,9 +25,9 @@ class AllMapsSetupDisplay {
     this.pursuerDamage;
     this.playerSpeed;
     this.pursuerSpeed;
-    this.pauseButton = new Button("PAUSE", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
-    this.defaultControlButton = new Button("standart control", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
-    this.alternativeControlButton = new Button("alternative Control", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
+    this.pauseButton = new Button("Pause", windowWidth/2.5, windowHeight/18, 'seagreen', 20, this.buttonClick.bind(this));
+    this.defaultControlButton = new Button("Standard Controls", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.setStandardControls());
+    this.alternativeControlButton = new Button("Alternative Controls", windowWidth*2/3, windowHeight*3/18, 'seagreen', 20, () => this.playerCfg.setAlternativeControls());
     this.exitButton = new Button("Exit", windowWidth*5/6, windowHeight/18, 'seagreen', 20, this.buttonExit.bind(this));
     this.isPaused = false;
   }
@@ -293,7 +293,7 @@ class AllMapsSetupDisplay {
     }
     else {
       //this.pauseButton.setColour("skyblue");
-      this.pauseButton.setLabel("PLAY");
+      this.pauseButton.setLabel("Play");
       this.pauseButton.show();
       this.pauseGame();
       this.isPaused = true;
