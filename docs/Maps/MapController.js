@@ -27,7 +27,7 @@ class MapController {
             case 0:
                 return new Sprite(100, 70, 35, 25);
             case 1:
-                return new Sprite(1000, -50, 35, 25);
+                return new Sprite(1500, -100, 35, 25);
             case 2:
                 return new Sprite(265, -328, 35, 25);
             case 3:
@@ -47,7 +47,7 @@ class MapController {
             case 0:
                 return new Sprite(100, 70, 25, 15);
             case 1:
-                return new Sprite(0, 0, 25, 15);
+                return new Sprite(20, 0, 25, 15);
             case 2:
                 return new Sprite(-442, -327, 25, 15);
             case 3:
@@ -77,7 +77,7 @@ class MapController {
     
     static getMap1(player) {
         // Map creation variables. Values for straight segments
-        let stdWidth = 150;
+        let stdWidth = 100;
         let stdLength = 300;
         let midPoint = 3;
         // Values for snaking segments
