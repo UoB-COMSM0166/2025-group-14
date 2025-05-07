@@ -3,18 +3,23 @@
 class MapSelectionScreen{
     constructor() {
         this.selectedMapId = -1; // Default map is -1 (no map selected)
-        this.tutorialButton = new Button("Tutorial", windowWidth/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(0));
+        this.tutorialButton = new Button("Tutorial", windowWidth/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(0), true, 'assets/mapScreenshots/tutorial.png');
         this.tutorialButton.hide();
-        this.mapOneButton = new Button("Forkminster", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1));
+        this.mapOneButton = new Button("Forkminster", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1), true, 'assets/mapScreenshots/map1.png');
         this.mapOneButton.hide();
-        this.mapTwoButton = new Button("Locksbow Crescent", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2));
+        this.mapTwoButton = new Button("Locksbow Crescent", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2), true, 'assets/mapScreenshots/map2.png');
         this.mapTwoButton.hide();
-        this.mapThreeButton = new Button("The Hedge Maze", windowWidth/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(3));
+        this.mapThreeButton = new Button("The Hedge Maze", windowWidth/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(3), true, 'assets/mapScreenshots/map3.png');
         this.mapThreeButton.hide();
-        this.mapFourButton = new Button("Hairpin Hampton", windowWidth*2/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(4));
+        this.mapFourButton = new Button("Hairpin Hampton", windowWidth*2/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(4), true, 'assets/mapScreenshots/map4.png');
         this.mapFourButton.hide();
-        this.mapFiveButton = new Button("Snailshell Spiral", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5));
+        this.mapFiveButton = new Button("Snailshell Spiral", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5), true, 'assets/mapScreenshots/map5.png');
         this.mapFiveButton.hide();
+
+        this.titleText = "Select a map to play";
+        this.titleTextSize = 40;
+        this.titleTextX = windowWidth / 2;
+        this.titleTextY = windowHeight / 12;
     }
 
     display() {
@@ -27,12 +32,18 @@ class MapSelectionScreen{
         this.mapThreeButton.show();
         this.mapFourButton.show();
         this.mapFiveButton.show();
-        this.tutorialButton.setPosition(windowWidth/4, windowHeight/5);
-        this.mapOneButton.setPosition(windowWidth*2/4, windowHeight/5);
-        this.mapTwoButton.setPosition(windowWidth*3/4, windowHeight/5);
-        this.mapThreeButton.setPosition(windowWidth/4, windowHeight*3/5);
-        this.mapFourButton.setPosition(windowWidth*2/4, windowHeight*3/5);
-        this.mapFiveButton.setPosition(windowWidth*3/4, windowHeight*3/5);
+        
+        textAlign(CENTER);
+        textSize(this.titleTextSize);
+        stroke(3);
+        text(this.titleText, this.titleTextX, this.titleTextY);
+        
+        this.tutorialButton.setPosition(windowWidth/4, (windowHeight/4)+50);
+        this.mapOneButton.setPosition(windowWidth*2/4, (windowHeight/4)+50);
+        this.mapTwoButton.setPosition(windowWidth*3/4, (windowHeight/4)+50);
+        this.mapThreeButton.setPosition(windowWidth/4, windowHeight*3/4);
+        this.mapFourButton.setPosition(windowWidth*2/4, windowHeight*3/4);
+        this.mapFiveButton.setPosition(windowWidth*3/4, windowHeight*3/4);
     
     }
 
