@@ -71,8 +71,10 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 
 [Testing Session feedback on game requirements - positive feedback, confusing aspects and potential improvements to concept](https://github.com/UoB-COMSM0166/2025-group-14/blob/main/Requirements/TestingSessionFeedback.md)
 
+
 #### Identifying Stakeholders
 
+We identified the stakeholders of our game as:
 - Markers
 - Developers (us)
 - Casual Gamers
@@ -102,13 +104,30 @@ Platformer style game where you are an Android in the year 2442. An evil conglom
 | Markers |As markers, we want a functional and enjoyable game so that the students learn how to develop software in a team.|Given that the students show up to the demo day, when we play their game, we should find that the game is reasonably playable and enjoyable without any major issues.|
 | Developers |As developers, we want modular game design, following Object-Oriented principles, so that we can divide tasks efficiently among our team members.|Given that we are assigned separate objects and mechanics to work on, when we merge branches, the game should function with minimal refactoring.|
 | Developers | As developers, we want to implement locks in the game, so that the game accurately represents canal systems. |Given I am moving through the map, when I encounter lock gates, then I should recognise it as a lock and know what its purpose is.|
-| Casual gamer |As a casual player, I want simple instructions on how to play the game so that I’m not confused.|Given that I have started up the game and seen the introductory screen, when I start playing the game I should not be confused about the controls or objective of the game.|
-| Casual gamer |As a player, I want the game to have a backstory, so that the game feels more real and immersive.|Given that I have seen the game's introduction, when I see the enemy avatar approach, I should be able to say why they are chasing me and what the stakes are for my in-game character.|
-| Competitive gamer |As a skilled gamer, I want to explore maps with challenges that reward strategic gameplay, so that I feel satisfaction from mastering the game mechanics.|Given that I progress through the levels, when I encounter increasingly difficult maps, I should be able to complete them with some practice.|
+| Casual gamer |As a casual player, I want simple instructions on how to play the game so that I’m not confused.|Given that I have started up the game, seen the introductory screen and been given the option to play through the tutorial, when I start playing the game I should not be confused about the controls or objective of the game.|
+| Casual gamer |As a player, I want the game to have a backstory, so that the game feels more real and immersive.|Given that I have seen the game's introduction screen, when I see the enemy avatar approach, I should be able to say why they are chasing me and what the stakes are for my in-game character.|
+| Competitive gamer |As a skilled gamer, I want to explore maps with challenges that reward strategic gameplay, so that I feel satisfaction from mastering the game mechanics.|Given that I have selected a difficulty level that matches my ability, when I encounter increasingly difficult maps, I should be able to complete them with some practice without being either bored or overexerted.|
 | Boat owner/enthusiast |As a boating enthusiast, I want a map that represents real-life canals so that I feel a sense of familiarity and exploration.|Given some familiarity with the English countryside, while playing the game, I should be able to recognise locks, winding holes and fields.|
 | Boat owners/enthusiasts |As a boating enthusiast, I want the mechanics to feel similar to the reality of boat life so that the game feels immersive.|Given that the player is controlling the boat, when the player moves it should make the motions of a vessel that turns and advances rather than strafing.|
 | Canal Preservation Organisation |As an organisation concerned with the long-term preservation of canals, we want the game to have a mechanic which rewards picking up rubbish from the canal waters, so that players learn the importance of keeping canals clean.|Given that there is rubbish floating throughout the map, when players pick up the rubbish, then they should receive positive feedback that encourages them to continue picking up rubbish.|
 
+#### Paper Prototyping and Early Stage Design
+
+As a team, we made paper prototypes for both game ideas in order to quickly test our initial design ideas and provide us with an outline of our game ideation moving forward. Making the paper prototypes involved making some preliminary design decisions about user interface and gameplay mechanics, such as the movement controls, health/repair mechanics and the locks (the paper prototype also included some features that we did not end up implementing, such as a fuel guage and ability to refuel at chandleries). 
+
+We later discussed during early team meetings what features to implement at each stage of development. We made a list of features broken down by category and assigned a value/effort estimation:
+- First stage (core) features (essential to a working version of the game) - this included:
+  - up/down/left/right movement controls (low effort)
+  - canals with sides the player cannot cross (mid effort)
+  - a pursuer (high effort)
+  - movement mechanics (high effort)
+- Second stage (extension) features included:
+  - aesthetics of game - assets/images over boats, canal and background (medium effort)
+  - damage/healthbar/repair mechanic (high effort)
+  - canal locks (high effort)
+  - refueling (this was not implemented due to prioritising other features)
+
+These features constituted the first version of our product backlog (as represented by the To Do list of our Jira Kanban board), and roughly define work completed over the first and second sprints (first stage features were implemented in sprint 1 and second phase features were implemented in sprint 2, though this is overly simplistic as development of some features did overlap both sprints, and it does not allow for the extensive refactor undertaken between the two sprints).
 
 
 ### Requirements Reflection
@@ -128,7 +147,6 @@ We also quickly realised the utility of Agile development, as it can be difficul
 
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
-
 
 ### Design
 
