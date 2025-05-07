@@ -67,6 +67,8 @@ class AllMapsSetupDisplay {
     camera.y = this.player.y;
     camera.zoom = 1;
 
+    this.repairButton = new Button("repair boat", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.repair());
+
     // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
   }
 
@@ -166,16 +168,19 @@ class AllMapsSetupDisplay {
     this.defaultControlButton.setPosition(windowWidth*2/3, windowHeight/18);
     this.alternativeControlButton.setPosition(windowWidth*2/3, windowHeight*3/18);
     this.exitButton.setPosition(windowWidth*4/5, windowHeight/18);
+    this.repairButton.setPosition(windowWidth*2/3, windowHeight/18);
 
 
     if (!(this.isPaused)) {
       this.defaultControlButton.hideButton();
       this.alternativeControlButton.hideButton();
       this.exitButton.showButton();
+      this.repairButton.showButton();
     } else {
       this.exitButton.hideButton();
       this.defaultControlButton.showButton();
       this.alternativeControlButton.showButton();
+      this.repairButton.hideButton();
     }
 
 
@@ -189,6 +194,7 @@ class AllMapsSetupDisplay {
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
       this.exitButton.remove();
+      this.repairButton.remove();
       state = GameState.LOSE;
     }
     if (kb.pressed('q') || finishLineCrossed){ 
@@ -198,6 +204,7 @@ class AllMapsSetupDisplay {
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
       this.exitButton.remove();
+      this.repairButton.remove();
       state = GameState.WIN;
       finishLineCrossed = false;
     }
@@ -208,6 +215,7 @@ class AllMapsSetupDisplay {
       this.defaultControlButton.remove();
       this.alternativeControlButton.remove();
       this.exitButton.remove();
+      this.repairButton.remove();
       state = GameState.START_SCREEN;
     }
   }
@@ -218,6 +226,7 @@ class AllMapsSetupDisplay {
     this.defaultControlButton.remove();
     this.alternativeControlButton.remove();
     this.exitButton.remove();
+    this.repairButton.remove();
     state = GameState.START_SCREEN;
   }
 
