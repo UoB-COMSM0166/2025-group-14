@@ -7,7 +7,7 @@ class MapSelectionScreen{
         this.tutorialButton.hide();
         this.mapOneButton = new Button("Map 1", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1));
         this.mapOneButton.hide();
-        this.mapTwoButton = new Button("Map 2", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2));
+        this.mapTwoButton = new Button("Bendwick-upon-Thames", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2));
         this.mapTwoButton.hide();
         this.mapThreeButton = new Button("The Hedge Maze", windowWidth/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(3));
         this.mapThreeButton.hide();
