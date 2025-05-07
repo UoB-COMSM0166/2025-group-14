@@ -5,7 +5,7 @@ class MapSelectionScreen{
         this.selectedMapId = -1; // Default map is -1 (no map selected)
         this.tutorialButton = new Button("Tutorial", windowWidth/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(0));
         this.tutorialButton.hide();
-        this.mapOneButton = new Button("Map 1", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1));
+        this.mapOneButton = new Button("Forkminster", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1));
         this.mapOneButton.hide();
         this.mapTwoButton = new Button("Locksbow Crescent", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2));
         this.mapTwoButton.hide();
