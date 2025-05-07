@@ -386,7 +386,8 @@ We regularly (after each sprint and integration) scan the assets we are storing 
 
 - Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together.
 
-[TODO - Add image of team working/on a teams call]
+![Example of us on a teams call](/./Images/teams_call.jpg)
+
 
 For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
 
