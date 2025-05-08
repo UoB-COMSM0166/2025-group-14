@@ -70,8 +70,7 @@ This is heightened by the presence of another classic feature of English waterwa
 
 Our game will have multiple maps and difficulty levels. Because the rate at which damage is incurred over time is partially randomized, we believe that even traversal of familiar maps will offer organic player-pursuer interactions, and the process of mastering a given map will not be linear. 
 
-Pollution and garbage are known problems on the canal *exact nature of garbage mechanic tbd - could contribute to a score or to vehicle damage calculations*
-
+Pollution and garbage are known problems on the canal, and our game encourages players to remove randomized garbage sprites; taking time to do so slows down the pursuer.
 
 #### Game ideas
 
@@ -112,7 +111,7 @@ We identified the stakeholders of our game as:
 |---|---|
 | Markers | We want unique game mechanics to demonstrate the developers' abilities.|
 | Developers | We want a game which simulates the experience of driving a boat through canals. |
-| Casual Gamers | We want a game that is intuitive so that it is easy to pick up and enjoy playing.|
+| Casual Gamers | We want a game that is intuitive so that it can be easily picked up and enjoyed |
 | Competitive Gamers | We want a game that has unique game mechanics and difficult levels which involve mastering the game mechanics. |
 | Boat Owners/Enthusiasts| We want a game that captures the tone and feel of real-life canals. |
 | Canal Preservation Organisations | We want a game that promotes sustainability and the importance of keeping canals clean. |
@@ -164,7 +163,7 @@ Initially we had some difficulty distinguishing between the Initiative, Epic, an
 
 Through the process of writing User Stories, we learned that if a particular Acceptance Criteria depends on something else that is not in the corresponding story, it should probably be broken down into multiple stories. This way, each story can be developed independently and more efficiently.
 
-We also quickly realised the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important and obvious requirements, and whenever we realised that we had to change certain features or add new features, we added it to our Kanban board and evaluated its priority. As a team, we found the prioritisation matrix below to be a useful tool and reminder of what to work on next.
+We also quickly recognized the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important and obvious requirements, and whenever we realised that we had to change certain features or add new features, we added it to our Kanban board and evaluated its priority. As a team, we found the prioritisation matrix below to be a useful tool and reminder of what to work on next.
 
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
@@ -173,15 +172,15 @@ Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
 Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js and p5play libraries. One of the advantages of utilising JavaScript in an Agile software development team is building the application using Object Oriented Programming. Specifically, our team has extensively utilised aggregation (e.g. the button class) and composition (e.g. the playerConfig class) to create modular code, which allowed us to maintain, change or build upon existing modules easily without it affecting the general structure.   
 
-Ever since the paper prototypes, the player, the pursuer and the map (consisting of the canal objects) were the foundational objects that the entire game were build around. With the constant experimentations in interactions between these three classes, we developed a range of game mechanics and helper classes that execute these mechanics, all of which we will explain in the next few paragraphs.  
+Ever since the paper prototypes, the player, the pursuer and the map (consisting of the canal objects) were the foundational objects around which the game would be built. Over the cousre of many experiments and tests of interactionss between these three classes, we developed a range of game mechanics and helper classes to execute them, detailed below.
  
 - #### Player sprite, playerConfig class and player mechanics  
  
-The player p5play sprite is the central object in the game player. The gamer directly controls the movement of sprite with the WASD keys input. The behaviour of the object in response of the keypresses is implemented in a way to resemble a real life physical object, that has such attributes as mass and inertia.  
+The player p5play sprite is the central object in the game. The player directly controls the movement of sprite via the WASD keys. The behaviour of the object in response of the keypresses is implemented in a way to resemble a real life physical object, that has such attributes as mass and inertia.  
  
 - #### Pursuer, pursuerConfig class and pursue mechanics  
  
-The pursuer object is the same p5play sprite as the player, but it’s behaviour is radically different due to pursuerConfig class. The config gives the sprite the artificial intelligence to to trace the position of the player on the map and move towards it’s last recorded location.  
+The pursuer object is the same p5play sprite as the player, but without any player control; its behaviour is instead governed by pursuerConfig class. The config gives the sprite basic artificial intelligence to to trace the position of the player on the map and move towards its last recorded location.  
  
 - #### CanalMap class and the locks mechanics  
  
@@ -192,25 +191,25 @@ Maps were built at three aggregated levels:
    
 Canal objects are instantiated with a width, a length and an angle, but not position. CanalNetworks are given starting x and y coordinates and a set of ordered canals, and then draw these canals in the order starting from those coordinates. Canal networks are also passed a set of canal pairs, with the first canal necessarily being within the network but the second potentially being outside it. The map object takes these pairs and uses them to create linkage objects, a co-descendent (along with networks) of the linearConnect abstract class, that contains a single canal which is positioned by the map to link the canals specified by the networks. 
  
-Locks, a subclass of canals, are given timing parameters and are positioned like any other canal via polymorphism. Lock doors open and close on an animation, allowing moments of tension as the player just makes it through a narrow gap ahead of the pursuer. A bar positioned beside the lock shows its full or empty status, which translates to when the doors will open. 
+Locks, a subclass of canals, are given timing parameters and are positioned like any other canal via polymorphism. Lock doors open and close on an animation, allowing moments of tension as the player just makes it through a narrow gap ahead of the pursuer. A bar positioned beside the lock shows how full it is; doors open at one side when full, and at the other when empty. 
  
  
 - #### Health mechanic: the interaction between canalMap, player and pursuer objects  
  
-The main objective of the game is to navigate through the canals and reach the end of the track. To make the gameplay more involving, we have introduced a health mechanic where health could be deducted as punishment for a gamer’s undesired behaviour. There are several scenarios where health is decreased, each with its own purpose:
-1.	The player hitting the bank of the canal forces the gamer to be more accurate when navigating through the map, especially at tight corners and turns. 
-2.	At the same time, when the pursuer catches up with the player and gets close enough, additional damage to encourage the player to balance between the speed and the movement precision. 
-3.	Additionally, a constant small amount of health is being constantly deducted to simulate real-world wear and tear of the boat.  
+The main objective of the game is to navigate through the canals and reach the end of the track. To make the gameplay more involving, we have introduced a health mechanic, which both forces strategic thinking and punishes undesirable behavior. Health is decreased in the following situations:
+1.	When the player hits the bank of a canal - this forces the player to be precise and slow when navigating the map, especially when handling tight corners and turns.
+2.	When the pursuer catches up to the player - the sizeable penalty incurred here (as much as the player's full health bar on harder difficulties) is intended to be the most common game-over condition. This pushes the player to base their strategy around staying abreast of the pursuer. 
+3.	At random intervals - a constant small amount of health is being constantly deducted to simulate real-world wear and tear of the boat, and to force the player to strategize around the repair function.  
  
 - #### Game difficulty mechanic:   
  
-To allow the game to be suited for a wide range of players with different gaming experiences, we have introduced the difficulty levels to the game. The combination of the selected map and the difficulty level sets the following parameters for the upcoming game: player’s start health amount, amount of health deducted for bank collision & pursuer catching up, and the pursuer freeze cool-down following garbage collecting.    
+To allow the game to be suited for a wide range of players with different gaming experiences, we have divided the game into three difficulty levels. Altering the difficulty level will affect the player's starting health amount, the amount of health deducted from bank collisions, the amount of hits from the pursuer that the player can withstand, and the degree to which garbage collection slows the pursuer down. It should be noted that individual maps also provide distinct player challenges, and players may sculpt the difficulty in accordance with their mastery of a particular skill: HarepinHampton, for example, rewards quick reflexes, while the Hedge Maze is a test of strategic thinking.  
  
 - #### User Interface classes:  
  
-The main non-gameplay features of the game are implemented as game screens, and either serve the purpose of game configuration (e.g. Map selection and difficulty level screens) or of information and game control flow (e.g. Info screen or win/lose screens).
+The main non-gameplay features of the game are implemented as game screens, and either allow for game configuration game configuration (e.g. Map selection and difficulty level screens) or provide information and game control flow (e.g. Info screen or win/lose screens).
 
-The transition between the screens that requires setting any parameter (e.g. map selection) is done via button class. Additionally, following the heuristic analysis report, a game pause and resume capability can be initiated via the button UI.    
+The transition between the screens that requires setting any parameter (e.g. map selection) is done via button class. Additionally, following the heuristic analysis report, a game pause and resume capability was added via the button UI.    
 
 #### UML Class Diagram of the entire game
 
