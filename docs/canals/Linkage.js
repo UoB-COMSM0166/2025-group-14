@@ -1,3 +1,4 @@
+//a one-canal version of the network designed to be created by maps to link two networks
 class linkage extends linearConnect{
     constructor(origin, destination, outbound, inbound, map, lock, lockDetails){
         super();
@@ -12,7 +13,7 @@ class linkage extends linearConnect{
 
         this.linkWidth = Math.min(outbound.getWidth(), inbound.getWidth());
 
-        //filled by "positionLink" which is called by the map after duplicate linkages are removed
+        //filled by "positionLink" which is called by the map during setup
         this.link = null;   
         this.outBank = null;
         this.outCoords = null;
@@ -21,6 +22,7 @@ class linkage extends linearConnect{
     }
 
     adjustCoords(){
+        //coordinates need to be adjusted during development as other canal details are calculated
         let linkGrad = this.link.getGradient();
         let lROff = this.link.getOffset("red");
         let lBOff = this.link.getOffset("black");
@@ -38,8 +40,6 @@ class linkage extends linearConnect{
 
         this.redCoords = [redStart, redEnd];
         this.blackCoords = [blackStart, blackEnd];
-
-
     }
     
     animate(){
@@ -55,28 +55,8 @@ class linkage extends linearConnect{
         this.link.setCoords(red, black, nextRed, nextBlack);
     }
 
-    checkInverse(input){
-        /*SIGNIFICANTLY bodged because comparing nonprimitive types in Js is haaard
-        will de-bodge if this becomes loadbearing*/
-
-        if(this.origin.getStartCoords()[0] != input.destination.getStartCoords()[0]){
-            return false;
-        }
-        /*
-        if(this.destination != input.getOrigin){
-            return false;
-        }
-        if(this.outbound != input.inbound){
-            return false;
-        }
-        if(this.inbound != input.outbound){
-            return false;
-        }*/
-       console.log("Duplicate linkage identified")
-        return true;
-    }
-
     createLink(){
+        //creates a new canal object that links the two linked canals by their respective halfway points
         let start = this.redCoords[0];
         let end = this.redCoords[1];
         let angle = angleCalc(start[0], start[1], end[0], end[1], true, true, true);
@@ -94,20 +74,8 @@ class linkage extends linearConnect{
         this.link.connect(this.outbound, this.inbound)
     }
 
-    determineTopLine(input){
-        let start1 = [input[0][0][0], input[0][0][1]];
-        let end1 = [input[0][1][0], input[0][1][1]];
-        let start2 = [input[1][0][0], input[1][0][1]];
-        let end2 = [input[1][1][0], input[1][1][1]];
-
-        if(start1[1] <= start2[1]){
-            return [start1, end1];
-        }else{
-            return [start2, end2];
-        }
-    }
-
     facingBanks(){
+        //determines which side of the two canals being connected to attach the link to
         let rsO = this.outbound.getCoord("redStart");
         let bsO = this.outbound.getCoord("blackStart");
         let rsI = this.inbound.getCoord("redStart");
@@ -145,12 +113,10 @@ class linkage extends linearConnect{
             default:
                 throw new Error("FacingBanks switch statement error, contact Leah");
         }
-
-
-
     }
 
     findExitPoints(){
+        //determines where in the two linked canals the link should connect to
  
         let outStart = this.outbound.getCoord(this.outBank.concat("Start"));
         let outEnd = this.outbound.getCoord(this.outBank.concat("End"));
@@ -159,44 +125,10 @@ class linkage extends linearConnect{
         let inEnd = this.inbound.getCoord(this.inBank.concat("End"));
         let inPoint = halfwayPoint(this.inbound.getCoord(this.inBank.concat("Start")), inEnd);
         let outPoint = halfwayPoint(outStart, outEnd);
-        //if(!this.map.clearRoute(inPoint, outPoint)){
         this.outPoint = outPoint;
         this.inPoint = inPoint
         return [outPoint, inPoint];
-        //}
-        /*for(let i = this.linkWidth; i < this.outbound.getLength(); i++){
-            let outPoint = this.segmentPosition2(i, this.outbound, outBank, "Start");
-            if(!this.map.clearRoute(inPoint, outPoint)){
-                return [outPoint, inPoint];      
-            }
-        }*/
-        //throw new Error("no way to link two networks without crossing a line.");
     }
-
-   /* //condemned I hope
-    findValidLines(){
-        let outExit = this.getCanalExits(this.outbound);
-        let inExit = this.getCanalExits(this.inbound);
-
-        let lineOne = [outExit[0][0], outExit[0][1], inExit[0][0], inExit[0][1]];
-        let lineTwo = [outExit[1][0], outExit[1][1], inExit[1][0], inExit[1][1]];
-
-        if(!checkCrossBetweenBounds(lineOne, lineTwo)){
-            return [[outExit[0], inExit[0]], [outExit[1], inExit[1]]];
-        }
-
-        lineOne = [outExit[0][0], outExit[0][1], inExit[1][0], inExit[1][1]];
-        lineTwo = [outExit[1][0], outExit[1][1], inExit[0][0], inExit[0][1]];
-        
-        console.log("outexit: " + outExit[0]);
-
-        if(!checkCrossBetweenBounds(lineOne, lineTwo)){
-            return [[outExit[0], inExit[1]], [outExit[1], inExit[0]]];
-        }
-
-        throw new Error("findValidLines error; message Leah and tell her that her maths is off")
-    }*/
-
     
     forAllCanals(callback){
         callback(this.link)
@@ -204,16 +136,6 @@ class linkage extends linearConnect{
 
 
     getBankSprites(){return this.bankSprites}
-
-    getCanalExits(canal){
-        if(canal.getConnections("next") === null){
-            return [canal.getCoord("redEnd"), canal.getCoord("blackEnd")];
-        }else if(canal.getConnections("prev") === null){
-            return [canal.getCoord("redStart"), canal.getCoord("blackStart")];
-        }else{
-            throw new Error("Feature under construction, shouldn't have seen this bit yet");
-        }
-    }
 
     getDestination(){return this.destination;}
 
@@ -241,8 +163,6 @@ class linkage extends linearConnect{
         this.setBankSprites();
         this.rebuildBanks();
 
-        //this.outbound.rebuildToExit(this.link.getCoord("redStart"), this.link.getCoord("blackStart"));
-        //this.inbound.rebuildToExit(this.link.getCoord("redEnd"), this.link.getCoord("blackEnd"));
     }
 
     rebuildBanks(){
@@ -258,53 +178,12 @@ class linkage extends linearConnect{
         this.bankSprites = [];
     }
 
-    segmentPosition2(x, canal, bank, pos){
-        let width = this.width;
-        let grad = canal.getGradient();
-        let off = canal.getOffset(bank);
-        let coord = canal.getCoord(bank.concat(pos));
-        let second = x + this.linkWidth;
-        if(canal.getDirection()[0] === "left"){
-            x *= -1;
-            second *= -1;
-        }
-
-        let xOne = x + coord[0];
-        let yOne = (xOne * grad) + off;
-        return [xOne, yOne];
-
-    }
-
-    //condemned assuming your current attempt works
-    segmentPosition(x, canal, bank, pos){
-        let width = this.width;
-        let grad = canal.getGradient();
-        let off = canal.getOffset(bank);
-        let coord = canal.getCoord(bank.concat(pos));
-        let second = x + this.linkWidth;
-        if(canal.getDirection()[0] === "left"){
-            x *= -1;
-            second *= -1;
-        }
-
-        let xOne = x + coord[0];
-        let yOne = (xOne * grad) + off;
-
-        let xTwo = second + coord[0];
-        let yTwo = (xTwo * grad) + off;
-        return [[xOne, yOne], [xTwo, yTwo]];
-    }
-
     setCanal(input){
         input.setLink(this);
         return input;
     }
 
     setRedCoords(){
-        //let valid = this.findValidLines(banks);
-        //let line = this.determineTopLine(valid);
-        //this.redCoords = [[line[0][0], line[0][1]], [line[1][0], line[1][1]]];
-        //this.redCoords = [[points[0][0], points[0][1]] , [points[1][0], points[1][1]]];
         this.redCoords = [this.outPoint, this.inPoint];
     }
 }

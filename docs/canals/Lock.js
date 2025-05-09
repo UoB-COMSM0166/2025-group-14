@@ -17,21 +17,8 @@ class lock extends canal {
         this.aftDoors;
         this.centre
 
-
-        //checks if the lock contains the player
-        this.foreSensor;
-        this.aftSensor;
-        this.containsBoat = -1
-        this.foreWaiting = true;
-        this.aftWaiting = true;
-
         // depth bar
         this.depthBar = new DepthBar(true);
-
-        /*if(prev != null){
-            this.prev = prev;
-            this.next = next;
-        }*/
 
         this.foreLockSoundPlaying = false;
         let foreLockSoundTimer;
@@ -39,52 +26,10 @@ class lock extends canal {
         let aftLockSoundTimer;
     }
 
-    checkForPlayer(){
-        //note that this is currently powerless in a situation where the boat touches a sensor but does not cross it
-        //still testing
-
-
-        if(this.foreAwaiting && this.checkSensor(this.foreSensor)){
-            this.containsBoat *= -1;
-        }
-        if(this.aftAwaiting && this.checkSensor(this.aftSensor)){
-            this.containsBoat *= -1;
-        }
-
-        if(!this.checkSensor(this.foreSensor)){
-            this.foreAwaiting = true;
-        }else{
-            this.foreAwaiting = false;
-        }
-        if(!this.checkSensor(this.aftSensor)){
-            this.aftAwaiting = true;
-        }else{
-            this.aftAwaiting = false;
-        }
-    }
-
-    checkSensor(sensor){
-        return this.player.overlaps(sensor);
-    }
-
     checkTimes(){
         if(this.fillTime === null || this.openTime === null){
             throw new Error("Remember a lock takes two extra arguments, fillTime and openTime; please set these");
         }
-    }
-
-    createSensor(doors){
-        let mid = doors.getMidway();
-        let len = doors.getDoorLength() * 2; 
-        let angle = doors.getClosedRed();
-        let thick = doors.getDoorThick();
-        let output = new Sprite(mid[0], mid[1], len, thick);
-        output.rotation = angle;
-        output.visible = false;
-        output.collider = 'none';
-        output.layer = -1;
-        this.allSprites.push(output);
-        return output;
     }
 
     //plays a lock sound effect for each set of lock doors with volume adjusted for distance from player
@@ -167,13 +112,8 @@ class lock extends canal {
     }
 
     lockAnimate(){
-        //this.openDoors(this.aftDoors, this.next);
         this.status = this.getFullStatus();
-        this.checkForPlayer();
-        //text(this.getContainsBoat(), this.redStart[0], this.redStart[1])
         // Depth bar position
-        //let depthBarX = Math.abs(this.redStart[0] - this.width);  
-        //let depthBarY = Math.abs(this.redStart[1] - (this.length/2));
         let depthBarX = this.centre[0];
         let depthBarY = this.centre[1];
         // Update depth bar based on percent depth
@@ -197,16 +137,6 @@ class lock extends canal {
 
     lockSetup(){
         this.createDoors()
-        this.foreSensor = this.createSensor(this.foreDoors);
-        this.aftSensor = this.createSensor(this.aftDoors);
-    }
-    
-    getContainsBoat(){
-        if(this.containsBoat < 0){
-            return false;
-        }else{
-            return true;
-        }
     }
 
     getFullStatus(){
@@ -242,7 +172,5 @@ class lock extends canal {
             throw new Error("Lock status error, message Leah about it")
         }
     }
-
-
 
 }

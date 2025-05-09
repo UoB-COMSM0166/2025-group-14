@@ -1,3 +1,4 @@
+//abstract class including canalnetwork and linkage
 class linearConnect{
     constructor(){
         this.redCoords = null;
@@ -5,7 +6,6 @@ class linearConnect{
         this.bankSprites = null;
     }
 
-    
     animate(){
         this.forAllCanals(canal => canal.animate());
     }
@@ -26,6 +26,7 @@ class linearConnect{
     }
 
     setBlackCoords(loop = false){
+        //once redCoords are set, this places a corresponding coordinate for each one depending on the angle and width of the canal
         let blackChanges = []
         this.forAllCanals(canal =>
             blackChanges.push(canal.getWidthChanges())
@@ -77,14 +78,10 @@ class linearConnect{
         if(loop){
             bc.push(bc[0])
         }else{
-            //note that this this is slightly ugly and leads to some non parallel canals.
-            //I could potentially fix it but that's a low priority. 
-            
             let last = rc[i];
             let lastChange = blackChanges[i - 1];
             bc.push([last[0] + lastChange[0], last[1] + lastChange[1]]);
         }
-            
 
         this.blackCoords = bc;
     

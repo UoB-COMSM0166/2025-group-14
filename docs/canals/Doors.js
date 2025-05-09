@@ -5,62 +5,40 @@ class doors{
         this.lock = lock;
         this.canal = canal;
         this.redSect = linearIntersect(lock.getGradient(), lock.getOffset("red"), canal.getGradient(), canal.getOffset("red"));
-        //this.blackSect = linearIntersect(lock.getGradient(), lock.getOffset("black"), canal.getGradient(), canal.getOffset("black"));
         this.blackSect = [this.redSect[0] + lock.getWidthChanges()[0], this.redSect[1] + lock.getWidthChanges()[1]];
         this.midway = halfwayPoint(this.redSect, this.blackSect);
         this.setSects();
         this.startPos = startPos
         this.speed = speed;
 
-
-        this.playerPass = -1;
-        this.awaiting = true;
-
-    
-
-
         // maintains state: open, closing, closed, opening
         this.state = "closed";
         this.timer = 0;
 
+        //sprites to be removed
         this.sprites = [];
-
         this.redDoor = this.blackDoor = null;
         this.redAngle = this.blackAngle = 0;
 
-
-        //red equals left, black equals right
-
+        //trigonometric functions to position the doors as they rotate
         this.doorThick = 8
         this.OFFSET = 10;
- 
-       
-        // offset from canal edge
         this.baseRot   = this.lock.getAngle(degrees)
         this.openRed   = this.baseRot - (90 - this.OFFSET);
         this.openBlack   = this.baseRot + 270 - this.OFFSET;
         this.closedRed = this.baseRot;
-        this.closedBlack = this.baseRot + 180 //((this.baseRot + 180) % 360);
-        //this.openRed = this.lock.getAngle(true);
-        //this.closedBlack = 185
-    
+        this.closedBlack = this.baseRot + 180
         let rotRad = angleCalc(this.redSect[0], this.redSect[1], this.blackSect[0], this.blackSect[1], true, true, true);
         const ux = Math.cos(rotRad);
         const uy = Math.sin(rotRad);
         this.anchorRed = [ this.midway[0] - ux * this.lock.getWidth(false) * 0.5, this.midway[1] - uy * this.lock.getWidth(false) * 0.5 ];
         this.anchorBlack = [ this.midway[0] + ux * this.lock.getWidth(false) * 0.5, this.midway[1] + uy * this.lock.getWidth(false) * 0.5 ];
-
-    
-  
-        // this.doorLength = Math.hypot(this.anchorBlack[0] - this.anchorRed[0], this.anchorBlack[1] - this.anchorRed[1]) * 0.5;
         this.doorLength = getHypotenuse(this.redSect, this.midway)
 
         this.createSprites()
 
 
     }
-
-    //functions to complete
 
     createSprites(){
         // Creates image for the doors of the lock
@@ -136,14 +114,6 @@ class doors{
 
     getMidway(){return this.midway}
 
-    getPlayerPass(){
-        if(this.playerPass < 0){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
     doorState() {
         if (this.state === "opening") {
             this.redAngle  = Math.max(this.openRed, this.redAngle - this.speed);
@@ -167,30 +137,14 @@ class doors{
     normDeg(d){ return ((d % 360) + 360) % 360; }
 
     open(){
-        /*this.timer++
-        if (this.state === "closed" /*&& this.timer >= this.closedFrames*//*) {/*
-            /*this.state = "opening"; 
-            this.timer = 0;
-        }
-        this.doorState();*/
         this.redAngle  = Math.max(this.openRed, this.redAngle - this.speed);
         this.blackAngle = Math.min(this.openBlack, this.blackAngle + this.speed);
         this.doorAnimate();
-  
-
     }
 
     close(){
-        /*this.timer++
-        if (this.state === "open" && this.timer >= this.openFrames) {
-            this.state = "closing"; 
-            this.timer = 0;
-        }*/
-
         this.redAngle  = Math.min(this.closedRed, this.redAngle + this.speed);
         this.blackAngle = Math.max(this.closedBlack, this.blackAngle - this.speed);
-
-        //this.doorState();
         this.doorAnimate();  
 
     }
@@ -221,13 +175,13 @@ class doors{
     }
 
     setSects(){
+        //helps to connect the doors to the sides of the canal
         let rc = halfwayPoint(this.lock.getCoord("redStart"), this.lock.getCoord("redEnd"));
         let dist = this.lock.getWidth()
         let angle = this.lock.getAngle(false);
         let xChange = Math.sin(angle) * dist;
         let yChange = -Math.cos(angle) * dist;
 
-        
         if(this.aft === false){
             xChange *= -1;
             yChange *= -1;
