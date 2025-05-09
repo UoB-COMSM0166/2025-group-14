@@ -56,7 +56,7 @@ function preload() {
   }
 
 
-class canal{
+class Canal{
 
     //construction functions
     constructor(length, oClock, width, player, garbageOn = true, finish = false){
@@ -423,6 +423,9 @@ class canal{
         for(const sprite of this.allSprites){
             sprite.remove();
             garbagePieceCnt = 0;
+        }
+        if(this instanceof Lock){
+            this.lockTimerReset();
         }
     }
 

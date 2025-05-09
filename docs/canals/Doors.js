@@ -1,4 +1,4 @@
-class doors{
+class Doors{
     constructor(lock, canal, speed = 1.5, startPos, aft = false){
         this.aft = aft;
 

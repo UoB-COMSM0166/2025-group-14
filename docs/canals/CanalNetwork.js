@@ -25,7 +25,7 @@ class CanalNetwork extends linearConnect{
     extractCourse(course){
         let output = []
         for(let c of course){
-            if(c instanceof canal){
+            if(c instanceof Canal){
                 output.push(c)
             }else{
                 let extracted = this.extractCourse(c);
@@ -58,7 +58,7 @@ class CanalNetwork extends linearConnect{
             if(link.length != 2 && link.length != 5 && link.length != 4){
                 throw new Error("Links must specify exactly two canals");
             }
-            if((!link[0] instanceof canal) || (!link[1] instanceof canal)){
+            if((!link[0] instanceof Canal) || (!link[1] instanceof Canal)){
                 throw new Error("Links must be between canal objects")
             }
         }
@@ -159,7 +159,7 @@ class CanalNetwork extends linearConnect{
         let oClock = angleToClock(angleCalc(penX, penY, this.x, this.y, true, true, true));
         let width = this.course[0].getWidth();
         let player = this.course[0].getPlayer();
-        this.course.push(new canal(length, oClock, width, player));
+        this.course.push(new Canal(length, oClock, width, player));
 
     }
 

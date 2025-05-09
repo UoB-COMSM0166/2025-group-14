@@ -66,10 +66,9 @@ class linkage extends linearConnect{
         let width = this.linkWidth;
         let player = this.outbound.getPlayer();
         if(this.lock){
-            console.log("lockdetails 2: " + this.lockDetails[2])
-            this.link = new lock(length, oClock, width, player, this.lockDetails[0], this.lockDetails[1], this.lockDetails[2]);
+            this.link = new Lock(length, oClock, width, player, this.lockDetails[0], this.lockDetails[1], this.lockDetails[2]);
         }else{
-            this.link = new canal(length, oClock, width, player);
+            this.link = new Canal(length, oClock, width, player);
         }
         this.link.connect(this.outbound, this.inbound)
     }

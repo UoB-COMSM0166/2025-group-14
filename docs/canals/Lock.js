@@ -1,4 +1,4 @@
-class lock extends canal {
+class Lock extends Canal {
     constructor(length, oClock, width, player, fillTime, openTime, waitTime = 0){
         super(length, oClock, width, player);
         this.fillTime = fillTime;
@@ -9,8 +9,11 @@ class lock extends canal {
         this.startFull = this.openTime + this.fillTime;
         this.endFull = this.openTime + this.fillTime + this.openTime;
         this.status = null;
-        this.relativeFrames = 0;
+
+        //determines the position that the lock is in in its cycle
+        this.relativeFrames = null;
         this.waitFrames = waitTime * 60
+        this.lockTimerReset();
         
         //set after connections as part of the createSprites function
         this.foreDoors;
@@ -46,7 +49,7 @@ class lock extends canal {
             if (soundOn) {
                 lockSoundFore.play();
             }
-            //console.log("play lock sound fore");
+
         }
 
         //if noise is playing and has played for roughly its opening time then stop playing the sound
@@ -61,7 +64,6 @@ class lock extends canal {
             if (soundOn) {
                 lockSoundAft.play();
             }
-            //console.log("play lock sound aft");
         }
         //ditto
         if (this.aftLockSoundPlaying && (millis() - this.aftLockSoundTimer) >= this.openTime * 900) {
@@ -82,8 +84,8 @@ class lock extends canal {
     }
 
     createDoors(){
-        this.foreDoors = new doors(this, this.prev, this.inLink, "open", false);
-        this.aftDoors = new doors(this, this.next, this.inLink, "closed", true);
+        this.foreDoors = new Doors(this, this.prev, this.inLink, "open", false);
+        this.aftDoors = new Doors(this, this.next, this.inLink, "closed", true);
 
         let sprites = []
         for(const sprite of this.foreDoors.getSprites()){
@@ -103,9 +105,7 @@ class lock extends canal {
 
 
     animate(){
-        if(frameCount > this.waitFrames){
-            this.relativeFrames++;
-        }
+        this.relativeFrames++;
         this.canalAnimate();
         this.lockAnimate();
         this.playLockSound();
@@ -141,9 +141,6 @@ class lock extends canal {
 
     getFullStatus(){
         let mod = (this.relativeFrames/60) % this.cycle;
-        if(frameCount < this.waitTime){
-            return "emptying";
-        }
         if(mod < this.openTime){
             return "empty";
         }else if(mod >= this.openTime && mod < this.startFull){
@@ -171,6 +168,10 @@ class lock extends canal {
         }else{
             throw new Error("Lock status error, message Leah about it")
         }
+    }
+
+    lockTimerReset(){
+        this.relativeFrames = this.waitFrames; 
     }
 
 }
