@@ -23,7 +23,7 @@ class InfoScreen {
         this.textLine5 = "";
         this.textLine6 = "";
 
-        this.returnToMapSelection = new Button("Return to map selection", windowWidth/6, windowHeight*5/6, 'seagreen', 30, this.returnToMapSelectionScreen.bind(this));
+        this.returnToMapSelection = new Button("or click here to return to map selection", windowWidth/6, windowHeight*5/6, 'seagreen', 30, this.returnToMapSelectionScreen.bind(this));
         this.returnToMapSelection.hide();
     }
     
@@ -44,14 +44,15 @@ class InfoScreen {
         let numberOfDucks = 9;
 
         this.returnToMapSelection.show();
-        this.returnToMapSelection.setPosition(windowWidth/6, instructionY+(instructionSpacing*6.5) - 10);
+        this.returnToMapSelection.setPosition(windowWidth*3/6, windowHeight*7/8);
 
         for (let i = 0; i < numberOfDucks; i++) {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
         }
 
         textSize(17)
-        textAlign(LEFT);
+        // textAlign(LEFT);
+        textAlign(CENTER);
         text(this.textLine1, instructionX, instructionY, instructionBoxWidth);
         text(this.textLine2, instructionX, instructionY + instructionSpacing, instructionBoxWidth);
         text(this.textLine3, instructionX, instructionY + (instructionSpacing*2), instructionBoxWidth);
@@ -62,7 +63,7 @@ class InfoScreen {
         textAlign(CENTER);
         textSize(30);
         stroke(3);
-        text("Press [SPACE] to continue", windowWidth/2, instructionY+(instructionSpacing*6.5));
+        text("Press [SPACE] to continue", windowWidth/2, windowHeight*7/8 - 70);
         
         textSize(10);
 
