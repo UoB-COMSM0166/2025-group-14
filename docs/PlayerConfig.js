@@ -19,9 +19,8 @@ class PlayerConfig {
   constructor(player, maxHealth, collisionDamage, damageOverTime, pursuerDamage, timer, map, speed) {
     this.playerSprite = player;
   
-
-    // player.debug = true;
-    // player.maxSpeed = 5;
+    // These are the adjustable physics parameters from p5Play that you can play areound with
+    // to simulate natural movement of the boat
     this.playerSprite.friction = 10;
     this.playerSprite.drag = 5;
     this.playerSprite.bounciness = 0.9;
@@ -53,7 +52,8 @@ class PlayerConfig {
 
   camera() {
     camera.zoom = 1;
-    // if the player starts to move outside the camera frame, you move the camera
+    // if the player starts to move outside the camera frame, the camera shifts to keep the player 
+    //withing the visible box
     if (this.playerSprite.canvasPos.x < windowWidth/4 || this.playerSprite.canvasPos.x > windowWidth*3/4) {
       camera.x += this.playerSprite.vel.x;
     }   
@@ -66,9 +66,15 @@ class PlayerConfig {
   movement(damageOn = true, healthOn = true) {
 
 
+    // Standart controls: pressing WASD makes the boat move up, left, down, right correspondingly 
+    // Alternative controls: pressing W makes you go forward, and S backwards, depending on the 
+    // direction the boat is facing at a given moment, and A and D rotate the boat clockwise 
+    // and anticlockwise correspondingly 
+
     if (PlayerStatus.alternativeControls) {
       let acc = 0;
 
+      // Detecting the input from the keys
       if (kb.pressing('left')) this.playerSprite.rotationSpeed = -2;
       else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 2;
       else this.playerSprite.rotationSpeed = 0;
@@ -80,13 +86,15 @@ class PlayerConfig {
       } else {
         engineSound.setVolume(0.05)
       }
+
+      //if W or S is pressed, then apply force to the boat sprite
       let rad = radians(this.playerSprite.rotation);
       let vector = p5.Vector.fromAngle(rad, (80 * acc));
       this.playerSprite.applyForce(vector);
   
       acc = 0;
 
-      // the following code 1) prevents exceeding the maxSpeed  
+      // the following code prevents exceeding the maxSpeed  
       this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
       if (this.currentVel.mag() > this.maxSpeed) {
         this.currentVel.setMag(this.maxSpeed);
@@ -118,7 +126,7 @@ class PlayerConfig {
         this.playerSprite.vel.y = this.currentVel.y;
       } 
   
-      // 2)preserves the direction when the sprite stops
+      // 2) preserves the direction when the sprite stops
       if (this.currentVel.mag() > 0.2) this.direcitonSave = this.currentVel.heading();
       
       if (this.currentVel.mag() < 0.2) this.stationary = true; 
@@ -162,16 +170,19 @@ class PlayerConfig {
  
   }
 
+
+
+  // the 2 setters methods that are called in response to pushing the controls buttons at the pause menu
   setStandardControls(){
-    // this.standardControls = true;
     PlayerStatus.alternativeControls = false;
   }
   
   setAlternativeControls(){
-    // this.standardControls = false;
     PlayerStatus.alternativeControls = true;
   }
 
+  // uncomment and modify the lines below if you want to continue developing the game and need to 
+  // see some player stats above the player sprite
   debug() {
     //debug info with coordinates ont pot of mivng player
     /* text(`player.x: ${round(this.playerSprite.x)} player.y: ${round(this.playerSprite.y)}`, this.playerSprite.x, this.playerSprite.y - 30);

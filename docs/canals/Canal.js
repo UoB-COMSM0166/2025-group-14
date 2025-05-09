@@ -311,7 +311,6 @@ class Canal{
     }
 
     canalAnimate(){
-        //text(this.getConnections("prev"), this.redStart[0] + 20, this.redStart[1] + 20);
         this.displayWater();
     }
 
@@ -357,6 +356,14 @@ class Canal{
         this.allSprites.push(this.finishLine);
     }
 
+    // the way this method creates garbage is as follows:
+    // say you have 2 lines of different lengths pointing at different directions
+    // offsetAlongCanal says how much from the beginning of each lien you want to go (relative to each line's length)
+    // balckPosition and redPosition are the points created withe the offset
+    // to create a tangental coordinate, you create a third line between balckPosition and redPosition and once again
+    // via a random variable assing the offset between the lines (offsetBetweenCanals), and based on that create a final 
+    // point - garbageSpriteCoordinates. This way, the position of the coordinate is consistently within a canal segment 
+    // and randomly generated, which creates an effect of scattared sprites
     createGarbage() {
 
         this.garbage = new Group();
@@ -478,6 +485,8 @@ class Canal{
 
 }
  
+// this fucntion is adapted from the p5play tutorials. For some reason, it refuses to work from within a class, 
+// therefore it was moved outside into a separate function
 function collect(player, gem) {
 	gem.remove();
     gem.ripple.remove();

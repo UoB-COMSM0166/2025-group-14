@@ -5,6 +5,7 @@ class LoseScreen {
         this.playAgainButton.hide();
         this.nextGameButton = new Button("Next map", windowWidth*2/4, windowHeight*2/3 + 100, 'seagreen', 30, this.nextGameClick.bind(this));
         this.nextGameButton.hide();
+        // this button adds redundant functionality of pressing ESC, but I just thought its more intuitive that way
         this.exitButton = new Button("Exit game", windowWidth*3/4, windowHeight*2/3 + 100, 'seagreen', 30, this.exitToStartScreen.bind(this));
         this.exitButton.hide();
     }
