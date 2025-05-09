@@ -60,9 +60,7 @@ class canal{
 
     //construction functions
     constructor(length, oClock, width, player, garbageOn = true, finish = false){
-        //allows passing of length, oclock, width and player as array
-        //useful when making lots of identical canals!
-        if(length.length === 4){
+        if(length.length === 4){ //allows passing of length/oclock/width/player as array
             oClock = length[1];
             width = length[2];
             player = length[3];
@@ -75,8 +73,9 @@ class canal{
         //basic attributes
         this.length = length;
         this.angle = clockToAngle(oClock);
-        this.oClock = oClock;//remove if this works
+        this.oClock = oClock;
         this.width = width;
+        this.player = player;
 
 
         //trigonometric attributes used by the network
@@ -98,10 +97,6 @@ class canal{
 
         //redBank and blackBank are both sprite objects
 
-        //this.bankSprites contains all sprites, there should be a similar one for garbage if you want to make one
-        //Daniil; can you also push all your garbage to this.allSprites?
-        //this.allSprites shold contain all sprites including garbage (and potentially player? not sure)
-
         this.redStart = null;
         this.redEnd = null;
         this.blackStart = null;
@@ -111,45 +106,21 @@ class canal{
         this.gradient = null;
         this.redOff = null;
         this.blackOff = null;
-        
         this.redBank;
         this.blackBank;
 
-        this.allSprites = [];
-        this.bankSprites = [];
+        this.allSprites = []; //sprites to be removed on finishing a level
+        this.bankSprites = []; //sprites that hurt you to collide with
 
-        this.player = player;
-
+        //garbage and aesthetic sprites
         this.garbageOn = garbageOn;
         this.garbage;
         this.ripples;
-        // this.garbagePiece;
+
+
+        //if true, entering this segment will end the game
         this.finish = finish;
         this.finishLine = null;
-    }
-
-    getDirection(){
-        let a = this.getAngle(true)
-        let outp = [];
-        if (a <= 180){
-            outp.push("right");
-        }else{
-            outp.push("left");
-        }
-        if (a <= 90 || a > 270){
-            outp.push("up");
-        }else{
-            outp.push("down");
-        }
-
-        return outp;
-
-    }
-
-    //getters
-
-    getUniqueID(){
-        return this.length + this.angle + this.width;
     }
 
     getAngle(degrees){
@@ -171,11 +142,12 @@ class canal{
 
         const perp = angle + Math.PI / 2;
 
-        this.xWidth = Math.sin(perp) * this.width;
+        this.xWidth = Math.sin(perp) * this.width; //positions the second bank based on width and angle
         this.yWidth = -Math.cos(perp) * this.width;
     }
 
     setLink(link){
+        //informs a canal if it will be linking to a new network
         this.link = link;
     }
 
@@ -186,7 +158,6 @@ class canal{
     connect(prev, next){
         this.prev = prev;
         this.next = next;
-        //this.setExits();
     }
 
     getLength(){return this.length;}
@@ -235,36 +206,29 @@ class canal{
     }
 
 
-    getExits(){
-        //will also look different for forks
-        //AN (leah): this may be buggy if used irresponsibly. Probably wouldn't work if you have a network
-        //which is just a single canal, or if you have a fork with both of its ends unconnected. so
-        //don't do that
-        if(this.prev === null){
+    /*CONDMNEDgetExits(){
+         if(this.prev === null){
             return [this.redStart, this.blackStart];
         }else if(this.next === null){
             return [this.redEnd, this.blackEnd];
         }else{
             return false;
         }
-    }
+    }*/
 
     createRedBank(){
+        //"red" is just shorthand; this is the first bank created
         this.redBank = this.createBank(this.redStart, this.redEnd, "red")
-
     }
 
     createBlackBank(){
+        //"black" is just shorthand; this is the second bank created
         this.blackBank = this.createBank(this.blackStart, this.blackEnd, "black")
-
-
     }
 
-    //getter functions
     getChanges(){
         return [this.xChange, this.yChange];
     }
-
 
     getWidthChanges(){
         return [this.xWidth, this.yWidth];
@@ -277,12 +241,14 @@ class canal{
     }
 
     animate(){
-        //structured this way to allow subclasses to call their own animation methods on top 
-        //of a standard canal one.
+        /*called during draw - structured this way to allow subclasses to get all standard canal animations by calling
+        this.canalAnimate, while still overwriting this to add their own animations*/
         this.canalAnimate();
     }
 
     createSprites(){
+        /*called during setup- structured this way to allow subclasses to get all standard canal setup detailsby calling
+        this.canalSetup, while still overwriting this to add their own setup*/
         this.canalSetup();
     }
 
@@ -310,7 +276,6 @@ class canal{
     createBank(start, end, colour = null){
         let outp = new Sprite([start, end]);
         outp.collider = "static";
-        // outp.color = "red";
         outp.visible = false;
         this.allSprites.push(outp);
         this.bankSprites.push(outp);
@@ -335,13 +300,6 @@ class canal{
         }
         throw new Error("Incorrect use of canal.getOffset; has to be red or black. Message leah with any questions");
     }
-
-    rebuildToExit(red, black){
-        if(this.link === null){
-            throw new Error("Improper use of rebuildToExit function");
-        }
-    }
-    //aesthetic functions
 
     displayWater(){
         // each canal is split into two triangles and filled with blue colour to represent water
@@ -371,13 +329,6 @@ class canal{
     canalAnimate(){
         //text(this.getConnections("prev"), this.redStart[0] + 20, this.redStart[1] + 20);
         this.displayWater();
-
-        // for (let sprite of this.allSprites) {
-        //     // if (this.player.collides(sprite)) console.log("COLLISION");
-        //     // if (sprite.colliding(this.player)) console.log("COLLISION");
-        //     // if (this.player.collided(sprite)) console.log("COLLISION");
-        // }
-
     }
 
     closeMapEnd() {
@@ -429,10 +380,8 @@ class canal{
 
         this.garbage.amount = this.getRandomInt(1, 4);
         this.ripples.amount = this.garbage.amount;
-        // console.log(this.garbage.amount);
         this.garbage.diameter = 10;
         this.ripples.diameter = 15;
-        // this.garbage.collider = NONE;
 
         let rippleIndex = 0;
 
@@ -442,7 +391,6 @@ class canal{
             piece.ripple = this.ripples[rippleIndex];
 
             let offsetAlongCanal = this.getRandomFloat(0.1, 0.9);
-            // console.log(offsetAlongCanal);
         
             let balckPosition = this.pointBetween(this.blackStart, this.blackEnd, offsetAlongCanal);
             let redPosition = this.pointBetween(this.redStart, this.redEnd, offsetAlongCanal);
@@ -548,18 +496,13 @@ function collect(player, gem) {
     gem.ripple.remove();
     garbagePieceCnt++;
     pursuerMoveCooldown += pursuerFreezeFrames;
-    // print(difficultyLevel);
-    // console.log(pursuerMoveCooldown);
     pursuerMoveCooldown += pursuerFreezeFrames;
     if (soundOn) {
         collectGarbageSound.play();
     }
-    // print(difficultyLevel);
-    // console.log(pursuerMoveCooldown);
+
 }
 
 function finish(player) {
     finishLineCrossed = true;
-    // state = GameState.WIN;
-    // console.log(finishLineCrossed);
 }

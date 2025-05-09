@@ -7,10 +7,10 @@ class CanalMap {
         this.player = player;
         this.garbageOn = garbageOn;
 
-        this.inLock = null; //is the player in a lock?
-        //FOR NOW - make any changes to the testmap below
+        //this.inLock = null; //is the player in a lock? CONDEMNED
 
         if (customNetwork == null) {
+            //a useful "default map" created for testing
             let c1 = new canal(300, 2, 100, this.player, garbageOn); //right, up
             let c2 = new canal(770, 4.5, 150, this.player, garbageOn); //right, down
             let c3 = new lock(470, 7, 130, this.player, garbageOn, 5, 3); //left, down
@@ -23,7 +23,7 @@ class CanalMap {
             }
         }
 
-        print("Canal network x and y:" + this.networks[0].x + ", " + this.networks[0].y);
+        //print("Canal network x and y:" + this.networks[0].x + ", " + this.networks[0].y); CONDEMNED
        
         this.linkages = []
         if(this.networks.length > 1){
@@ -54,7 +54,7 @@ class CanalMap {
             }
 
         })
-        /*for(const linkOne of this.linkages){
+        /* CONDEMNED for(const linkOne of this.linkages){
             for(const linkTwo of this.linkages){
                 if(linkOne.checkInverse(linkTwo)){
                     let crosshairs = this.linkages.indexOf(linkTwo);
@@ -68,7 +68,7 @@ class CanalMap {
         }
     }
 
-    checkInLock(linearConnect){
+    /*CONDEMNEDcheckInLock(linearConnect){
         let test = false;
         linearConnect.forAllCanals(canal => {
             if(canal instanceof lock){
@@ -79,10 +79,10 @@ class CanalMap {
             }
         })
         this.inLock = test;
-    }
+    }*/
 
     clearRoute(start, end){
-        let networkCanals = []
+        /*let networkCanals = []
         this.forAllNetworks(network => network.forAllCanals(canal => networkCanals.push(canal)));
         for(const c of networkCanals){
             let redCoords = [c.getCoord("redStart"), c.getCoord("redEnd")];
@@ -97,7 +97,7 @@ class CanalMap {
             if(crossable){
                 return true;
             }
-        }
+        }*/
         return false;
     }
 
