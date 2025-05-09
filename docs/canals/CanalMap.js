@@ -7,8 +7,6 @@ class CanalMap {
         this.player = player;
         this.garbageOn = garbageOn;
 
-        //this.inLock = null; //is the player in a lock? CONDEMNED
-
         if (customNetwork == null) {
             //a useful "default map" created for testing
             let c1 = new canal(300, 2, 100, this.player, garbageOn); //right, up
@@ -22,9 +20,7 @@ class CanalMap {
                 this.networks.push(network);
             }
         }
-
-        //print("Canal network x and y:" + this.networks[0].x + ", " + this.networks[0].y); CONDEMNED
-       
+      
         this.linkages = []
         if(this.networks.length > 1){
             this.setLinkages();
@@ -32,7 +28,6 @@ class CanalMap {
 
         this.bankSprites = null
         this.setBankSprites();
-
     }
 
     setLinkages(){
@@ -54,51 +49,10 @@ class CanalMap {
             }
 
         })
-        /* CONDEMNED for(const linkOne of this.linkages){
-            for(const linkTwo of this.linkages){
-                if(linkOne.checkInverse(linkTwo)){
-                    let crosshairs = this.linkages.indexOf(linkTwo);
-                    this.linkages.splice(crosshairs, 1)
 
-                }
-            }
-        }*/
         for(const link of this.linkages){
             link.positionLink();
         }
-    }
-
-    /*CONDEMNEDcheckInLock(linearConnect){
-        let test = false;
-        linearConnect.forAllCanals(canal => {
-            if(canal instanceof lock){
-                if(canal.getContainsBoat()){
-                    test = true;
-                }
-
-            }
-        })
-        this.inLock = test;
-    }*/
-
-    clearRoute(start, end){
-        /*let networkCanals = []
-        this.forAllNetworks(network => network.forAllCanals(canal => networkCanals.push(canal)));
-        for(const c of networkCanals){
-            let redCoords = [c.getCoord("redStart"), c.getCoord("redEnd")];
-            let blackCoords = [c.getCoord("blackStart"), c.getCoord("blackEnd")];
-            let crossable = true;
-            if(checkCrossBetweenBounds([start, end], redCoords, true)){
-                crossable = false;
-            }
-            if(checkCrossBetweenBounds([start, end], blackCoords, true)){
-                crossable = false;
-            }
-            if(crossable){
-                return true;
-            }
-        }*/
-        return false;
     }
 
     getNetworkByCanal(c){
@@ -132,7 +86,6 @@ class CanalMap {
             callback(linkage);
         }
     }
-
 
     forAllNetworks(callback){
         for(const network of this.networks){

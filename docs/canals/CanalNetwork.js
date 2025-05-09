@@ -1,31 +1,9 @@
-/*HOW TO MAKE A MAP WITH A CANALNETWORK (in case you want to test things)
-During setup, create some canal objects (or lock or fork objects but those are under construction).
-Arguments for each canal go, in order:
-    - length of the segment.
-    - direction of the segment in oClock format (ie, 12 points directly upwards)
-    - width of the segment
-Once you have your canals, in setup, create a new canalNetwork with the following arguments:
-    - starting X coordinate
-    - starting Y coordinate
-    - array of all canals the network will contain
-
-It will start drawing the red back of the first canal at X,Y, and work everything else out from there.
-if your map is impossible (ie, the widhts can't physically fit together) it might make the lines go screwy
-just resize the components and it'll fix.
-
-finally, add canalNetwork.animate(); to your draw function. 
-
-/*things I can improve if this works as an engine:
-- make it so that 3.30 is "3 and a half" not 3 and just under a third
-- put something in to handle if we have a canal swallow another (currently this fucks the blackbanks)
-*/
-
 class CanalNetwork extends linearConnect{
     constructor(x, y, course, links = [], loop = false){
         super()
         this.x = x;
         this.y = y;
-        this.course = this.extractCourse(course);
+        this.course = this.extractCourse(course); //recursive function allows nesting of canals in multidimensional arrays
 
         this.setRedCoords(loop);      
         this.setBlackCoords(loop);
@@ -68,6 +46,7 @@ class CanalNetwork extends linearConnect{
     getStartCoords(){return [this.x, this.y]}
 
     setLinks(input){
+        //validates a proposed linkage
         if(input === null || input.length < 1){
             return [];
         }
@@ -92,6 +71,7 @@ class CanalNetwork extends linearConnect{
     getBankSprites(){ return this.bankSprites};
 
     bestowCoords(){
+        //provides the red and black coordinates calculated for the network to the individual canal objects
         for(let i = 0; i < this.course.length; i++){
             let c = this.course[i];
             let red = this.redCoords[i];
@@ -103,6 +83,8 @@ class CanalNetwork extends linearConnect{
     }
 
     setRedCoords(loop){
+        /*defines an initial set of coordinates based on the angles and lengths of the provided canals; the equivalent
+        setBlackCoords function is abstracted into the LinearConnect class*/
         this.redCoords = [[this.x, this.y]];
         let prev;
         for(let i = 0; i < this.course.length; i++){
@@ -139,6 +121,7 @@ class CanalNetwork extends linearConnect{
     }
 
     connectCanals(loop){
+        //tells canal objects which other canal objects come before and after them
         const l = this.course.length;
         let current;
         let prev;
@@ -167,6 +150,7 @@ class CanalNetwork extends linearConnect{
     }
 
     pushLoopCanal(){
+        //creates a new canal liking the start and end of the course
         let penultimate = this.redCoords[this.redCoords.length - 2];
         let penX = penultimate[0];
         let penY = penultimate[1];

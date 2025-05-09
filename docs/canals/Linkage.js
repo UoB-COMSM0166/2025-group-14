@@ -159,18 +159,18 @@ class linkage extends linearConnect{
         let inEnd = this.inbound.getCoord(this.inBank.concat("End"));
         let inPoint = halfwayPoint(this.inbound.getCoord(this.inBank.concat("Start")), inEnd);
         let outPoint = halfwayPoint(outStart, outEnd);
-        if(!this.map.clearRoute(inPoint, outPoint)){
-            this.outPoint = outPoint;
-            this.inPoint = inPoint
-            return [outPoint, inPoint];
-        }
+        //if(!this.map.clearRoute(inPoint, outPoint)){
+        this.outPoint = outPoint;
+        this.inPoint = inPoint
+        return [outPoint, inPoint];
+        //}
         /*for(let i = this.linkWidth; i < this.outbound.getLength(); i++){
             let outPoint = this.segmentPosition2(i, this.outbound, outBank, "Start");
             if(!this.map.clearRoute(inPoint, outPoint)){
                 return [outPoint, inPoint];      
             }
         }*/
-        throw new Error("no way to link two networks without crossing a line.");
+        //throw new Error("no way to link two networks without crossing a line.");
     }
 
    /* //condemned I hope
