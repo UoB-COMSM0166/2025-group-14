@@ -437,7 +437,7 @@ From the outset, we strove to maintain a positive and supportive team environmen
 The main challenge arose when we ultimately decided to undertake a major refactor of our codebase more than halfway through the project. This massively impacted our priority list of tasks/features to complete, but due to not having fixed roles, we were all able to jump in and complete the refactor with relative ease. This decision really paid off. The development of our game skyrocketed (see Figure 10) after improving our system design and utilising the “p5Play” library, as it solved the challenges we were facing regarding physics/collisions and map creation.
 
 Figure 10:
-![commits-per-week](https://github.com/user-attachments/assets/24935125-eed8-4a2a-b22f-12a33d596d33)
+![commits-per-week](./Images/Commit_graph.png) 
 
 In retrospect, it would have been great if we began by using the p5Play library from the very start. Specifically, because we allocated time into attempting to debug the original game, discussing how the development should proceed and searching for libraries and other solutions online, we started lagging behind the supposed timeline of the development of the game, which was additionally exacerbated by a sudden and sharp increase in workload from other modules. This resulted in some missed opportunities for presenting a more complete game to users, particularly when it came round to the HCI and sustainability evaluations.
 
