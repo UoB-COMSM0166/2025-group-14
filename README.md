@@ -13,6 +13,7 @@
 ## Canal Chase
 
 [TODO - ADD VIDEO OF GAME, ADD BANNER WITH GAME NAME, ADD GIFS]
+[Video](https://www.youtube.com/watch?v=fnFCwF3ykg4)
 
 ## Group 14 - Team Snack Overflow 
 

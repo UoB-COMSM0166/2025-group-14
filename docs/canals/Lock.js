@@ -12,7 +12,7 @@ class Lock extends Canal {
 
         //determines the position that the lock is in in its cycle
         this.relativeFrames = null;
-        this.swap = false;
+        this.swap = false; //waitframes parameter can also be used to swap fore and aftgates
         this.waitFrames = this.setWaitFrames(waitTime)
         this.lockTimerReset();
         
