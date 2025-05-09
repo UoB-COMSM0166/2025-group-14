@@ -189,17 +189,6 @@ class Canal{
 
     }
 
-
-    /*CONDMNEDgetExits(){
-         if(this.prev === null){
-            return [this.redStart, this.blackStart];
-        }else if(this.next === null){
-            return [this.redEnd, this.blackEnd];
-        }else{
-            return false;
-        }
-    }*/
-
     createRedBank(){
         //"red" is just shorthand; this is the first bank created
         this.redBank = this.createBank(this.redStart, this.redEnd, "red")
