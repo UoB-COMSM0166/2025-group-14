@@ -69,6 +69,9 @@ class InfoScreen {
 
         
         // Transition to gameplay screen when player presses the SPACE key
+        // I also wanted to a redundant button that the user would click to move 
+        // to the next level, but to add this feature main logic should be changed
+        // which is not the changes I want to make 2 days before submission
         if (state === GameState.INFO_SCREEN && kb.pressed(' ')) {
             this.returnToMapSelection.hide();
             state = GameState.PLAY_GAME;
