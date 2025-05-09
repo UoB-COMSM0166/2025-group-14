@@ -172,7 +172,7 @@ Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
 Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js and p5play libraries. One of the advantages of utilising JavaScript in an Agile software development team is building the application using Object Oriented Programming. Specifically, our team has extensively utilised aggregation (e.g. the button class) and composition (e.g. the playerConfig class) to create modular code, which allowed us to maintain, change or build upon existing modules easily without it affecting the general structure.   
 
-Ever since the paper prototypes, the player, the pursuer and the map (consisting of the canal objects) were the foundational objects around which the game would be built. Over the cousre of many experiments and tests of interactionss between these three classes, we developed a range of game mechanics and helper classes to execute them, detailed below.
+Ever since the paper prototypes, the player, the pursuer and the map (consisting of the canal objects) were the foundational objects around which the game would be built. Over the cousre of many experiments and tests of interactions between these three classes, we developed a range of game mechanics and helper classes to execute them, detailed below.
  
 - #### Player sprite, playerConfig class and player mechanics  
  
