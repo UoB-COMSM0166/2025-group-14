@@ -207,9 +207,7 @@ To allow the game to be suited for a wide range of players with different gaming
  
 - #### User Interface classes:  
  
-The main non-gameplay features of the game are implemented as game screens, and either allow for game configuration game configuration (e.g. Map selection and difficulty level screens) or provide information and game control flow (e.g. Info screen or win/lose screens).
-
-The transition between the screens that requires setting any parameter (e.g. map selection) is done via button class. Additionally, following the heuristic analysis report, a game pause and resume capability was added via the button UI.    
+Game-screens are menus that allow for game configuration game configuration (e.g. Map selection and difficulty level screens) or provide information and game control flow (e.g. Info screen or win/lose screens). Transitioning between these screens usually involves setting a parameter (eg map selection, game difficulty) which is done via the button class. Following our heuristic analysis report, we also added pause and resume capcaity to the game via the button UI. 
 
 #### UML Class Diagram of the entire game
 
@@ -225,19 +223,19 @@ The transition between the screens that requires setting any parameter (e.g. map
 
 ### 4 - Implementation
 
-Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, and (2) the movement and collision mechanics of the game (including the pursuer AI), which necessitated a major refactor partway through our development process. These challenges are described below.
+Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, which necessitated a major refactor partway through our development process, and (2) the pursuer AI These challenges are described below.
 
 #### Challenge 1: Building the canal maps
 
-We considered it prudent, as level traversal was a core player challenge in our game, to design levels based on canal objects, rather than “custom-build” objects for pre-planned levels. This meant our canals - essentially just parallel sets of barriers past
+We considered it prudent, as level traversal was a core player challenge in our game, to design levels based on canal objects, rather than build and plan levels in advance. This meant our canals - essentially just parallel sets of barriers past
 which the player could not move - had to be drawable at any angle and any connecting width, while remaining parallel, and not
 overspilling. 
 
-Initially, this requried the player object to track which canal object they were in and repeatedly check their coordinates against the cartesian functions of the banks, disabling playe controls when out of limits. This swiftly accumulated bugs as the player moved from a single point to a complex hitbox, and as we began to model interactions with the bank as damage-inducing collisions. These bugs may have been resolvable individually, but we were uncomfortable with the rate at which bugs were multiplying as our game became more complex. 
+Initially, this requried the player object to track which canal object they were in and repeatedly check their coordinates against the cartesian functions of the banks, disabling player controls when out of limits. This swiftly accumulated bugs as the player moved from a single point to a complex hitbox, and as we began to model interactions with the bank as damage-inducing collisions. These bugs may have been resolvable individually, but we were uncomfortable with the rate at which bugs were multiplying as our game became more complex. 
 
-This was one of several factors which prompted a refactor around the P5play library, which provided us with sprites and a basic physics engine. Canals instead became simple pairs of straight-line sprites, trivializing all these bugs in one stroke. This decision was thoroughly vindicated, as designing banks that could connect at any angle proved to be a signficant challenge on its own. We eventually settled on a "redBank" and "blackBank" shorthand: our aggregating "network" class would position an initial "red" bank for each canal based on the angle and length of those canals, and then, at the junctions of each of these banks, position a pair of "black" banks based on the angle of intersection and the width of each canal. In addition to requiring complex trigonometric logic on its own, this presupposed linear routes, finding "black" coordinates by positioning each canal end-to-end. However, we considered forking and looping routes essential to our game. 
+This was one of several factors which prompted a refactor around the P5play library, which provided us with sprites and a basic physics engine. Canals instead became simple pairs of straight-line sprites, trivializing all these bugs in one stroke. This decision was thoroughly vindicated, as designing banks that could connect at any angle proved to be a signficant challenge on its own. We eventually settled on a "redBank" and "blackBank" shorthand: our aggregating "network" class would position an initial "red" bank for each canal based on the angle and length of those canals, and then, at the junctions of each of these banks, position a pair of "black" banks based on the angle of intersection and the width of each canal. 
 
-Our solution took two steps. First, CanalNetworks were given as an additional parameter a 2D array of canals that they wanted to "link" with additional connections. Second, CanalNetworks were aggreated into a new CanalMap object, which was given the power to automatically create its own canal objects based on these requested linkages via the "linkage" class, a one-canal network that uses polymorphic methods it inherits from the linearConnect superclass to instantiate a new canal based on entry and exit points in the linked canals. While it was initially hoped that linkages would be able to detect and elbow around obstacles, or connect from any point on specified canals, it was eventually decided that they would simply connect two canals in a straight line from their halfway point, and map designers would be responsible for only connecting sensibly positioned canals. 
+In addition to requiring complex trigonometric logic on its own, this locked us into linear routes, as "black" coordinates were obtained by positioning each canal end-to-end. However, we considered forking and looping routes essential to our game. Our solution took two steps. First, CanalNetworks were given as an additional parameter a 2D array of canals that they wanted to "link" with additional connections. Second, CanalNetworks were aggreated into a new CanalMap object, which was given the power to automatically create its own canal objects based on these requested linkages via the "linkage" class, a one-canal network that uses polymorphic methods it inherits from the linearConnect superclass to instantiate a new canal based on entry and exit points in the linked canals. While it was initially hoped that linkages would be able to detect and elbow around obstacles, or connect from any point on specified canals, it was eventually decided that they would simply connect two canals in a straight line from their halfway point, and map designers would be responsible for only connecting sensibly positioned canals. 
 
 While implementing the trigonometric functions necessary for canals to join at any angle, and automatically re-adjust their sprite coordinates to accommodate forks, was complex and time-consuming, this model ultimately paid dividends in late-development flexibility, as canals could be easily resized/re-angled during iterated playtests to create structured player challenges.
 
@@ -254,7 +252,7 @@ Instead, we implemented a vision-based system where the pursuer follows the play
 
 #### Qualitative Evaluation
 
-In the quantitative evaluation, we used the Think Aloud empirical evaluation method to get feedback about the user experience of playing our game, and identify and issues. We asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without being caught by the pursuing boat. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results and categoried them into meaningful groupings.
+In the quantitative evaluation, we used the Think Aloud empirical evaluation method to get feedback about the user experience of playing our game, and identify issues. We asked participants to perform two tasks: (i) to complete two loops around our prototype circuit canal (under no contraints) and (ii) to complete the same loops but without letting the pursuer too close to them. As they did the tasks, a facilitator encouraged the participants to speak their thoughts out loud, describing their feelings and reactions to the gameplay in real time. Two observers recorded the feedback, and the team later discussed the results and categoried them into meaningful groupings.
 
 The following describe the categories of contructive criticism we received from our participants, and the changes that we made to the game in response.
 
@@ -263,7 +261,7 @@ The following describe the categories of contructive criticism we received from 
 This included various glitches/bug, trouble navigating corners, and too much bounce in collision with canal walls.
 
 Specifically, users reported that:
-- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occur on corner collision.
+- The corners were difficult to navigate with current movement mechanics. Glitches sometimes occured on corner collision.
 - The player did not feel in direct control of the movement; there is a learning curve to navigate the corners without crashing and being caught by the pursuer.
 - Users thought that there was too much bounce when colliding with the walls of the canals.
 
@@ -273,7 +271,7 @@ In response, We did a complete refactor of the game, overhauling how movement me
 
 The users reported that the pursuer boat was too fast, started too close to the player, was almost impossible to escape, and occasionally experienced bugs such as passing through canal u-turns to reach player.
 
-In response, The p5 play library was also used to refactor the Pursuer class, reducing bugs. We also re-tuned the pursuer's parameters to make it less fast/maneuverable, and changed its path-finding mechanism to ensure that it follows the player's trail rather than finding the shortest path to reach the player, ensuring that it never 'cuts the corner', passing through walls.
+In response, The p5 play library was also used to refactor the Pursuer class, reducing bugs. We also re-tuned the pursuer's parameters to make it less fast/maneuverable, and changed its path-finding mechanism to ensure that it follows the player's trail rather than finding the shortest path to reach the player, ensuring that it never 'cuts the corner', passing through walls. We also made the starting position of the pursuer an adjustable parameter for each level, allowing us to tune its starting position in accordance with what best suited the level's challenges.
 
 ##### Lack of tutorials/information about how to use controls
 
@@ -281,8 +279,8 @@ One of the most frequent comments we received from users throughout the evaluati
 
 We made three main changes to the game in response to this:
 - First, we implemented game control flow logic that meant that the player moves through a an introduction screen before proceeding on to the gameplay. This introduction screen details the narrative background to the game, as well as giving a brief overview of the controls and rules of the game before the player starts playing.
-- Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a 'Level 0' Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.
-- Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Difficult, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/ameuverability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
+- Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.
+- Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Difficult, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/manoeuvrability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
 
 ##### Winning/losing conditions are unclear
 
@@ -294,19 +292,17 @@ The lack of win/lose conditions was due to the prototype nature of our game duri
 
 Users commented that the health bar was too small and unnoticeable, to the point that some didn't notice there was a health bar until long into gameplay, and were surprised to find that their health was being tracked.
 
-In response to this, the size of the healthbar was increased. The presence of health tracking, and the damage taken over time and during collisions was highlighted to the player in the introduction menu and tutorial, before gameplay starts.
+In response to this, the size of the healthbar was increased. The presence of health tracking, and the damage taken over time and during collisions was highlighted to the player in the tutorial, before gameplay starts.
 
- We also posited adding sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. However, this has not yet been implemented, and may be considered as a possible future extension.
+ We also posited adding sound to collisions and when health goes down to, for example, 50%, to make the game more immersive and make it clearer to the player that they are losing health. As later informal testing following the introduction of aforementioned fixes did not bring up this issue, we did not see the need to implement it; it may be considered as a possible future extension.
 
 ##### Issues with repair functionality 
 
-Users stated that the repair functionality was unintuitive, lacking in explanation, and too slow. 
-
-In response, we made alterations to the game. Use of the repair functionality is now described on the Introduction page of the game, and taught in the Level 0 tutorial. Repair functionality was re-tuned to take less time, reducing player frustration.
+Users stated that the repair functionality was unintuitive, lacking in explanation, and too slow. In response, we added a section of the repair functionality to the level 0 tutorial; initially we also added an explanation of it to our introduction screen, but ultimately phased that out, using the screen instead to focus on map-specific details.  Repair functionality was re-tuned to take less time, reducing player frustration.
 
 ##### Other useability considerations
 
-Although it was not explicitly mentioned during the evaluations, we decided to improve the useability and accessibility of the game by implementing a pause button, which allows the player to pause and resume the game by clicking the button. They can do this at any time during gameplay, and as many times as they like. 
+Although it was not explicitly mentioned during the evaluations, we came to regard a pause button as an important sustainability feature, as it encouraged a positive player-game relationship. Clicking the pause button can be done at any time during gameplay and as frequently as the player likes.
 
 It is also possible to escape from gameplay and go back to the start screen (from where the player can start a new game) at any time using the Escape key on the keyboard. This gives the user control over the game, and enables them to go back to change settings or start again.
 
@@ -335,7 +331,7 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 
 ![Average NASA TLX scores by Question](/./Images/NASA_TLX_graph_average_score_by_category.png)
 
-- **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We conclude from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
+- **Mental demand & Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We concluded from this that there is a significant difference in mental demand and effort between the easy level and the difficulty level, as there should be.
 - **Physical demand**: The difference between the groups was not statistically significant, because in each case the controls for the player’s character were the same, i.e. pressing arrow keys for the boat movement.
 - **Temporal demand**: The difference between the groups was not statistically significant, because there was no time limit in completing the task in each case. 
 - **Performance**: We expected the difference not to be statistically significant because of the way the nature of the task (make *n* number of laps around a canal circuit). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was alternated.
@@ -347,7 +343,7 @@ The NASA TLX asks a user to rate the perceived workload of a system (i.e. how ef
 
 For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
 
-We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, members of our team did develop specialisms and tended to work on similar aspects of the game. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
+We did not have static roles and instead took a more flexible approach where team members were free to move between roles. Features were assigned based on interest and team needs. Over time, some members of our team did specialize, but this was done based on need and not considered a hard rule. Notably, we found that canals required sustained work throughout the project, so Leah took the lead on this feature.
 
 As we went into the active development stage we formalised meetings into twice weekly scrum-style stand ups. Each session would involve a general discussion on what we were working on for that sprint, any challenges that had come up, and what support we might need. 
 
@@ -434,14 +430,14 @@ This project proved to be challenging but very rewarding; we gained invaluable e
 
 From the outset, we strove to maintain a positive and supportive team environment, where everyone felt comfortable communicating and contributing. Our flexible approach to roles made our team resilient to challenges and changes in requirements throughout the project, as we were all able to move around and take on different tasks depending on what needed to be done at any given time. 
 
-The main challenge arose when we ultimately decided to undertake a major refactor of our codebase more than halfway through the project. This massively impacted our priority list of tasks/features to complete, but due to not having fixed roles, we were all able to jump in and complete the refactor with relative ease. This decision really paid off. The development of our game skyrocketed (see Figure 10) after improving our system design and utilising the “p5Play” library, as it solved the challenges we were facing regarding physics/collisions and map creation.
+The main challenge arose when we ultimately decided to undertake a major refactor of our codebase more than halfway through the project. This massively impacted our priority list of tasks/features to complete, but due to not having fixed roles, we were all able to jump in and complete the refactor with relative ease. This decision ultimately paid off. The development of our game skyrocketed (see Figure 10) after improving our system design and utilising the “p5Play” library, as it solved the challenges we were facing regarding physics/collisions and map creation.
 
 Figure 10:
 ![commits-per-week](https://github.com/user-attachments/assets/24935125-eed8-4a2a-b22f-12a33d596d33)
 
 In retrospect, it would have been great if we began by using the p5Play library from the very start. Specifically, because we allocated time into attempting to debug the original game, discussing how the development should proceed and searching for libraries and other solutions online, we started lagging behind the supposed timeline of the development of the game, which was additionally exacerbated by a sudden and sharp increase in workload from other modules. This resulted in some missed opportunities for presenting a more complete game to users, particularly when it came round to the HCI and sustainability evaluations.
 
-However, we learnt that the reality of software projects is that things go wrong and you have to be willing and able to adapt to changing circumstances. It is unrealistic to expect everything to go smoothly. We believe that because we were able to adopt this mindset, we were therefore able to successfully carry out the refactor and ultimately deliver on our aim to create a unique, fun, and challenging game. 
+However, we recognize that in software development is unrealistic to expect everything to go smoothly, and the ability to adapt to new challenges is an imporant part of the skillset. We believe that because we were able to adopt this mindset, we were therefore able to successfully carry out the refactor and ultimately deliver on our aim to create a unique, fun, and challenging game. 
 
 Looking to the future of “Canal Chase”, there are many things that we would want to add and improve. In the short-to-medium term: (1) we would conduct further testing of our two control modes – Standard and Alternative – to see which one users prefer, and then fine-tune the movement variables, like turning speed and maximum velocity; (2) we would create a more coherent storyline that ties all the levels together; possibly with the addition of NPCs and interactable objects; and (3) we would improve the aesthetics of the game by adding trees and other objects to the background and making the banks of the canals look more realistic. If we had a higher budget and more time, we would aim to add multiplayer and different game modes – for example a “Time Trial”, with global leaderboards showing the players across the world who completed each level in the shortest amount of time. 
 

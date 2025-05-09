@@ -12,7 +12,8 @@ class Lock extends Canal {
 
         //determines the position that the lock is in in its cycle
         this.relativeFrames = null;
-        this.waitFrames = waitTime * 60
+        this.swap = false;
+        this.waitFrames = this.setWaitFrames(waitTime)
         this.lockTimerReset();
         
         //set after connections as part of the createSprites function
@@ -84,8 +85,14 @@ class Lock extends Canal {
     }
 
     createDoors(){
-        this.foreDoors = new Doors(this, this.prev, this.inLink, "open", false);
-        this.aftDoors = new Doors(this, this.next, this.inLink, "closed", true);
+        if(!this.swap){
+            this.foreDoors = new Doors(this, this.prev, this.inLink, "open", false);
+            this.aftDoors = new Doors(this, this.next, this.inLink, "closed", true);
+        }else{
+            this.foreDoors = new Doors(this, this.prev, this.inLink, "open", true);
+            this.aftDoors = new Doors(this, this.next, this.inLink, "closed", false);
+
+        }
 
         let sprites = []
         for(const sprite of this.foreDoors.getSprites()){
@@ -172,6 +179,16 @@ class Lock extends Canal {
 
     lockTimerReset(){
         this.relativeFrames = this.waitFrames; 
+    }
+
+    setWaitFrames(waitTime){
+        if(isNaN(waitTime)){
+            this.swap = true;
+            return 0;
+        }
+
+        return waitTime * 60;
+
     }
 
 }

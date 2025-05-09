@@ -257,7 +257,7 @@ class MapController {
 
         let threshold = new CanalNetwork(0, 0, [intro, firstGates, after], [[after, inLoop[0]]], false);
         let loop = new CanalNetwork(300, 300, [inLoop], [
-            [inLoop[1], outLoop[0], c, o, inc++],
+            [inLoop[1], outLoop[0], c, o, "swap"],
             [inLoop[2], outLoop[1], c, o, incA++],
             [inLoop[3], outLoop[2], c, o, inc++],
             [inLoop[4], outLoop[3], c, o, incA++],

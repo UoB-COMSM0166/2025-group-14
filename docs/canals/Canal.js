@@ -1,21 +1,5 @@
-/*NOTE for Leon/Daniil:
-At the bottom of this are two methods, "canalVisualize" and "canalAnimate". Both are empty in the canal superclass.
-any aesthetic stuff you add to canalVisualize will happen once during the setup function.
-Anything you add to canalAnimation will happen repeatedly as part of the draw function.
-
-the attributes redStart, blackStart, redEnd and blackEnd are each 2-number arrays holding coordinate pairs for the 
-four corners of each segment, so you can use them to decorate and add sprites to the inside of the canals. 
-
-(Leon - I think last time I gave you a Quad_Strip shape with four vertices? that old code is still in docs if
-you want to adapt it for here)
-
-UPDATE!! - if you add any sprites, please add a line to push them to this.allSprites, as that's necessary
-to removing sprites cleanly when done.
-
-*/
 
 let garbagePieceCnt = 0;
-// let playerInFinalSegment = false;
 let finishLineCrossed = false;
 
 let flipflopAni, bottleAni, maskAni, tireAni, takeoutboxAni, rippleAni;
