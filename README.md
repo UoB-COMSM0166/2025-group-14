@@ -448,7 +448,14 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 
 ### Contribution Statement
 
-- Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
+| Name | Contribution |
+|----|----|
+| Polly | 1.0 |
+| Leon | 1.0 |
+| Casey | 1.0 |
+| Daniil | 1.0 |
+| Leah | 1.0 |
+| Adam | 1.0 |
 
 
 # Appendix 1
