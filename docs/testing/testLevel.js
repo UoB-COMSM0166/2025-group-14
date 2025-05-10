@@ -40,7 +40,7 @@ class TestLevel {
 
       this.player.addAnimation("boat", this.playerAnimation);
       this.player.animation.frameDelay = 18;
-      this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
+      this.playerCfg = new Player(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, this.timer, this.map);
     
       // this.pursuer = new Sprite(-442, -327, 25, 15);
       // this.pursuer.addAnimation("boat", this.pursuerAnimation);

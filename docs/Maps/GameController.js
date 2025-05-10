@@ -1,4 +1,4 @@
-class AllMapsSetupDisplay {
+class GameController {
   
     constructor() {
     // Post-refactor globals
@@ -52,12 +52,12 @@ class AllMapsSetupDisplay {
     //initialisation and configuration of the player and pursuer classes
     this.player.addAnimation("boat", this.playerAnimation);
     this.player.animation.frameDelay = 18;
-    this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
+    this.playerCfg = new Player(this.player, this.playerMaxHealth, this.canalCollisionDamage, this.damageOverTime, 
       this.pursuerDamage, this.timer, this.map, this.playerSpeed);
 
     this.pursuer.addAnimation("boat", this.pursuerAnimation);
     this.pursuer.animation.frameDelay = 18;
-    this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, this.pursuerSpeed);
+    this.pursuerCfg = new Pursuer(this.pursuer, this.player, this.pursuerSpeed);
 
     // Instantiate healthbar
     this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);

@@ -65,7 +65,7 @@ class TutorialSetupDisplay {
         this.grassBackground = loadImage("assets/grass-texture.png");
         this.player.animation.frameDelay = 18;
         this.playerMaxHealth = 100;
-        this.playerCfg = new PlayerConfig(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.pursuerDamage, 
+        this.playerCfg = new Player(this.player, this.playerMaxHealth,  this.canalCollisionDamage, this.damageOverTime, this.pursuerDamage, 
             this.timer, this.map, this.playerSpeed);
     
     }
@@ -313,7 +313,7 @@ class TutorialSetupDisplay {
                 this.textboxLookUp()
             );
             this.pursuer = MapController.getPursuer(0);
-            this.pursuerCfg = new PursuerConfig(this.pursuer, this.player, 1.5);
+            this.pursuerCfg = new Pursuer(this.pursuer, this.player, 1.5);
             this.pursuer.addAnimation("boat", this.pursuerAnimation);
             this.pursuer.animation.frameDelay = 18;
             pursuerFreezeFrames = 15;

@@ -1,7 +1,7 @@
 let pursuerCatched = false;
 let pursuerMoveCooldown = 0;
 
-class PursuerConfig {
+class Pursuer {
     // Constructor takes a pursuer, player and speed as arguments
     constructor(pursuer, player, speed) {
         this.pursuer = pursuer;

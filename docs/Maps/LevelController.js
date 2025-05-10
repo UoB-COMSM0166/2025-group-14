@@ -16,7 +16,7 @@ class LevelController {
             case 3:
             case 4:
             case 5:
-                levelInstance = new AllMapsSetupDisplay();
+                levelInstance = new GameController();
                 break;
             default:
                 throw new Error("Invalid level number: " + level);

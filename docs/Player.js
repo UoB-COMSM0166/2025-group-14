@@ -15,7 +15,7 @@ class PlayerStatus {
 
 
 
-class PlayerConfig {
+class Player {
   constructor(player, maxHealth, collisionDamage, damageOverTime, pursuerDamage, timer, map, speed) {
     this.playerSprite = player;
   
