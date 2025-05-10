@@ -21,14 +21,14 @@
 
 ![group photo](/Images/Group_photo.jpeg)
 
-| Name | Email | Role |
-|----|-----|------|
-| Polly Lang | js24119@bristol.ac.uk | developer |
-| Leon Wellstead | np24094@bristol.ac.uk | developer |
-| Casey Cronyn | mt24200@bristol.ac.uk | developer |
-| Daniil Lutskiy | ya24711@bristol.ac.uk | developer |
-| Leah Liddle | zs24945@bristol.ac.uk | developer |
-| Adam Sidnell | fv24034@bristol.ac.uk | developer |
+| Name | Username | Email | Role |
+|----|-----|------|-----|
+| Polly Lang | drpollylang | js24119@bristol.ac.uk | developer |
+| Leon Wellstead | leon1454 (uni) and Lifguson (personal) | np24094@bristol.ac.uk | developer |
+| Casey Cronyn | caseycronyn | mt24200@bristol.ac.uk | developer |
+| Daniil Lutskiy | Daniil845270 | ya24711@bristol.ac.uk | developer |
+| Leah Liddle | Electric-Whelk | zs24945@bristol.ac.uk | developer |
+| Adam Sidnell | adam-sid | fv24034@bristol.ac.uk | developer |
 
 ## Project Report
 
