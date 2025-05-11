@@ -27,12 +27,12 @@ class LevelController {
 
     static loadAssets() {
         if (LevelController.firstTimeLoading) {
-            LevelController.playerAnimation = loadAnimation("Boat-redbrown.png", [
+            LevelController.playerAnimation = loadAnimation("assets/Boat-redbrown.png", [
                 [64, 64, 64, 32],
                 [0, 0, 64, 32],
                 [0, 64, 64, 32],
               ]);
-              LevelController.pursuerAnimation = loadAnimation("Boat-grey.png", [
+              LevelController.pursuerAnimation = loadAnimation("assets/Boat-grey.png", [
                 [64, 64, 64, 32],
                 [0, 0, 64, 32],
                 [0, 64, 64, 32],
