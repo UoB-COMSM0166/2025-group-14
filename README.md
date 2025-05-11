@@ -1,34 +1,34 @@
 # 2025-group-14
 2025 COMSM0166 group 14
 
+## Canal Chase
 ![Canal Chase Banner](https://github.com/user-attachments/assets/3208036b-4ee5-4ca2-b676-5d8044b1703f)
 
-## Link to game
+## Table of Contents
 
-[Narrowboat game demo](https://uob-comsm0166.github.io/2025-group-14/)
+### Links
+- [Game Link](https://uob-comsm0166.github.io/2025-group-14/)
+- [Video](https://www.youtube.com/watch?v=fnFCwF3ykg4)
+- [Kanban Board](https://bristol-team-bmscl43v.atlassian.net/jira/software/projects/SO/boards/1?cloudId=1256e9a6-2479-47c4-9fb8-bf1054da7034&atlOrigin=eyJpIjoiNGM4NmY3MWQwYTMwNGJjMjg0YjFlOTNhMDM5NzJmNDkiLCJwIjoiaiJ9)
+### Chapters
+1. [Team details](#Team-Details) 
+2. [Project Report](#Project-Report)
+3. [Contribution Statement](#Contribution-Statement)
 
-## Link to Kanban board (Jira)
 
-[Kanban board](https://bristol-team-bmscl43v.atlassian.net/jira/software/projects/SO/boards/1?cloudId=1256e9a6-2479-47c4-9fb8-bf1054da7034&atlOrigin=eyJpIjoiNGM4NmY3MWQwYTMwNGJjMjg0YjFlOTNhMDM5NzJmNDkiLCJwIjoiaiJ9)
-
-
-## Canal Chase
-
-[TODO - ADD VIDEO OF GAME, ADD BANNER WITH GAME NAME, ADD GIFS]
-[Video](https://www.youtube.com/watch?v=fnFCwF3ykg4)
-
-## Group 14 - Team Snack Overflow 
-
+## 1. Team Details
+### Group 14 - Team Snack Overflow 
 ![group photo](/Images/Group_photo.jpeg)
-
 | Name | Username | Email | Role |
 |----|-----|------|-----|
-| Polly Lang | drpollylang | js24119@bristol.ac.uk | developer |
-| Leon Wellstead | leon1454 (uni) and Lifguson (personal) | np24094@bristol.ac.uk | developer |
-| Casey Cronyn | caseycronyn | mt24200@bristol.ac.uk | developer |
-| Daniil Lutskiy | Daniil845270 | ya24711@bristol.ac.uk | developer |
-| Leah Liddle | Electric-Whelk | zs24945@bristol.ac.uk | developer |
-| Adam Sidnell | adam-sid | fv24034@bristol.ac.uk | developer |
+| Polly Lang | drpollylang | js24119@bristol.ac.uk | Developer |
+| Leon Wellstead | leon1454 (uni) and Lifguson (personal) | np24094@bristol.ac.uk | Developer |
+| Casey Cronyn | caseycronyn | mt24200@bristol.ac.uk | Developer |
+| Daniil Lutskiy | Daniil845270 | ya24711@bristol.ac.uk | Developer |
+| Leah Liddle | Electric-Whelk | zs24945@bristol.ac.uk | Developer |
+| Adam Sidnell | adam-sid | fv24034@bristol.ac.uk | Developer |
+
+---
 
 ## Project Report
 
@@ -64,6 +64,7 @@
     - [Green software patterns](#green-software-patterns)
 - [8 – Conclusion](#8---conclusion)
 
+---
 
 ### 1 - Introduction
 
@@ -87,6 +88,7 @@ Top down lightly humorous chase game where you, on a canalboat, must flee a purs
 
 Platformer style game where you are an Android in the year 2442. An evil conglomerate has stolen parts from you and your mission is to get these back before it's too late and you become obsolete. Along the way you must go through levels and solve small puzzles and problems to progress. Problems to deal with include lasers, trap doors, and traps. The tools at your disposal include jet packs, teleportation and hacking. These are upgrades that you get as you find the parts and progress through the levels.
 
+---
 
 ### 2 - Requirements 
 
@@ -171,6 +173,8 @@ We also quickly recognised the utility of Agile development, as it can be diffic
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
+---
+
 ### 3 - Design
 
 Following the main non-negotiable requirements, our team has implemented the game using JavaScript with p5.js and p5play libraries. One of the advantages of utilising JavaScript in an Agile software development team is the ability to build the application using Object Oriented Programming. Specifically, our team has extensively utilised aggregation (e.g. the button class), and composition (e.g. the Player class), to create modular code which allowed us to maintain, change, and build upon existing modules easily, without it causing unintended structural issues.   
@@ -224,6 +228,8 @@ Game-screens are menus that allow for game configuration (e.g. Map selection and
 
 ![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
+---
+
 ### 4 - Implementation
 
 Two areas of challenge in developing our game were (1) the creation of the canal maps which included features such as forks and locks, which necessitated a major refactor partway through our development process, and (2) the pursuer AI. 
@@ -250,6 +256,7 @@ One interesting solution we experimented with was an implementation of the [A* s
 
 Instead, we implemented a vision-based system where the pursuer follows the player while in sight. If the player is lost, the pursuer heads to the last seen point and either chases the player (if visible) or pursues the next “last seen point” from the previous “last seen point”. This approach ensures efficient performance while maintaining intelligent pathfinding to keep the gameplay engaging.
 
+---
 
 ### 5 - Evaluation
 
@@ -341,6 +348,8 @@ The NASA TLX asks a user to rate the perceived workload of a system in 6 categor
 - **Performance**: We expected the difference not to be statistically significant because of the nature of the task (make *n* number of laps around a canal circuit). However, the players reported feeling that they completed the task more successfully on a difficult level than on the easy level. This result could not be explained by participants getting accustomed to the game play mechanics, because the order of difficulty (easy then hard or vice versa) was alternated.
 - **Frustration**: At the time of conducting the testing we had unfixed bugs appearing randomly during the gameplay, which players might find unfair. Increased frustration at higher levels could have been induced by greater unjustified punishment.
 
+---
+
 ### 6 - Process
 
 ![Example of us on a Teams call](/./Images/teams_call.jpeg)
@@ -382,6 +391,8 @@ The main forms of communication we used in the project were teams and WhatsApp. 
 
 #### Process Reflection
 We found that our flexible approach to team roles and regular scrum-style meetings worked well, as it gave everyone broad knowledge of the codebase and kept communication regular. This proved particularly valuable during unforeseen issues - such as the major refactor in sprint 3 - as no role changes were needed and everyone was able to contribute across different parts of the game without the workload falling too heavily on any one individual.
+
+---
 
 ### 7 - Sustainability, ethics and accessibility
 
@@ -428,6 +439,8 @@ We maintain a single CSS file to reduce the number of requests and amount of tim
 **(3) Remove unused assets**
 We regularly (after each sprint and integration) scan the assets we are storing and remove any unused assets.
 
+---
+
 ### 8 - Conclusion
 
 This project proved to be challenging but very rewarding; we gained invaluable experience and picked up many new skills. We learnt about the entire Software Development Lifecycle, put Agile development into practice, successfully developed a complex game, and documented the entire process.
@@ -447,7 +460,25 @@ Looking to the future of “Canal Chase”, there are many things that we would 
 
 Ultimately, we learnt a lot about software engineering, project management, and working in a team (and as a team), which will prove invaluable when we begin our professional careers.
 
-### Contribution Statement
+---
+
+### Appendix
+
+#### Raw SUS data - Easy Level
+
+![Raw SUS data - easy level](./Images/Raw_SUS_data_EasyLevel.png)
+
+#### Raw SUS data - Difficult Level
+
+![Raw SUS data - difficult level](./Images/Raw_SUS_data_DifficultLevel.png)
+
+#### Raw NASA TLX data
+
+![R
+
+---
+
+## Contribution Statement
 
 | Name | Contribution |
 | - | - |
@@ -457,17 +488,5 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 | Leah | 1/6 |
 | Polly | 1/6 |
 
-# Appendix 1
-
-## Raw SUS data - Easy Level
-
-![Raw SUS data - easy level](./Images/Raw_SUS_data_EasyLevel.png)
-
-## Raw SUS data - Difficult Level
-
-![Raw SUS data - difficult level](./Images/Raw_SUS_data_DifficultLevel.png)
-
-## Raw NASA TLX data
-
-![Raw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
+--aw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
 
