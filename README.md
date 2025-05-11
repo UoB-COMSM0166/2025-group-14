@@ -11,7 +11,7 @@
 - [Video](https://www.youtube.com/watch?v=fnFCwF3ykg4)
 - [Kanban Board](https://bristol-team-bmscl43v.atlassian.net/jira/software/projects/SO/boards/1?cloudId=1256e9a6-2479-47c4-9fb8-bf1054da7034&atlOrigin=eyJpIjoiNGM4NmY3MWQwYTMwNGJjMjg0YjFlOTNhMDM5NzJmNDkiLCJwIjoiaiJ9)
 ### Chapters
-1. [Team details](#Team-Details) 
+1. [Team Details](#Team-Details) 
 2. [Project Report](#Project-Report)
 3. [Contribution Statement](#Contribution-Statement)
 
