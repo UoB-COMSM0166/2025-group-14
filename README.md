@@ -21,12 +21,12 @@
 ![group photo](/Images/Group_photo.jpeg)
 | Name | Username | Email | Role |
 |----|-----|------|-----|
-| Polly Lang | drpollylang | js24119@bristol.ac.uk | Developer |
-| Leon Wellstead | leon1454 (uni) and Lifguson (personal) | np24094@bristol.ac.uk | Developer |
+| Adam Sidnell | adam-sid | fv24034@bristol.ac.uk | Developer |
 | Casey Cronyn | caseycronyn | mt24200@bristol.ac.uk | Developer |
 | Daniil Lutskiy | Daniil845270 | ya24711@bristol.ac.uk | Developer |
 | Leah Liddle | Electric-Whelk | zs24945@bristol.ac.uk | Developer |
-| Adam Sidnell | adam-sid | fv24034@bristol.ac.uk | Developer |
+| Leon Wellstead | leon1454 (uni) and Lifguson (personal) | np24094@bristol.ac.uk | Developer |
+| Polly Lang | drpollylang | js24119@bristol.ac.uk | Developer |
 
 ---
 
@@ -486,7 +486,6 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 | Casey | 1.0 |
 | Daniil | 1.0 |
 | Leah | 1.0 |
-| Polly | 1.0 |
 | Leon | 1.0 |
-
+| Polly | 1.0 |
 
