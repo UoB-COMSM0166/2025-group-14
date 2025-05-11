@@ -482,10 +482,10 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 
 | Name | Contribution |
 | - | - |
-| Adam | 1.0 |
-| Casey | 1.0 |
-| Daniil | 1.0 |
-| Leah | 1.0 |
-| Leon | 1.0 |
-| Polly | 1.0 |
+| Adam | 1/6 |
+| Casey | 1/6 |
+| Daniil | 1/6 |
+| Leah | 1/6 |
+| Leon | 1/6 |
+| Polly | 1/6 |
 
