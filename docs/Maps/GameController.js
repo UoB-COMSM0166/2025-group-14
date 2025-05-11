@@ -97,7 +97,7 @@ class GameController {
             this.canalCollisionDamage = 3;
             this.damageOverTime = 1;
             this.playerSpeed = 4;
-            this.pursuerSpeed = 1.5;
+            this.pursuerSpeed = 2;
             this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
             pursuerFreezeFrames = 15;
             break;
@@ -106,7 +106,7 @@ class GameController {
             this.canalCollisionDamage = 5;
             this.damageOverTime = 1.2;
             this.playerSpeed = 4;
-            this.pursuerSpeed = 2;
+            this.pursuerSpeed = 2.6;
             this.pursuerDamage = 0.5; // colliding with pursuer causes player to lose 1/2 of their health
             pursuerFreezeFrames = 10;
             break;
@@ -115,7 +115,7 @@ class GameController {
             this.canalCollisionDamage = 10;
             this.damageOverTime = 1.5;
             this.playerSpeed = 4;
-            this.pursuerSpeed = 2.5;
+            this.pursuerSpeed = 2.6;
             this.pursuerDamage = 1; // colliding with pursuer causes player to lose all of their health and die
             pursuerFreezeFrames = 5;
             break;

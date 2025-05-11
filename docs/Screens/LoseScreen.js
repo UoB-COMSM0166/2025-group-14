@@ -45,6 +45,7 @@ class LoseScreen {
         this.playAgainButton.hide();
         this.exitButton.hide();
         selectedMap++;
+        pursuerFreezeFrames = 0;
         if (state === GameState.LOSE) {
             game_screen = LevelController.getLevel(selectedMap);
             state = GameState.PLAY_GAME;
@@ -55,6 +56,7 @@ class LoseScreen {
         this.nextGameButton.hide();
         this.playAgainButton.hide();
         this.exitButton.hide();
+        pursuerFreezeFrames = 0;
         if (state === GameState.LOSE) {
             game_screen = LevelController.getLevel(selectedMap);
             state = GameState.PLAY_GAME;
