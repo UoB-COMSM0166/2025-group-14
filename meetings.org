@@ -499,3 +499,17 @@ Polly and I are both going to do a map.
 3. editing: Leah is happy to do this
 
 Aim for 11am Sunday. Bring snacks/ drinks
+
+* 11/05/2025
+final meeting :(
+** agenda
+- final bits to do pre-submission
+- go through kanban
+- lock speed
+** to-do
+- play game button if easy
+- header formatting of readme
+- HR between sections in readme
+- map images issue from Casey's gitignore
+- [fig] on the images in the readme
+- play through of the game
