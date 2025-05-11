@@ -23,8 +23,10 @@ class InfoScreen {
         this.textLine5 = "";
         this.textLine6 = "";
 
-        this.returnToMapSelection = new Button("or click here to return to map selection", windowWidth/6, windowHeight*5/6, 'seagreen', 30, this.returnToMapSelectionScreen.bind(this));
+        this.returnToMapSelection = new Button("Return to map selection", windowWidth/2, windowHeight*10/12, 'seagreen', 30, this.returnToMapSelectionScreen.bind(this));
         this.returnToMapSelection.hide();
+        this.playButton = new Button("Play", windowWidth/2, windowHeight*9/12, 'seagreen', 30, () => this.playGame());
+        this.playButton.hide();
     }
     
 
@@ -44,7 +46,9 @@ class InfoScreen {
         let numberOfDucks = 9;
 
         this.returnToMapSelection.show();
-        this.returnToMapSelection.setPosition(windowWidth*3/6, windowHeight*7/8);
+        this.returnToMapSelection.setPosition(windowWidth/2, windowHeight*11/12);
+        this.playButton.show();
+        this.playButton.setPosition(windowWidth/2, windowHeight*9/12);
 
         for (let i = 0; i < numberOfDucks; i++) {
             animation(this.duck, duckX+(i*duckSpacing), duckY);
@@ -63,7 +67,7 @@ class InfoScreen {
         textAlign(CENTER);
         textSize(30);
         stroke(3);
-        text("Press [SPACE] to continue", windowWidth/2, windowHeight*7/8 - 70);
+        //text("Press [SPACE] to continue", windowWidth/2, windowHeight*5/8 - 70);
         
         textSize(10);
 
@@ -74,6 +78,15 @@ class InfoScreen {
         // which is not the changes I want to make 2 days before submission
         if (state === GameState.INFO_SCREEN && kb.pressed(' ')) {
             this.returnToMapSelection.hide();
+            this.playButton.hide();
+            if (!(selectedDifficulty === -1)) {
+                difficultyLevel = difficulty_screen.getSelectedDifficulty();
+              } else {
+                difficultyLevel = 0; //i.e. the default seleciton
+              }
+              game_screen = LevelController.getLevel(selectedMap);
+              //difficulty_screen.resetSelectedDifficulty();
+              map_selection_screen.resetSelectedMapId();
             state = GameState.PLAY_GAME;
         }
 
@@ -95,6 +108,21 @@ class InfoScreen {
 
     returnToMapSelectionScreen() {
         this.returnToMapSelection.hide();
+        this.playButton.hide();
         state = GameState.MAP_SELECTION_SCREEN;
+    }
+
+    playGame() {
+        this.playButton.hide();
+        this.returnToMapSelection.hide();
+        if (!(selectedDifficulty === -1)) {
+            difficultyLevel = difficulty_screen.getSelectedDifficulty();
+          } else {
+            difficultyLevel = 0; //i.e. the default seleciton
+          }
+          game_screen = LevelController.getLevel(selectedMap);
+          //difficulty_screen.resetSelectedDifficulty();
+          map_selection_screen.resetSelectedMapId();
+        state = GameState.PLAY_GAME;
     }
 }

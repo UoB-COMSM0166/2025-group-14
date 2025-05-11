@@ -22,12 +22,12 @@ class InfoTextController {
     }
 
     static getInfoText0() {
-        let line1 = "OH NO! One moment you were enjoying the peaceful idyll of life on the canal - just you, your narrowboat, and the occasional duck - and the next, you are being chased by [....]!";
+        let line1 = "OH NO! One moment you were enjoying the peaceful idyll of life on the canal - just you, your narrowboat, and the occasional duck - and the next, you are being chased by a boat trying to ram you!";
         let line2 = "This tutorial will teach you the basics of how to play";
         let line3 = "You can press [Esc] key at any time to go back to the Start Menu";
-        let line4 = ""
+        let line4 = "";
         let line5 = "";
-        let line6 = ""
+        let line6 = "";
 
         return {
             1: line1,
