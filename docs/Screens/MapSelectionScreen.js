@@ -5,15 +5,15 @@ class MapSelectionScreen{
         this.selectedMapId = -1; // Default map is -1 (no map selected)
         this.tutorialButton = new Button("Tutorial", windowWidth/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(0), true, 'assets/mapScreenshots/tutorial.png');
         this.tutorialButton.hide();
-        this.mapOneButton = new Button("Forkminster", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1), true, 'assets/mapScreenshots/map1.png');
+        this.mapOneButton = new Button("Locksbow Crescent", windowWidth*2/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(1), true, 'assets/mapScreenshots/locksbow.png');
         this.mapOneButton.hide();
-        this.mapTwoButton = new Button("Locksbow Crescent", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2), true, 'assets/mapScreenshots/map2.png');
+        this.mapTwoButton = new Button("Snailshell Spiral", windowWidth*3/4, windowHeight/5, 'seagreen', 30, () => this.selectMap(2), true, 'assets/mapScreenshots/snailshell.png');
         this.mapTwoButton.hide();
-        this.mapThreeButton = new Button("The Hedge Maze", windowWidth/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(3), true, 'assets/mapScreenshots/map3.png');
+        this.mapThreeButton = new Button("Forkminister", windowWidth/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(3), true, 'assets/mapScreenshots/forkminister.png');
         this.mapThreeButton.hide();
-        this.mapFourButton = new Button("Hairpin Hampton", windowWidth*2/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(4), true, 'assets/mapScreenshots/map4.png');
+        this.mapFourButton = new Button("Hairpin Hampton", windowWidth*2/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(4), true, 'assets/mapScreenshots/hairpin.png');
         this.mapFourButton.hide();
-        this.mapFiveButton = new Button("Snailshell Spiral", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5), true, 'assets/mapScreenshots/map5.png');
+        this.mapFiveButton = new Button("The Hedge Maze", windowWidth*3/4, windowHeight*3/5, 'seagreen', 30, () => this.selectMap(5), true, 'assets/mapScreenshots/hedge-maze.png');
         this.mapFiveButton.hide();
 
         this.titleText = "Select a map to play";
