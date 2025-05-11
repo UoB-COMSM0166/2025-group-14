@@ -4,6 +4,8 @@
 ## Canal Chase
 ![Canal Chase Banner](https://github.com/user-attachments/assets/3208036b-4ee5-4ca2-b676-5d8044b1703f)
 
+![Playing maze map](/Images/maze-map.gif)
+
 ## Table of Contents
 
 ### Links
@@ -190,6 +192,8 @@ The Player p5play Sprite is the central class in the game. The player directly c
 The Pursuer class is also a p5play Sprite. Pursuer has a basic form of artificial intelligence; it can trace the position of the player on the map and move towards its last recorded location.  
  
 - #### CanalMap class and the locks mechanics  
+
+![Lock mechanic](/Images/lock.gif)
  
 Maps were built at three aggregated levels:
 1.	Canals, straight line pairs of banks. 
@@ -202,6 +206,8 @@ Locks, a subclass of canals, are given timing parameters and are positioned like
  
  
 - #### Health mechanic: the interaction between canalMap, player and pursuer objects  
+
+![Damage to player](/Images/damage.gif)
  
 The main objective of the game is to navigate through the canals and reach the end of the track. To make the gameplay more involving, we have introduced a health mechanic, which both forces strategic thinking and punishes undesirable behaviour. Health is decreased in the following situations:
 1.	When the player hits the bank of a canal - this forces the player to be precise and slow whilst navigating the map, especially when handling tight corners and turns.
@@ -290,6 +296,9 @@ One of the most frequent comments we received from users throughout the evaluati
 We made three main changes to the game in response to this:
 - First, we implemented game control flow logic that meant that the player moves through an introduction screen before proceeding on to the gameplay. This introduction screen details the narrative background to the game, as well as giving a brief overview of the controls and rules of the game before the user starts playing.
 - Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.
+
+![Playing tutorial](/Images/tutorial.gif)
+
 - Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Hard, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/manoeuvrability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
 
 ##### Winning/losing conditions are unclear
