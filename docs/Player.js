@@ -8,8 +8,6 @@ class PlayerStatus {
       return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
   }
 
-  // this.alternativeControls = false;
-
   static alternativeControls = false;
 }
 
@@ -25,8 +23,6 @@ class Player {
     this.playerSprite.drag = 5;
     this.playerSprite.bounciness = 0.9;
     this.playerSprite.mass = 5;
-
-    // player.collider = 'kinematic';
 
     this.maxSpeed = speed;
     this.maxSpeedCopy = speed;
@@ -66,7 +62,7 @@ class Player {
   movement(damageOn = true, healthOn = true) {
 
 
-    // Standart controls: pressing WASD makes the boat move up, left, down, right correspondingly 
+    // Standard controls: pressing WASD makes the boat move up, left, down, right correspondingly
     // Alternative controls: pressing W makes you go forward, and S backwards, depending on the 
     // direction the boat is facing at a given moment, and A and D rotate the boat clockwise 
     // and anticlockwise correspondingly 
@@ -146,19 +142,6 @@ class Player {
         this.takeDamage(this.pursuerDamage);
         //print("Player take pursuer damage");
       } 
-    }
-
-    if(healthOn) {
-      // If health is zero, stops player boat until repaired.
-      if (this.zeroHealth) {
-        // Display speech bubble message
-        let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
-          this.playerSprite.x-5, this.playerSprite.y - 10,
-          "OH NO! Your health is zero! Press the 'r' key to make repairs!");
-          //Adam: commented this out as I think game ends if health is
-          //zerohealthMessage.show();
-        //this.haltPlayer();
-      }
     }
 
     // If 'r' key is pressed, repair boat

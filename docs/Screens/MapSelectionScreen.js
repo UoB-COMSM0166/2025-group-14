@@ -60,7 +60,6 @@ class MapSelectionScreen{
         } else {
             state = GameState.INFO_SCREEN;
         }
-        // state = GameState.INFO_SCREEN;
     }
 
     getSelectedMapId() {

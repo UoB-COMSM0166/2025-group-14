@@ -158,7 +158,6 @@ class Doors{
     }
 
     segmentPosition(x, canal, bank, pos){
-        let width = canal.width;
         let grad = canal.getGradient();
         let off = canal.getOffset(bank);
         let coord = canal.getCoord(bank.concat(pos));

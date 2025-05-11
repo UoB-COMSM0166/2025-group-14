@@ -123,17 +123,6 @@ function draw() {
     info_screen.updateText(selectedMap);
     selectedDifficulty = difficulty_screen.getSelectedDifficulty();
     info_screen.display();
-   /*  if (kb.pressed(' ')) {
-      // print("was here " + selectedDifficulty);
-      if (!(selectedDifficulty === -1)) {
-        difficultyLevel = difficulty_screen.getSelectedDifficulty();
-      } else {
-        difficultyLevel = 0; //i.e. the default seleciton
-      }
-      game_screen = LevelController.getLevel(selectedMap);
-      //difficulty_screen.resetSelectedDifficulty();
-      map_selection_screen.resetSelectedMapId();
-    } */
   }
 
   if (state == GameState.PLAY_GAME) {

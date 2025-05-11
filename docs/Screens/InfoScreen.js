@@ -36,7 +36,6 @@ class InfoScreen {
         let instructionX = windowWidth*0.05;
         let instructionSpacing = windowHeight*0.1; 
         let instructionBoxWidth = windowWidth*0.9;
-        //background("lightblue");
         background(183, 233, 193);
         fill(0);
         
@@ -55,7 +54,6 @@ class InfoScreen {
         }
 
         textSize(17)
-        // textAlign(LEFT);
         textAlign(CENTER);
         text(this.textLine1, instructionX, instructionY, instructionBoxWidth);
         text(this.textLine2, instructionX, instructionY + instructionSpacing, instructionBoxWidth);
@@ -67,8 +65,7 @@ class InfoScreen {
         textAlign(CENTER);
         textSize(30);
         stroke(3);
-        //text("Press [SPACE] to continue", windowWidth/2, windowHeight*5/8 - 70);
-        
+
         textSize(10);
 
         
@@ -85,7 +82,6 @@ class InfoScreen {
                 difficultyLevel = 0; //i.e. the default seleciton
               }
               game_screen = LevelController.getLevel(selectedMap);
-              //difficulty_screen.resetSelectedDifficulty();
               map_selection_screen.resetSelectedMapId();
             state = GameState.PLAY_GAME;
         }
@@ -121,7 +117,6 @@ class InfoScreen {
             difficultyLevel = 0; //i.e. the default seleciton
           }
           game_screen = LevelController.getLevel(selectedMap);
-          //difficulty_screen.resetSelectedDifficulty();
           map_selection_screen.resetSelectedMapId();
         state = GameState.PLAY_GAME;
     }
