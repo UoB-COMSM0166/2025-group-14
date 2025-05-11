@@ -474,7 +474,7 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 
 #### Raw NASA TLX data
 
-![R
+![Raw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
 
 ---
 
@@ -482,11 +482,11 @@ Ultimately, we learnt a lot about software engineering, project management, and 
 
 | Name | Contribution |
 | - | - |
-| Adam | 1/6 |
-| Casey | 1/6 |
-| Daniil | 1/6 |
-| Leah | 1/6 |
-| Polly | 1/6 |
+| Adam | 1.0 |
+| Casey | 1.0 |
+| Daniil | 1.0 |
+| Leah | 1.0 |
+| Polly | 1.0 |
+| Leon | 1.0 |
 
---aw NASA TLX data](./Images/Raw_NASA_TLX_data.png)
 
