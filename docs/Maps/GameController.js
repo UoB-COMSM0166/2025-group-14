@@ -92,31 +92,34 @@ class GameController {
       case 2:
       default:
         switch (difficultyLevel) { 
+          // easy mode: should be hard to die but not too boring
           case 0:
             this.playerMaxHealth = 100; 
-            this.canalCollisionDamage = 3;
-            this.damageOverTime = 1;
+            this.canalCollisionDamage = 1;
+            this.damageOverTime = 0.25;
             this.playerSpeed = 4;
-            this.pursuerSpeed = 2;
-            this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/4 of their health
+            this.pursuerSpeed = 2.5;
+            this.pursuerDamage = 0.025;
             pursuerFreezeFrames = 15;
             break;
+          // medium mode: a fun balance for most players
           case 1:
-            this.playerMaxHealth = 70;
-            this.canalCollisionDamage = 5;
-            this.damageOverTime = 1.2;
+            this.playerMaxHealth = 100;
+            this.canalCollisionDamage = 4;
+            this.damageOverTime = 1;
             this.playerSpeed = 4;
-            this.pursuerSpeed = 2.6;
-            this.pursuerDamage = 0.5; // colliding with pursuer causes player to lose 1/2 of their health
+            this.pursuerSpeed = 2.65;
+            this.pursuerDamage = 0.25; // colliding with pursuer causes player to lose 1/3 of their health
             pursuerFreezeFrames = 10;
             break;
+          // hard mode: for players wanting a challenge
           case 2:
-            this.playerMaxHealth = 50;
-            this.canalCollisionDamage = 10;
-            this.damageOverTime = 1.5;
+            this.playerMaxHealth = 100;
+            this.canalCollisionDamage = 8;
+            this.damageOverTime = 2;
             this.playerSpeed = 4;
-            this.pursuerSpeed = 2.6;
-            this.pursuerDamage = 1; // colliding with pursuer causes player to lose all of their health and die
+            this.pursuerSpeed = 2.8;
+            this.pursuerDamage = 0.5; // colliding with pursuer causes player to lose all of their health and die
             pursuerFreezeFrames = 5;
             break;
         }

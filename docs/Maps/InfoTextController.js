@@ -79,7 +79,7 @@ class InfoTextController {
         let line1 = "A long and winding canal with a couple 'forks' ahead.";
         let line2 = "Choose your path wisely, as you are being pursued from afar, slowly but surely.";
         let line3 = "All is not as serene as it may at first appear.";
-        let line4 = "";
+        let line4 = "And make sure you get through that first lock!";
         let line5 = "";
         let line6 = "";
 
@@ -95,7 +95,7 @@ class InfoTextController {
 
     static getInfoText4() {
         let line1 = "Quick! Dodge into that lock as soon as you see it!";
-        let line2 = "In HairpinHampton, the pursuer isn't your biggest threat - the banks are."
+        let line2 = "In Hairpin Hampton, the pursuer isn't your biggest threat - the banks are."
         let line3 = "Be prepared for tight turns and narrow channels";
         let line4 = "Do you repair often and risk the pursuer catching you?";
         let line5 = "Or save it for the next lock wait and risk catching the next corner and sinking?";

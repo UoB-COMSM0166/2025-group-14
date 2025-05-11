@@ -27,15 +27,15 @@ class MapController {
             case 0:
                 return new Sprite(100, 70, 35, 25);
             case 1:
-                return new Sprite(265, -328, 35, 25);
+                return new Sprite(265, -250, 35, 25);
             case 2:
-                return new Sprite(122, 45, 25, 15);
+                return new Sprite(250, 200, 35, 25);
             case 3:
                 return new Sprite(1500, -100, 35, 25);
             case 4:
-                return new Sprite(225, 407, 35, 25);//originally 225 407; 3122 3070 for surveying the current end
+                return new Sprite(280, 575, 35, 25);//originally 225 407; 3122 3070 for surveying the current end
             case 5:
-                return new Sprite(186, 52, 35, 25);
+                return new Sprite(300, 250, 35, 25);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -47,15 +47,15 @@ class MapController {
             case 0:
                 return new Sprite(100, 70, 25, 15);
             case 1:
-                return new Sprite(-442, -327, 25, 15);
+                return new Sprite(-450, -250, 25, 15);
             case 2:
-                return new Sprite(30, 45, 25, 15);
+                return new Sprite(10, 0, 25, 15);
             case 3:
-                return new Sprite(20, 0, 25, 15);
+                return new Sprite(10, 0, 25, 15);
             case 4:
-                return new Sprite(5, 82, 25, 15);
+                return new Sprite(-40, 30, 25, 15);
             case 5:
-                return new Sprite(37, 39, 25, 15);
+                return new Sprite(10, 30, 25, 15);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -81,7 +81,7 @@ class MapController {
         let c3 = new Canal(500, 4, 200, player);
         let c4 = new Canal(400, 2, 200, player);
         let c5 = new Canal(400, 11, 200, player);
-        let c6 = new Lock(1200, 3, 150, player, 1, 1.5);
+        let c6 = new Lock(1200, 3, 150, player, 1.5, 3);
         let c7 = new Canal(700, 7, 150, player);
         let c8 = new Canal(500, 3, 150, player);
         let c9 = new Canal(700, 7, 150, player);
@@ -106,10 +106,10 @@ class MapController {
         let c7 = new Canal(700, 6, 100, player);
         let c8 = new Canal(600, 8, 100, player);
         let c9 = new Canal(800, 10, 100, player);
-        let c10 = new Lock(300, 11, 100, player, 5, 3);
+        let c10 = new Lock(300, 11, 100, player, 1.5, 2);
         let c11 = new Canal(900, 1, 100, player);
         let c12 = new Canal(1000, 3, 100, player);
-        let c13 = new Lock(300, 4, 100, player, 5, 3);
+        let c13 = new Lock(300, 4, 100, player, 1.5, 3);
         let c14 = new Canal(500, 6, 100, player);
         let c15 = new Canal(100, 7, 100, player, true, true);
 
@@ -136,7 +136,7 @@ class MapController {
         // Map segments.
         // Network one. Initial stretch of map. pursuer is placed far behind the player to begin with, out of sight.
         let seg1 = new Canal(stdLength + 1800, 2.8, stdWidth, player);
-        let lockSeg1 = new Lock(100, 2.8, stdWidth, player, 2, 4);
+        let lockSeg1 = new Lock(100, 2.8, stdWidth, player, 1, 3);
         let seg2 = new Canal(100, 2.9, stdWidth, player, false);
 
         // Looping section that serves as an entry point to the forks
@@ -261,7 +261,7 @@ class MapController {
         into the lock pronto, or face a very short game!*/
 
         let start = new Canal(stdlen * 2, 5, stdwidth, player);
-        let jumpScare = new Lock(stdlen, 2, stdwidth, player, 3, 3)
+        let jumpScare = new Lock(stdlen, 2, stdwidth, player, 2, 3)
         let phew = new Canal(stdlen, 1, stdwidth, player);
 
         /*...you made it! And you've now got a lead on the pursuer, which is good, cause the canal's
@@ -351,8 +351,8 @@ class MapController {
         avoiding the opponent*/
 
 
-        let o = 1.5
-        let c = 7
+        let o = 2.5
+        let c = 6
         let inc = 2
         let incA = 0;
 
@@ -440,7 +440,7 @@ class MapController {
 
         let finishLine = new Canal(300, 8, stdwidth, player, true, true)
 
-        let ring = new CanalNetwork(-1375, -228, [outerRing, finishLine], [[outerRing[2], lowMidArc[3], 4, 3]]);
+        let ring = new CanalNetwork(-1375, -228, [outerRing, finishLine], [[outerRing[2], lowMidArc[3], 3, 3]]);
 
 
 
