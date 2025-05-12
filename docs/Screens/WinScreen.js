@@ -16,7 +16,7 @@ class WinScreen {
         //background("lightblue");
         this.playAgainButton.show();
         this.playAgainButton.setPosition(windowWidth/2, windowHeight*2/3 + 20);
-        if (selectedMap < 5) {
+        if (selectedMap < 5  && selectedMap > 0) {
             this.nextGameButton.show();
             this.nextGameButton.setPosition(windowWidth/2, windowHeight*2/3 + 100);
         }
