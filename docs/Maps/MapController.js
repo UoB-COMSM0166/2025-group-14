@@ -62,7 +62,7 @@ class MapController {
     }
 
     static getMap0(player) {
-        let c1 = new Canal(1000, 3, 150, player); //TODO update this with new canal structure
+        let c1 = new Canal(1000, 3, 150, player);
         let c2 = new Canal(500, 2, 150, player);
         let c3 = new Canal(1000, 3, 150, player);
         let c4 = new Canal(500, 2.5, 150, player);
@@ -112,11 +112,6 @@ class MapController {
         let c13 = new Lock(300, 4, 100, player, 1.5, 3);
         let c14 = new Canal(500, 6, 100, player);
         let c15 = new Canal(100, 7, 100, player, true, true);
-
-        //let c15 = new Canal(300, 7, 100, player);
-        //let c16 = new Canal(200, 3, 100, player);
-        //let c17 = new Canal(200, 12, 100, player);
-        //let c18 = new Canal(200, 10, 100, player);
 
         let mainNetwork = new CanalNetwork(0, 0, [c1, c2, c3, c4, c5, c6, c6pt5, c7, c8, c9, c10, c11, c12, c13, c14, c15], []);
         return new CanalMap(player, true, [mainNetwork]);
@@ -337,8 +332,6 @@ class MapController {
             finishLine
         ]);
 
-        //240 50
-
         return new CanalMap(player, true, [network]);
     }
 
@@ -441,10 +434,6 @@ class MapController {
         let finishLine = new Canal(300, 8, stdwidth, player, true, true)
 
         let ring = new CanalNetwork(-1375, -228, [outerRing, finishLine], [[outerRing[2], lowMidArc[3], 3, 3]]);
-
-
-
-        //-1571, 223
 
         return new CanalMap(player, true, [threshold, loop, arc, midLayerOne, midLayerTwo, midLayerThree, ring]);
     }

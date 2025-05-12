@@ -69,6 +69,7 @@ class GameController {
 
     this.repairButton = new Button("Repair boat", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.repair());
 
+    // for debugging
     // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
   }
 
@@ -123,19 +124,17 @@ class GameController {
             pursuerFreezeFrames = 5;
             break;
         }
-        // break;
     }
 
   }
 
-  // Post-refactor display
   display() {
     // clean the previous frame
     clear();
 
     this.displayBackground();
 
-    //add the mouse coordinates on the screen
+    //add the mouse coordinates on the screen for debugging
     /* textSize(20);
     fill(0);
     stroke(256);
@@ -179,7 +178,7 @@ class GameController {
     }
 
 
-    //unocmment this line of code to detach the camera from the player sprite and have an overview of the map
+    // uncomment this line of code to detach the camera from the player sprite and have an overview of the map for debugging
     // this.moveCamera();
 
     if (this.playerCfg.isHealthZero()){
@@ -280,14 +279,12 @@ class GameController {
   buttonClick() {
     console.log("Button clicked!");
     if (this.isPaused) {
-      //this.pauseButton.setColour("seagreen");
       this.pauseButton.setLabel("PAUSE");
       this.pauseButton.show();
       this.resumeGame();
       this.isPaused = false;
     }
     else {
-      //this.pauseButton.setColour("skyblue");
       this.pauseButton.setLabel("Play");
       this.pauseButton.show();
       this.pauseGame();

@@ -223,7 +223,6 @@ class TutorialSetupDisplay {
 
     //damage tutorial logic
     runDamageTutorial() {
-      //camera.off();
       //when first run initialise a healthbar speechbubble etc
         if (!this.startedDamageTutorial) {
             this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);

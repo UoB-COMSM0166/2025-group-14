@@ -42,8 +42,6 @@ class Button {
         let buttonHeight = this.button.elt.offsetHeight;
         this.button.position(this.x - buttonWidth / 2, this.y - buttonHeight / 2);
 
-        //setPosition(x, y);
-        
         // event handling
         this.button.mousePressed(() => this.click(callback)); //callback when button is clicked
         this.button.mouseOver(() => this.hoverOver());     

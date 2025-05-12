@@ -13,7 +13,6 @@ class LoseScreen {
     display() {
         let centerX = windowWidth/2;
         let centerY = windowHeight/2;
-        //background("lightblue");
         this.playAgainButton.show();
         this.playAgainButton.setPosition(windowWidth/2, windowHeight*2/3 + 20);
         if (selectedMap < 5 && selectedMap > 0) {
@@ -26,8 +25,6 @@ class LoseScreen {
         fill(0);
         textSize(20)
         textAlign(CENTER);
-        //text("You lose..", (oldWindowWidth/2), (oldWindowHeight/2)-30);
-        //text("Press SPACE to play the game again.", oldWindowWidth/2, oldWindowHeight/2);
         text("You lose...", centerX, centerY);
         text("Press esc to return to the start menu.", centerX, centerY+30);
         

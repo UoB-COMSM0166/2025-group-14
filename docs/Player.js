@@ -8,8 +8,6 @@ class PlayerStatus {
       return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
   }
 
-  // this.alternativeControls = false;
-
   static alternativeControls = false;
 }
 
@@ -25,8 +23,6 @@ class Player {
     this.playerSprite.drag = 5;
     this.playerSprite.bounciness = 0.9;
     this.playerSprite.mass = 5;
-
-    // player.collider = 'kinematic';
 
     this.maxSpeed = speed;
     this.maxSpeedCopy = speed;
@@ -66,7 +62,7 @@ class Player {
   movement(damageOn = true, healthOn = true) {
 
 
-    // Standart controls: pressing WASD makes the boat move up, left, down, right correspondingly 
+    // Standard controls: pressing WASD makes the boat move up, left, down, right correspondingly 
     // Alternative controls: pressing W makes you go forward, and S backwards, depending on the 
     // direction the boat is facing at a given moment, and A and D rotate the boat clockwise 
     // and anticlockwise correspondingly 
@@ -144,7 +140,6 @@ class Player {
       if (pursuerCatched){
         pursuerCatched = false;
         this.takeDamage(this.pursuerDamage);
-        //print("Player take pursuer damage");
       } 
     }
 
@@ -155,9 +150,6 @@ class Player {
         let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
           this.playerSprite.x-5, this.playerSprite.y - 10,
           "OH NO! Your health is zero! Press the 'r' key to make repairs!");
-          //Adam: commented this out as I think game ends if health is
-          //zerohealthMessage.show();
-        //this.haltPlayer();
       }
     }
 
@@ -182,7 +174,7 @@ class Player {
   }
 
   // uncomment and modify the lines below if you want to continue developing the game and need to 
-  // see some player stats above the player sprite
+  // see some player stats above the player sprite for debugging
   debug() {
     //debug info with coordinates ont pot of mivng player
     /* text(`player.x: ${round(this.playerSprite.x)} player.y: ${round(this.playerSprite.y)}`, this.playerSprite.x, this.playerSprite.y - 30);
@@ -283,8 +275,6 @@ class Player {
 
   // Stops boat for a given amount of time
   haltPlayer(timeHalted = null) {
-    //this.repairTimer.show();
-   // this.halted = true;
     this.maxSpeed = 0; // halt player
     this.currentVelCopy = this.currentVel.mag();
     this.currentVel.setMag(0);
