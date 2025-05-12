@@ -1,4 +1,5 @@
 class DepthBar {
+  //constructor(x, y, maxHealth, player) {
   constructor(isEmpty) {
     textAlign(LEFT);
     this.x;
@@ -19,6 +20,7 @@ class DepthBar {
     fill(0, 0, 0);
     textSize(12);
     textAlign(LEFT)
+    //text("Healthbar: " + this.health, this.x, this.y - 10);
     let depthText;
     if (this.depth == 100) depthText = "FULL";
     else if (this.depth == 0) depthText = "EMPTY";

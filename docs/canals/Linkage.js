@@ -120,6 +120,7 @@ class linkage extends linearConnect{
         let outStart = this.outbound.getCoord(this.outBank.concat("Start"));
         let outEnd = this.outbound.getCoord(this.outBank.concat("End"));
         
+        let inStart = this.inbound.getCoord(this.inBank.concat("Start"));
         let inEnd = this.inbound.getCoord(this.inBank.concat("End"));
         let inPoint = halfwayPoint(this.inbound.getCoord(this.inBank.concat("Start")), inEnd);
         let outPoint = halfwayPoint(outStart, outEnd);

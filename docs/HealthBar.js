@@ -1,4 +1,5 @@
 class HealthBar {
+  //constructor(x, y, maxHealth, player) {
   constructor( maxHealth, player) {
     textAlign(LEFT);
     this.x = player.playerSprite.x - (windowWidth/2)+20;
@@ -18,6 +19,7 @@ class HealthBar {
     fill(0, 0, 0);
     textSize(15);
     textAlign(LEFT)
+    //text("Healthbar: " + this.health, this.x, this.y - 10);
     text("Healthbar: " + Math.round(this.health), camera.x-(windowWidth/2)+20, camera.y - (windowHeight/2)+15);
 
     // Draw empty health bar box

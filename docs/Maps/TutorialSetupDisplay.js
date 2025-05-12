@@ -152,7 +152,14 @@ class TutorialSetupDisplay {
             this.runDamageTutorial();
             return;
         }
-    }
+
+        // pursuer tutorial and normal game logic in the runPursuerTutorial function (has win lose conditions)
+        if (!this.passedPursuerTutorial) {
+            this.runPursuerTutorial();
+            return;
+        }
+  
+    }   
 
     displayBackground(){
         camera.on();
@@ -216,6 +223,7 @@ class TutorialSetupDisplay {
 
     //damage tutorial logic
     runDamageTutorial() {
+      //camera.off();
       //when first run initialise a healthbar speechbubble etc
         if (!this.startedDamageTutorial) {
             this.healthbar = new HealthBar(this.playerMaxHealth, this.playerCfg);

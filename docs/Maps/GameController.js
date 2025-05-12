@@ -68,6 +68,8 @@ class GameController {
     camera.zoom = 1;
 
     this.repairButton = new Button("Repair boat", windowWidth*2/3, windowHeight/18, 'seagreen', 20, () => this.playerCfg.repair());
+
+    // text(`${mouseX} ${mouseY}`, mouseX, mouseY);
   }
 
   // the selectedMap variable is assigned a value in main (when the player clicks which map they want to play)
@@ -121,17 +123,19 @@ class GameController {
             pursuerFreezeFrames = 5;
             break;
         }
+        // break;
     }
 
   }
 
+  // Post-refactor display
   display() {
     // clean the previous frame
     clear();
 
     this.displayBackground();
 
-    //add the mouse coordinates on the screen. Uncomment below for debugging
+    //add the mouse coordinates on the screen
     /* textSize(20);
     fill(0);
     stroke(256);
@@ -276,12 +280,14 @@ class GameController {
   buttonClick() {
     console.log("Button clicked!");
     if (this.isPaused) {
+      //this.pauseButton.setColour("seagreen");
       this.pauseButton.setLabel("PAUSE");
       this.pauseButton.show();
       this.resumeGame();
       this.isPaused = false;
     }
     else {
+      //this.pauseButton.setColour("skyblue");
       this.pauseButton.setLabel("Play");
       this.pauseButton.show();
       this.pauseGame();

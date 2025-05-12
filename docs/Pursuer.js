@@ -46,6 +46,7 @@ class Pursuer {
         if (this.pursuer.collides(this.player) && !this.haveJustCollided) {
             this.haveJustCollided = true;
             this.collisionTimer = millis();
+            //console.log("Hit player");
             if (soundOn) {
                 boatCrashSound.play();
             }
@@ -56,6 +57,7 @@ class Pursuer {
         } else {
             this.pursuer.speed = 0;
             this.pursuer.sleeping = true;
+            //console.log("Cooling off");
             return
         }
         // If the pursuer is within 60 pixels of the target, stop moving and set to "sleep" to stop weird jiggling 

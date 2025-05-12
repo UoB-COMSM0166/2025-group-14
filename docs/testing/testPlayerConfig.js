@@ -7,29 +7,24 @@ class PlayerStatus {
   static isValid(status) {
       return [PlayerStatus.NONE, PlayerStatus.REPAIRING, PlayerStatus.REPAIRS_FINISHED].includes(status);
   }
-
-  // this.alternativeControls = false;
-
-  static alternativeControls = false;
 }
 
 
 
 class Player {
-  constructor(player, maxHealth, collisionDamage, damageOverTime, pursuerDamage, timer, map, speed) {
+  constructor(player, maxHealth, collisionDamage, damageOverTime, timer, map) {
     this.playerSprite = player;
   
-    // These are the adjustable physics parameters from p5Play that you can play areound with
-    // to simulate natural movement of the boat
+
+    // player.debug = true;
+    // player.maxSpeed = 5;
     this.playerSprite.friction = 10;
     this.playerSprite.drag = 5;
     this.playerSprite.bounciness = 0.9;
-    this.playerSprite.mass = 5;
-
     // player.collider = 'kinematic';
 
-    this.maxSpeed = speed;
-    this.maxSpeedCopy = speed;
+    this.maxSpeed = 4.5;
+    this.maxSpeedCopy = 4.5;
 
     this.stationary = false;
     this.direcitonSave = 0;
@@ -47,13 +42,12 @@ class Player {
     this.repairTime = 3.0;  // time for repairs = 3 seconds. Time for zero-health repairs=repairTime*2
     this.repairTimer = new Timer();
     this.status = PlayerStatus.NONE;
-    this.pursuerDamage = this.maxHealth * pursuerDamage; // amount of health lost if collide with pursuer
+    // this.pursuerDamageCooldown = 0;
   }
 
   camera() {
     camera.zoom = 1;
-    // if the player starts to move outside the camera frame, the camera shifts to keep the player 
-    //withing the visible box
+    // if the player starts to move outside the camera frame, you move the camera
     if (this.playerSprite.canvasPos.x < windowWidth/4 || this.playerSprite.canvasPos.x > windowWidth*3/4) {
       camera.x += this.playerSprite.vel.x;
     }   
@@ -63,89 +57,45 @@ class Player {
   }
 
   // added boolean damageOn and healthOn argument so that these can turned off in the tutorial
-  movement(damageOn = true, healthOn = true) {
+  movement(damageOn = true, healthOn = false) {
+    // player sprite movement logic
+    // applying force to the player's sprite in response to wasd or the arrow keys
+    if (kb.pressing('left')) this.playerSprite.applyForce(-30, 0);
+    else if (kb.pressing('right')) this.playerSprite.applyForce(30, 0);
+    if (kb.pressing('up')) this.playerSprite.applyForce(0, -30);
+    else if (kb.pressing('down')) this.playerSprite.applyForce(0, 30);
 
+    // the following code 1) prevents exceeding the maxSpeed  
+    this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
+    if (this.currentVel.mag() > this.maxSpeed) {
+      this.currentVel.setMag(this.maxSpeed);
+      this.playerSprite.vel.x = this.currentVel.x;
+      this.playerSprite.vel.y = this.currentVel.y;
+    } 
 
-    // Standart controls: pressing WASD makes the boat move up, left, down, right correspondingly 
-    // Alternative controls: pressing W makes you go forward, and S backwards, depending on the 
-    // direction the boat is facing at a given moment, and A and D rotate the boat clockwise 
-    // and anticlockwise correspondingly 
+    // 2)preserves the direction when the sprite stops
+    if (this.currentVel.mag() > 0.2) this.direcitonSave = this.currentVel.heading();
+    
+    if (this.currentVel.mag() < 0.2) this.stationary = true; 
+    else this.stationary = false;
 
-    if (PlayerStatus.alternativeControls) {
-      let acc = 0;
-
-      // Detecting the input from the keys
-      if (kb.pressing('left')) this.playerSprite.rotationSpeed = -2;
-      else if (kb.pressing('right')) this.playerSprite.rotationSpeed = 2;
-      else this.playerSprite.rotationSpeed = 0;
-      if (kb.pressing('up')) acc = 1;
-      else if (kb.pressing('down')) acc = -0.3; 
-      
-      if (kb.pressing('up') || kb.pressing('down')) {
-        engineSound.setVolume(0.1)
-      } else {
-        engineSound.setVolume(0.05)
-      }
-
-      //if W or S is pressed, then apply force to the boat sprite
-      let rad = radians(this.playerSprite.rotation);
-      let vector = p5.Vector.fromAngle(rad, (80 * acc));
-      this.playerSprite.applyForce(vector);
-  
-      acc = 0;
-
-      // the following code prevents exceeding the maxSpeed  
-      this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
-      if (this.currentVel.mag() > this.maxSpeed) {
-        this.currentVel.setMag(this.maxSpeed);
-        this.playerSprite.vel.x = this.currentVel.x;
-        this.playerSprite.vel.y = this.currentVel.y;
-      } 
-    } else {
-      let dirX = 0;
-      let dirY = 0;
-  
-      if (kb.pressing('left')) dirX -= 1;
-      else if (kb.pressing('right')) dirX += 1;
-      if (kb.pressing('up')) dirY -= 1;
-      else if (kb.pressing('down')) dirY += 1;
-
-      if (kb.pressing('up') || kb.pressing('down') || kb.pressing('left') || kb.pressing('right')) {
-        engineSound.setVolume(0.4)
-      } else {
-        engineSound.setVolume(0.2)
-      }
-  
-      this.playerSprite.applyForce(createVector(dirX, dirY).normalize().mult(80));
-  
-      // the following code 1) prevents exceeding the maxSpeed  
-      this.currentVel = createVector(this.playerSprite.vel.x, this.playerSprite.vel.y);
-      if (this.currentVel.mag() > this.maxSpeed) {
-        this.currentVel.setMag(this.maxSpeed);
-        this.playerSprite.vel.x = this.currentVel.x;
-        this.playerSprite.vel.y = this.currentVel.y;
-      } 
-  
-      // 2) preserves the direction when the sprite stops
-      if (this.currentVel.mag() > 0.2) this.direcitonSave = this.currentVel.heading();
-      
-      if (this.currentVel.mag() < 0.2) this.stationary = true; 
-      else this.stationary = false;
-  
-      if (this.stationary === false) this.playerSprite.rotation = this.currentVel.heading();
-      else this.playerSprite.rotation = this.direcitonSave;
-    }
+    if (this.stationary === false) this.playerSprite.rotation = this.currentVel.heading();
+    else this.playerSprite.rotation = this.direcitonSave;
 
     // Update damage over time and collision damage
 
     if(damageOn) {
       this.takeDamageOverTime();
       this.takeCollisionDamage();
-      if (pursuerCatched){
+      if (pursuerCatched && pursuerDamageCooldown === 0){
         pursuerCatched = false;
-        this.takeDamage(this.pursuerDamage);
-        //print("Player take pursuer damage");
+        pursuerDamageCooldown = 60;
+        this.takeDamage(this.collisionDamage);
+        // print("Pursuer catched");
       } 
+      if (pursuerDamageCooldown !== 0) {
+        pursuerDamageCooldown -= 1;
+      }
     }
 
     if(healthOn) {
@@ -155,8 +105,7 @@ class Player {
         let zerohealthMessage = new SpeechBubble(this.playerSprite.x-150, this.playerSprite.y-100, 150, 75, 
           this.playerSprite.x-5, this.playerSprite.y - 10,
           "OH NO! Your health is zero! Press the 'r' key to make repairs!");
-          //Adam: commented this out as I think game ends if health is
-          //zerohealthMessage.show();
+          zerohealthMessage.show();
         //this.haltPlayer();
       }
     }
@@ -170,23 +119,10 @@ class Player {
  
   }
 
-
-
-  // the 2 setters methods that are called in response to pushing the controls buttons at the pause menu
-  setStandardControls(){
-    PlayerStatus.alternativeControls = false;
-  }
-  
-  setAlternativeControls(){
-    PlayerStatus.alternativeControls = true;
-  }
-
-  // uncomment and modify the lines below if you want to continue developing the game and need to 
-  // see some player stats above the player sprite
   debug() {
     //debug info with coordinates ont pot of mivng player
-    /* text(`player.x: ${round(this.playerSprite.x)} player.y: ${round(this.playerSprite.y)}`, this.playerSprite.x, this.playerSprite.y - 30);
-    text(`player vel: ${this.currentVel.mag()}`, this.playerSprite.x, this.playerSprite.y - 50); */
+    text(`player.x: ${round(this.playerSprite.x)} player.y: ${round(this.playerSprite.y)}`, this.playerSprite.x, this.playerSprite.y - 30);
+    text(`player vel: ${this.currentVel.mag()}`, this.playerSprite.x, this.playerSprite.y - 50);
     // text(`p.canv.x: ${round(player.canvasPos.x)} p.canv.y: ${round(player.canvasPos.y)}`, player.x, player.y - 50);
     // text(`windowWidth/4: ${round(windowWidth/4)} windowWidth*3/4: ${round(windowWidth*3/4)}`, player.x, player.y - 70);
     // text(`windowHeight/4: ${round(windowHeight/4)} windowHeight*3/4: ${round(windowHeight*3/4)}`, player.x, player.y - 90); 
@@ -217,9 +153,6 @@ class Player {
     for (let i = 0; i < bankSprites.length; i++) {
       if (this.playerSprite.collides(bankSprites[i])) {
         this.takeDamage(this.collisionDamage);
-        if (soundOn) {
-          wallCollisionSound.play();
-        }
       }
     }
     if (this.health <= 0) {
@@ -230,12 +163,7 @@ class Player {
   // Decrements health by [damagePoints] points every [timeInterval] seconds.
   takeDamageOverTime(timeInterval = 2.0) {
     // Get current time from Main timer (started during setup)
-    let timeElapsed = 0;
-    if (this.timer) {
-      timeElapsed = this.timer.getTime();
-    } else {
-      console.log("timer undefined")
-    }
+    let timeElapsed = this.timer.getTime();
     // Set the comparison value - depends on frame rate. Ensures that condition for taking damage is
     // only true ONCE per timeInterval (rather than multiple times, which is what you get if you use
     // integer seconds).
@@ -265,17 +193,8 @@ class Player {
       "Repairing...repairs will take " + timeTaken + " seconds...");
     repairMessage.show();
 
-    if (soundOn && (!repairHammer.isPlaying() || !repairDrill.isPlaying() || !repairSaw.isPlaying())  ) {
-      repairDrill.play();
-      repairSaw.play();
-      repairHammer.play();
-    }
-
     if (this.status === PlayerStatus.REPAIRS_FINISHED) {
       // Update health to maxHealth
-      repairDrill.pause();
-      repairSaw.pause();
-      repairHammer.pause();
       this.health = this.maxHealth;
       this.zeroHealth = false;
     }

@@ -358,7 +358,7 @@ class Canal{
         this.garbage = new Group();
         this.ripples = new Group();
 
-        this.garbage.amount = this.getRandomInt(1, 3);
+        this.garbage.amount = this.getRandomInt(1, 4);
         this.ripples.amount = this.garbage.amount;
         this.garbage.diameter = 10;
         this.ripples.diameter = 15;
