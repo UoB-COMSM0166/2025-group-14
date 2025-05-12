@@ -20,7 +20,9 @@
 
 ## 1. Team Details
 ### Group 14 - Team Snack Overflow 
+Figure 1:
 ![group photo](/Images/Group_photo.jpeg)
+Table 1:
 | Name | Username | Email | Role |
 |----|-----|------|-----|
 | Adam Sidnell | adam-sid | fv24034@bristol.ac.uk | Developer |
@@ -109,11 +111,13 @@ We identified the stakeholders of our game as:
 - Boat Owners/Enthusiasts
 - Canal Preservation Organisations
 
+Figure 2:
 ![Stakeholder Diagram](https://github.com/user-attachments/assets/7b6193a0-34b3-48de-b859-2cfbdd3cdf21)
 
 
 #### Epics
 
+Table 2:
 | Stakeholder | Epic |
 |---|---|
 | Markers | We want unique game mechanics to demonstrate the developers' abilities.|
@@ -126,6 +130,7 @@ We identified the stakeholders of our game as:
 
 #### User stories 
 
+Table 3:
 | Stakeholder | User story | Acceptance criteria |
 |---|---|---|
 | Markers |As markers, we want a functional and enjoyable game so that the students learn how to develop software in a team.|Given that the students show up to the demo day, when we play their game, we should find that the game is reasonably playable and enjoyable without any major issues.|
@@ -172,6 +177,7 @@ Throughout the process of writing User Stories, we learned that if a particular 
 
 We also quickly recognised the utility of Agile development, as it can be difficult to know upfront what all the requirements will be. We focused on prioritising the most important and obvious requirements, and whenever we realised that we had to change certain features or add new features, we added it to our Kanban board and evaluated its priority. As a team, we found the prioritisation matrix below to be a useful tool and reminder of what to work on next.
 
+Figure 3:
 ![Prioritisation matrix](https://www.productplan.com/uploads/2x2-prioritization-1024x536-1.png)
 Source: https://www.productplan.com/glossary/2x2-prioritization-matrix/
 
@@ -193,6 +199,7 @@ The Pursuer class is also a p5play Sprite. Pursuer has a basic form of artificia
  
 - #### CanalMap class and the locks mechanics  
 
+Figure 4:
 ![Lock mechanic](/Images/lock.gif)
  
 Maps were built at three aggregated levels:
@@ -207,6 +214,7 @@ Locks, a subclass of canals, are given timing parameters and are positioned like
  
 - #### Health mechanic: the interaction between canalMap, player and pursuer objects  
 
+Figure 5:
 ![Damage to player](/Images/damage.gif)
  
 The main objective of the game is to navigate through the canals and reach the end of the track. To make the gameplay more involving, we have introduced a health mechanic, which both forces strategic thinking and punishes undesirable behaviour. Health is decreased in the following situations:
@@ -224,14 +232,17 @@ Game-screens are menus that allow for game configuration (e.g. Map selection and
 
 #### UML Class Diagram of the entire game
 
+Figure 6:
 ![UML Class Diagram of Narrowboat Game core features](./Images/DGRM_updated.jpg)
 
 #### UML sequence diagrams of non-gameplay classes
 
+Figure 7:
 ![UML Flow Diagram of Narrowboat Game](./Images/High_level_sequence.jpeg)
 
 #### UML sequence diagrams of gameplay classes
 
+Figure 8:
 ![UML Flow Diagram of Narrowboat Game](./Images/Flow_diagram_of_the_game.png)
 
 ---
@@ -297,6 +308,7 @@ We made three main changes to the game in response to this:
 - First, we implemented game control flow logic that meant that the player moves through an introduction screen before proceeding on to the gameplay. This introduction screen details the narrative background to the game, as well as giving a brief overview of the controls and rules of the game before the user starts playing.
 - Our second change was that, if the player still feels unsure of how to play the game, they have the option to play a Tutorial level in which all of the controls and hazards of the game (movement controls, health damage, collision, pursuit, repair, garbage collection) are described, demonstrated, and they are asked to perform them one-by-one to learn how they work and what they look like.
 
+Figure 9:
 ![Playing tutorial](/Images/tutorial.gif)
 
 - Finally, we have provided options for the player to play the game on three different difficulty levels: Easy, Medium and Hard, to suit different levels of ability and confidence. Differences between the levels were informed from the results of the quantitative evaluation, and involve differences in health damage over time, collision damage, maximum health of the player, the speed/manoeuvrability of the pursuer, and the length of time that collecting garbage freezes the pursuer.
@@ -340,6 +352,7 @@ Ten participants took part in our quantitative evaluation. Each participant play
 
 The NASA TLX asks a user to rate the perceived workload of a system in 6 categories. The results of our evaluation are shown below (raw data is given in Appendix 1).
 
+Table 4:
 | TLX Question | W value | Sample size | Result significance (at p<0.5) |
 |---|---|---| ---|
 | Mental Demand | 0 | 9 | significant |
@@ -349,6 +362,7 @@ The NASA TLX asks a user to rate the perceived workload of a system in 6 categor
 | Performance | 5 | 9 | significant |
 | Frustration | 8 | 10 | significant |
 
+Figure 10:
 ![Average NASA TLX scores by Question](/./Images/NASA_TLX_graph_average_score_by_category.png)
 
 - **Mental demand and Effort**: The result was statistically significant, because increasing the difficulty level implies putting more effort into game play. Moreover, both tests were redone with the p=0.01, and the difference in means of the 2 groups was still statistically significant. We concluded from this that there was a significant difference in mental demand and effort between the easy level and the difficulty level (as there should be).
@@ -361,6 +375,7 @@ The NASA TLX asks a user to rate the perceived workload of a system in 6 categor
 
 ### 6 - Process
 
+Figure 11:
 ![Example of us on a Teams call](/./Images/teams_call.jpeg)
 
 For this project our team met up regularly outside of timetabled hours through a mixture of in-person and online meetings. Early on, our meetings consisted of discussing the overall direction of the game and creating user stories to shape the kinds of features we wanted to have as a baseline. It was during these discussions that we set up our Kanban board and populated it with features.
@@ -371,6 +386,7 @@ As we went into the active development stage we formalised meetings into twice w
 
 Below is a rough timeline and description of our sprints with each taking 1-3 weeks.
 
+Table 5:
 | Sprint No     |  Description  |
 | ------------- |-------------|
 |1 - Calm before the storm     | Implemented core stage 1 features such as the map, player, and pursuer.     |
@@ -387,6 +403,7 @@ Outside of our stand-up meetings, we often arranged separate individual meetings
 #### Jira
 We used a Jira Kanban board to manage tasks and track our progress. Tasks were linked to user stories with relevant tags added (such as expected difficulty or which sprint stage it was associated with). This helped us to have a clear picture of where we were in development and what features we would need to work on next.
 
+Figure 12:
 ![Screenshot of our Kanban](/./Images/jira_screenshot.png)
 
 #### VS Code 
@@ -433,6 +450,7 @@ There is potential for our game to positively support canal biodiversity by ensu
 #### Chain of Effects diagram
 Below is a diagram which shows the potential chains of effect that may happen when many people use this product over several years.
 
+Figure 13:
 ![Sustainability Diagram](https://github.com/user-attachments/assets/1fb71942-a06a-4de6-96e4-89cee56ae224)
 
 #### Green Software Patterns
@@ -456,9 +474,9 @@ This project proved to be challenging but very rewarding; we gained invaluable e
 
 From the outset, we strove to maintain a positive and supportive team environment, where everyone felt comfortable communicating and contributing. Our flexible approach to roles made our team resilient to challenges and changes in requirements throughout the project, as we were all able to move around and take on different tasks depending on what needed to be done at any given time. 
 
-The main challenge arose when we decided to undertake a major refactor of our codebase more than halfway through the project. This massively impacted our priority list of tasks/features to complete, but due to not having fixed roles, we were all able to jump in and complete the refactor with relative ease. This decision ultimately paid off. The development of our game skyrocketed (see Figure 10) after improving our system design and utilising the “p5Play” library, as it solved the challenges we were facing regarding physics/collisions and map creation.
+The main challenge arose when we decided to undertake a major refactor of our codebase more than halfway through the project. This massively impacted our priority list of tasks/features to complete, but due to not having fixed roles, we were all able to jump in and complete the refactor with relative ease. This decision ultimately paid off. The development of our game skyrocketed (see Figure 14) after improving our system design and utilising the “p5Play” library, as it solved the challenges we were facing regarding physics/collisions and map creation.
 
-Figure 10:
+Figure 14:
 ![commits-per-week](./Images/Commit_graph.png) 
 
 In retrospect, it would have been great if we began by using the p5Play library from the very start. Specifically, because we allocated time into attempting to debug the original game, discussing how the development should proceed and searching for libraries and other solutions online, we started falling behind the supposed timeline of the development of the game, which was additionally exacerbated by a sudden and sharp increase in workload from other modules. This resulted in some missed opportunities for presenting a more complete game to users, particularly when it came round to the HCI and sustainability evaluations.
