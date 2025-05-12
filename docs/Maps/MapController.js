@@ -35,7 +35,7 @@ class MapController {
             case 4:
                 return new Sprite(280, 575, 35, 25);//originally 225 407; 3122 3070 for surveying the current end
             case 5:
-                return new Sprite(300, 250, 35, 25);
+                return new Sprite(450, 650, 35, 25);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -55,7 +55,7 @@ class MapController {
             case 4:
                 return new Sprite(-40, 30, 25, 15);
             case 5:
-                return new Sprite(10, 30, 25, 15);
+                return new Sprite(250, 100, 25, 15);
             default:
                 throw new Error("Invalid map number: " + mapNumber);
         }
@@ -344,8 +344,8 @@ class MapController {
         avoiding the opponent*/
 
 
-        let o = 2.5
-        let c = 6
+        let o = 2
+        let c = 6.5
         let inc = 2
         let incA = 0;
 
